@@ -54,6 +54,7 @@ public final class R {
         public static final int config=0x7f050003;
         public static final int ejemplos=0x7f050009;
         public static final int entrar=0x7f050007;
+        public static final int explicacion=0x7f05000b;
         public static final int hello_world=0x7f050001;
         public static final int nombre=0x7f050005;
         public static final int password=0x7f050006;

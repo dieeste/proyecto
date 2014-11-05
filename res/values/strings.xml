@@ -12,5 +12,6 @@
     <string name="test">Test</string>
     <string name="ejemplos">Ejemplos</string>
     <string name="teoria">Teoría</string>
+    <string name="explicacion">Este programa ha sido desarrollado como ejemplo en el curso de Android para demostrar cómo se pueden lanzar nuevas actividades desde la actividad principal.</string>
 
 </resources>
