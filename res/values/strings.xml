@@ -6,5 +6,11 @@
     <string name="action_settings">Settings</string>
     <string name="config">Configuracion</string>
     <string name="acercaDe">Acerca de</string>
+    <string name="nombre">Escriba su nombre</string>
+    <string name="password">Escriba su password</string>
+    <string name="entrar">Entrar</string>
+    <string name="test">Test</string>
+    <string name="ejemplos">Ejemplos</string>
+    <string name="teoria">Teoría</string>
 
 </resources>
