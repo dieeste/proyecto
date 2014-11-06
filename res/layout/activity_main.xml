@@ -10,19 +10,19 @@
     android:background="@drawable/fondomenu">
 
     <Button
-        android:id="@+id/test"
+        android:id="@+id/simulacion"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
-        android:text="@string/test" />
+        android:text="@string/simulacion" />
 
     <Button
         android:id="@+id/ejemplos"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/test"
+        android:layout_below="@+id/simulacion"
         android:layout_marginTop="40dp"
         android:text="@string/ejemplos" />
 
@@ -33,5 +33,13 @@
         android:layout_below="@+id/ejemplos"
         android:layout_marginTop="40dp"
         android:text="@string/teoria" />
+
+    <Button
+        android:id="@+id/sensoresdisponibles"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/teoria"
+        android:layout_marginTop="40dp"
+    	android:text="@string/sensores" />
 
 </RelativeLayout>

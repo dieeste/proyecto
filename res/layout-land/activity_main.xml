@@ -10,7 +10,7 @@
     android:background="@drawable/fondomenu">
 
     <Button
-        android:id="@+id/test"
+        android:id="@+id/simulacion"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
         android:id="@+id/ejemplos"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/test"
+        android:layout_below="@+id/simulacion"
         android:layout_marginTop="20dp"
         android:text="@string/ejemplos" />
 

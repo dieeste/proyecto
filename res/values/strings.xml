@@ -9,9 +9,10 @@
     <string name="nombre">Escriba su nombre</string>
     <string name="password">Escriba su password</string>
     <string name="entrar">Entrar</string>
-    <string name="test">Test</string>
+    <string name="simulacion">Simulación</string>
     <string name="ejemplos">Ejemplos</string>
     <string name="teoria">Teoría</string>
     <string name="explicacion">Este programa ha sido desarrollado como ejemplo en el curso de Android para demostrar cómo se pueden lanzar nuevas actividades desde la actividad principal.</string>
+    <string name="sensores">Sensores disponibles</string>
 
 </resources>

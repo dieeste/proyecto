@@ -15,6 +15,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button test;
 	Button ejemplo;
 	Button teoria;
+	Button listasensores;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +23,16 @@ public class MainActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_main);
 
 		//Recogemos los botones 
-		test = (Button) findViewById(R.id.test);
+		test = (Button) findViewById(R.id.simulacion);
 		ejemplo = (Button) findViewById(R.id.ejemplos);
 		teoria = (Button) findViewById(R.id.teoria);
+		listasensores = (Button) findViewById(R.id.sensoresdisponibles);
 		
 		//Escuchamos los botones
 		test.setOnClickListener(this);
 		ejemplo.setOnClickListener(this);
 		teoria.setOnClickListener(this);
+		listasensores.setOnClickListener(this);
 	}
 
 	@Override
@@ -73,7 +76,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View boton) {
 		// TODO Auto-generated method stub
 		switch (boton.getId()) {
-		case R.id.test:
+		case R.id.simulacion:
 			//envía lo que nosotros queremos y nos deja elegir entre las aplicaciones que tenemos para enviar el correo
 			Intent test = new Intent(Intent.ACTION_SEND); 
 			test.setType("text/plain");
@@ -82,8 +85,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.ejemplos:
 			break;
 		case R.id.teoria:
+			Intent teoria = new Intent(this, Teoria.class);
+			startActivity(teoria);
 			break;
-
+		case R.id.sensoresdisponibles:
+			Intent sensoresdisponibles = new Intent(this, Listasensores.class);
+			startActivity(sensoresdisponibles);
+			break;
 		default:
 			break;
 		}

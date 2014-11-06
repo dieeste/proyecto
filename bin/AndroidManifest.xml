@@ -21,13 +21,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
         <activity android:name="AcercaDe" android:label="Acerca de"></activity>
+        
         <activity android:name="Principal">
               <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            </activity>
+		</activity>
+            
+        <activity android:name="Teoria">
+            <action android:name=".Teoria"/>
+        </activity>
+        <activity android:name="Listasensores">
+            <action android:name=".Listasensores"/>
+        </activity>
     </application>
 </manifest>
