@@ -74,8 +74,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (boton.getId()) {
 		case R.id.test:
-		/*	Intent test = new Intent(th);
-			startActivity(test);*/
+			//envía lo que nosotros queremos y nos deja elegir entre las aplicaciones que tenemos para enviar el correo
+			Intent test = new Intent(Intent.ACTION_SEND); 
+			test.setType("text/plain");
+			startActivity(test);
 			break;
 		case R.id.ejemplos:
 			break;
