@@ -34,6 +34,7 @@
             
         <activity android:name="Teoria">
             <action android:name=".Teoria"/>
+            <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity android:name="Listasensores">
             <action android:name=".Listasensores"/>

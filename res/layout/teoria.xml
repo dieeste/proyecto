@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   
-  >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/TVteoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/explicacion" />
+   <com.androidplot.xy.XYPlot
+       android:id="@+id/mySimpleXYPlot"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       androidPlot.graphWidget.marginTop="20dp"
+       androidPlot.graphWidget.marginLeft="10dp"
+       androidPlot.graphWidget.marginBottom="20dp"
+       androidPlot.graphWidget.marginRight="10dp"
+       title="A Simple XYPlot Example" />
 
 </LinearLayout>
