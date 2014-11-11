@@ -1,4 +1,5 @@
 package com.example.app;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -26,15 +28,17 @@ public class Simulacion extends Activity implements SensorEventListener{
 	TextView temperatura;
 	TextView presion;
 	TextView cuenta;
+	TextView mostrar;
 	Button empezar;
 	Button parar;
+	EditText contador;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.simulacion);
-		
+		mostrar = (TextView) findViewById(R.id.mostrar);
 		detecta = (TextView) findViewById(R.id.detecta);
 		acelerometro = (TextView) findViewById(R.id.acelerometro);
 		gravedad = (TextView) findViewById(R.id.gravedad);
@@ -48,19 +52,27 @@ public class Simulacion extends Activity implements SensorEventListener{
 		cuenta = (TextView) findViewById(R.id.cuenta);
 		empezar = (Button) findViewById(R.id.empezar);
 		parar = (Button) findViewById(R.id.parar);
+		contador = (EditText) findViewById(R.id.contador);
 		
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		onStop();
+		
 		
 		empezar.setOnClickListener(new OnClickListener() {
 			
-			@Override
+			@SuppressLint("NewApi") @Override
 			public void onClick(View v) {
+				
+				int cont = Integer.parseInt(contador.getText().toString());
+				String ini = "";	
 				// TODO Auto-generated method stub
-				onStart();
-			}
+				for (int i=0; i<=cont; i++ ){
+				 ini= "num"+ i+ "\n";
+				 mostrar.setText(ini);
+				//mostrar.setText(String.valueOf(ini + "\n"));
+				//onRestart();
+			}	}
 		});
-		
+
 		parar.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -69,7 +81,8 @@ public class Simulacion extends Activity implements SensorEventListener{
 				onPause();
 			}
 		});
-		
+	
+	
 	}
 
 	
@@ -145,6 +158,7 @@ public class Simulacion extends Activity implements SensorEventListener{
 		String txt = "\n\nSensor: ";
 		synchronized (this) {
 			Log.d("sensor", event.sensor.getName());
+			
 
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_GRAVITY:
@@ -202,10 +216,12 @@ public class Simulacion extends Activity implements SensorEventListener{
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub
-
+		
 		Iniciar_sensores();
 
 		super.onRestart();
+		
+		
 	}
 
 	@Override

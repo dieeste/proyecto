@@ -28,30 +28,32 @@ public final class R {
     }
     public static final class id {
         public static final int TextView01=0x7f080000;
-        public static final int acelerometro=0x7f08000d;
-        public static final int acercaDe=0x7f080018;
-        public static final int action_settings=0x7f080017;
-        public static final int config=0x7f080019;
+        public static final int acelerometro=0x7f08000f;
+        public static final int acercaDe=0x7f08001a;
+        public static final int action_settings=0x7f080019;
+        public static final int config=0x7f08001b;
+        public static final int contador=0x7f08000b;
         public static final int cuenta=0x7f08000a;
-        public static final int detecta=0x7f08000c;
+        public static final int detecta=0x7f08000e;
         public static final int ejemplos=0x7f080002;
         public static final int empezar=0x7f080008;
         public static final int entrar=0x7f080007;
-        public static final int giro=0x7f08000f;
-        public static final int gravedad=0x7f08000e;
-        public static final int luminosidad=0x7f080013;
-        public static final int magnetico=0x7f080011;
-        public static final int mySimpleXYPlot=0x7f080016;
+        public static final int giro=0x7f080011;
+        public static final int gravedad=0x7f080010;
+        public static final int luminosidad=0x7f080015;
+        public static final int magnetico=0x7f080013;
+        public static final int mostrar=0x7f08000c;
+        public static final int mySimpleXYPlot=0x7f080018;
         public static final int nombre=0x7f080005;
-        public static final int orientacion=0x7f080010;
+        public static final int orientacion=0x7f080012;
         public static final int parar=0x7f080009;
         public static final int password=0x7f080006;
-        public static final int presion=0x7f080015;
-        public static final int proximidad=0x7f080012;
-        public static final int scrollView1=0x7f08000b;
+        public static final int presion=0x7f080017;
+        public static final int proximidad=0x7f080014;
+        public static final int scrollView1=0x7f08000d;
         public static final int sensoresdisponibles=0x7f080004;
         public static final int simulacion=0x7f080001;
-        public static final int temperatura=0x7f080014;
+        public static final int temperatura=0x7f080016;
         public static final int teoria=0x7f080003;
     }
     public static final class layout {
