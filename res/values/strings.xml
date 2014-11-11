@@ -14,5 +14,8 @@
     <string name="teoria">Teoría</string>
     <string name="explicacion">Este programa ha sido desarrollado como ejemplo en el curso de Android para demostrar cómo se pueden lanzar nuevas actividades desde la actividad principal.</string>
     <string name="sensores">Sensores disponibles</string>
+    <string name="empezar">Inicio</string>
+    <string name="parar">Parar</string>
+    <string name="cuenta">Tiempo: </string>
 
 </resources>

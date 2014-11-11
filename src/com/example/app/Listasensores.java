@@ -28,11 +28,11 @@ public class Listasensores extends ListActivity  {
 		SensorManager mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
 		List<Sensor> sensores = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-
+		
+		//pantalla con los datos
 		Log.d("sensores", "" + sensores.size());
 
-		SensorAdapter adapter = new SensorAdapter(this,
-				android.R.layout.simple_list_item_1, sensores);
+		SensorAdapter adapter = new SensorAdapter(this,android.R.layout.simple_list_item_1, sensores);
 
 		setListAdapter(adapter);
 	}
