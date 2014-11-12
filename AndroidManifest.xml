@@ -48,6 +48,9 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
+        <activity android:name="Acelerometro">
+            <action android:name=".Acelerometro" />
+        </activity>
     </application>
 
 </manifest>

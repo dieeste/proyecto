@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/cuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cuenta" />
+
+    <EditText
+        android:id="@+id/contador"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="number"
+        android:numeric="integer" />
+
+    <com.androidplot.xy.XYPlot
+        android:id="@+id/mySimpleXYPlot"
+        android:layout_width="184dp"
+        android:layout_height="110dp"
+        android:layout_marginLeft="17dp" />
+
+    <Chronometer
+        android:id="@+id/cronometro"
+        android:layout_width="86dp"
+        android:layout_height="54dp"
+        android:layout_alignRight="@+id/mySimpleXYPlot"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_marginRight="21dp"
+        android:text="Chronometer" />
+
+    <Button
+        android:id="@+id/empezar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/mySimpleXYPlot"
+        android:layout_below="@+id/cronometro"
+        android:text="@string/empezar" />
+
+    <Button
+        android:id="@+id/parar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cronometro"
+        android:layout_toLeftOf="@+id/cronometro"
+        android:text="@string/parar" />
+
+    <TextView
+        android:id="@+id/mostrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/mySimpleXYPlot"
+        android:layout_toRightOf="@+id/mySimpleXYPlot"
+        android:text="TextView" />
+
+</LinearLayout>

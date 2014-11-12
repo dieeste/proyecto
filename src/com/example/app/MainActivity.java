@@ -11,24 +11,24 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity implements OnClickListener {
-	//Declaramos los botones, los hacemos globales para ser usados mas adelante
+	// Declaramos los botones, los hacemos globales para ser usados mas adelante
 	Button simulacion;
 	Button ejemplo;
 	Button teoria;
 	Button listasensores;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//Recogemos los botones 
+		// Recogemos los botones
 		simulacion = (Button) findViewById(R.id.simulacion);
 		ejemplo = (Button) findViewById(R.id.ejemplos);
 		teoria = (Button) findViewById(R.id.teoria);
 		listasensores = (Button) findViewById(R.id.sensoresdisponibles);
-		
-		//Escuchamos los botones
+
+		// Escuchamos los botones
 		simulacion.setOnClickListener(this);
 		ejemplo.setOnClickListener(this);
 		teoria.setOnClickListener(this);
@@ -46,12 +46,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		/** true -> el menú ya está visible */
 	}
 
-	/*public void lanzarAcercaDe(View view) {
-
-		Intent i = new Intent(this, AcercaDe.class);
-
-		startActivity(i);
-	}*/
+	/*
+	 * public void lanzarAcercaDe(View view) {
+	 * 
+	 * Intent i = new Intent(this, AcercaDe.class);
+	 * 
+	 * startActivity(i); }
+	 */
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -77,7 +78,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (boton.getId()) {
 		case R.id.simulacion:
-			//envía lo que nosotros queremos y nos deja elegir entre las aplicaciones que tenemos para enviar el correo
+			// envía lo que nosotros queremos y nos deja elegir entre las
+			// aplicaciones que tenemos para enviar el correo
 			Intent simulacion = new Intent(this, Simulacion.class);
 			startActivity(simulacion);
 			break;

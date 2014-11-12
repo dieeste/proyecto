@@ -4,14 +4,4 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
 
-   <com.androidplot.xy.XYPlot
-       android:id="@+id/mySimpleXYPlot"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       androidPlot.graphWidget.marginTop="20dp"
-       androidPlot.graphWidget.marginLeft="10dp"
-       androidPlot.graphWidget.marginBottom="20dp"
-       androidPlot.graphWidget.marginRight="10dp"
-       title="A Simple XYPlot Example" />
-
 </LinearLayout>

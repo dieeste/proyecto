@@ -1,119 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/empezar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empezar" />
-
-        <Button
-            android:id="@+id/parar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/parar" />
-
-        <TextView
-            android:id="@+id/cuenta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cuenta" />
-
-        <EditText
-            android:id="@+id/contador"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:numeric="integer"
-            android:inputType="number" >
-
-            <requestFocus />
-        </EditText>
-
-        <TextView
-            android:id="@+id/mostrar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <Chronometer
-            android:id="@+id/cronometro"
-            android:layout_width="86dp"
-            android:layout_height="54dp"
-            android:text="Chronometer" />
-
-    </LinearLayout>
+    android:orientation="vertical"
+    tools:context=".Simulacion"
+    tools:ignore="ObsoleteLayoutParam,UselessParent" >
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        tools:ignore="ScrollViewCount" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+        <TextView
+            android:id="@+id/orientacion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="127dp" />
 
-            <TextView
-                android:id="@+id/detecta"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/proximidad"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/orientacion" />
 
-            <TextView
-                android:id="@+id/acelerometro"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/presion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/cronometro"
+            android:layout_alignBottom="@+id/cronometro"
+            android:layout_alignParentLeft="true"
+            tools:ignore="ObsoleteLayoutParam" />
 
-            <TextView
-                android:id="@+id/gravedad"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/temperatura"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="54dp" />
 
-            <TextView
-                android:id="@+id/giro"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/luminosidad"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="29dp" />
 
-            <TextView
-                android:id="@+id/orientacion"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/magnetico"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/temperatura"
+            android:layout_alignBottom="@+id/temperatura"
+            android:layout_alignParentLeft="true" />
 
-            <TextView
-                android:id="@+id/magnetico"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/giro"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/temperatura"
+            android:layout_alignBottom="@+id/temperatura"
+            android:layout_alignParentLeft="true" />
 
-            <TextView
-                android:id="@+id/proximidad"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/gravedad"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/luminosidad"
+            android:layout_alignBottom="@+id/luminosidad"
+            android:layout_alignParentLeft="true" />
 
-            <TextView
-                android:id="@+id/luminosidad"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/acelerometro"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/luminosidad"
+            android:layout_marginTop="18dp" />
 
-            <TextView
-                android:id="@+id/temperatura"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/presion"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/detecta"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/luminosidad"
+            android:layout_alignBottom="@+id/luminosidad"
+            android:layout_alignParentLeft="true" />
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>
