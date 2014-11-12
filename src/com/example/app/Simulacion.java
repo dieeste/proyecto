@@ -1,15 +1,17 @@
 package com.example.app;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.Chronometer.OnChronometerTickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -32,13 +34,15 @@ public class Simulacion extends Activity implements SensorEventListener{
 	Button empezar;
 	Button parar;
 	EditText contador;
+	Chronometer cronometro;
+	int tempoAutodestrucion; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.simulacion);
-		mostrar = (TextView) findViewById(R.id.mostrar);
+		
 		detecta = (TextView) findViewById(R.id.detecta);
 		acelerometro = (TextView) findViewById(R.id.acelerometro);
 		gravedad = (TextView) findViewById(R.id.gravedad);
@@ -53,25 +57,55 @@ public class Simulacion extends Activity implements SensorEventListener{
 		empezar = (Button) findViewById(R.id.empezar);
 		parar = (Button) findViewById(R.id.parar);
 		contador = (EditText) findViewById(R.id.contador);
+		mostrar = (TextView) findViewById(R.id.mostrar);
+		cronometro = (Chronometer) findViewById(R.id.cronometro);
 		
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+	
 		
-		
+		cronometro.setOnChronometerTickListener(new OnChronometerTickListener() {
+			
+			@Override
+			public void onChronometerTick(Chronometer chronometer) {
+				// TODO Auto-generated method stub
+
+                long tempoPasado = SystemClock.elapsedRealtime() - chronometer.getBase();
+                int tempoSeg = (int) tempoPasado / 1000;
+                if (tempoSeg == tempoAutodestrucion){
+                        //finish();
+                	cronometro.stop();
+                	onStop();
+			}
+                mostrar.setText("Autodestrucción en: " + (tempoAutodestrucion - tempoSeg) + " seg");
+			}
+		});
 		empezar.setOnClickListener(new OnClickListener() {
 			
-			@SuppressLint("NewApi") @Override
+			@Override
 			public void onClick(View v) {
-				
-				int cont = Integer.parseInt(contador.getText().toString());
-				String ini = "";	
+				//String resultado = "";
+			//	int cont = Integer.parseInt(contador.getText().toString());
+				tempoAutodestrucion = Integer.parseInt(contador.getText().toString());
+				//String ini = "";	
 				// TODO Auto-generated method stub
-				for (int i=0; i<=cont; i++ ){
-				 ini= "num"+ i+ "\n";
-				 mostrar.setText(ini);
-				//mostrar.setText(String.valueOf(ini + "\n"));
+				cronometro.setBase(SystemClock.elapsedRealtime());
+                cronometro.start();
+                Log.i("cronometro","vemos como cambia: " + String.valueOf(SystemClock.elapsedRealtime()));
+              //  Log.i("tiempo","time now: " + String.valueOf(cronometro.getBase()));
+               // Log.i("tiempo","time now3: " + String.valueOf(SystemClock.elapsedRealtime()/1000));
+				//if (SystemClock.elapsedRealtime()/1000>conta*10000){
+           /*     if (currentThreadTimeMillis ()==conta*1000){
+				 //resultado += String.valueOf(i);
+				 cronometro.stop();
+				 onStop();
 				//onRestart();
-			}	}
+					}	*/
+				//mostrar.setText(resultado+"\n");*/
+				
+				}
 		});
+
+			
 
 		parar.setOnClickListener(new OnClickListener() {
 			
@@ -79,6 +113,7 @@ public class Simulacion extends Activity implements SensorEventListener{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				onPause();
+				cronometro.stop();
 			}
 		});
 	

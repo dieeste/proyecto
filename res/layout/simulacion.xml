@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/empezar"
@@ -44,6 +44,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView" />
+
+        <Chronometer
+            android:id="@+id/cronometro"
+            android:layout_width="86dp"
+            android:layout_height="54dp"
+            android:text="Chronometer" />
 
     </LinearLayout>
 
