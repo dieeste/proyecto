@@ -159,7 +159,7 @@ public class Simulacion extends Activity implements SensorEventListener, OnClick
 				txt += "\n y: " + event.values[1];
 				txt += "\n z: " + event.values[2];
 				acelerometro.setText(txt);
-
+				break;
 			
 			case Sensor.TYPE_GRAVITY:
 
