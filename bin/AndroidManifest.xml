@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="Menú" >
             <intent-filter>
                 <action android:name=".MainActivity" />
 
@@ -33,7 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="Teoria" >
+        <activity
+            android:name="Teoria"
+            android:label="Teoría" >
             <action android:name=".Teoria" />
 
             <category android:name="android.intent.category.DEFAULT" />
@@ -42,14 +44,15 @@
             <action android:name=".Listasensores" />
         </activity>
         <activity
-            android:name=".Simulacion"
+            android:name="Simulacion"
             android:label="Simulación sensores" >
             <action android:name=".Simulacion" />
-
-            <category android:name="android.intent.category.DEFAULT" />
         </activity>
-        <activity android:name="Acelerometro">
+        <activity
+            android:name="Acelerometro"
+            android:label="Acelerómetro" >
             <action android:name=".Acelerometro" />
+
         </activity>
     </application>
 

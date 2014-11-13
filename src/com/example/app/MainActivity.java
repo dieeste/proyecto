@@ -86,8 +86,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.ejemplos:
 			break;
 		case R.id.teoria:
-			Intent teoria = new Intent(this, Teoria.class);
-			startActivity(teoria);
+			Intent teo = new Intent(this, Teoria.class);
+			startActivity(teo);
 			break;
 		case R.id.sensoresdisponibles:
 			Intent sensoresdisponibles = new Intent(this, Listasensores.class);

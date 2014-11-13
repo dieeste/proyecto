@@ -1,6 +1,7 @@
 package com.example.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,6 +25,7 @@ public class Acelerometro extends Activity implements SensorEventListener {
 	TextView mostrar;
 	Button empezar;
 	Button parar;
+	Button enviar;
 	Chronometer cronometro;
 	XYPlot mySimleXYPlot;
 	SensorManager mSensorManager;
@@ -39,6 +41,7 @@ public class Acelerometro extends Activity implements SensorEventListener {
 		cuenta = (TextView) findViewById(R.id.cuenta);
 		empezar = (Button) findViewById(R.id.empezar);
 		parar = (Button) findViewById(R.id.parar);
+		enviar = (Button) findViewById(R.id.enviar);
 		contador = (EditText) findViewById(R.id.contador);
 		mostrar = (TextView) findViewById(R.id.mostrar);
 		cronometro = (Chronometer) findViewById(R.id.cronometro);
@@ -103,7 +106,17 @@ public class Acelerometro extends Activity implements SensorEventListener {
 				cronometro.stop();
 			}
 		});
-
+		enviar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent send = new Intent(Intent.ACTION_SEND);
+				send.setType("text/html");
+				startActivity(send);
+				
+			}
+		});
 	}
 
 	protected void Iniciar_sensores() {
