@@ -12,10 +12,12 @@
             android:id="@+id/empezar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+             android:textColor="#fff" 
             android:text="@string/empezar" />
 
         <Button
             android:id="@+id/parar"
+             android:textColor="#fff" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/parar" />
@@ -33,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+             android:textColor="#fff" 
             android:text="@string/cuenta" />
 
         <EditText
@@ -50,10 +53,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+             android:textColor="#fff" 
             android:text="@string/mostrar" />
 
         <Chronometer
             android:id="@+id/cronometro"
+             android:textColor="#fff" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -105,6 +110,7 @@
         android:id="@+id/enviar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+         android:textColor="#fff" 
         android:layout_below="@+id/mySimpleXYPlot"
         android:text="Enviar" />
 

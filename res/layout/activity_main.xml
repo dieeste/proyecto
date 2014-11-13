@@ -12,7 +12,7 @@
         android:layout_marginTop="70dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-      
+        android:textColor="#fff" 
         android:text="@string/simulacion" />
 
     <Button
@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/simulacion"
+         android:textColor="#fff" 
         android:text="@string/ejemplos" />
 
     <Button
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/ejemplos"
+         android:textColor="#fff" 
         android:text="@string/teoria" />
 
     <Button
@@ -37,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/teoria"
+         android:textColor="#fff" 
     	android:text="@string/sensores" />
 
 </RelativeLayout>

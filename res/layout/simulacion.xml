@@ -12,64 +12,77 @@
         <TextView
             android:id="@+id/detecta"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+             android:textColor="#fff" />
 
         <Button
             android:id="@+id/acelerometer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Acelerometro" />
+            android:text="Acelerometro" 
+             android:textColor="#fff" />
+        
 
         <TextView
             android:id="@+id/acelerometro"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+             android:textColor="#fff"  />
 
         <Button
             android:id="@+id/gravity"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Gravedad" />
+            android:text="Gravedad"
+             android:textColor="#fff"  />
 
         <TextView
             android:id="@+id/gravedad"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+             android:textColor="#fff" />
 
         <TextView
             android:id="@+id/giro"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+             android:textColor="#fff"  />
 
         <TextView
             android:id="@+id/orientacion"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+             android:textColor="#fff" />
 
         <TextView
             android:id="@+id/magnetico"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+             android:textColor="#fff" />
 
         <TextView
             android:id="@+id/proximidad"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+             android:textColor="#fff"  />
 
         <TextView
             android:id="@+id/luminosidad"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+             android:textColor="#fff" />
 
         <TextView
             android:id="@+id/temperatura"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+             android:textColor="#fff" />
 
         <TextView
             android:id="@+id/presion"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+             android:textColor="#fff"  />
     </LinearLayout>
 
 </ScrollView>

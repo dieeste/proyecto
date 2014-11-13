@@ -16,7 +16,9 @@
         android:layout_marginTop="70dp"
         android:ems="10"
         android:hint="@string/nombre"
+         android:textColor="#fff" 
         android:inputType="textPersonName" >
+        
 
         <requestFocus />
     </EditText>
@@ -30,6 +32,7 @@
         android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/password"
+         android:textColor="#fff" 
         android:inputType="textPassword" />
 
     <Button
@@ -38,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/password"
         android:layout_marginTop="40dp"
+         android:textColor="#fff" 
         android:text="@string/entrar" />
 
 </RelativeLayout>
