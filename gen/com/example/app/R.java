@@ -22,11 +22,14 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int base=0x7f020000;
-        public static final int fondomenu=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int ima=0x7f020003;
-        public static final int images=0x7f020004;
+        public static final int fondomenu=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int ima=0x7f020002;
+        public static final int images=0x7f020003;
+        public static final int menu=0x7f020004;
+        public static final int principal=0x7f020005;
+        public static final int sensores=0x7f020006;
+        public static final int simulacion=0x7f020007;
     }
     public static final class id {
         public static final int TextView01=0x7f080010;
