@@ -30,6 +30,7 @@ public class Simulacion extends Activity implements SensorEventListener, OnClick
 	TextView presion;
 	Button gravity;
 	Button acelerometer;
+	Button magnetic;
 
 	double x = 0, y = 0, z = 0;
 	ArrayList<Double> vector = new ArrayList<Double>();
@@ -52,11 +53,14 @@ public class Simulacion extends Activity implements SensorEventListener, OnClick
 		presion = (TextView) findViewById(R.id.presion);
 		gravity = (Button) findViewById(R.id.gravity);
 		acelerometer = (Button) findViewById(R.id.acelerometer);
+		magnetic = (Button) findViewById(R.id.magnetic);
 
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		
 		//Escucha de los botones
 		acelerometer.setOnClickListener(this);
+		gravity.setOnClickListener(this);
+		magnetic.setOnClickListener(this);
 	}
 	@Override
 	public void onClick(View boton){
@@ -154,7 +158,7 @@ public class Simulacion extends Activity implements SensorEventListener, OnClick
 			
 			case Sensor.TYPE_ACCELEROMETER:
 
-				txt += "acelerometro\n";
+				txt += "Acelerómetro\n";
 				txt += "\n x: " + event.values[0];
 				txt += "\n y: " + event.values[1];
 				txt += "\n z: " + event.values[2];
@@ -171,7 +175,7 @@ public class Simulacion extends Activity implements SensorEventListener, OnClick
 				break;
 
 			case Sensor.TYPE_MAGNETIC_FIELD:
-				txt += "magnetic field\n";
+				txt += "Campo magnético\n";
 				txt += "\n" + event.values[0] + " uT";
 
 				magnetico.setText(txt);

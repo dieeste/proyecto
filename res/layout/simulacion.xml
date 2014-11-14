@@ -1,8 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent" 
-       android:background="@drawable/pantalla">
+    android:layout_height="match_parent"
+    android:background="@drawable/pantalla" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -12,77 +12,82 @@
         <TextView
             android:id="@+id/detecta"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-             android:textColor="#fff" />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/acelerometer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Acelerometro" 
-             android:textColor="#fff" />
-        
+            android:textColor="#ffffff"
+            android:text="Acelerometro" />
 
         <TextView
             android:id="@+id/acelerometro"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-             android:textColor="#fff"  />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/gravity"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Gravedad"
-             android:textColor="#fff"  />
+            android:textColor="#ffffff"
+            android:text="Gravedad" />
 
         <TextView
             android:id="@+id/gravedad"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-             android:textColor="#fff" />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/giro"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-             android:textColor="#fff"  />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/orientacion"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-             android:textColor="#fff" />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/magnetic"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="Campo magnético" />
 
         <TextView
             android:id="@+id/magnetico"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-             android:textColor="#fff" />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/proximidad"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-             android:textColor="#fff"  />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/luminosidad"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-             android:textColor="#fff" />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/temperatura"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-             android:textColor="#fff" />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/presion"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-             android:textColor="#fff"  />
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </ScrollView>

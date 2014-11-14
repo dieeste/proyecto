@@ -30,7 +30,7 @@ public class Acelerometro extends Activity implements SensorEventListener {
 	XYPlot mySimleXYPlot;
 	SensorManager mSensorManager;
 
-	int tempoAutodestrucion;
+	int tiempoParada;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +55,16 @@ public class Acelerometro extends Activity implements SensorEventListener {
 					public void onChronometerTick(Chronometer chronometer) {
 						// TODO Auto-generated method stub
 
-						long tempoPasado = SystemClock.elapsedRealtime()
+						long tiempoTranscurrido= SystemClock.elapsedRealtime()
 								- chronometer.getBase();
-						int tempoSeg = (int) tempoPasado / 1000;
-						if (tempoSeg == tempoAutodestrucion) {
+						int tiempoSeg = (int) tiempoTranscurrido / 1000;
+						if (tiempoSeg == tiempoParada) {
 							// finish();
 							cronometro.stop();
 							onStop();
 						}
-						mostrar.setText("Autodestrucción en: "
-								+ (tempoAutodestrucion - tempoSeg) + " seg");
+						mostrar.setText("Tiempo hasta parada: "
+								+ (tiempoParada - tiempoSeg) + " seg");
 					}
 				});
 
@@ -74,7 +74,7 @@ public class Acelerometro extends Activity implements SensorEventListener {
 			public void onClick(View v) {
 				// String resultado = "";
 				// int cont = Integer.parseInt(contador.getText().toString());
-				tempoAutodestrucion = Integer.parseInt(contador.getText()
+				tiempoParada = Integer.parseInt(contador.getText()
 						.toString());
 				// String ini = "";
 				// TODO Auto-generated method stub

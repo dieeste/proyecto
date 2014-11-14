@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class Listasensores extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list);
 		setTitle("Listado de sensores");
+		
 
 		SensorManager mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
@@ -37,6 +39,7 @@ public class Listasensores extends ListActivity {
 
 	class SensorAdapter extends ArrayAdapter<Sensor> {
 		private int textViewResourceId;
+		
 
 		public SensorAdapter(Context context, int textViewResourceId,
 				List<Sensor> objects) {
@@ -56,7 +59,9 @@ public class Listasensores extends ListActivity {
 
 			TextView text = (TextView) convertView
 					.findViewById(android.R.id.text1);
+			
 			text.setText(s.getName());
+			text.setTextColor(Color.WHITE);
 
 			return convertView;
 		}
