@@ -13,8 +13,8 @@
             android:id="@+id/empezar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:text="@string/empezar" />
+            android:text="@string/empezar"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/parar"
