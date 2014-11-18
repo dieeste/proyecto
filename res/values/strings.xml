@@ -6,10 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="config">Configuracion</string>
     <string name="acercaDe">Acerca de</string>
-    <string name="nombre">Escriba su nombre</string>
-    <string name="password">Escriba su contraseña</string>
-    <string name="entrar">Entrar</string>
-    <string name="simulacion">Simulación</string>
+    <string name="medicion">Medición de datos</string>
     <string name="ejemplos">Ejemplos</string>
     <string name="teoria">Teoría</string>
     <string name="explicacion">Este programa ha sido desarrollado como ejemplo en el curso de Android para demostrar cómo se pueden lanzar nuevas actividades desde la actividad principal.</string>
@@ -18,5 +15,11 @@
     <string name="parar">Parar</string>
     <string name="cuenta">Tiempo en segundos: </string>
     <string name="mostrar">&quot;&quot;</string>
+    <string name="acelerometro">Acelerómetro</string>
+    <string name="luminosidad">Sensor de luz</string>
+    <string name="proximidad">Sensor de proximidad</string>
+    <string name="giroscopio">Giroscopio</string>
+    <string name="magnetico">Campo magnético</string>
+    <string name="enviar">Enviar</string>
 
 </resources>

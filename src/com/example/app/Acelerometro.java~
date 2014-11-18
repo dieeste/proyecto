@@ -20,7 +20,6 @@ import android.widget.Chronometer.OnChronometerTickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
@@ -31,7 +30,6 @@ public class Acelerometro extends Activity implements SensorEventListener {
 	EditText contador;
 	TextView cuenta;
 	TextView mostrar;
-	//TextView mostrar2;
 	Button empezar;
 	Button parar;
 	Button enviar;
@@ -40,13 +38,13 @@ public class Acelerometro extends Activity implements SensorEventListener {
 	SensorManager mSensorManager;
 
 	int tiempoParada;
+	
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.acelerometro);
-		
 
 		cuenta = (TextView) findViewById(R.id.cuenta);
 		empezar = (Button) findViewById(R.id.empezar);
@@ -54,15 +52,13 @@ public class Acelerometro extends Activity implements SensorEventListener {
 		enviar = (Button) findViewById(R.id.enviar);
 		contador = (EditText) findViewById(R.id.contador);
 		mostrar = (TextView) findViewById(R.id.mostrar);
-		//mostrar2 = (TextView) findViewById(R.id.mostrar2);
 		cronometro = (Chronometer) findViewById(R.id.cronometro);
 		mySimleXYPlot = (XYPlot) findViewById(R.id.mySimpleXYPlot);
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		
+		
 
-		// Función para controlar el cronómetro y parar al llegar al tiempo
-		// indicado
-		cronometro
-				.setOnChronometerTickListener(new OnChronometerTickListener() {
+		cronometro.setOnChronometerTickListener(new OnChronometerTickListener() {
 
 					@Override
 					public void onChronometerTick(Chronometer chronometer) {
@@ -80,14 +76,13 @@ public class Acelerometro extends Activity implements SensorEventListener {
 								+ (tiempoParada - tiempoSeg) + " seg");
 					}
 				});
-		//Función para coger el tiempo que queremos y parar al llegar a ese tiempo
+
 		empezar.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// String resultado = "";
 				// int cont = Integer.parseInt(contador.getText().toString());
-				onStart();
 				tiempoParada = Integer.parseInt(contador.getText().toString());
 				// String ini = "";
 				// TODO Auto-generated method stub
@@ -115,7 +110,7 @@ public class Acelerometro extends Activity implements SensorEventListener {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				onDestroy();
+				onPause();
 				cronometro.stop();
 			}
 		});
@@ -188,79 +183,48 @@ public class Acelerometro extends Activity implements SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		//onStop();
 		// TODO Auto-generated method stub
-		//String txt = "\n\nSensor: ";
+		String txt = "\n\nSensor: ";
 		synchronized (this) {
 			Log.d("sensor", event.sensor.getName());
 			switch (event.sensor.getType()) {
-
+			
 			case Sensor.TYPE_ACCELEROMETER:
-				/*txt += "Acelerómetro\n";
+				txt += "Acelerómetro\n";
 				txt += "\n x: " + event.values[0];
 				txt += "\n y: " + event.values[1];
-				txt += "\n z: " + event.values[2];*/
-				//mostrar2.setText(txt);
+				txt += "\n z: " + event.values[2];
+				mostrar.setText(txt);
+			
+				Number[] valoresX = {event.values[0]};
+				
+			
+			
+			 	LineAndPointFormatter series1Format = new LineAndPointFormatter(
+		                	Color.rgb(0, 200, 0),                   // Color de la línea
+		                	Color.rgb(0, 100, 0),                   // Color del punto
+		                	null, null);				//Relleno
+		                
+			
+			 
+			 	XYSeries series1 = new SimpleXYSeries(
+			            Arrays.asList(valoresX),  // Array de datos
+			            SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Sólo valores verticales
+			            "Acelerometro");
 
-				Number[] valoresX = {event.values[0],(SystemClock.elapsedRealtime()- cronometro.getBase())/1000};
-				Number[] valoresY = {event.values[1],(SystemClock.elapsedRealtime()- cronometro.getBase())/1000};
-				Number[] valoresZ = {event.values[2],(SystemClock.elapsedRealtime()- cronometro.getBase())/1000};
-
-				XYSeries series1 = new SimpleXYSeries(Arrays.asList(valoresX), // Array
-																				// de
-																				// datos
-						SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Sólo valores
-																// verticales
-						"X");
-
-				XYSeries series2 = new SimpleXYSeries(Arrays.asList(valoresY), // Array
-																				// de
-																				// datos
-						SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Sólo valores
-																// verticales
-						"Y");
-				XYSeries series3 = new SimpleXYSeries(Arrays.asList(valoresZ), // Array
-																				// de
-																				// datos
-						SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Sólo valores
-																// verticales
-						"Z");
-				//(SystemClock.elapsedRealtime()- cronometro.getBase())/1000
-				LineAndPointFormatter series2Format = new LineAndPointFormatter(
-						Color.rgb(100, 200, 100), Color.rgb(100, 200, 100),
-						null, null);
-				LineAndPointFormatter series3Format = new LineAndPointFormatter(
-						Color.rgb(200, 100, 100), Color.rgb(200, 100, 100),
-						null, null);
-				LineAndPointFormatter series1Format = new LineAndPointFormatter(
-						Color.rgb(100, 100, 200), // Color de la línea
-						Color.rgb(100, 100, 200), // Color del punto
-						null, null); // Relleno
-				mySimleXYPlot.setRangeBoundaries(-10, 20, BoundaryMode.FIXED);
-				mySimleXYPlot.setDomainBoundaries(0, 20, BoundaryMode.FIXED);
-				mySimleXYPlot.setDomainStepValue(5);
-				mySimleXYPlot.setTicksPerRangeLabel(3);
-
-				/*
-				 * XYSeries series1 = new SimpleXYSeries("Acelerómetro");
-				 * series1(Arrays.asList(valoresX),
-				 * SimpleXYSeries.ArrayFormat.Y_VALS_ONLY);
-				 */
-				//mySimleXYPlot.clear();
-				mySimleXYPlot.addSeries(series1, series1Format);
-				mySimleXYPlot.addSeries(series2, series2Format);
-				mySimleXYPlot.addSeries(series3, series3Format);
-				mySimleXYPlot.redraw();
-				break;
+			 	mySimleXYPlot.addSeries(series1, series1Format);
+			 	break;
 			}
-
+			
+			
 		}
-
+			
 	}
+	
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
-
+		
 	}
 }

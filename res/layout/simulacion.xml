@@ -9,85 +9,75 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/detecta"
-            android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
-
         <Button
             android:id="@+id/acelerometer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:text="Acelerometro" />
+            android:text="@string/acelerometro"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/acelerometro"
             android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/gravity"
+            android:id="@+id/giroscopio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:text="Gravedad" />
+            android:text="@string/giroscopio"
+            android:textColor="#ffffff" />
 
         <TextView
-            android:id="@+id/gravedad"
+            android:id="@+id/giroscopo"
             android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff" />
 
-        <TextView
-            android:id="@+id/giro"
-            android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/orientacion"
-            android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/magnetic"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:text="Campo magnético" />
+            android:text="@string/magnetico"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/magnetico"
             android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff" />
+ <Button
+            android:id="@+id/proximity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proximidad"
+            android:textColor="#ffffff" />
+ 
+        <TextView
+            android:id="@+id/detecta"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/proximidad"
             android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff" />
+        
+         <Button
+            android:id="@+id/luminosity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/luminosidad"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/luminosidad"
             android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/temperatura"
-            android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/presion"
-            android:layout_width="fill_parent"
-            android:textColor="#ffffff"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 </ScrollView>

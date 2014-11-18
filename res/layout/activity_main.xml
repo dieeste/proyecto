@@ -6,39 +6,28 @@
     android:background="@drawable/pmenu">
 
     <Button
-        android:id="@+id/simulacion"
+        android:id="@+id/medicion"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
-        android:text="@string/simulacion" />
-
-    <Button
-        android:id="@+id/ejemplos"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/simulacion"
-        android:textColor="#ffffff"
-        android:text="@string/ejemplos" />
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/sensoresdisponibles"
+        android:text="@string/medicion" />
 
     <Button
         android:id="@+id/teoria"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/ejemplos"
+        android:layout_marginTop="40dp"
         android:textColor="#ffffff"
+        android:layout_below="@+id/medicion"
         android:text="@string/teoria" />
 
     <Button
         android:id="@+id/sensoresdisponibles"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/teoria"
+        android:layout_marginTop="70dp"
         android:textColor="#ffffff"
     	android:text="@string/sensores" />
 

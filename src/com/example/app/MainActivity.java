@@ -13,7 +13,6 @@ import android.widget.Button;
 public class MainActivity extends Activity implements OnClickListener {
 	// Declaramos los botones, los hacemos globales para ser usados mas adelante
 	Button simulacion;
-	Button ejemplo;
 	Button teoria;
 	Button listasensores;
 
@@ -23,14 +22,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_main);
 
 		// Recogemos los botones
-		simulacion = (Button) findViewById(R.id.simulacion);
-		ejemplo = (Button) findViewById(R.id.ejemplos);
+		simulacion = (Button) findViewById(R.id.medicion);
 		teoria = (Button) findViewById(R.id.teoria);
 		listasensores = (Button) findViewById(R.id.sensoresdisponibles);
 
 		// Escuchamos los botones
 		simulacion.setOnClickListener(this);
-		ejemplo.setOnClickListener(this);
 		teoria.setOnClickListener(this);
 		listasensores.setOnClickListener(this);
 	}
@@ -77,13 +74,11 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View boton) {
 		// TODO Auto-generated method stub
 		switch (boton.getId()) {
-		case R.id.simulacion:
+		case R.id.medicion:
 			// envía lo que nosotros queremos y nos deja elegir entre las
 			// aplicaciones que tenemos para enviar el correo
 			Intent simulacion = new Intent(this, Simulacion.class);
 			startActivity(simulacion);
-			break;
-		case R.id.ejemplos:
 			break;
 		case R.id.teoria:
 			Intent teo = new Intent(this, Teoria.class);
