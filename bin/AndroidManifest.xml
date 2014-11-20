@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="MainActivity"
-            android:label="Menú" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +45,11 @@
             android:name="Acelerometro"
             android:label="Acelerómetro" >
             <action android:name=".Acelerometro" />
-
+        </activity>
+        <activity
+            android:name="Grafica"
+            android:label="Gráfica" >
+            <action android:name=".Grafica" />
         </activity>
     </application>
 
