@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+ 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
@@ -43,7 +45,8 @@
         </activity>
         <activity
             android:name="Acelerometro"
-            android:label="Acelerómetro" >
+            android:label="Acelerómetro"
+            android:theme="@style/MooTheme" >
             <action android:name=".Acelerometro" />
         </activity>
         <activity

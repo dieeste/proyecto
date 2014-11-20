@@ -10,43 +10,52 @@
         android:id="@+id/inforacelerometro"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="¿ QUÉ ES EL ACELEROMETRO?"
         android:textColor="#ffffff" />
     
     <Spinner
         android:id="@+id/spinnerfrecuencia"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff" 
+        android:layout_marginTop="10dp"
+        
+        android:singleLine="true"
         android:focusable="false" />
 
-    <TextView
-        android:id="@+id/prueba"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
     
     <ToggleButton 
         android:id="@+id/toggleGps"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="GPS"
         android:textOn="GPS Encendido"
         android:textOff="GPS Apagado"
+        android:layout_marginTop="10dp"
         android:textColor="#ffffff"/>
 
+    <TextView
+        android:id="@+id/gps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" 
+        android:layout_marginTop="10dp"
+        android:textColor="#ffffff" />
+    
     <ToggleButton
         android:id="@+id/toggleTiempo"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Tiempo"
         android:textOn="Tiempo Sí"
         android:textOff="Tiempo No"
+        android:layout_marginTop="10dp"
         android:textColor="#ffffff"/>
 
     <TextView
         android:id="@+id/tiempos"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="¿Escriba el tiempo?"
@@ -61,7 +70,7 @@
         android:ems="10"
         android:inputType="numberDecimal"
         android:visibility="invisible"
-        android:textColor="#ffffff" />
+        android:textColor="#000000" />
 
     <Button
         android:id="@+id/grafica"
