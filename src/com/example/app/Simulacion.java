@@ -65,13 +65,13 @@ public class Simulacion extends Activity implements SensorEventListener,
 			break;
 		case R.id.giroscopio:
 			/*
-			 * Intent gravedad = new Intent(Simulacion.this,Acelerometro.class);
+			 * Intent gravedad = new Intent(Simulacion.this,AcelerometroViejo.class);
 			 * startActivity(gravedad);
 			 */
 			break;
 		case R.id.magnetic:
 			/*
-			 * Intent gravedad = new Intent(Simulacion.this,Acelerometro.class);
+			 * Intent gravedad = new Intent(Simulacion.this,AcelerometroViejo.class);
 			 * startActivity(gravedad);
 			 */
 			break;
