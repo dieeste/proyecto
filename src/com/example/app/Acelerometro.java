@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -38,6 +39,7 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 	LocationManager controladorgps;
 	String proveedor;
 	
+	int tipo; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -66,8 +68,9 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 			@Override
 			public void onClick(View boton) {
 				// TODO Auto-generated method stub
-				Intent grafica = new Intent(Acelerometro.this, Grafica.class);
-				startActivity(grafica);
+				Intent graficas = new Intent(Acelerometro.this, Grafica.class);
+				graficas.putExtra("tipo", tipo);
+				startActivity(graficas);
 			}
 		});
 		
@@ -137,18 +140,23 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 		// TODO Auto-generated method stub
 		parent.getItemAtPosition(pos);
 		
-		if (pos==0)
+		if (pos==0){
+			tipo = SensorManager.SENSOR_DELAY_NORMAL;
 			gps.setVisibility(View.VISIBLE);
+		}
 		
-		if (pos==1)
+		if (pos==1){
+			tipo = SensorManager.SENSOR_DELAY_UI;
 			gps.setVisibility(View.INVISIBLE);
-		
-		if (pos==2)
+		}
+		if (pos==2){
+			tipo = SensorManager.SENSOR_DELAY_GAME;
 			gps.setVisibility(View.INVISIBLE);
-		
-		if(pos==3)
+		}
+		if(pos==3){
+			tipo = SensorManager.SENSOR_DELAY_FASTEST;
 			gps.setVisibility(View.INVISIBLE);
-		
+		}
 		}
 	
 		
