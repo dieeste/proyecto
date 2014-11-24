@@ -37,17 +37,16 @@ public final class R {
         public static final int acelerometro=0x7f090012;
         public static final int acercaDe=0x7f09001e;
         public static final int action_settings=0x7f09001d;
-        public static final int button1=0x7f09000e;
-        public static final int button2=0x7f09000d;
-        public static final int button3=0x7f09000f;
         public static final int config=0x7f09001f;
         public static final int detecta=0x7f090018;
         public static final int ejemplos=0x7f09001c;
+        public static final int enviar=0x7f09000e;
         public static final int etTiempo=0x7f090006;
         public static final int giroscopio=0x7f090013;
         public static final int giroscopo=0x7f090014;
         public static final int gps=0x7f090003;
         public static final int grafica=0x7f090007;
+        public static final int guardar=0x7f09000d;
         public static final int inforacelerometro=0x7f090000;
         public static final int luminosidad=0x7f09001b;
         public static final int luminosity=0x7f09001a;
@@ -55,6 +54,7 @@ public final class R {
         public static final int magnetico=0x7f090016;
         public static final int medicion=0x7f090009;
         public static final int mySimpleXYPlot=0x7f09000c;
+        public static final int parar=0x7f09000f;
         public static final int proximidad=0x7f090019;
         public static final int proximity=0x7f090017;
         public static final int scrollView1=0x7f090010;
@@ -87,22 +87,23 @@ public final class R {
         public static final int cuenta=0x7f06000c;
         public static final int ejemplos=0x7f060006;
         public static final int empezar=0x7f06000a;
-        public static final int entrar=0x7f060016;
+        public static final int entrar=0x7f060017;
         public static final int enviar=0x7f060013;
         public static final int explicacion=0x7f060008;
         public static final int giroscopio=0x7f060011;
+        public static final int guardar=0x7f060014;
         public static final int hello_world=0x7f060001;
         public static final int luminosidad=0x7f06000f;
         public static final int magnetico=0x7f060012;
         public static final int medicion=0x7f060005;
         public static final int mostrar=0x7f06000d;
-        public static final int nombre=0x7f060014;
+        public static final int nombre=0x7f060015;
         public static final int parar=0x7f06000b;
-        public static final int password=0x7f060015;
+        public static final int password=0x7f060016;
         public static final int proximidad=0x7f060010;
         public static final int sensores=0x7f060009;
         public static final int teoria=0x7f060007;
-        public static final int test=0x7f060017;
+        public static final int test=0x7f060018;
     }
     public static final class style {
         /** 
@@ -131,8 +132,7 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
-        public static final int MooSpinnerItem=0x7f070003;
-        public static final int MooTextAppearanceSpinnerItem=0x7f070004;
-        public static final int MooTheme=0x7f070002;
+        public static final int MooSpinnerItem=0x7f070002;
+        public static final int MooTextAppearanceSpinnerItem=0x7f070003;
     }
 }

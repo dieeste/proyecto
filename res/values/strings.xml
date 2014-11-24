@@ -21,5 +21,6 @@
     <string name="giroscopio">Giroscopio</string>
     <string name="magnetico">Campo magnético</string>
     <string name="enviar">Enviar</string>
+    <string name="guardar">Guardar</string>
 
 </resources>

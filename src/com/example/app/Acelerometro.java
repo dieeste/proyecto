@@ -55,10 +55,11 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 		Criteria criteria = new Criteria();
 		proveedor = controladorgps.getBestProvider(criteria, true);
 		
+		//Declaración del gps
 		Location localizacion = controladorgps.getLastKnownLocation(proveedor);
 		muestraLocalizacion(localizacion);
-	
 		controladorgps.isProviderEnabled(proveedor);
+
 		//Declaramos el botón de la gráfica
 		grafica.setOnClickListener(new OnClickListener() {
 			
@@ -74,6 +75,8 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.frecuencia_recogida, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
+		spinner.setOnItemSelectedListener(this);
+		
 		toggleGps.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -132,12 +135,22 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
 		// TODO Auto-generated method stub
-		String txt="";
 		parent.getItemAtPosition(pos);
-		if (pos==0){
-			gps.setText(txt+"has elegido normal");
+		
+		if (pos==0)
+			gps.setVisibility(View.VISIBLE);
+		
+		if (pos==1)
+			gps.setVisibility(View.INVISIBLE);
+		
+		if (pos==2)
+			gps.setVisibility(View.INVISIBLE);
+		
+		if(pos==3)
+			gps.setVisibility(View.INVISIBLE);
+		
 		}
-		}
+	
 		
 
 	@Override

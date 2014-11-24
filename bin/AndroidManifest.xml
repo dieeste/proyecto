@@ -45,8 +45,7 @@
         </activity>
         <activity
             android:name="Acelerometro"
-            android:label="Acelerómetro"
-            android:theme="@style/MooTheme" >
+            android:label="Acelerómetro" >
             <action android:name=".Acelerometro" />
         </activity>
         <activity
