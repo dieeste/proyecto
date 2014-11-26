@@ -7,6 +7,15 @@
     android:scrollbarAlwaysDrawVerticalTrack="false" >
 
     <Button
+        android:id="@+id/grafica"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#003333"
+        android:text="INICIAR GRÁFICA"
+        android:textColor="#ffcc00" />
+
+    <Button
         android:id="@+id/inforacelerometro"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -71,14 +80,5 @@
         android:inputType="numberDecimal"
         android:visibility="invisible"
         android:textColor="#000000" />
-
-    <Button
-        android:id="@+id/grafica"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#003333"
-        android:text="INICIAR GRÁFICA"
-        android:textColor="#ffcc00" />
 
 </LinearLayout>
