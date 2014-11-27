@@ -22,5 +22,6 @@
     <string name="magnetico">Campo magnético</string>
     <string name="enviar">Enviar</string>
     <string name="guardar">Guardar</string>
+    <string name="save_complate">Guardado</string>
 
 </resources>
