@@ -41,4 +41,5 @@
             android:text="@string/parar" />
     </LinearLayout>
 
+
 </RelativeLayout>
