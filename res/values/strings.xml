@@ -23,5 +23,11 @@
     <string name="enviar">Enviar</string>
     <string name="guardar">Guardar</string>
     <string name="save_complate">Guardado</string>
+	<string name="channel_x_axis">X-Axis</string>
+	<string name="channel_y_axis">Y-Axis</string>
+	<string name="channel_z_axis">Z-Axis</string>
+	<string name="channel_default">Channel</string>
+	<string name="unit_acceleration">m/s²</string>
+	<string name="samplerate">Samplerate: 1/%1$d ms</string>
 
 </resources>
