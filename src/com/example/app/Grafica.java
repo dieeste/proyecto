@@ -28,8 +28,8 @@ import android.os.Message;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,7 +67,6 @@ public class Grafica extends Activity implements OnClickListener {
 
 
 	private Thread ticker;
-	private Sensor sensor;
 	// Declaración del layout
 	LinearLayout layout;
 	// Maneja los sensores
@@ -100,7 +99,8 @@ public class Grafica extends Activity implements OnClickListener {
 		mRenderer = new XYMultipleSeriesRenderer();
 		//grafica
 		//chartView = ChartFactory.getLineChartView(this, sensorData, mRenderer);
-		
+		mRenderer.setApplyBackgroundColor(true);
+	    mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
 		mRenderer.setGridColor(Color.DKGRAY);
 		mRenderer.setShowGrid(true);
 		mRenderer.setXAxisMin(0.0);
@@ -271,9 +271,11 @@ public class Grafica extends Activity implements OnClickListener {
 
 	private void saveHistory() {
 		// Paramos los sensores
-		onStop();
-
-	
+		String stadoSD = Environment.getExternalStorageState();
+		if (!stadoSD.equals(Environment.MEDIA_MOUNTED) && !stadoSD.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+		Toast.makeText(this, "No puedo leer en la memoria externa", Toast.LENGTH_LONG).show();
+		return;
+		}
 		SaveThread thread = new SaveThread();
 		thread.start();
 	}
@@ -288,6 +290,7 @@ public class Grafica extends Activity implements OnClickListener {
 			Toast.makeText(this, "Parado", Toast.LENGTH_SHORT).show();
 		}
 		catch (Exception e) {
+			Toast.makeText(this, "Error al parar", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -329,7 +332,7 @@ public class Grafica extends Activity implements OnClickListener {
 
 				
 				String fileName = DateFormat
-						.format("yyyy-MM-dd-kk:mm:ss", System.currentTimeMillis())
+						.format("yyyy-MM-dd-kk mm ss", System.currentTimeMillis())
 						.toString().concat(".csv");
 
 				
@@ -344,7 +347,6 @@ public class Grafica extends Activity implements OnClickListener {
 
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage());
-			
 				bundle.putBoolean("success", false);
 			}
 

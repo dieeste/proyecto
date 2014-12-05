@@ -58,9 +58,9 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 		proveedor = controladorgps.getBestProvider(criteria, true);
 		
 		//Declaración del gps
-		Location localizacion = controladorgps.getLastKnownLocation(proveedor);
-		muestraLocalizacion(localizacion);
-		controladorgps.isProviderEnabled(proveedor);
+		/*Location localizacion = controladorgps.getLastKnownLocation(proveedor);
+		muestraLocalizacion(localizacion);*/
+		//controladorgps.isProviderEnabled(proveedor);
 
 		//Declaramos el botón de la gráfica
 		grafica.setOnClickListener(new OnClickListener() {
@@ -191,7 +191,7 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+	/*@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
@@ -204,5 +204,5 @@ public class Acelerometro extends Activity implements SensorEventListener, OnIte
 		// TODO Auto-generated method stub
 		super.onPause();
 		controladorgps.removeUpdates(this);
-	}
+	}*/
 }

@@ -48,11 +48,13 @@
             android:name="Acelerometro"
             android:label="Acelerómetro" >
             <action android:name=".Acelerometro" />
+            <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
             android:name="Grafica"
             android:label="Gráfica" >
             <action android:name=".Grafica" />
+            <category android:name="android.intent.category.DEFAULT" />
         </activity>
     </application>
 
