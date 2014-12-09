@@ -1,84 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/principal"
-    android:orientation="vertical"
-    android:scrollbarAlwaysDrawVerticalTrack="false" >
+    android:background="@drawable/principal" >
 
-    <Button
-        android:id="@+id/grafica"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#003333"
-        android:text="INICIAR GRÁFICA"
-        android:textColor="#ffcc00" />
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/inforacelerometro"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="¿ QUÉ ES EL ACELEROMETRO?"
-        android:textColor="#ffffff" />
-    
-    <Spinner
-        android:id="@+id/spinnerfrecuencia"
-        style="@style/MooSpinnerItem"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:focusable="false"
-        android:singleLine="true"
-        android:textColor="#ffffff" />
-    
-    <ToggleButton 
-        android:id="@+id/toggleGps"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="GPS"
-        android:textOn="GPS Encendido"
-        android:textOff="GPS Apagado"
-        android:layout_marginTop="10dp"
-        android:textColor="#ffffff"/>
+        <Button
+            android:id="@+id/inforacelerometro"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="¿QUÉ ES EL ACELEROMETRO?"
+            android:textColor="#ffffff" />
 
-    <TextView
-        android:id="@+id/gps"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="TextView"
-        android:textColor="#ffffff"
-        android:visibility="invisible" />
-    
-    <ToggleButton
-        android:id="@+id/toggleTiempo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Tiempo"
-        android:textOn="Tiempo Sí"
-        android:textOff="Tiempo No"
-        android:layout_marginTop="10dp"
-        android:textColor="#ffffff"/>
+        <Spinner
+            android:id="@+id/spinnerfrecuencia"
+            style="@style/MooSpinnerItem"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:focusable="false"
+            android:singleLine="true"
+            android:textColor="#ffffff" />
 
-    <TextView
-        android:id="@+id/tiempos"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="¿Escriba el tiempo?"
-        android:visibility="invisible"
-        android:textColor="#ffffff" />
+        <ToggleButton
+            android:id="@+id/toggleGps"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="GPS"
+            android:textColor="#ffffff"
+            android:textOff="GPS Apagado"
+            android:textOn="GPS Encendido" />
 
-    <EditText
-        android:id="@+id/etTiempo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:visibility="invisible"
-        android:textColor="#000000" />
+        <TextView
+            android:id="@+id/gps"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            android:textColor="#ffffff"
+            android:visibility="invisible" />
 
-</LinearLayout>
+        <ToggleButton
+            android:id="@+id/toggleTiempo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Tiempo"
+            android:textColor="#ffffff"
+            android:textOff="Tiempo No"
+            android:textOn="Tiempo Sí" />
+
+        <TextView
+            android:id="@+id/tiempos"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="¿Escriba el tiempo?"
+            android:textColor="#ffffff"
+            android:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/etTiempo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textColor="#000000"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/grafica"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#003333"
+            android:text="INICIAR GRÁFICA"
+            android:textColor="#ffcc00" />
+
+    </LinearLayout>
+
+</ScrollView>

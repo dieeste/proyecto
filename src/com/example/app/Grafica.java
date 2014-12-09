@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CountDownLatch;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -23,6 +24,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Message;
 import android.text.format.DateFormat;
@@ -57,6 +59,7 @@ public class Grafica extends Activity implements OnClickListener {
 	int xTick = 0;
 	// Int tipo es la frecuencia que recogemos de la actividad anterior
 	int tipo;
+	int tiempoParada;
 	// Hacemos una cola FIFO con listas enlazadas
 	ConcurrentLinkedQueue<float[]> datosSensor = new ConcurrentLinkedQueue<float[]>();
 	
@@ -75,7 +78,7 @@ public class Grafica extends Activity implements OnClickListener {
 	Button parar;
 	Button guardar;
 	Button enviar;
-
+	CountDownTimer temporizador;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -129,6 +132,7 @@ public class Grafica extends Activity implements OnClickListener {
 		// de acelerómetro
 		Bundle graficas = getIntent().getExtras();
 		tipo = graficas.getInt("tipo");
+		tiempoParada = graficas.getInt("tiempo");
 		onStart();
 	}
 

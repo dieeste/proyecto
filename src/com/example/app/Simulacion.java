@@ -27,9 +27,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 	Button acelerometer;
 	Button giroscopio;
 	Button magnetic;
-
-	/*double x = 0, y = 0, z = 0;
-	ArrayList<Double> vector = new ArrayList<Double>();*/
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
