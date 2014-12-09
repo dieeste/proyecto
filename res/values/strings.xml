@@ -23,11 +23,18 @@
     <string name="enviar">Enviar</string>
     <string name="guardar">Guardar</string>
     <string name="save_complate">Guardado</string>
-	<string name="channel_x_axis">X-Axis</string>
-	<string name="channel_y_axis">Y-Axis</string>
-	<string name="channel_z_axis">Z-Axis</string>
+	<string name="channel_x_axis">X</string>
+	<string name="channel_y_axis">Y</string>
+	<string name="channel_z_axis">Z</string>
 	<string name="channel_default">Channel</string>
 	<string name="unit_acceleration">m/s²</string>
+	<string name="gpss">¿DESEA ACTIVAR EL GPS?</string>
+	<string name="tiempo">¿DESEA MARCAR UN TIEMPO DETERMINADO?</string>
+	<string name="frecuencias">SELECCIONE LA FRECUENCA</string>
 	<string name="samplerate">Samplerate: 1/%1$d ms</string>
-
+	<string name="infoacelerometro">¿QUÉ ES EL ACELERÓMETRO?</string>
+	<string name="infogiroscopio">¿QUÉ ES EL GIROSCOPIO?</string>
+	<string name="infomagnetico">¿QUÉ ES EL MAGNETÓMETRO?</string>
+	<string name="infoproximidad">¿QUÉ ES EL SENSOR DE PROXIMIDAD?</string>
+	<string name="infoluz">¿QUÉ ES EL SENSOR DE LUZ?</string>
 </resources>

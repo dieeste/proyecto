@@ -8,7 +8,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -35,7 +34,7 @@ public class Acelerometro extends Activity implements
 	TextView gps;
 	LocationManager controladorgps;
 	String proveedor;
-
+	Button infoacelerometro;
 	int tipo;
 	int tiempoParada;
 
@@ -55,12 +54,12 @@ public class Acelerometro extends Activity implements
 		controladorgps = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		proveedor = controladorgps.getBestProvider(criteria, true);
-		
-		//Recogemos el tiempo
+		infoacelerometro = (Button) findViewById(R.id.infogiroscopio);
+		/*/Recogemos el tiempo
 		if (etTiempo.getText() != null){
 		tiempoParada = Integer.parseInt(etTiempo.getText().toString());
 		Log.d("tiempo", "tiempoParada");
-		}
+		}*/ 
 
 		// Declaración del gps
 		
@@ -79,6 +78,17 @@ public class Acelerometro extends Activity implements
 				graficas.putExtra("tipo", tipo);
 				graficas.putExtra("tiempo", tiempoParada);
 				startActivity(graficas);
+			}
+		});
+		
+		//Declaración del botón informacion
+		infoacelerometro.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View boton) {
+				// TODO Auto-generated method stub
+				Intent info = new Intent(Acelerometro.this, DefinicionAcelerometro.class);
+				startActivity(info);
 			}
 		});
 

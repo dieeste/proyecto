@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CountDownLatch;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;

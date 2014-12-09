@@ -27,7 +27,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 	Button acelerometer;
 	Button giroscopio;
 	Button magnetic;
-	
+	Button proximity;
+	Button luminosity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +45,17 @@ public class Simulacion extends Activity implements SensorEventListener,
 		acelerometer = (Button) findViewById(R.id.acelerometer);
 		giroscopio = (Button) findViewById(R.id.giroscopio);
 		magnetic = (Button) findViewById(R.id.magnetic);
-
+		proximity = (Button) findViewById(R.id.proximity);
+		luminosity = (Button) findViewById(R.id.luminosity);
+		
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
 		// Escucha de los botones
 		acelerometer.setOnClickListener(this);
 		giroscopio.setOnClickListener(this);
 		magnetic.setOnClickListener(this);
+		proximity.setOnClickListener(this);
+		luminosity.setOnClickListener(this);
 	}
 
 	@Override
@@ -62,16 +67,28 @@ public class Simulacion extends Activity implements SensorEventListener,
 			startActivity(acelerometro);
 			break;
 		case R.id.giroscopio:
-			/*
-			 * Intent gravedad = new Intent(Simulacion.this,AcelerometroViejo.class);
-			 * startActivity(gravedad);
-			 */
+			
+			Intent gravedad = new Intent(Simulacion.this,Giroscopio.class);
+			startActivity(gravedad);
+			
 			break;
 		case R.id.magnetic:
-			/*
-			 * Intent gravedad = new Intent(Simulacion.this,AcelerometroViejo.class);
-			 * startActivity(gravedad);
-			 */
+			
+			 Intent magnetico = new Intent(Simulacion.this,Magnetico.class);
+			 startActivity(magnetico);
+			
+			break;
+		case R.id.luminosity:
+			
+			 Intent luz = new Intent(Simulacion.this, Luz.class);
+			 startActivity(luz);
+			
+			break;
+		case R.id.proximity:
+			
+			 Intent proximidad = new Intent(Simulacion.this, Proximidad.class);
+			 startActivity(proximidad);
+			
 			break;
 		}
 	}

@@ -51,6 +51,60 @@
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
+            android:name="DefinicionAcelerometro"
+            android:label="Definición Acelerómetro" >
+            <action android:name=".DefinicionAcelerometro" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
+            android:name="Giroscopio"
+            android:label="Giroscopio" >
+            <action android:name=".Giroscopio" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
+            android:name="DefinicionGiroscopio"
+            android:label="Definición Giroscopio" >
+            <action android:name=".DefinicionGiroscopio" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
+            android:name="Magnetico"
+            android:label="Magnético" >
+            <action android:name=".Magnetico" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
+            android:name="DefinicionMagnetico"
+            android:label="Definición Magnético" >
+            <action android:name=".DefinicionMagnetico" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
+            android:name="Proximidad"
+            android:label="Proximidad" >
+            <action android:name=".Proximidad" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
+            android:name="DefinicionProximidad"
+            android:label="Definición Proximidad" >
+            <action android:name=".DefinicionProximidad" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
+            android:name="Luz"
+            android:label="Luz" >
+            <action android:name=".Luz" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
+            android:name="DefinicionLuz"
+            android:label="Definición Luz" >
+            <action android:name=".DefinicionLuz" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
             android:name="Grafica"
             android:label="Gráfica" >
             <action android:name=".Grafica" />
