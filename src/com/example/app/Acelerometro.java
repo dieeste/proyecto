@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -37,6 +38,7 @@ public class Acelerometro extends Activity implements
 	Button infoacelerometro;
 	int tipo;
 	int tiempoParada;
+	String numero;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +56,9 @@ public class Acelerometro extends Activity implements
 		controladorgps = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		proveedor = controladorgps.getBestProvider(criteria, true);
-		infoacelerometro = (Button) findViewById(R.id.infogiroscopio);
-		/*/Recogemos el tiempo
-		if (etTiempo.getText() != null){
-		tiempoParada = Integer.parseInt(etTiempo.getText().toString());
-		Log.d("tiempo", "tiempoParada");
-		}*/ 
+		infoacelerometro = (Button) findViewById(R.id.infoacelerometro);
+		
+		
 
 		// Declaración del gps
 		
@@ -125,13 +124,25 @@ public class Acelerometro extends Activity implements
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				// TODO Auto-generated method stub
+				int t;
 				if (isChecked) {
 
 					tiempo.setVisibility(View.VISIBLE);
 					etTiempo.setVisibility(View.VISIBLE);
+					/*numero=etTiempo.getText().toString();
+					t=Integer.parseInt(numero);
+					Log.d("tiempo", "tiempot"+t);
+					//Recogemos el tiempo
+					if (t >0){
+					Log.d("tiempo", "tiempoParadaVisible "+tiempoParada);
+					tiempoParada = Integer.parseInt(numero);
+					}*/
+					
 				} else {
 					tiempo.setVisibility(View.INVISIBLE);
 					etTiempo.setVisibility(View.INVISIBLE);
+					tiempoParada=0;
+					Log.d("tiempo", "tiempoParadaOculto "+tiempoParada);
 				}
 			}
 		});

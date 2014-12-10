@@ -38,7 +38,7 @@ import android.widget.Toast;
 
 public class Grafica extends Activity implements OnClickListener {
 	private static final String TAG = "Acelerometro aplicacion";
-	
+
 	// declarar grafica
 
 	private GraphicalView chartView;
@@ -46,14 +46,12 @@ public class Grafica extends Activity implements OnClickListener {
 	XYMultipleSeriesRenderer mRenderer;
 	XYSeries series[];
 	public static final int SAMPLERATE = 10;
-	
-	
+
 	/**
-	 * For moving the viewport of the grpah
+	 * For moving the viewport of the graph
 	 */
 	private int lastMinX = 0;
 
-	
 	long timestamp;
 	int xTick = 0;
 	// Int tipo es la frecuencia que recogemos de la actividad anterior
@@ -61,12 +59,9 @@ public class Grafica extends Activity implements OnClickListener {
 	int tiempoParada;
 	// Hacemos una cola FIFO con listas enlazadas
 	ConcurrentLinkedQueue<float[]> datosSensor = new ConcurrentLinkedQueue<float[]>();
-	
+
 	// Aquí guardamos los valores de x,y,z en un array que luego irán el la cola
 	float[] xyz = new float[3];
-	
-	public static final String SENSORINDEX = "com.example.app.SensorIndex";
-
 
 	private Thread ticker;
 	// Declaración del layout
@@ -78,13 +73,14 @@ public class Grafica extends Activity implements OnClickListener {
 	Button guardar;
 	Button enviar;
 	CountDownTimer temporizador;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 		requestWindowFeature(Window.FEATURE_PROGRESS);
-		
+
 		setContentView(R.layout.grafica);
 		// Declaramos objetos
 		layout = (LinearLayout) findViewById(R.id.chart);
@@ -92,21 +88,23 @@ public class Grafica extends Activity implements OnClickListener {
 		parar = (Button) findViewById(R.id.parar);
 		guardar = (Button) findViewById(R.id.guardar);
 		enviar = (Button) findViewById(R.id.enviar);
-		
-		//Escuchamos los botones
+
+		// Escuchamos los botones
 		parar.setOnClickListener(this);
 		guardar.setOnClickListener(this);
 		enviar.setOnClickListener(this);
 		sensorData = new XYMultipleSeriesDataset();
 		mRenderer = new XYMultipleSeriesRenderer();
-		//grafica
-		//chartView = ChartFactory.getLineChartView(this, sensorData, mRenderer);
+
+		// grafica
+		// chartView = ChartFactory.getLineChartView(this, sensorData,
+		// mRenderer);
 		mRenderer.setApplyBackgroundColor(true);
-	    mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
+		mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
 		mRenderer.setGridColor(Color.DKGRAY);
 		mRenderer.setShowGrid(true);
 		mRenderer.setXAxisMin(0.0);
-		mRenderer.setXTitle(getString(R.string.samplerate, 1000 / SAMPLERATE));
+		mRenderer.setXTitle("Tiempo");
 		mRenderer.setXAxisMax(10000 / (1000 / SAMPLERATE)); // 10 seconds wide
 		mRenderer.setXLabels(10); // 1 second per DIV
 		mRenderer.setChartTitle(" ");
@@ -124,44 +122,64 @@ public class Grafica extends Activity implements OnClickListener {
 		margins[1] *= upscale;
 		margins[2] = (int) (2 * mRenderer.getLegendTextSize());
 		mRenderer.setMargins(margins);
-		
-		//chartView.repaint();
-		//layout.addView(chartView);
+
+		// chartView.repaint();
+		// layout.addView(chartView);
 		// Recogemos el tipo de frecuencia que hemos pasado desde la actividad
-		// de acelerómetro
+		// de acelerómetro y el tiempo
 		Bundle graficas = getIntent().getExtras();
 		tipo = graficas.getInt("tipo");
-		tiempoParada = graficas.getInt("tiempo");
+		int tiempo= graficas.getInt("tiempo");
+		tiempoParada = tiempo*1000;
+		Log.d("tiempo", "tiempoParada2 "+tiempoParada);
+		
+		new CountDownTimer(tiempoParada,1000) {
+			
+			@Override
+			public void onTick(long millisUntilFinished) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFinish() {
+				// TODO Auto-generated method stub
+				Parar_sensores();
+				
+			}
+		};
 		onStart();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		 super.onResume();
-		 switch (getResources().getConfiguration().orientation) {
-			case Configuration.ORIENTATION_PORTRAIT: {
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-				break;
-			}
-			case Configuration.ORIENTATION_LANDSCAPE: {
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-				break;
-			}
+		super.onResume();
+		switch (getResources().getConfiguration().orientation) {
+		case Configuration.ORIENTATION_PORTRAIT: {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			break;
+		}
+		case Configuration.ORIENTATION_LANDSCAPE: {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			break;
+		}
 		}
 
 		if (xTick == 0) {
 			ticker = new Ticker(this);
 			ticker.start();
-			sensorManager.registerListener((SensorEventListener) ticker, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+			sensorManager.registerListener((SensorEventListener) ticker,
+					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 					tipo);
 		}
 	}
-	
+
 	protected void onTick(SensorEvent currentEvent) {
 
 		if (xTick == 0) {
-			// Dirty, but we only learn a few things after getting the first event.
+			// Dirty, but we only learn a few things after getting the first
+			// event.
 			configure(currentEvent);
 			layout.addView(chartView);
 		}
@@ -179,23 +197,22 @@ public class Grafica extends Activity implements OnClickListener {
 			}
 		}
 		xTick++;
-		
+
 		for (int i = 0; i < 3; i++) {
 			float valor = currentEvent.values[i];
 			xyz[i] = valor;
-			Log.d("hola","xxx "+i + " "+xyz[i] +"");
+			Log.d("hola", "xxx " + i + " " + xyz[i] + "");
 		}
 		synchronized (this) {
 			datosSensor.add(xyz.clone());
 			timestamp = System.currentTimeMillis();
-			//configure(datosSensor);
-			
-			}
+			// configure(datosSensor);
 
-		
+		}
+
 		chartView.repaint();
 	}
-	
+
 	private void fitYAxis(SensorEvent event) {
 		double min = mRenderer.getYAxisMin(), max = mRenderer.getYAxisMax();
 		for (int i = 0; i < series.length; i++) {
@@ -212,7 +229,8 @@ public class Grafica extends Activity implements OnClickListener {
 		}
 		double half = 0;
 		if (xTick == 0 && sum == event.values[0] * event.values.length) {
-			// If the plot flatlines on the first event, we can't grade the Y axis.
+			// If the plot flatlines on the first event, we can't grade the Y
+			// axis.
 			// This is especially bad if the sensor does not change without a
 			// stimulus. the graph will then flatline on the x-axis where it is
 			// impossible to be seen.
@@ -230,34 +248,28 @@ public class Grafica extends Activity implements OnClickListener {
 		}
 
 		switch (event.sensor.getType()) {
-			case Sensor.TYPE_ACCELEROMETER: {
-				channelNames[0] = getString(R.string.channel_x_axis);
-				channelNames[1] = getString(R.string.channel_y_axis);
-				channelNames[2] = getString(R.string.channel_z_axis);
-				mRenderer.setYTitle(getString(R.string.unit_acceleration));
-				break;
-			}
-			
+		case Sensor.TYPE_ACCELEROMETER: {
+			channelNames[0] = getString(R.string.channel_x_axis);
+			channelNames[1] = getString(R.string.channel_y_axis);
+			channelNames[2] = getString(R.string.channel_z_axis);
+			mRenderer.setYTitle(getString(R.string.unit_acceleration));
+			break;
 		}
 
-		int[] colors = {
-				Color.RED,
-				Color.YELLOW,
-				Color.BLUE,
-				Color.GREEN,
-				Color.MAGENTA,
-				Color.CYAN };
+		}
+
+		int[] colors = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN,
+				Color.MAGENTA, Color.CYAN };
 		for (int i = 0; i < series.length; i++) {
 			series[i] = new XYSeries(channelNames[i]);
 			sensorData.addSeries(series[i]);
 			XYSeriesRenderer r = new XYSeriesRenderer();
 			r.setColor(colors[i % colors.length]);
 			mRenderer.addSeriesRenderer(r);
-			
 
 		}
 	}
-	
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -267,7 +279,7 @@ public class Grafica extends Activity implements OnClickListener {
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
-		
+
 		Parar_sensores();
 		super.onStop();
 	}
@@ -275,14 +287,17 @@ public class Grafica extends Activity implements OnClickListener {
 	private void saveHistory() {
 		// Paramos los sensores
 		String stadoSD = Environment.getExternalStorageState();
-		if (!stadoSD.equals(Environment.MEDIA_MOUNTED) && !stadoSD.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
-		Toast.makeText(this, "No puedo leer en la memoria externa", Toast.LENGTH_LONG).show();
-		return;
+		if (!stadoSD.equals(Environment.MEDIA_MOUNTED)
+				&& !stadoSD.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+			Toast.makeText(
+					this,
+					"No puedo leer en la memoria externa, solo se puede exportar",
+					Toast.LENGTH_LONG).show();
+			return;
 		}
 		SaveThread thread = new SaveThread();
 		thread.start();
 	}
-
 
 	protected void Parar_sensores() {
 		try {
@@ -291,22 +306,14 @@ public class Grafica extends Activity implements OnClickListener {
 			ticker.join();
 			ticker = null;
 			Toast.makeText(this, "Parado", Toast.LENGTH_SHORT).show();
-		}
-		catch (Exception e) {
-			Toast.makeText(this, "Error al parar", Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
 		}
 	}
-
-	
-
-	
-	
-
 
 	private class SaveThread extends Thread {
 		@Override
 		public void run() {
-			
+
 			StringBuilder csvData = new StringBuilder();
 			Iterator<float[]> iterator = datosSensor.iterator();
 			while (iterator.hasNext()) {
@@ -320,30 +327,29 @@ public class Grafica extends Activity implements OnClickListener {
 				csvData.append("\n");
 			}
 
-			
 			Message msg = new Message();
 			Bundle bundle = new Bundle();
 
 			try {
-				
+
 				String appName = getResources().getString(R.string.app_name);
-				String dirPath = Environment.getExternalStorageDirectory().toString() + "/" + appName;
+				String dirPath = Environment.getExternalStorageDirectory()
+						.toString() + "/" + appName;
 				File dir = new File(dirPath);
 				if (!dir.exists()) {
 					dir.mkdirs();
 				}
 
-				
 				String fileName = DateFormat
-						.format("yyyy-MM-dd-kk mm ss", System.currentTimeMillis())
-						.toString().concat(".csv");
+						.format("yyyy-MM-dd-kk mm ss",
+								System.currentTimeMillis()).toString()
+						.concat(".csv");
 
-				
 				File file = new File(dirPath, fileName);
 				if (file.createNewFile()) {
 					FileOutputStream fileOutputStream = new FileOutputStream(
 							file);
-					
+
 					fileOutputStream.write(csvData.toString().getBytes());
 					fileOutputStream.close();
 				}
@@ -353,27 +359,28 @@ public class Grafica extends Activity implements OnClickListener {
 				bundle.putBoolean("success", false);
 			}
 
-			
 			msg.setData(bundle);
 
 		}
-	
+
 	}
+
 	@Override
 	public void onClick(View boton) {
 		// TODO Auto-generated method stub
 		switch (boton.getId()) {
 		case (R.id.parar):
-			Log.d("Parada","boton parar");
+			Log.d("Parada", "boton parar");
 			onStop();
 			break;
 		case (R.id.guardar):
-			Log.d("algo","boton guardar");
+			Log.d("algo", "boton guardar");
 			saveHistory();
 			break;
 		case (R.id.enviar):
+			new Exportar(this).execute(datosSensor);
 			break;
 		}
 	}
 
-	}
+}
