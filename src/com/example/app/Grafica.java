@@ -36,7 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Grafica extends Activity implements OnClickListener {
+public class Grafica extends Activity implements OnClickListener, SensorEventListener {
 	private static final String TAG = "Acelerometro aplicacion";
 
 	// declarar grafica
@@ -147,8 +147,8 @@ public class Grafica extends Activity implements OnClickListener {
 				Parar_sensores();
 				
 			}
-		};
-		onStart();
+		}.start();
+		Iniciar_sensores();
 	}
 
 	@Override
@@ -198,18 +198,7 @@ public class Grafica extends Activity implements OnClickListener {
 		}
 		xTick++;
 
-		for (int i = 0; i < 3; i++) {
-			float valor = currentEvent.values[i];
-			xyz[i] = valor;
-			Log.d("hola", "xxx " + i + " " + xyz[i] + "");
-		}
-		synchronized (this) {
-			datosSensor.add(xyz.clone());
-			timestamp = System.currentTimeMillis();
-			// configure(datosSensor);
-
-		}
-
+		
 		chartView.repaint();
 	}
 
@@ -302,6 +291,8 @@ public class Grafica extends Activity implements OnClickListener {
 	protected void Parar_sensores() {
 		try {
 			sensorManager.unregisterListener((SensorEventListener) ticker);
+			sensorManager.unregisterListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
 			ticker.interrupt();
 			ticker.join();
 			ticker = null;
@@ -309,6 +300,12 @@ public class Grafica extends Activity implements OnClickListener {
 		} catch (Exception e) {
 		}
 	}
+	protected void Iniciar_sensores() {
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				tipo);
+	}
+
 
 	private class SaveThread extends Thread {
 		@Override
@@ -380,6 +377,31 @@ public class Grafica extends Activity implements OnClickListener {
 		case (R.id.enviar):
 			new Exportar(this).execute(datosSensor);
 			break;
+		}
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		// TODO Auto-generated method stub
+		switch (event.sensor.getType()){
+		case Sensor.TYPE_ACCELEROMETER:
+			for (int i = 0; i < 3; i++) {
+				float valor = event.values[i];
+				xyz[i] = valor;
+				Log.d("hola", "xxx " + i + " " + xyz[i] + "");
+			}
+			break;
+		}
+		synchronized (this) {
+			datosSensor.add(xyz.clone());
+			//timestamp = System.currentTimeMillis();
+			// configure(datosSensor);
 		}
 	}
 
