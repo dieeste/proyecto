@@ -29,6 +29,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 	Button magnetic;
 	Button proximity;
 	Button luminosity;
+	Sensor giroscope;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		luminosity = (Button) findViewById(R.id.luminosity);
 		
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
+		giroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 		// Escucha de los botones
 		acelerometer.setOnClickListener(this);
 		giroscopio.setOnClickListener(this);
@@ -98,11 +99,13 @@ public class Simulacion extends Activity implements SensorEventListener,
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_NORMAL);
-
+		if (giroscope== null) {
+			giroscopo.setText("NO ESTA DISPONIBLE EL SENSOR");
+		} else{
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
 				SensorManager.SENSOR_DELAY_NORMAL);
-
+	    }	
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
 				SensorManager.SENSOR_DELAY_NORMAL);
@@ -161,6 +164,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 				txt += "\n y: " + event.values[1] + " rad/s";
 				txt += "\n z: " + event.values[2] + " rad/s";
 				giroscopo.setText(txt);
+				if (event == null) {
+
+					giroscopo.setText("No esta disponible");
+				}
+
+				
 				break;
 
 			case Sensor.TYPE_MAGNETIC_FIELD:

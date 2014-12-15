@@ -23,6 +23,7 @@
     <string name="enviar">Enviar</string>
     <string name="guardar">Guardar</string>
     <string name="save_complate">Guardado</string>
+	<string name="save_imcomplate">NO Guardado</string>
 	<string name="channel_x_axis">X</string>
 	<string name="channel_y_axis">Y</string>
 	<string name="channel_z_axis">Z</string>
@@ -37,4 +38,6 @@
 	<string name="infomagnetico">¿QUÉ ES EL MAGNETÓMETRO?</string>
 	<string name="infoproximidad">¿QUÉ ES EL SENSOR DE PROXIMIDAD?</string>
 	<string name="infoluz">¿QUÉ ES EL SENSOR DE LUZ?</string>
+	<string name="reiniciar">Reiniciar</string>
+	<string name="reanudar">Reanudar</string>
 </resources>

@@ -17,20 +17,12 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/guardar"
+            android:id="@+id/reanudar"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/guardar" />
-
-        <Button
-            android:id="@+id/enviar"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/enviar" />
+            android:text="@string/reanudar" />
 
         <Button
             android:id="@+id/parar"
@@ -39,7 +31,39 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/parar" />
+
+        <Button
+            android:id="@+id/reiniciar"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reiniciar" />
+
     </LinearLayout>
 
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="CheckBox" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/checkBox1"
+        android:text="CheckBox" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/checkBox2"
+        android:text="CheckBox" />
 
 </RelativeLayout>

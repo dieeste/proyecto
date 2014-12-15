@@ -26,8 +26,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Message;
+import android.os.PowerManager;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -37,10 +41,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Grafica extends Activity implements OnClickListener, SensorEventListener {
-	private static final String TAG = "Acelerometro aplicacion";
+	
 
+	protected PowerManager.WakeLock wakeLock;
 	// declarar grafica
-
+	
 	private GraphicalView chartView;
 	XYMultipleSeriesDataset sensorData;
 	XYMultipleSeriesRenderer mRenderer;
@@ -70,29 +75,23 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 	SensorManager sensorManager;
 	// Declaramos los botones
 	Button parar;
-	Button guardar;
-	Button enviar;
 	CountDownTimer temporizador;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_PROGRESS);
-
+		final PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
 		setContentView(R.layout.grafica);
 		// Declaramos objetos
 		layout = (LinearLayout) findViewById(R.id.chart);
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		parar = (Button) findViewById(R.id.parar);
-		guardar = (Button) findViewById(R.id.guardar);
-		enviar = (Button) findViewById(R.id.enviar);
-
+		this.wakeLock=pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "etiqueta");
 		// Escuchamos los botones
 		parar.setOnClickListener(this);
-		guardar.setOnClickListener(this);
-		enviar.setOnClickListener(this);
 		sensorData = new XYMultipleSeriesDataset();
 		mRenderer = new XYMultipleSeriesRenderer();
 
@@ -133,6 +132,9 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 		tiempoParada = tiempo*1000;
 		Log.d("tiempo", "tiempoParada2 "+tiempoParada);
 		
+		
+		
+		
 		new CountDownTimer(tiempoParada,1000) {
 			
 			@Override
@@ -155,6 +157,7 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		wakeLock.acquire();
 		switch (getResources().getConfiguration().orientation) {
 		case Configuration.ORIENTATION_PORTRAIT: {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -268,11 +271,18 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
-
+		this.wakeLock.release();
 		Parar_sensores();
 		super.onStop();
 	}
 
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		this.wakeLock.release();
+		super.onDestroy();
+	}
+	
 	private void saveHistory() {
 		// Paramos los sensores
 		String stadoSD = Environment.getExternalStorageState();
@@ -284,8 +294,12 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 					Toast.LENGTH_LONG).show();
 			return;
 		}
+		
 		SaveThread thread = new SaveThread();
+		
 		thread.start();
+		
+		Toast.makeText(Grafica.this,"Guardado", Toast.LENGTH_SHORT).show();
 	}
 
 	protected void Parar_sensores() {
@@ -308,9 +322,11 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 
 
 	private class SaveThread extends Thread {
-		@Override
+	
+	@Override
+		
 		public void run() {
-
+		boolean guardado;	
 			StringBuilder csvData = new StringBuilder();
 			Iterator<float[]> iterator = datosSensor.iterator();
 			while (iterator.hasNext()) {
@@ -324,8 +340,9 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 				csvData.append("\n");
 			}
 
-			Message msg = new Message();
 			Bundle bundle = new Bundle();
+			Message msg = new Message();
+			
 
 			try {
 
@@ -349,14 +366,15 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 
 					fileOutputStream.write(csvData.toString().getBytes());
 					fileOutputStream.close();
+					
 				}
-
-			} catch (Exception e) {
-				Log.e(TAG, e.getMessage());
-				bundle.putBoolean("success", false);
+				bundle.putString("msg",Grafica.this.getResources().getString(R.string.save_complate) );
+			} 
+			catch (Exception e) {
+				bundle.putString("msg",Grafica.this.getResources().getString(R.string.save_imcomplate) );
 			}
 
-			msg.setData(bundle);
+			
 
 		}
 
@@ -370,13 +388,7 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 			Log.d("Parada", "boton parar");
 			onStop();
 			break;
-		case (R.id.guardar):
-			Log.d("algo", "boton guardar");
-			saveHistory();
-			break;
-		case (R.id.enviar):
-			new Exportar(this).execute(datosSensor);
-			break;
+	
 		}
 	}
 
@@ -404,5 +416,45 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 			// configure(datosSensor);
 		}
 	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
 
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menugrafica, menu);
+		return true;
+		/** true -> el menú ya está visible */
+	}
+
+	/*
+	 * public void lanzarAcercaDe(View view) {
+	 * 
+	 * Intent i = new Intent(this, AcercaDe.class);
+	 * 
+	 * startActivity(i); }
+	 */
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		/*
+		 * int id = item.getItemId(); if (id == R.id.action_settings) { return
+		 * true; } return super.onOptionsItemSelected(item); }
+		 */
+		switch (item.getItemId()) {
+		case (R.id.guardar):
+			Log.d("algo", "boton guardar");
+			saveHistory();
+		
+			break;
+		case (R.id.enviar):
+			new Exportar(this).execute(datosSensor);
+			break;
+		}
+		return true;
+		/** true -> consumimos el item, no se propaga */
+	}
 }
