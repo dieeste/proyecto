@@ -41,21 +41,18 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int pantalla=0x7f020001;
-        public static final int pmenu=0x7f020002;
-        public static final int principal=0x7f020003;
-        public static final int psensor=0x7f020004;
+        public static final int icongraf=0x7f020001;
+        public static final int iconografic=0x7f020002;
+        public static final int pantalla=0x7f020003;
+        public static final int pmenu=0x7f020004;
+        public static final int principal=0x7f020005;
+        public static final int psensor=0x7f020006;
     }
     public static final class id {
         public static final int TextView01=0x7f0b000c;
         public static final int acelerometer=0x7f0b001a;
         public static final int acelerometro=0x7f0b001b;
         public static final int acercaDe=0x7f0b002b;
-        public static final int button1=0x7f0b001c;
-        public static final int button2=0x7f0b001f;
-        public static final int button3=0x7f0b0022;
-        public static final int button4=0x7f0b0025;
-        public static final int button5=0x7f0b0028;
         public static final int buttons=0x7f0b0012;
         public static final int chart=0x7f0b0010;
         public static final int config=0x7f0b002c;
@@ -73,18 +70,23 @@ public final class R {
         public static final int gps=0x7f0b0006;
         public static final int gpss=0x7f0b0004;
         public static final int grafica=0x7f0b000b;
+        public static final int graficaAcelerometro=0x7f0b001c;
+        public static final int graficaGiroscopo=0x7f0b001f;
+        public static final int graficaLuminosidad=0x7f0b0029;
+        public static final int graficaMagnetico=0x7f0b0022;
+        public static final int graficaProximidad=0x7f0b0026;
         public static final int guardar=0x7f0b002d;
         public static final int infoacelerometro=0x7f0b0001;
         public static final int inicio=0x7f0b0013;
         public static final int linear=0x7f0b0011;
-        public static final int luminosidad=0x7f0b0029;
+        public static final int luminosidad=0x7f0b0028;
         public static final int luminosity=0x7f0b0027;
         public static final int magnetic=0x7f0b0020;
         public static final int magnetico=0x7f0b0021;
         public static final int medicion=0x7f0b000d;
         public static final int modulo=0x7f0b0019;
         public static final int parar=0x7f0b0014;
-        public static final int proximidad=0x7f0b0026;
+        public static final int proximidad=0x7f0b0025;
         public static final int proximity=0x7f0b0023;
         public static final int reiniciar=0x7f0b0015;
         public static final int scrollView1=0x7f0b0000;
@@ -133,6 +135,7 @@ public final class R {
         public static final int frecuencias=0x7f08001e;
         public static final int giroscopio=0x7f080011;
         public static final int gpss=0x7f08001c;
+        public static final int grafica=0x7f080028;
         public static final int guardar=0x7f080014;
         public static final int hello_world=0x7f080001;
         public static final int infoacelerometro=0x7f080020;
