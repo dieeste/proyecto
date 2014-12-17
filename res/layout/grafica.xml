@@ -5,10 +5,10 @@
 
     <LinearLayout
         android:id="@+id/chart"
-         android:layout_width="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        android:layout_below="@+id/buttons"/>
+        android:layout_below="@+id/linear"
+        android:orientation="horizontal" />
 
     <LinearLayout
         android:id="@+id/buttons"
@@ -17,12 +17,13 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/reanudar"
+            android:id="@+id/inicio"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/reanudar" />
+            android:enabled="true"
+            android:text="@string/empezar" />
 
         <Button
             android:id="@+id/parar"
@@ -30,6 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:enabled="false"
             android:text="@string/parar" />
 
         <Button
@@ -38,32 +40,46 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:enabled="false"
             android:text="@string/reiniciar" />
 
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/checkBox1"
+    <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="CheckBox" />
+        android:layout_below="@+id/buttons"
+        android:orientation="horizontal" >
 
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/checkBox1"
-        android:text="CheckBox" />
+        <CheckBox
+            android:id="@+id/ejex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/channel_x_axis" />
 
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/checkBox2"
-        android:text="CheckBox" />
+        <CheckBox
+            android:id="@+id/ejey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/channel_y_axis" />
+
+        <CheckBox
+            android:id="@+id/ejez"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/channel_z_axis" />
+
+        <CheckBox
+            android:id="@+id/modulo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/modulo" />
+
+    </LinearLayout>
 
 </RelativeLayout>

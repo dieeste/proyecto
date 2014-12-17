@@ -11,7 +11,7 @@
     <string name="teoria">Teoría</string>
     <string name="explicacion">Este programa ha sido desarrollado como ejemplo en el curso de Android para demostrar cómo se pueden lanzar nuevas actividades desde la actividad principal.</string>
     <string name="sensores">Sensores disponibles</string>
-    <string name="empezar">Inicio</string>
+    <string name="empezar">Empezar</string>
     <string name="parar">Parar</string>
     <string name="cuenta">Tiempo en segundos: </string>
     <string name="mostrar">&quot;&quot;</string>
@@ -40,4 +40,5 @@
 	<string name="infoluz">¿QUÉ ES EL SENSOR DE LUZ?</string>
 	<string name="reiniciar">Reiniciar</string>
 	<string name="reanudar">Reanudar</string>
+	<string name="modulo">Módulo</string>
 </resources>

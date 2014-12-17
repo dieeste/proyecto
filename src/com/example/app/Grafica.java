@@ -12,6 +12,7 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -25,8 +26,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Message;
-import android.os.PowerManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -35,21 +36,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Grafica extends Activity implements OnClickListener, SensorEventListener {
-	
+@SuppressLint("HandlerLeak")
+public class Grafica extends Activity implements OnClickListener,
+		SensorEventListener {
 
-	protected PowerManager.WakeLock wakeLock;
-	// declarar grafica
-	
+	// Declaración de la grafica
 	private GraphicalView chartView;
+
+	// Declaración de las series que usamos en la representación de la gráfica
 	XYMultipleSeriesDataset sensorData;
 	XYMultipleSeriesRenderer mRenderer;
 	XYSeries series[];
+
+	// Número de muestras por segundo
 	public static final int SAMPLERATE = 10;
 
 	/**
@@ -57,47 +63,75 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 	 */
 	private int lastMinX = 0;
 
-	long timestamp;
 	int xTick = 0;
 	// Int tipo es la frecuencia que recogemos de la actividad anterior
 	int tipo;
+	// tiempoParada es el tiempo que recogemos de la actividad anterior y que
+	// será el tiempo durante el que vamos a medir los sensores
 	int tiempoParada;
+
 	// Hacemos una cola FIFO con listas enlazadas
 	ConcurrentLinkedQueue<float[]> datosSensor = new ConcurrentLinkedQueue<float[]>();
 
 	// Aquí guardamos los valores de x,y,z en un array que luego irán el la cola
 	float[] xyz = new float[3];
 
+	// Hilo dónde van guardados los datos de los sensores
 	private Thread ticker;
-	// Declaración del layout
+
+	// Declaración del layout donde irá la gráfica
 	LinearLayout layout;
-	// Maneja los sensores
+
+	// Controlador de los sensores
 	SensorManager sensorManager;
+
 	// Declaramos los botones
 	Button parar;
-	CountDownTimer temporizador;
+	Button iniciar;
+	Button reiniciar;
 	
+	// Declaramos los checkbox
+	CheckBox ejex;
+	CheckBox ejey;
+	CheckBox ejez;
+	CheckBox modulo;
+
+	// Declaramos los temporizadores tanto para empezar a tomar datos como para
+	// detener la toma de medidas
+	CountDownTimer temporizador;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		// Mantenemos la pantalla encendida
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		requestWindowFeature(Window.FEATURE_PROGRESS);
-		final PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
+
+		// Elegimos el layout a mostrar en esta clase
 		setContentView(R.layout.grafica);
+
 		// Declaramos objetos
 		layout = (LinearLayout) findViewById(R.id.chart);
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		sensorManager.unregisterListener((SensorEventListener) ticker);
+		sensorManager.unregisterListener(this);
 		parar = (Button) findViewById(R.id.parar);
-		this.wakeLock=pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "etiqueta");
+		iniciar = (Button) findViewById(R.id.inicio);
+		reiniciar = (Button) findViewById(R.id.reiniciar);
+
 		// Escuchamos los botones
 		parar.setOnClickListener(this);
+		iniciar.setOnClickListener(this);
+		reiniciar.setOnClickListener(this);
+		
+		// Escuchamos los checkbox
+		
 		sensorData = new XYMultipleSeriesDataset();
 		mRenderer = new XYMultipleSeriesRenderer();
 
-		// grafica
-		// chartView = ChartFactory.getLineChartView(this, sensorData,
-		// mRenderer);
+		// Propiedades de la gráfica
 		mRenderer.setApplyBackgroundColor(true);
 		mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
 		mRenderer.setGridColor(Color.DKGRAY);
@@ -122,60 +156,37 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 		margins[2] = (int) (2 * mRenderer.getLegendTextSize());
 		mRenderer.setMargins(margins);
 
-		// chartView.repaint();
-		// layout.addView(chartView);
-		// Recogemos el tipo de frecuencia que hemos pasado desde la actividad
-		// de acelerómetro y el tiempo
+		// Recogemos el tipo de frecuencia (normal, ui, game, fastest) que hemos
+		// pasado desde la actividad de acelerómetro y los tiempos
 		Bundle graficas = getIntent().getExtras();
 		tipo = graficas.getInt("tipo");
-		int tiempo= graficas.getInt("tiempo");
-		tiempoParada = tiempo*1000;
-		Log.d("tiempo", "tiempoParada2 "+tiempoParada);
-		
-		
-		
-		
-		new CountDownTimer(tiempoParada,1000) {
-			
+		// Cuando recogemos los tiempos los pasamos a milisegundos
+		int tiempo = graficas.getInt("tiempo");
+		tiempoParada = tiempo * 1000;
+		Log.d("tiempo", "tiempoParada2 " + tiempoParada);
+
+		// Temporizador con el que paramos los sensore al llegar al tiempoParada
+		new CountDownTimer(tiempoParada, 1000) {
+
 			@Override
 			public void onTick(long millisUntilFinished) {
 				// TODO Auto-generated method stub
-				
 			}
-			
+
+			// Cuando llega al tiempo especificado paramos los sensores
 			@Override
 			public void onFinish() {
 				// TODO Auto-generated method stub
 				Parar_sensores();
-				
+
 			}
 		}.start();
-		Iniciar_sensores();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		wakeLock.acquire();
-		switch (getResources().getConfiguration().orientation) {
-		case Configuration.ORIENTATION_PORTRAIT: {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			break;
-		}
-		case Configuration.ORIENTATION_LANDSCAPE: {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			break;
-		}
-		}
-
-		if (xTick == 0) {
-			ticker = new Ticker(this);
-			ticker.start();
-			sensorManager.registerListener((SensorEventListener) ticker,
-					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-					tipo);
-		}
 	}
 
 	protected void onTick(SensorEvent currentEvent) {
@@ -201,7 +212,6 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 		}
 		xTick++;
 
-		
 		chartView.repaint();
 	}
 
@@ -265,27 +275,58 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
+		// Lo que hacemos aquí es bloquear la pantalla una vez iniciada la
+		// gráfica. Es decir que si la pantalla está en vertical o en horizontal
+		// al inciar la actividad se mantendrá en esa posición todo el proceso
+		switch (getResources().getConfiguration().orientation) {
+		case Configuration.ORIENTATION_PORTRAIT: {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			break;
+		}
+		case Configuration.ORIENTATION_LANDSCAPE: {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			break;
+		}
+		}
+
+		if (xTick == 0) {
+			ticker = new Ticker(this);
+			ticker.start();
+			sensorManager.registerListener((SensorEventListener) ticker,
+					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+					tipo);
+		}
+		Iniciar_sensores();
 		super.onStart();
 	}
 
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
-		this.wakeLock.release();
 		Parar_sensores();
 		super.onStop();
 	}
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		this.wakeLock.release();
-		super.onDestroy();
-	}
-	
+	// Controlador de mensajería. Recogemos el mensaje enviado desde el la
+	// función de guardado
+	private Handler mensajeria = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			Bundle data = msg.getData();
+			Toast.makeText(Grafica.this, data.getString("msg"),
+					Toast.LENGTH_SHORT).show();
+			super.handleMessage(msg);
+		}
+
+	};
+
+	// Función para guardar los datos obtenidos de los sensores
 	private void saveHistory() {
-		// Paramos los sensores
 		String stadoSD = Environment.getExternalStorageState();
+		// Comprobamos si podemos acceder a la memoria sd, si no se puede lanza
+		// este mensaje y solo se podrían compartir los datos
 		if (!stadoSD.equals(Environment.MEDIA_MOUNTED)
 				&& !stadoSD.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
 			Toast.makeText(
@@ -294,12 +335,11 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 					Toast.LENGTH_LONG).show();
 			return;
 		}
-		
+
 		SaveThread thread = new SaveThread();
-		
+
 		thread.start();
-		
-		Toast.makeText(Grafica.this,"Guardado", Toast.LENGTH_SHORT).show();
+
 	}
 
 	protected void Parar_sensores() {
@@ -314,19 +354,17 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 		} catch (Exception e) {
 		}
 	}
+
 	protected void Iniciar_sensores() {
-		sensorManager.registerListener(this,
-				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				tipo);
+		sensorManager
+				.registerListener(this, sensorManager
+						.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), tipo);
 	}
 
-
 	private class SaveThread extends Thread {
-	
-	@Override
-		
+
+		@Override
 		public void run() {
-		boolean guardado;	
 			StringBuilder csvData = new StringBuilder();
 			Iterator<float[]> iterator = datosSensor.iterator();
 			while (iterator.hasNext()) {
@@ -342,7 +380,6 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 
 			Bundle bundle = new Bundle();
 			Message msg = new Message();
-			
 
 			try {
 
@@ -366,16 +403,25 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 
 					fileOutputStream.write(csvData.toString().getBytes());
 					fileOutputStream.close();
-					
+
 				}
-				bundle.putString("msg",Grafica.this.getResources().getString(R.string.save_complate) );
-			} 
-			catch (Exception e) {
-				bundle.putString("msg",Grafica.this.getResources().getString(R.string.save_imcomplate) );
+				// Si se ha guardado con éxito enviamos un mensaje al
+				// controlador de mensajes y lo muestra
+				bundle.putString(
+						"msg",
+						Grafica.this.getResources().getString(
+								R.string.save_complate));
+			} catch (Exception e) {
+				// Si no se ha podido guardar entonces nos envía un mensaje
+				// diciendo que no se ha guardado
+				bundle.putString(
+						"msg",
+						Grafica.this.getResources().getString(
+								R.string.save_imcomplate));
 			}
-
-			
-
+			msg.setData(bundle);
+			// Envía el mensaje al controlador
+			mensajeria.sendMessage(msg);
 		}
 
 	}
@@ -386,22 +432,29 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 		switch (boton.getId()) {
 		case (R.id.parar):
 			Log.d("Parada", "boton parar");
+			iniciar.setEnabled(true);
+			parar.setEnabled(true);
 			onStop();
 			break;
-	
+		case (R.id.inicio):
+			parar.setEnabled(true);
+			onStart();
+			break;
+		case (R.id.reiniciar):
+			break;
 		}
 	}
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		// TODO Auto-generated method stub
-		switch (event.sensor.getType()){
+		switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
 			for (int i = 0; i < 3; i++) {
 				float valor = event.values[i];
@@ -412,13 +465,12 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 		}
 		synchronized (this) {
 			datosSensor.add(xyz.clone());
-			//timestamp = System.currentTimeMillis();
-			// configure(datosSensor);
 		}
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		// Cargamos las opciones que vamos a usar en esta pantalla
 
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
@@ -427,28 +479,13 @@ public class Grafica extends Activity implements OnClickListener, SensorEventLis
 		/** true -> el menú ya está visible */
 	}
 
-	/*
-	 * public void lanzarAcercaDe(View view) {
-	 * 
-	 * Intent i = new Intent(this, AcercaDe.class);
-	 * 
-	 * startActivity(i); }
-	 */
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		/*
-		 * int id = item.getItemId(); if (id == R.id.action_settings) { return
-		 * true; } return super.onOptionsItemSelected(item); }
-		 */
+		// Elegimos entre las opciones disponibles en esta pantalla
 		switch (item.getItemId()) {
 		case (R.id.guardar):
 			Log.d("algo", "boton guardar");
 			saveHistory();
-		
 			break;
 		case (R.id.enviar):
 			new Exportar(this).execute(datosSensor);
