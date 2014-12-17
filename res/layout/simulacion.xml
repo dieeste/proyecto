@@ -23,6 +23,13 @@
             android:textColor="#ffffff" />
 
         <Button
+            android:id="@+id/button1"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
             android:id="@+id/giroscopio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -36,6 +43,13 @@
             android:textColor="#ffffff" />
 
         <Button
+            android:id="@+id/button2"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
             android:id="@+id/magnetic"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -47,6 +61,14 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/button3"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
  		<Button
             android:id="@+id/proximity"
             android:layout_width="fill_parent"
@@ -60,6 +82,13 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff" />
 
+        <Button
+            android:id="@+id/button4"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
         <TextView
             android:id="@+id/proximidad"
             android:layout_width="fill_parent"
@@ -72,6 +101,13 @@
             android:layout_height="wrap_content"
             android:text="@string/luminosidad"
             android:textColor="#ffffff" />
+
+         <Button
+             android:id="@+id/button5"
+             style="?android:attr/buttonStyleSmall"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Button" />
 
         <TextView
             android:id="@+id/luminosidad"

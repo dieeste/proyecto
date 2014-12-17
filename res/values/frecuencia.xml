@@ -8,4 +8,38 @@
         <item>MÁS RÁPIDO</item>
     </string-array>
 
+    <string-array name="frecuencias">
+        <item >0</item>
+        <item >1</item>
+        <item >2</item>
+        <item >3</item>
+    </string-array>
+    
+     <string-array name="temporizador">
+        <item>DESACTIVADO</item>
+        <item>3 SEGUNDOS</item>
+        <item>5 SEGUNDOS</item>
+        <item>10 SEGUNDOS</item>
+    </string-array>
+    
+     <string-array name="temporizadoropciones">
+        <item >0</item>
+        <item >1</item>
+        <item >2</item>
+        <item >3</item>
+    </string-array>
+    
+     <string-array name="tiempograbacion">
+        <item >DESACTIVADO</item>
+        <item >15 SEGUNDOS</item>
+        <item >20 SEGUNDOS</item>
+        <item >3O SEGUNDOS</item>
+    </string-array>
+    
+     <string-array name="opcionestiempograbacion">
+        <item >0</item>
+        <item >1</item>
+        <item >2</item>
+        <item >3</item>
+    </string-array>
 </resources>

@@ -7,6 +7,7 @@
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
  <uses-permission android:name="android.permission.WAKE_LOCK" />
+ 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
@@ -21,7 +22,7 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,10 +45,10 @@
             android:label="Simulación sensores" >
             <action android:name=".Simulacion" />
         </activity>
-        <activity
-            android:name="Acelerometro"
-            android:label="Acelerómetro" >
-            <action android:name=".Acelerometro" />
+         <activity
+            android:name="Preferencias"
+            android:label="Preferencias" >
+            <action android:name=".Preferencias" />
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
@@ -57,21 +58,9 @@
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
-            android:name="Giroscopio"
-            android:label="Giroscopio" >
-            <action android:name=".Giroscopio" />
-            <category android:name="android.intent.category.DEFAULT" />
-        </activity>
-        <activity
             android:name="DefinicionGiroscopio"
             android:label="Definición Giroscopio" >
             <action android:name=".DefinicionGiroscopio" />
-            <category android:name="android.intent.category.DEFAULT" />
-        </activity>
-        <activity
-            android:name="Magnetico"
-            android:label="Magnético" >
-            <action android:name=".Magnetico" />
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
@@ -81,21 +70,9 @@
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
-            android:name="Proximidad"
-            android:label="Proximidad" >
-            <action android:name=".Proximidad" />
-            <category android:name="android.intent.category.DEFAULT" />
-        </activity>
-        <activity
             android:name="DefinicionProximidad"
             android:label="Definición Proximidad" >
             <action android:name=".DefinicionProximidad" />
-            <category android:name="android.intent.category.DEFAULT" />
-        </activity>
-        <activity
-            android:name="Luz"
-            android:label="Luz" >
-            <action android:name=".Luz" />
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity

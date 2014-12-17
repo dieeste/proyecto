@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/frecuencia_recogida"
+        android:entryValues="@array/frecuencias"
+        android:summary="Elige una frecuencia de los sensores."
+        android:title="TIPO FRECUENCIA" android:key="frecuencia"/>
+    <ListPreference
+        android:entries="@array/temporizador"
+        android:entryValues="@array/temporizadoropciones"
+        android:title="TEMPORIZADOR" android:defaultValue="0" android:key="temporizador"/>
+    <ListPreference
+        android:entries="@array/tiempograbacion"
+        android:entryValues="@array/opcionestiempograbacion"
+        android:summary="Selecciona un tiempo que durará la grabación."
+        android:title="TIEMPO DE GRABACIÓN" android:defaultValue="0" android:key="tiempo"/>
+
+</PreferenceScreen>
