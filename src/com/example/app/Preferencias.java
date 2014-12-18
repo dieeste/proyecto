@@ -1,6 +1,5 @@
 package com.example.app;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
@@ -11,9 +10,6 @@ public class Preferencias extends PreferenceActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.confsimulacion);
-		
-		
-		
 	}
 	   
 

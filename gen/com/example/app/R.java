@@ -71,7 +71,7 @@ public final class R {
         public static final int gpss=0x7f0b0004;
         public static final int grafica=0x7f0b000b;
         public static final int graficaAcelerometro=0x7f0b001c;
-        public static final int graficaGiroscopo=0x7f0b001f;
+        public static final int graficaGiroscopio=0x7f0b001f;
         public static final int graficaLuminosidad=0x7f0b0029;
         public static final int graficaMagnetico=0x7f0b0022;
         public static final int graficaProximidad=0x7f0b0026;

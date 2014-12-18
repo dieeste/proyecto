@@ -9,10 +9,10 @@
     </string-array>
 
     <string-array name="frecuencias">
-        <item >0</item>
-        <item >1</item>
-        <item >2</item>
-        <item >3</item>
+        <item >SensorManager.SENSOR_DELAY_NORMAL</item>
+        <item >SensorManager.SENSOR_DELAY_UI</item>
+        <item >SensorManager.SENSOR_DELAY_GAME</item>
+        <item >SensorManager.SENSOR_DELAY_FASTEST</item>
     </string-array>
     
      <string-array name="temporizador">
@@ -24,22 +24,22 @@
     
      <string-array name="temporizadoropciones">
         <item >0</item>
-        <item >1</item>
-        <item >2</item>
         <item >3</item>
+        <item >5</item>
+        <item >10</item>
     </string-array>
     
      <string-array name="tiempograbacion">
         <item >DESACTIVADO</item>
         <item >15 SEGUNDOS</item>
         <item >20 SEGUNDOS</item>
-        <item >3O SEGUNDOS</item>
+        <item >30 SEGUNDOS</item>
     </string-array>
     
      <string-array name="opcionestiempograbacion">
         <item >0</item>
-        <item >1</item>
-        <item >2</item>
-        <item >3</item>
+        <item >15</item>
+        <item >20</item>
+        <item >30</item>
     </string-array>
 </resources>

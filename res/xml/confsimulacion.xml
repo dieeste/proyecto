@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ListPreference
-        android:defaultValue="0"
+        android:defaultValue="SensorManager.SENSOR_DELAY_NORMAL"
         android:entries="@array/frecuencia_recogida"
         android:entryValues="@array/frecuencias"
         android:summary="Elige una frecuencia de los sensores."

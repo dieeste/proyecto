@@ -3,12 +3,15 @@ package com.example.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,9 +20,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Simulacion extends Activity implements SensorEventListener,
-		OnClickListener {
+		OnClickListener,OnSharedPreferenceChangeListener {
 
 	SensorManager mSensorManager;
 	TextView detecta;
@@ -38,6 +42,17 @@ public class Simulacion extends Activity implements SensorEventListener,
 	Sensor magnetometro;
 	Sensor luces;
 	Sensor proximo;
+	Button grafAcelerometro;
+	Button grafGiroscopio;
+	Button grafMagnetico;
+	Button grafProximidad;
+	Button grafLuz;
+	
+	// Recogemos las preferencias
+	int temporizador,tiempo,tipo;
+	
+	// temporizador para tiempo
+	CountDownTimer tempo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +73,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 		magnetic = (Button) findViewById(R.id.magnetic);
 		proximity = (Button) findViewById(R.id.proximity);
 		luminosity = (Button) findViewById(R.id.luminosity);
+		grafAcelerometro = (Button) findViewById(R.id.graficaAcelerometro);
+		grafGiroscopio = (Button) findViewById(R.id.graficaGiroscopio);
+		grafMagnetico = (Button) findViewById(R.id.graficaMagnetico);
+		grafProximidad = (Button) findViewById(R.id.graficaProximidad);
+		grafLuz = (Button) findViewById(R.id.graficaLuminosidad);
 		
 		
 		// declarar los sensores como variables
@@ -75,7 +95,36 @@ public class Simulacion extends Activity implements SensorEventListener,
 		magnetic.setOnClickListener(this);
 		proximity.setOnClickListener(this);
 		luminosity.setOnClickListener(this);
+		grafAcelerometro.setOnClickListener(this);
+		grafGiroscopio.setOnClickListener(this);
+		grafMagnetico.setOnClickListener(this);
+		grafProximidad.setOnClickListener(this);
+		grafLuz.setOnClickListener(this);
+		
+		// Temporizador con el que paramos los sensore al llegar al tiempoParada
+					new CountDownTimer(tiempo, 1000) {
+
+						@Override
+						public void onTick(long millisUntilFinished) {
+							// TODO Auto-generated method stub
+						}
+
+						// Cuando llega al tiempo especificado paramos los sensores
+						@Override
+						public void onFinish() {
+							// TODO Auto-generated method stub
+							Hola();
+						}
+					}.start();
+					
+					/**/
+				
 	}
+	
+	protected void Hola(){
+		Toast.makeText(this, "Hola si que funciona"+tiempo, Toast.LENGTH_SHORT).show();
+
+	};
 
 	@Override
 	public void onClick(View boton) {
@@ -118,42 +167,48 @@ public class Simulacion extends Activity implements SensorEventListener,
 		//iniciar acelerometro
 		if (aceleromete== null) {
 			acelerometer.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			grafAcelerometro.setVisibility(Button.GONE);
 		} else{
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				SensorManager.SENSOR_DELAY_NORMAL);
+				tipo);
 		}
 		//iniciar giroscopio
 		if (giroscope== null) {
 			giroscopo.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			grafGiroscopio.setVisibility(Button.GONE);
 		} else{
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
-				SensorManager.SENSOR_DELAY_NORMAL);
+				tipo);
 	    }	
 		//iniciar magnetometro
 		if (magnetometro== null) {
 			magnetic.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			grafMagnetico.setVisibility(Button.GONE);
 		} else{
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-				SensorManager.SENSOR_DELAY_NORMAL);
+				tipo);
 		}
 		//iniciar proximidad
 		if (proximo== null) {
 			proximity.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			grafProximidad.setVisibility(Button.GONE);
+			detecta.setVisibility(View.GONE);
 		} else{
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
-				SensorManager.SENSOR_DELAY_NORMAL);
+				tipo);
 		}
 		//iniciar luces
 		if (luces== null) {
 			luminosidad.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			grafLuz.setVisibility(Button.GONE);
 		} else{
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
-				SensorManager.SENSOR_DELAY_NORMAL);
+				tipo);
 		}
 	}
 
@@ -189,9 +244,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 			case Sensor.TYPE_ACCELEROMETER:
 
 				txt += "Acelerómetro\n";
-				txt += "\n x: " + event.values[0] + " m/s2";
-				txt += "\n y: " + event.values[1] + " m/s2";
-				txt += "\n z: " + event.values[2] + " m/s2";
+				txt += "\n x: " + event.values[0] + getString(R.string.unit_acceleration);
+				txt += "\n y: " + event.values[1] + getString(R.string.unit_acceleration);
+				txt += "\n z: " + event.values[2] + getString(R.string.unit_acceleration);
 				acelerometro.setText(txt);
 				break;
 
@@ -256,12 +311,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 	protected void onResume() {
 		super.onResume();
 		Iniciar_sensores();
-		SharedPreferences pref= getSharedPreferences("com.example.app.Preferencias", MODE_PRIVATE);
-		int temporizador,tiempo;
-		String Tipo;
 		
-		String prefTiempo = pref.getString("tiempo", "0");
-	
 	}
 
 	@Override
@@ -291,6 +341,18 @@ public class Simulacion extends Activity implements SensorEventListener,
 		return true;
 		/** true -> consumimos el item, no se propaga */
 	}
-	
-	
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+		// TODO Auto-generated method stub
+		SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(this);
+		int timer,time;
+		
+		tipo = pref.getInt("tipo", SensorManager.SENSOR_DELAY_NORMAL);
+		timer = pref.getInt("temporizador", 0);
+		temporizador=timer*1000;
+		time = pref.getInt("tiempo", 0);
+		tiempo= time*1000;
+	}
 }
