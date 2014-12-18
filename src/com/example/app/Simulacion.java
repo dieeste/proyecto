@@ -158,6 +158,26 @@ public class Simulacion extends Activity implements SensorEventListener,
 			 startActivity(proximidad);
 			
 			break;
+		case R.id.graficaAcelerometro:
+			Intent grafica = new Intent(Simulacion.this, Grafica.class);
+			 startActivity(grafica);
+			 break;
+		case R.id.graficaGiroscopio:
+			Intent graficaGir = new Intent(Simulacion.this, Grafica.class);
+			 startActivity(graficaGir);
+			 break;
+		case R.id.graficaLuminosidad:
+			Intent graficaLu = new Intent(Simulacion.this, Grafica.class);
+			 startActivity(graficaLu);
+			 break;
+		case R.id.graficaMagnetico:
+			Intent graficaMa = new Intent(Simulacion.this, Grafica.class);
+			 startActivity(graficaMa);
+			 break;
+		case R.id.graficaProximidad:
+			Intent graficaPr = new Intent(Simulacion.this, Grafica.class);
+			 startActivity(graficaPr);
+			 break;
 		}
 	}
 
@@ -171,7 +191,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		} else{
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				tipo);
+				SensorManager.SENSOR_DELAY_NORMAL);
 		}
 		//iniciar giroscopio
 		if (giroscope== null) {
@@ -180,7 +200,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		} else{
 		mSensorManager.registerListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
-				tipo);
+				SensorManager.SENSOR_DELAY_NORMAL);
 	    }	
 		//iniciar magnetometro
 		if (magnetometro== null) {

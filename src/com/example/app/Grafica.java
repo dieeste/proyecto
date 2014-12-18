@@ -12,7 +12,6 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -43,7 +42,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-@SuppressLint("HandlerLeak")
 public class Grafica extends Activity implements OnClickListener,
 		SensorEventListener {
 
@@ -54,7 +52,7 @@ public class Grafica extends Activity implements OnClickListener,
 	XYMultipleSeriesDataset sensorData;
 	XYMultipleSeriesRenderer mRenderer;
 	XYSeries series[];
-
+	
 	// Número de muestras por segundo
 	public static final int SAMPLERATE = 10;
 
@@ -62,13 +60,14 @@ public class Grafica extends Activity implements OnClickListener,
 	 * For moving the viewport of the graph
 	 */
 	private int lastMinX = 0;
-
+	long timestamp;
 	int xTick = 0;
+	
 	// Int tipo es la frecuencia que recogemos de la actividad anterior
 	int tipo;
 	// tiempoParada es el tiempo que recogemos de la actividad anterior y que
 	// será el tiempo durante el que vamos a medir los sensores
-	int tiempoParada;
+	int tiempoParada,tiempoInicio;
 
 	// Hacemos una cola FIFO con listas enlazadas
 	ConcurrentLinkedQueue<float[]> datosSensor = new ConcurrentLinkedQueue<float[]>();
@@ -132,15 +131,15 @@ public class Grafica extends Activity implements OnClickListener,
 		mRenderer = new XYMultipleSeriesRenderer();
 
 		// Propiedades de la gráfica
-		mRenderer.setApplyBackgroundColor(true);
-		mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
-		mRenderer.setGridColor(Color.DKGRAY);
-		mRenderer.setShowGrid(true);
-		mRenderer.setXAxisMin(0.0);
-		mRenderer.setXTitle("Tiempo");
-		mRenderer.setXAxisMax(10000 / (1000 / SAMPLERATE)); // 10 seconds wide
+		mRenderer.setApplyBackgroundColor(true); //fondo
+		mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50)); //color fondo
+		mRenderer.setGridColor(Color.DKGRAY); //color lineas
+		mRenderer.setShowGrid(true); //lineas
+		mRenderer.setXAxisMin(0.0); //valor minimo de la x
+		mRenderer.setXTitle("Tiempo"); // titulo del eje x
+		mRenderer.setXAxisMax(10); // maximo 10
 		mRenderer.setXLabels(10); // 1 second per DIV
-		mRenderer.setChartTitle(" ");
+		mRenderer.setChartTitle(" "); //titulo de la grafica
 		mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
 		chartView = ChartFactory.getLineChartView(this, sensorData, mRenderer);
 		float textSize = new TextView(this).getTextSize();
@@ -158,15 +157,15 @@ public class Grafica extends Activity implements OnClickListener,
 
 		// Recogemos el tipo de frecuencia (normal, ui, game, fastest) que hemos
 		// pasado desde la actividad de acelerómetro y los tiempos
-		Bundle graficas = getIntent().getExtras();
-		tipo = graficas.getInt("tipo");
+		//Bundle graficas = getIntent().getExtras();
+		/*tipo = graficas.getInt("tipo");
 		// Cuando recogemos los tiempos los pasamos a milisegundos
 		int tiempo = graficas.getInt("tiempo");
 		tiempoParada = tiempo * 1000;
-		Log.d("tiempo", "tiempoParada2 " + tiempoParada);
+		Log.d("tiempo", "tiempoParada2 " + tiempoParada);*/
 
 		// Temporizador con el que paramos los sensore al llegar al tiempoParada
-		new CountDownTimer(tiempoParada, 1000) {
+		/*new CountDownTimer(tiempoParada, 1000) {
 
 			@Override
 			public void onTick(long millisUntilFinished) {
@@ -180,14 +179,10 @@ public class Grafica extends Activity implements OnClickListener,
 				Parar_sensores();
 
 			}
-		}.start();
+		}.start();*/
 	}
 
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-	}
+
 
 	protected void onTick(SensorEvent currentEvent) {
 
@@ -204,10 +199,11 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 
 		fitYAxis(currentEvent);
-
+		
 		for (int i = 0; i < series.length; i++) {
 			if (series[i] != null) {
 				series[i].add(xTick, currentEvent.values[i]);
+				Log.d("serie","serie xxx"+i+"  "+currentEvent.values[i]);
 			}
 		}
 		xTick++;
@@ -358,7 +354,7 @@ public class Grafica extends Activity implements OnClickListener,
 	protected void Iniciar_sensores() {
 		sensorManager
 				.registerListener(this, sensorManager
-						.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), tipo);
+						.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 	}
 
 	private class SaveThread extends Thread {
@@ -459,7 +455,7 @@ public class Grafica extends Activity implements OnClickListener,
 			for (int i = 0; i < 3; i++) {
 				float valor = event.values[i];
 				xyz[i] = valor;
-				Log.d("hola", "xxx " + i + " " + xyz[i] + "");
+				 
 			}
 			break;
 		}
