@@ -137,7 +137,7 @@ public class Grafica extends Activity implements OnClickListener,
 		mRenderer.setShowGrid(true); //lineas
 		mRenderer.setXAxisMin(0.0); //valor minimo de la x
 		mRenderer.setXTitle("Tiempo"); // titulo del eje x
-		mRenderer.setXAxisMax(10); // maximo 10
+		mRenderer.setXAxisMax(10000/(1000/ SAMPLERATE)); // maximo 10
 		mRenderer.setXLabels(10); // 1 second per DIV
 		mRenderer.setChartTitle(" "); //titulo de la grafica
 		mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
@@ -184,59 +184,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 
 
-	protected void onTick(SensorEvent currentEvent) {
-
-		if (xTick == 0) {
-			// Dirty, but we only learn a few things after getting the first
-			// event.
-			configure(currentEvent);
-			layout.addView(chartView);
-		}
-
-		if (xTick > mRenderer.getXAxisMax()) {
-			mRenderer.setXAxisMax(xTick);
-			mRenderer.setXAxisMin(++lastMinX);
-		}
-
-		fitYAxis(currentEvent);
-		
-		for (int i = 0; i < series.length; i++) {
-			if (series[i] != null) {
-				series[i].add(xTick, currentEvent.values[i]);
-				Log.d("serie","serie xxx"+i+"  "+currentEvent.values[i]);
-			}
-		}
-		xTick++;
-
-		chartView.repaint();
-	}
-
-	private void fitYAxis(SensorEvent event) {
-		double min = mRenderer.getYAxisMin(), max = mRenderer.getYAxisMax();
-		for (int i = 0; i < series.length; i++) {
-			if (event.values[i] < min) {
-				min = event.values[i];
-			}
-			if (event.values[i] > max) {
-				max = event.values[i];
-			}
-		}
-		float sum = 0;
-		for (int i = 0; i < event.values.length; i++) {
-			sum += event.values[i];
-		}
-		double half = 0;
-		if (xTick == 0 && sum == event.values[0] * event.values.length) {
-			// If the plot flatlines on the first event, we can't grade the Y
-			// axis.
-			// This is especially bad if the sensor does not change without a
-			// stimulus. the graph will then flatline on the x-axis where it is
-			// impossible to be seen.
-			half = event.values[0] * 0.5 + 1;
-		}
-		mRenderer.setYAxisMax(max + half);
-		mRenderer.setYAxisMin(min - half);
-	}
+	
 
 	private void configure(SensorEvent event) {
 		String[] channelNames = new String[event.values.length];
@@ -285,13 +233,7 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 		}
 
-		if (xTick == 0) {
-			ticker = new Ticker(this);
-			ticker.start();
-			sensorManager.registerListener((SensorEventListener) ticker,
-					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-					tipo);
-		}
+		
 		Iniciar_sensores();
 		super.onStart();
 	}
@@ -319,24 +261,7 @@ public class Grafica extends Activity implements OnClickListener,
 	};
 
 	// Función para guardar los datos obtenidos de los sensores
-	private void saveHistory() {
-		String stadoSD = Environment.getExternalStorageState();
-		// Comprobamos si podemos acceder a la memoria sd, si no se puede lanza
-		// este mensaje y solo se podrían compartir los datos
-		if (!stadoSD.equals(Environment.MEDIA_MOUNTED)
-				&& !stadoSD.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
-			Toast.makeText(
-					this,
-					"No puedo leer en la memoria externa, solo se puede exportar",
-					Toast.LENGTH_LONG).show();
-			return;
-		}
-
-		SaveThread thread = new SaveThread();
-
-		thread.start();
-
-	}
+	
 
 	protected void Parar_sensores() {
 		try {
@@ -455,7 +380,7 @@ public class Grafica extends Activity implements OnClickListener,
 			for (int i = 0; i < 3; i++) {
 				float valor = event.values[i];
 				xyz[i] = valor;
-				 
+				 Log.d("sensorchanged", "xxx "+i+" "+xyz[i]);
 			}
 			break;
 		}
@@ -481,7 +406,7 @@ public class Grafica extends Activity implements OnClickListener,
 		switch (item.getItemId()) {
 		case (R.id.guardar):
 			Log.d("algo", "boton guardar");
-			saveHistory();
+			//saveHistory();
 			break;
 		case (R.id.enviar):
 			new Exportar(this).execute(datosSensor);
