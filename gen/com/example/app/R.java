@@ -9,24 +9,24 @@ package com.example.app;
 
 public final class R {
     public static final class array {
-        public static final int frecuencia_recogida=0x7f070000;
-        public static final int frecuencias=0x7f070001;
-        public static final int opcionestiempograbacion=0x7f070005;
-        public static final int temporizador=0x7f070002;
-        public static final int temporizadoropciones=0x7f070003;
-        public static final int tiempograbacion=0x7f070004;
+        public static final int frecuencia_recogida=0x7f050000;
+        public static final int frecuencias=0x7f050001;
+        public static final int opcionestiempograbacion=0x7f050005;
+        public static final int temporizador=0x7f050002;
+        public static final int temporizadoropciones=0x7f050003;
+        public static final int tiempograbacion=0x7f050004;
     }
     public static final class attr {
     }
     public static final class color {
-        public static final int accele_r=0x7f050003;
-        public static final int accele_x=0x7f050000;
-        public static final int accele_y=0x7f050001;
-        public static final int accele_z=0x7f050002;
-        public static final int background=0x7f050006;
-        public static final int filter_rate_value=0x7f050007;
-        public static final int string=0x7f050005;
-        public static final int zero_line=0x7f050004;
+        public static final int accele_r=0x7f060003;
+        public static final int accele_x=0x7f060000;
+        public static final int accele_y=0x7f060001;
+        public static final int accele_z=0x7f060002;
+        public static final int background=0x7f060006;
+        public static final int filter_rate_value=0x7f060007;
+        public static final int string=0x7f060005;
+        public static final int zero_line=0x7f060004;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -36,8 +36,8 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f060000;
-        public static final int activity_vertical_margin=0x7f060001;
+        public static final int activity_horizontal_margin=0x7f070000;
+        public static final int activity_vertical_margin=0x7f070001;
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
