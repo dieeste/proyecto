@@ -46,7 +46,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 	Button grafLuz;
 
 	// Recogemos las preferencias
-	int tiempoInicio, tiempoParada, tipo;
+	int tiempoInicio, tiempoParada;
+	int tipo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 		grafProximidad.setOnClickListener(this);
 		grafLuz.setOnClickListener(this);
 
+		tipo=SensorManager.SENSOR_DELAY_NORMAL;
+		Log.d("tiempo","inicio: "+tipo);
 	}
 
 	@Override
@@ -365,11 +368,19 @@ public class Simulacion extends Activity implements SensorEventListener,
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 
-		tipo = pref.getInt("fecuencia", SensorManager.SENSOR_DELAY_NORMAL);
+		String type=pref.getString("frecuencia", "SensorManager.SENSOR_DELAY_NORMAL");
+		if(type.equals("SensorManager.SENSOR_DELAY_NORMAL")){
+			tipo=SensorManager.SENSOR_DELAY_NORMAL;
+		}else if (type.equals("SensorManager.SENSOR_DELAY_UI")){
+			tipo=SensorManager.SENSOR_DELAY_UI;
+		}else if (type.equals("SensorManager.SENSOR_DELAY_GAME")){
+			tipo=SensorManager.SENSOR_DELAY_GAME;
+		}else if (type.equals("SensorManager.SENSOR_DELAY_FASTEST")){
+			tipo=SensorManager.SENSOR_DELAY_FASTEST;
+		}
 		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));
 		tiempoParada = Integer.parseInt(pref.getString("tiempo", "0"));
 
-		// tiempoInicio = pref.getInt("temporizador",0);
 		Log.d("tiempo", "tiempoInicio " + tiempoInicio);
 		Log.d("tiempo", "tiempoParada " + tiempoParada);
 		Log.d("tiempo", "tiempofre " + tipo);

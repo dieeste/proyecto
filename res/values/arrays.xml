@@ -7,39 +7,52 @@
         <item>JUEGO</item>
         <item>MÁS RÁPIDO</item>
     </string-array>
-
     <string-array name="frecuencias">
-        <item >SensorManager.SENSOR_DELAY_NORMAL</item>
-        <item >SensorManager.SENSOR_DELAY_UI</item>
-        <item >SensorManager.SENSOR_DELAY_GAME</item>
-        <item >SensorManager.SENSOR_DELAY_FASTEST</item>
+        <item>SensorManager.SENSOR_DELAY_NORMAL</item>
+        <item>SensorManager.SENSOR_DELAY_UI</item>
+        <item>SensorManager.SENSOR_DELAY_GAME</item>
+        <item>SensorManager.SENSOR_DELAY_FASTEST</item>
     </string-array>
-    
-     <string-array name="temporizador">
+    <string-array name="temporizador">
         <item>DESACTIVADO</item>
         <item>3 SEGUNDOS</item>
         <item>5 SEGUNDOS</item>
         <item>10 SEGUNDOS</item>
     </string-array>
-    
-     <string-array name="temporizadoropciones">
-        <item >0</item>
-        <item >3000</item>
-        <item >5000</item>
-        <item >10000</item>
+    <string-array name="temporizadoropciones">
+        <item>0</item>
+        <item>3000</item>
+        <item>5000</item>
+        <item>10000</item>
     </string-array>
-    
-     <string-array name="tiempograbacion">
-        <item >DESACTIVADO</item>
-        <item >15 SEGUNDOS</item>
-        <item >20 SEGUNDOS</item>
-        <item >30 SEGUNDOS</item>
+    <string-array name="tiempograbacion">
+        <item>DESACTIVADO</item>
+        <item>15 SEGUNDOS</item>
+        <item>20 SEGUNDOS</item>
+        <item>30 SEGUNDOS</item>
     </string-array>
-    
-     <string-array name="opcionestiempograbacion">
-        <item >0</item>
-        <item >15000</item>
-        <item >20000</item>
-        <item >30000</item>
+    <string-array name="opcionestiempograbacion">
+        <item>0</item>
+        <item>15000</item>
+        <item>20000</item>
+        <item>30000</item>
     </string-array>
+    <string-array name="sensores">
+        <item>Acelerómetro</item>
+        <item>Giroscopio</item>
+        <item>Magnetómetro</item>
+        <item>Proximidad</item>
+        <item>Luz</item>
+    </string-array>
+    <string-array name="valorsensores">
+        <item>Acelerometro</item>
+        <item>Giroscopio</item>
+        <item>Magnetometro</item>
+        <item>Proximidad</item>
+        <item>Luz</item>
+    </string-array>
+    <string-array name="defecto">
+        <item>Acelerometro</item>
+    </string-array>
+
 </resources>

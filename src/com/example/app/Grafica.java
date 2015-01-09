@@ -42,8 +42,8 @@ public class Grafica extends Activity implements OnClickListener,
 	private GraphicalView chartView;
 
 	// Declaración de las series que usamos en la representación de la gráfica
-	XYMultipleSeriesDataset sensorData;
-	XYMultipleSeriesRenderer mRenderer;
+	XYMultipleSeriesDataset sensorData = new XYMultipleSeriesDataset();
+	XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
 	XYSeries series[];
 
 	// Número de muestras por segundo
@@ -78,6 +78,7 @@ public class Grafica extends Activity implements OnClickListener,
 	int frecuencia;
 	int tiempoInicio;
 	int tiempoParada;
+	int vector;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -105,9 +106,6 @@ public class Grafica extends Activity implements OnClickListener,
 
 		// Escuchamos los checkbox
 
-		sensorData = new XYMultipleSeriesDataset();
-		mRenderer = new XYMultipleSeriesRenderer();
-
 		// Propiedades de la gráfica
 		mRenderer.setApplyBackgroundColor(true); // fondo
 		mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50)); // color
@@ -132,11 +130,10 @@ public class Grafica extends Activity implements OnClickListener,
 		margins[1] *= upscale;
 		margins[2] = (int) (2 * mRenderer.getLegendTextSize());
 		mRenderer.setMargins(margins);
-		if (chartView == null) {
-			chartView = ChartFactory.getLineChartView(Grafica.this, sensorData,
-					mRenderer);
+		if (chartView == null){
+			chartView = ChartFactory.getTimeChartView(this, sensorData, mRenderer, "s");
 			layout.addView(chartView);
-		} else {
+		}else {
 			chartView.repaint();
 		}
 		// chartView = ChartFactory.getLineChartView(this, sensorData,
@@ -150,19 +147,26 @@ public class Grafica extends Activity implements OnClickListener,
 		// actividad anteerior que a su vez es recogido de la configuración
 		frecuencia = graficas.getInt("tipo");
 		// tiempoParada y tiempoInicio es el tiempo que recogemos de la
-		// actividad anterior y que
-		// será el tiempo durante el que vamos a medir los sensores y el tiempo
-		// que pasará antes de inciar los sensores
+		// actividad anterior y que será el tiempo durante el que vamos a medir
+		// los sensores y el tiempo que pasará antes de inciar los sensores
 		tiempoInicio = graficas.getInt("temporizador");
 		Log.d("tiempo", "tiempoInicio " + tiempoInicio);
 		tiempoParada = graficas.getInt("tiempo");
 		Log.d("tiempo", "tiempoParada " + tiempoParada);
+
+		vector = graficas.getInt("vector", vector);
+
 		// si el tiempo de inicio es mayor que cero vamos a contadores si no lo
 		// dejamos como está
 		if (tiempoInicio > 0) {
 			contadores();
 		}
 	}
+
+	/*private void seleccionSensores() {
+		xyz = new float[vector];
+
+	}*/
 
 	private void contadores() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
@@ -215,6 +219,30 @@ public class Grafica extends Activity implements OnClickListener,
 		Toast.makeText(this, "empieza por tiempo", Toast.LENGTH_SHORT).show();
 	}
 
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		// TODO Auto-generated method stub
+		switch (event.sensor.getType()) {
+		case Sensor.TYPE_ACCELEROMETER:
+			for (int i = 0; i < 3; i++) {
+				float valor = event.values[i];
+				xyz[i] = valor;
+				Log.d("sensorchanged", "xxx " + i + " " + xyz[i]);
+			}
+			synchronized (this) {
+				datosSensor.add(xyz.clone());
+				configure(event);
+			}
+			break;
+		}
+		
+	}
 	private void configure(SensorEvent event) {
 		String[] channelNames = new String[event.values.length];
 		series = new XYSeries[event.values.length];
@@ -241,7 +269,7 @@ public class Grafica extends Activity implements OnClickListener,
 			XYSeriesRenderer r = new XYSeriesRenderer();
 			r.setColor(colors[i % colors.length]);
 			mRenderer.addSeriesRenderer(r);
-
+			chartView.repaint();
 		}
 	}
 
@@ -351,39 +379,16 @@ public class Grafica extends Activity implements OnClickListener,
 		switch (boton.getId()) {
 		case (R.id.parar):
 			iniciar.setEnabled(true);
-			parar.setEnabled(true);
+			parar.setEnabled(false);
 			onStop();
 			break;
 		case (R.id.inicio):
 			parar.setEnabled(true);
+			iniciar.setEnabled(false);
 			Iniciar_sensores();
 			break;
 		case (R.id.reiniciar):
 			break;
-		}
-	}
-
-	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		// TODO Auto-generated method stub
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-			for (int i = 0; i < 3; i++) {
-				float valor = event.values[i];
-				xyz[i] = valor;
-				Log.d("sensorchanged", "xxx " + i + " " + xyz[i]);
-			}
-			break;
-		}
-		synchronized (this) {
-			datosSensor.add(xyz.clone());
-			configure(event);
 		}
 	}
 
@@ -409,9 +414,26 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.enviar):
 			// new Exportar(this).execute(datosSensor);
 			break;
+	/*	case (R.id.configurate):
+			Log.d("algo", "boton conf");
+			Intent i = new Intent(this, PrefGrafica.class);
+			// Iniciamos la actividad y esperamos respuesta con los datos
+			startActivityForResult(i, 0);
+			break;*/
 		}
 		return true;
 		/** true -> consumimos el item, no se propaga */
 	}
+
+	/*@SuppressLint("NewApi") @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		boolean v = pref.getBoolean("sensores", false);
+            Log.d("vec", "este es: " + v);
+		
+	}*/
 
 }

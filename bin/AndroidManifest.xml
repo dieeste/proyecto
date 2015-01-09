@@ -53,9 +53,9 @@
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
-            android:name="Pref"
-            android:label="Preferenciass" >
-            <action android:name=".Pref" />
+            android:name="PrefGrafica"
+            android:label="Preferencias" >
+            <action android:name=".PrefGrafica" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
