@@ -1,20 +1,25 @@
 package com.example.app;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.ArrayList;
+
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.PointStyle;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+
+
+import com.example.app.AccelData;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Paint;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -32,28 +37,20 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class Grafica extends Activity implements OnClickListener,
 		SensorEventListener {
 
 	// Declaración de la grafica
-	private GraphicalView chartView;
+
 
 	// Declaración de las series que usamos en la representación de la gráfica
-	XYMultipleSeriesDataset sensorData = new XYMultipleSeriesDataset();
-	XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-	XYSeries series[];
 
-	// Número de muestras por segundo
-	public static final int SAMPLERATE = 10;
 
-	// Hacemos una cola FIFO con listas enlazadas
-	ConcurrentLinkedQueue<float[]> datosSensor = new ConcurrentLinkedQueue<float[]>();
 
-	// Aquí guardamos los valores de x,y,z en un array que luego irán el la cola
-	float[] xyz = new float[3];
+	private ArrayList<AccelData> sensorDatas;
+	
 
 	// Declaración del layout donde irá la gráfica
 	LinearLayout layout;
@@ -79,7 +76,15 @@ public class Grafica extends Activity implements OnClickListener,
 	int tiempoInicio;
 	int tiempoParada;
 	int vector;
+	long previoustime;
+	long firstTime;
 
+     GraphicalView view;
+
+     ArrayList<Double> x,y,z;
+
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -92,6 +97,8 @@ public class Grafica extends Activity implements OnClickListener,
 		// Elegimos el layout a mostrar en esta clase
 		setContentView(R.layout.grafica);
 
+		sensorDatas = new ArrayList<AccelData>();
+		
 		// Declaramos objetos
 		layout = (LinearLayout) findViewById(R.id.chart);
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -105,47 +112,23 @@ public class Grafica extends Activity implements OnClickListener,
 		reiniciar.setOnClickListener(this);
 
 		// Escuchamos los checkbox
+		
+		ejex = (CheckBox) findViewById(R.id.ejex);
+		ejey = (CheckBox) findViewById(R.id.ejey);
+		ejez = (CheckBox) findViewById(R.id.ejez);
+		modulo = (CheckBox) findViewById(R.id.modulo);
 
-		// Propiedades de la gráfica
-		mRenderer.setApplyBackgroundColor(true); // fondo
-		mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50)); // color
-																	// fondo
-		mRenderer.setGridColor(Color.DKGRAY); // color lineas
-		mRenderer.setShowGrid(true); // lineas
-		mRenderer.setXAxisMin(0.0); // valor minimo de la x
-		mRenderer.setXTitle("Tiempo"); // titulo del eje x
-		mRenderer.setXAxisMax(10); // maximo 10
-		mRenderer.setXLabels(10); // 1 second per DIV
-		mRenderer.setChartTitle(" "); // titulo de la grafica
-		mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
-		float textSize = new TextView(this).getTextSize();
-		float upscale = textSize / mRenderer.getLegendTextSize();
-		mRenderer.setLabelsTextSize(textSize);
-		mRenderer.setLegendTextSize(textSize);
-		mRenderer.setChartTitleTextSize(textSize);
-		mRenderer.setAxisTitleTextSize(textSize);
-		mRenderer.setFitLegend(true);
-		int[] margins = mRenderer.getMargins();
-		margins[0] *= upscale;
-		margins[1] *= upscale;
-		margins[2] = (int) (2 * mRenderer.getLegendTextSize());
-		mRenderer.setMargins(margins);
-		if (chartView == null){
-			chartView = ChartFactory.getTimeChartView(this, sensorData, mRenderer, "s");
-			layout.addView(chartView);
-		}else {
-			chartView.repaint();
-		}
-		// chartView = ChartFactory.getLineChartView(this, sensorData,
-		// mRenderer);
-
+		
+	
 		// Recogemos el tipo de frecuencia (normal, ui, game, fastest) que hemos
 		// pasado desde la actividad de acelerómetro y los tiempos
 
 		Bundle graficas = getIntent().getExtras();
+		
 		// Frecuencia es los distintos tipos de frecuencia que recogemos de la
 		// actividad anteerior que a su vez es recogido de la configuración
 		frecuencia = graficas.getInt("tipo");
+		
 		// tiempoParada y tiempoInicio es el tiempo que recogemos de la
 		// actividad anterior y que será el tiempo durante el que vamos a medir
 		// los sensores y el tiempo que pasará antes de inciar los sensores
@@ -154,19 +137,15 @@ public class Grafica extends Activity implements OnClickListener,
 		tiempoParada = graficas.getInt("tiempo");
 		Log.d("tiempo", "tiempoParada " + tiempoParada);
 
-		vector = graficas.getInt("vector", vector);
 
 		// si el tiempo de inicio es mayor que cero vamos a contadores si no lo
 		// dejamos como está
 		if (tiempoInicio > 0) {
 			contadores();
 		}
+	
 	}
 
-	/*private void seleccionSensores() {
-		xyz = new float[vector];
-
-	}*/
 
 	private void contadores() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
@@ -182,7 +161,6 @@ public class Grafica extends Activity implements OnClickListener,
 				// TODO Auto-generated method stub
 				Log.d("tiempo", "inciamos por tiempo");
 				Iniciar_sensores();
-				hi();
 				iniciar.setEnabled(false);
 				parar.setEnabled(true);
 				reiniciar.setEnabled(false);
@@ -200,7 +178,6 @@ public class Grafica extends Activity implements OnClickListener,
 					public void onFinish() { // TODO Auto-generated method stub
 						Log.d("tiempo", "Paramos por tiempo");
 						onStop();
-						hola();
 						reiniciar.setEnabled(true);
 						iniciar.setEnabled(true);
 						parar.setEnabled(false);
@@ -210,14 +187,7 @@ public class Grafica extends Activity implements OnClickListener,
 		}.start();
 	}
 
-	// prueba para ver si empieza y nacaban bien los temporizadores
-	private void hola() {
-		Toast.makeText(this, "parado por tiempo", Toast.LENGTH_SHORT).show();
-	}
 
-	private void hi() {
-		Toast.makeText(this, "empieza por tiempo", Toast.LENGTH_SHORT).show();
-	}
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -228,50 +198,37 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		// TODO Auto-generated method stub
-		switch (event.sensor.getType()) {
+		double x = event.values[0];
+		double y = event.values[1];
+		double z = event.values[2];
+		long timestamp = System.currentTimeMillis();
+		AccelData data = new AccelData(timestamp, x, y, z);
+		sensorDatas.add(data);
+
+		//long deltaTime = currentTime - previoustime;
+		
+		
+		
+		/*switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
-			for (int i = 0; i < 3; i++) {
-				float valor = event.values[i];
-				xyz[i] = valor;
-				Log.d("sensorchanged", "xxx " + i + " " + xyz[i]);
-			}
+				xSeries.add(currentTime, event.values[0]);
+				Log.d("sensorchanged", "xxx " + " " + xSeries);
+				
 			synchronized (this) {
-				datosSensor.add(xyz.clone());
-				configure(event);
 			}
+			sensorData.addSeries(xSeries);
+			XYSeriesRenderer xRenderer = new  XYSeriesRenderer();
+			xRenderer.setColor(Color.CYAN);
+			xRenderer.setPointStyle(PointStyle.CIRCLE);
+			xRenderer.setDisplayChartValues(true);
+			xRenderer.setLineWidth(2);
+			xRenderer.setFillPoints(true);
+			mRenderer.addSeriesRenderer(xRenderer);
 			break;
-		}
+		}*/
 		
 	}
-	private void configure(SensorEvent event) {
-		String[] channelNames = new String[event.values.length];
-		series = new XYSeries[event.values.length];
-		for (int i = 0; i < channelNames.length; i++) {
-			channelNames[i] = getString(R.string.channel_default) + i;
-		}
 
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER: {
-			channelNames[0] = getString(R.string.channel_x_axis);
-			channelNames[1] = getString(R.string.channel_y_axis);
-			channelNames[2] = getString(R.string.channel_z_axis);
-			mRenderer.setYTitle(getString(R.string.unit_acceleration));
-			break;
-		}
-
-		}
-
-		int[] colors = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN,
-				Color.MAGENTA, Color.CYAN };
-		for (int i = 0; i < series.length; i++) {
-			series[i] = new XYSeries(channelNames[i]);
-			sensorData.addSeries(series[i]);
-			XYSeriesRenderer r = new XYSeriesRenderer();
-			r.setColor(colors[i % colors.length]);
-			mRenderer.addSeriesRenderer(r);
-			chartView.repaint();
-		}
-	}
 
 	@Override
 	protected void onStop() {
@@ -381,11 +338,14 @@ public class Grafica extends Activity implements OnClickListener,
 			iniciar.setEnabled(true);
 			parar.setEnabled(false);
 			onStop();
+			openChart();
 			break;
 		case (R.id.inicio):
 			parar.setEnabled(true);
 			iniciar.setEnabled(false);
+			sensorDatas = new ArrayList<AccelData>();
 			Iniciar_sensores();
+			
 			break;
 		case (R.id.reiniciar):
 			break;
@@ -435,5 +395,79 @@ public class Grafica extends Activity implements OnClickListener,
             Log.d("vec", "este es: " + v);
 		
 	}*/
+	private void openChart() {
+		
+			long t = sensorDatas.get(0).getTimestamp();
+			XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+
+			XYSeries xSeries = new XYSeries("X");
+			XYSeries ySeries = new XYSeries("Y");
+			XYSeries zSeries = new XYSeries("Z");
+
+			for (AccelData data : sensorDatas) {
+				xSeries.add(data.getTimestamp() - t, data.getX());
+				ySeries.add(data.getTimestamp() - t, data.getY());
+				zSeries.add(data.getTimestamp() - t, data.getZ());
+			}
+
+			dataset.addSeries(xSeries);
+			dataset.addSeries(ySeries);
+			dataset.addSeries(zSeries);
+
+			XYSeriesRenderer xRenderer = new XYSeriesRenderer();
+			xRenderer.setColor(Color.RED);
+			xRenderer.setPointStyle(PointStyle.CIRCLE);
+			xRenderer.setFillPoints(true);
+			xRenderer.setLineWidth(1);
+			xRenderer.setDisplayChartValues(false);
+
+			XYSeriesRenderer yRenderer = new XYSeriesRenderer();
+			yRenderer.setColor(Color.GREEN);
+			yRenderer.setPointStyle(PointStyle.CIRCLE);
+			yRenderer.setFillPoints(true);
+			yRenderer.setLineWidth(1);
+			yRenderer.setDisplayChartValues(false);
+
+			XYSeriesRenderer zRenderer = new XYSeriesRenderer();
+			zRenderer.setColor(Color.BLUE);
+			zRenderer.setPointStyle(PointStyle.CIRCLE);
+			zRenderer.setFillPoints(true);
+			zRenderer.setLineWidth(1);
+			zRenderer.setDisplayChartValues(false);
+
+			XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+			multiRenderer.setXLabels(0);
+			multiRenderer.setLabelsColor(Color.RED);
+			multiRenderer.setChartTitle("t vs (x,y,z)");
+			multiRenderer.setXTitle("Sensor Data");
+			multiRenderer.setYTitle("Values of Acceleration");
+			multiRenderer.setZoomButtonsVisible(true);
+			for (int i = 0; i < sensorDatas.size(); i++) {
+				
+				multiRenderer.addXTextLabel(i + 1, ""
+						+ (sensorDatas.get(i).getTimestamp() - t));
+			}
+			for (int i = 0; i < 12; i++) {
+				multiRenderer.addYTextLabel(i + 1, ""+i);
+			}
+
+			multiRenderer.addSeriesRenderer(xRenderer);
+			multiRenderer.addSeriesRenderer(yRenderer);
+			multiRenderer.addSeriesRenderer(zRenderer);
+
+			// Getting a reference to LinearLayout of the MainActivity Layout
+			
+
+			// Creating a Line Chart
+			GraphicalView mCharts = ChartFactory.getLineChartView(getBaseContext(), dataset,
+					multiRenderer);
+
+			// Adding the Line Chart to the LinearLayout
+			layout.addView(mCharts);
+
+	
+	}
 
 }
+
+
