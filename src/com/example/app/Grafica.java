@@ -1,25 +1,14 @@
 package com.example.app;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-
-import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
-import org.achartengine.chart.PointStyle;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
-
-import com.example.app.AccelData;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -44,12 +33,12 @@ public class Grafica extends Activity implements OnClickListener,
 
 	// Declaración de la grafica
 
-
+	
 	// Declaración de las series que usamos en la representación de la gráfica
+    public boolean init = false;
 
 
-
-	private ArrayList<AccelData> sensorDatas;
+	private ConcurrentLinkedQueue<AccelData> sensorDatas;
 	
 
 	// Declaración del layout donde irá la gráfica
@@ -80,7 +69,7 @@ public class Grafica extends Activity implements OnClickListener,
 	long firstTime;
 
      GraphicalView view;
-
+     Graph mGraph;
      ArrayList<Double> x,y,z;
 
 
@@ -97,7 +86,7 @@ public class Grafica extends Activity implements OnClickListener,
 		// Elegimos el layout a mostrar en esta clase
 		setContentView(R.layout.grafica);
 
-		sensorDatas = new ArrayList<AccelData>();
+		sensorDatas = new ConcurrentLinkedQueue<AccelData>();
 		
 		// Declaramos objetos
 		layout = (LinearLayout) findViewById(R.id.chart);
@@ -128,7 +117,7 @@ public class Grafica extends Activity implements OnClickListener,
 		// Frecuencia es los distintos tipos de frecuencia que recogemos de la
 		// actividad anteerior que a su vez es recogido de la configuración
 		frecuencia = graficas.getInt("tipo");
-		
+		Log.d("tiem", "tifercuencia " + frecuencia);
 		// tiempoParada y tiempoInicio es el tiempo que recogemos de la
 		// actividad anterior y que será el tiempo durante el que vamos a medir
 		// los sensores y el tiempo que pasará antes de inciar los sensores
@@ -142,7 +131,8 @@ public class Grafica extends Activity implements OnClickListener,
 		// dejamos como está
 		if (tiempoInicio > 0) {
 			contadores();
-		}
+			
+		} 
 	
 	}
 
@@ -159,14 +149,25 @@ public class Grafica extends Activity implements OnClickListener,
 			@Override
 			public void onFinish() {
 				// TODO Auto-generated method stub
+				
 				Log.d("tiempo", "inciamos por tiempo");
-				Iniciar_sensores();
-				iniciar.setEnabled(false);
-				parar.setEnabled(true);
-				reiniciar.setEnabled(false);
+		
 				// Con este temporizador medimos el tiempo de medida de los
 				// sensores
 				// Empezamos el otro temporizador
+				if (tiempoParada==0){
+					Iniciar_sensores();
+					iniciar.setEnabled(false);
+					parar.setEnabled(true);
+					reiniciar.setEnabled(false);
+					
+				} else {
+					
+					Iniciar_sensores();
+					iniciar.setEnabled(false);
+					parar.setEnabled(true);
+					reiniciar.setEnabled(false);
+					
 				new CountDownTimer(tiempoParada, 1000) {
 					@Override
 					public void onTick(long millisUntilFinished) {
@@ -183,9 +184,34 @@ public class Grafica extends Activity implements OnClickListener,
 						parar.setEnabled(false);
 					}
 				}.start();
+				}
 			}
 		}.start();
 	}
+	private void contadores2() {
+		// Con este temporizador medimos el tiempo antes de iniciar los sensores
+				new CountDownTimer(tiempoParada, 1000) {
+					@Override
+					public void onTick(long millisUntilFinished) {
+						// TODO Auto-generated method stub
+					}
+					 	
+
+					// Cuando llega al tiempo especificado paramos los sensores
+					@Override
+					public void onFinish() { // TODO Auto-generated method stub
+						Log.d("tiempo", "Paramos por tiempo");
+						onStop();
+						reiniciar.setEnabled(true);
+						iniciar.setEnabled(false);
+						parar.setEnabled(false);
+					}
+				}.start();
+				}
+			
+			
+		
+	
 
 
 
@@ -202,8 +228,22 @@ public class Grafica extends Activity implements OnClickListener,
 		double y = event.values[1];
 		double z = event.values[2];
 		long timestamp = System.currentTimeMillis();
+		
 		AccelData data = new AccelData(timestamp, x, y, z);
 		sensorDatas.add(data);
+		Log.d("sensordatassss", "sensor: "+data);
+	       mGraph = new Graph(this);
+           mGraph.initData(sensorDatas);
+           mGraph.setProperties();
+               if(!init){
+                   view = mGraph.getGraph();
+                  layout.addView(view);
+                   init = true;
+               }else{
+                   layout.removeView(view);
+                   view = mGraph.getGraph();
+                   layout.addView(view);
+               }
 
 		//long deltaTime = currentTime - previoustime;
 		
@@ -338,14 +378,16 @@ public class Grafica extends Activity implements OnClickListener,
 			iniciar.setEnabled(true);
 			parar.setEnabled(false);
 			onStop();
-			openChart();
+			//openChart();
 			break;
 		case (R.id.inicio):
 			parar.setEnabled(true);
 			iniciar.setEnabled(false);
-			sensorDatas = new ArrayList<AccelData>();
+		//	sensorDatas = new ArrayList<AccelData>();
 			Iniciar_sensores();
-			
+			reiniciar.setEnabled(true);
+			if(tiempoParada>0)
+				contadores2();
 			break;
 		case (R.id.reiniciar):
 			break;
@@ -395,7 +437,7 @@ public class Grafica extends Activity implements OnClickListener,
             Log.d("vec", "este es: " + v);
 		
 	}*/
-	private void openChart() {
+	/*private void openChart() {
 		
 			long t = sensorDatas.get(0).getTimestamp();
 			XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -467,7 +509,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	
 	}
-
+*/
 }
 
 
