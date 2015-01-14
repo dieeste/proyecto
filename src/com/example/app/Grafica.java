@@ -1,6 +1,9 @@
 package com.example.app;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
@@ -15,6 +18,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,20 +33,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-
+import android.widget.Toast;
 
 public class Grafica extends Activity implements OnClickListener,
 		SensorEventListener {
 
 	// Declaración de la grafica
 
-	
 	// Declaración de las series que usamos en la representación de la gráfica
-    public boolean init = false;
-
+	public boolean init = false;
 
 	private ConcurrentLinkedQueue<AccelData> sensorDatas;
-	
 
 	// Declaración del layout donde irá la gráfica
 	LinearLayout layout;
@@ -68,12 +72,10 @@ public class Grafica extends Activity implements OnClickListener,
 	long previoustime;
 	long firstTime;
 
-     GraphicalView view;
-     Graph mGraph;
-     ArrayList<Double> x,y,z;
+	GraphicalView view;
+	Graph mGraph;
+	ArrayList<Double> x, y, z;
 
-
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -87,7 +89,7 @@ public class Grafica extends Activity implements OnClickListener,
 		setContentView(R.layout.grafica);
 
 		sensorDatas = new ConcurrentLinkedQueue<AccelData>();
-		
+
 		// Declaramos objetos
 		layout = (LinearLayout) findViewById(R.id.chart);
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -101,19 +103,17 @@ public class Grafica extends Activity implements OnClickListener,
 		reiniciar.setOnClickListener(this);
 
 		// Escuchamos los checkbox
-		
+
 		ejex = (CheckBox) findViewById(R.id.ejex);
 		ejey = (CheckBox) findViewById(R.id.ejey);
 		ejez = (CheckBox) findViewById(R.id.ejez);
 		modulo = (CheckBox) findViewById(R.id.modulo);
 
-		
-	
 		// Recogemos el tipo de frecuencia (normal, ui, game, fastest) que hemos
 		// pasado desde la actividad de acelerómetro y los tiempos
 
 		Bundle graficas = getIntent().getExtras();
-		
+
 		// Frecuencia es los distintos tipos de frecuencia que recogemos de la
 		// actividad anteerior que a su vez es recogido de la configuración
 		frecuencia = graficas.getInt("tipo");
@@ -126,16 +126,14 @@ public class Grafica extends Activity implements OnClickListener,
 		tiempoParada = graficas.getInt("tiempo");
 		Log.d("tiempo", "tiempoParada " + tiempoParada);
 
-
 		// si el tiempo de inicio es mayor que cero vamos a contadores si no lo
 		// dejamos como está
 		if (tiempoInicio > 0) {
 			contadores();
-			
-		} 
-	
-	}
 
+		}
+
+	}
 
 	private void contadores() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
@@ -149,71 +147,67 @@ public class Grafica extends Activity implements OnClickListener,
 			@Override
 			public void onFinish() {
 				// TODO Auto-generated method stub
-				
+
 				Log.d("tiempo", "inciamos por tiempo");
-		
+
 				// Con este temporizador medimos el tiempo de medida de los
 				// sensores
 				// Empezamos el otro temporizador
-				if (tiempoParada==0){
+				if (tiempoParada == 0) {
 					Iniciar_sensores();
 					iniciar.setEnabled(false);
 					parar.setEnabled(true);
 					reiniciar.setEnabled(false);
-					
-				} else {
-					
-					Iniciar_sensores();
-					iniciar.setEnabled(false);
-					parar.setEnabled(true);
-					reiniciar.setEnabled(false);
-					
-				new CountDownTimer(tiempoParada, 1000) {
-					@Override
-					public void onTick(long millisUntilFinished) {
-						// TODO Auto-generated method stub
-					}
 
-					// Cuando llega al tiempo especificado paramos los sensores
-					@Override
-					public void onFinish() { // TODO Auto-generated method stub
-						Log.d("tiempo", "Paramos por tiempo");
-						onStop();
-						reiniciar.setEnabled(true);
-						iniciar.setEnabled(true);
-						parar.setEnabled(false);
-					}
-				}.start();
+				} else {
+
+					Iniciar_sensores();
+					iniciar.setEnabled(false);
+					parar.setEnabled(true);
+					reiniciar.setEnabled(false);
+
+					new CountDownTimer(tiempoParada, 1000) {
+						@Override
+						public void onTick(long millisUntilFinished) {
+							// TODO Auto-generated method stub
+						}
+
+						// Cuando llega al tiempo especificado paramos los
+						// sensores
+						@Override
+						public void onFinish() { // TODO Auto-generated method
+													// stub
+							Log.d("tiempo", "Paramos por tiempo");
+							onStop();
+							reiniciar.setEnabled(true);
+							iniciar.setEnabled(true);
+							parar.setEnabled(false);
+						}
+					}.start();
 				}
 			}
 		}.start();
 	}
+
 	private void contadores2() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
-				new CountDownTimer(tiempoParada, 1000) {
-					@Override
-					public void onTick(long millisUntilFinished) {
-						// TODO Auto-generated method stub
-					}
-					 	
+		new CountDownTimer(tiempoParada, 1000) {
+			@Override
+			public void onTick(long millisUntilFinished) {
+				// TODO Auto-generated method stub
+			}
 
-					// Cuando llega al tiempo especificado paramos los sensores
-					@Override
-					public void onFinish() { // TODO Auto-generated method stub
-						Log.d("tiempo", "Paramos por tiempo");
-						onStop();
-						reiniciar.setEnabled(true);
-						iniciar.setEnabled(false);
-						parar.setEnabled(false);
-					}
-				}.start();
-				}
-			
-			
-		
-	
-
-
+			// Cuando llega al tiempo especificado paramos los sensores
+			@Override
+			public void onFinish() { // TODO Auto-generated method stub
+				Log.d("tiempo", "Paramos por tiempo");
+				onStop();
+				reiniciar.setEnabled(true);
+				iniciar.setEnabled(false);
+				parar.setEnabled(false);
+			}
+		}.start();
+	}
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -228,47 +222,40 @@ public class Grafica extends Activity implements OnClickListener,
 		double y = event.values[1];
 		double z = event.values[2];
 		long timestamp = System.currentTimeMillis();
-		
+
 		AccelData data = new AccelData(timestamp, x, y, z);
 		sensorDatas.add(data);
-		Log.d("sensordatassss", "sensor: "+data);
-	       mGraph = new Graph(this);
-           mGraph.initData(sensorDatas);
-           mGraph.setProperties();
-               if(!init){
-                   view = mGraph.getGraph();
-                  layout.addView(view);
-                   init = true;
-               }else{
-                   layout.removeView(view);
-                   view = mGraph.getGraph();
-                   layout.addView(view);
-               }
+		Log.d("sensordatassss", "sensor: " + data);
+		mGraph = new Graph(this);
+		mGraph.initData(sensorDatas);
+		mGraph.setProperties();
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
 
-		//long deltaTime = currentTime - previoustime;
-		
-		
-		
-		/*switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-				xSeries.add(currentTime, event.values[0]);
-				Log.d("sensorchanged", "xxx " + " " + xSeries);
-				
-			synchronized (this) {
-			}
-			sensorData.addSeries(xSeries);
-			XYSeriesRenderer xRenderer = new  XYSeriesRenderer();
-			xRenderer.setColor(Color.CYAN);
-			xRenderer.setPointStyle(PointStyle.CIRCLE);
-			xRenderer.setDisplayChartValues(true);
-			xRenderer.setLineWidth(2);
-			xRenderer.setFillPoints(true);
-			mRenderer.addSeriesRenderer(xRenderer);
-			break;
-		}*/
-		
+		// long deltaTime = currentTime - previoustime;
+
+		/*
+		 * switch (event.sensor.getType()) { case Sensor.TYPE_ACCELEROMETER:
+		 * xSeries.add(currentTime, event.values[0]); Log.d("sensorchanged",
+		 * "xxx " + " " + xSeries);
+		 * 
+		 * synchronized (this) { } sensorData.addSeries(xSeries);
+		 * XYSeriesRenderer xRenderer = new XYSeriesRenderer();
+		 * xRenderer.setColor(Color.CYAN);
+		 * xRenderer.setPointStyle(PointStyle.CIRCLE);
+		 * xRenderer.setDisplayChartValues(true); xRenderer.setLineWidth(2);
+		 * xRenderer.setFillPoints(true);
+		 * mRenderer.addSeriesRenderer(xRenderer); break; }
+		 */
+
 	}
-
 
 	@Override
 	protected void onStop() {
@@ -306,16 +293,19 @@ public class Grafica extends Activity implements OnClickListener,
 
 	// Controlador de mensajería. Recogemos el mensaje enviado desde el la
 	// función de guardado
-	/*
-	 * private Handler mensajeria = new Handler() {
-	 * 
-	 * @Override public void handleMessage(Message msg) { // TODO Auto-generated
-	 * method stub Bundle data = msg.getData(); Toast.makeText(Grafica.this,
-	 * data.getString("msg"), Toast.LENGTH_SHORT).show();
-	 * super.handleMessage(msg); }
-	 * 
-	 * };
-	 */
+
+	private Handler mensajeria = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			Bundle data = msg.getData();
+			Toast.makeText(Grafica.this, data.getString("msg"),
+					Toast.LENGTH_SHORT).show();
+			super.handleMessage(msg);
+		}
+
+	};
 
 	// Función para guardar los datos obtenidos de los sensores
 
@@ -330,45 +320,104 @@ public class Grafica extends Activity implements OnClickListener,
 				frecuencia);
 	}
 
-	/*
-	 * private class SaveThread extends Thread {
-	 * 
-	 * @Override public void run() { StringBuilder csvData = new
-	 * StringBuilder(); Iterator<float[]> iterator = datosSensor.iterator();
-	 * while (iterator.hasNext()) { float[] values = iterator.next(); for (int
-	 * angle = 0; angle < 3; angle++) {
-	 * csvData.append(String.valueOf(values[angle])); if (angle < 3) {
-	 * csvData.append(","); } } csvData.append("\n"); }
-	 * 
-	 * Bundle bundle = new Bundle(); Message msg = new Message();
-	 * 
-	 * try {
-	 * 
-	 * String appName = getResources().getString(R.string.app_name); String
-	 * dirPath = Environment.getExternalStorageDirectory() .toString() + "/" +
-	 * appName; File dir = new File(dirPath); if (!dir.exists()) { dir.mkdirs();
-	 * }
-	 * 
-	 * String fileName = DateFormat .format("yyyy-MM-dd-kk mm ss",
-	 * System.currentTimeMillis()).toString() .concat(".csv");
-	 * 
-	 * File file = new File(dirPath, fileName); if (file.createNewFile()) {
-	 * FileOutputStream fileOutputStream = new FileOutputStream( file);
-	 * 
-	 * fileOutputStream.write(csvData.toString().getBytes());
-	 * fileOutputStream.close();
-	 * 
-	 * } // Si se ha guardado con éxito enviamos un mensaje al // controlador de
-	 * mensajes y lo muestra bundle.putString( "msg",
-	 * Grafica.this.getResources().getString( R.string.save_complate)); } catch
-	 * (Exception e) { // Si no se ha podido guardar entonces nos envía un
-	 * mensaje // diciendo que no se ha guardado bundle.putString( "msg",
-	 * Grafica.this.getResources().getString( R.string.save_imcomplate)); }
-	 * msg.setData(bundle); // Envía el mensaje al controlador
-	 * mensajeria.sendMessage(msg); }
-	 * 
-	 * }**
-	 */
+	private class SaveThread extends Thread {
+
+		@Override
+		public void run() {
+			StringBuilder csvData = new StringBuilder();
+			// Iterator<AccelData> iterator = sensorDatas.iterator();
+			csvData.append("tiempo");
+			csvData.append(",");
+			csvData.append("X");
+			csvData.append(",");
+			csvData.append("Y");
+			csvData.append(",");
+			csvData.append("Z");
+			csvData.append("\n");
+			for (AccelData values : sensorDatas) {
+				// AccelData values = iterator.next();
+				// for (int angle = 0; angle < 4; angle++) {
+				csvData.append(String.valueOf(values.getTimestamp()));
+				csvData.append(",");
+				csvData.append(String.valueOf(values.getTimestamp()));
+				csvData.append(",");
+				csvData.append(String.valueOf(values.getX()));
+				csvData.append(",");
+				csvData.append(String.valueOf(values.getY()));
+				csvData.append(",");
+				csvData.append(String.valueOf(values.getZ()));
+				// }
+				// }
+				csvData.append("\n");
+			}
+
+			Bundle bundle = new Bundle();
+			Message msg = new Message();
+
+			try {
+
+				String appName = getResources().getString(R.string.app_name);
+				String dirPath = Environment.getExternalStorageDirectory()
+						.toString() + "/" + appName;
+				File dir = new File(dirPath);
+				if (!dir.exists()) {
+					dir.mkdirs();
+				}
+
+				String fileName = DateFormat
+						.format("yyyy-MM-dd-kk mm ss",
+								System.currentTimeMillis()).toString()
+						.concat(".csv");
+
+				File file = new File(dirPath, fileName);
+				if (file.createNewFile()) {
+					FileOutputStream fileOutputStream = new FileOutputStream(
+							file);
+
+					fileOutputStream.write(csvData.toString().getBytes());
+					fileOutputStream.close();
+
+				}
+				// Si se ha guardado con éxito enviamos un mensaje al
+				// controlador de mensajes y lo muestra
+				bundle.putString(
+						"msg",
+						Grafica.this.getResources().getString(
+								R.string.save_complate));
+			} catch (Exception e) {
+				// Si no se ha podido guardar entonces nos envía un mensaje
+				// diciendo que no se ha guardado
+				bundle.putString(
+						"msg",
+						Grafica.this.getResources().getString(
+								R.string.save_imcomplate));
+			}
+			msg.setData(bundle);
+			// Envía el mensaje al controlador
+			mensajeria.sendMessage(msg);
+		}
+
+	}
+
+	// Función para guardar los datos obtenidos de los sensores
+	private void saveHistory() {
+		String stadoSD = Environment.getExternalStorageState();
+		// Comprobamos si podemos acceder a la memoria sd, si no se puede lanza
+		// este mensaje y solo se podrían compartir los datos
+		if (!stadoSD.equals(Environment.MEDIA_MOUNTED)
+				&& !stadoSD.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+			Toast.makeText(
+					this,
+					"No puedo leer en la memoria externa, solo se puede exportar",
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		SaveThread thread = new SaveThread();
+
+		thread.start();
+
+	}
 
 	@Override
 	public void onClick(View boton) {
@@ -378,15 +427,15 @@ public class Grafica extends Activity implements OnClickListener,
 			iniciar.setEnabled(true);
 			parar.setEnabled(false);
 			onStop();
-			//openChart();
+			// openChart();
 			break;
 		case (R.id.inicio):
 			parar.setEnabled(true);
 			iniciar.setEnabled(false);
-		//	sensorDatas = new ArrayList<AccelData>();
+			// sensorDatas = new ArrayList<AccelData>();
 			Iniciar_sensores();
 			reiniciar.setEnabled(true);
-			if(tiempoParada>0)
+			if (tiempoParada > 0)
 				contadores2();
 			break;
 		case (R.id.reiniciar):
@@ -411,105 +460,91 @@ public class Grafica extends Activity implements OnClickListener,
 		switch (item.getItemId()) {
 		case (R.id.guardar):
 			Log.d("algo", "boton guardar");
-			// saveHistory();
+			saveHistory();
 			break;
 		case (R.id.enviar):
-			// new Exportar(this).execute(datosSensor);
+			//new Exportar(this).execute(sensorDatas);
 			break;
-	/*	case (R.id.configurate):
-			Log.d("algo", "boton conf");
-			Intent i = new Intent(this, PrefGrafica.class);
-			// Iniciamos la actividad y esperamos respuesta con los datos
-			startActivityForResult(i, 0);
-			break;*/
+		/*
+		 * case (R.id.configurate): Log.d("algo", "boton conf"); Intent i = new
+		 * Intent(this, PrefGrafica.class); // Iniciamos la actividad y
+		 * esperamos respuesta con los datos startActivityForResult(i, 0);
+		 * break;
+		 */
 		}
 		return true;
 		/** true -> consumimos el item, no se propaga */
 	}
 
-	/*@SuppressLint("NewApi") @Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		boolean v = pref.getBoolean("sensores", false);
-            Log.d("vec", "este es: " + v);
-		
-	}*/
-	/*private void openChart() {
-		
-			long t = sensorDatas.get(0).getTimestamp();
-			XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-
-			XYSeries xSeries = new XYSeries("X");
-			XYSeries ySeries = new XYSeries("Y");
-			XYSeries zSeries = new XYSeries("Z");
-
-			for (AccelData data : sensorDatas) {
-				xSeries.add(data.getTimestamp() - t, data.getX());
-				ySeries.add(data.getTimestamp() - t, data.getY());
-				zSeries.add(data.getTimestamp() - t, data.getZ());
-			}
-
-			dataset.addSeries(xSeries);
-			dataset.addSeries(ySeries);
-			dataset.addSeries(zSeries);
-
-			XYSeriesRenderer xRenderer = new XYSeriesRenderer();
-			xRenderer.setColor(Color.RED);
-			xRenderer.setPointStyle(PointStyle.CIRCLE);
-			xRenderer.setFillPoints(true);
-			xRenderer.setLineWidth(1);
-			xRenderer.setDisplayChartValues(false);
-
-			XYSeriesRenderer yRenderer = new XYSeriesRenderer();
-			yRenderer.setColor(Color.GREEN);
-			yRenderer.setPointStyle(PointStyle.CIRCLE);
-			yRenderer.setFillPoints(true);
-			yRenderer.setLineWidth(1);
-			yRenderer.setDisplayChartValues(false);
-
-			XYSeriesRenderer zRenderer = new XYSeriesRenderer();
-			zRenderer.setColor(Color.BLUE);
-			zRenderer.setPointStyle(PointStyle.CIRCLE);
-			zRenderer.setFillPoints(true);
-			zRenderer.setLineWidth(1);
-			zRenderer.setDisplayChartValues(false);
-
-			XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
-			multiRenderer.setXLabels(0);
-			multiRenderer.setLabelsColor(Color.RED);
-			multiRenderer.setChartTitle("t vs (x,y,z)");
-			multiRenderer.setXTitle("Sensor Data");
-			multiRenderer.setYTitle("Values of Acceleration");
-			multiRenderer.setZoomButtonsVisible(true);
-			for (int i = 0; i < sensorDatas.size(); i++) {
-				
-				multiRenderer.addXTextLabel(i + 1, ""
-						+ (sensorDatas.get(i).getTimestamp() - t));
-			}
-			for (int i = 0; i < 12; i++) {
-				multiRenderer.addYTextLabel(i + 1, ""+i);
-			}
-
-			multiRenderer.addSeriesRenderer(xRenderer);
-			multiRenderer.addSeriesRenderer(yRenderer);
-			multiRenderer.addSeriesRenderer(zRenderer);
-
-			// Getting a reference to LinearLayout of the MainActivity Layout
-			
-
-			// Creating a Line Chart
-			GraphicalView mCharts = ChartFactory.getLineChartView(getBaseContext(), dataset,
-					multiRenderer);
-
-			// Adding the Line Chart to the LinearLayout
-			layout.addView(mCharts);
-
-	
-	}
-*/
+	/*
+	 * @SuppressLint("NewApi") @Override protected void onActivityResult(int
+	 * requestCode, int resultCode, Intent data) { // TODO Auto-generated method
+	 * stub super.onActivityResult(requestCode, resultCode, data);
+	 * SharedPreferences pref = PreferenceManager
+	 * .getDefaultSharedPreferences(this); boolean v =
+	 * pref.getBoolean("sensores", false); Log.d("vec", "este es: " + v);
+	 * 
+	 * }
+	 */
+	/*
+	 * private void openChart() {
+	 * 
+	 * long t = sensorDatas.get(0).getTimestamp(); XYMultipleSeriesDataset
+	 * dataset = new XYMultipleSeriesDataset();
+	 * 
+	 * XYSeries xSeries = new XYSeries("X"); XYSeries ySeries = new
+	 * XYSeries("Y"); XYSeries zSeries = new XYSeries("Z");
+	 * 
+	 * for (AccelData data : sensorDatas) { xSeries.add(data.getTimestamp() - t,
+	 * data.getX()); ySeries.add(data.getTimestamp() - t, data.getY());
+	 * zSeries.add(data.getTimestamp() - t, data.getZ()); }
+	 * 
+	 * dataset.addSeries(xSeries); dataset.addSeries(ySeries);
+	 * dataset.addSeries(zSeries);
+	 * 
+	 * XYSeriesRenderer xRenderer = new XYSeriesRenderer();
+	 * xRenderer.setColor(Color.RED);
+	 * xRenderer.setPointStyle(PointStyle.CIRCLE);
+	 * xRenderer.setFillPoints(true); xRenderer.setLineWidth(1);
+	 * xRenderer.setDisplayChartValues(false);
+	 * 
+	 * XYSeriesRenderer yRenderer = new XYSeriesRenderer();
+	 * yRenderer.setColor(Color.GREEN);
+	 * yRenderer.setPointStyle(PointStyle.CIRCLE);
+	 * yRenderer.setFillPoints(true); yRenderer.setLineWidth(1);
+	 * yRenderer.setDisplayChartValues(false);
+	 * 
+	 * XYSeriesRenderer zRenderer = new XYSeriesRenderer();
+	 * zRenderer.setColor(Color.BLUE);
+	 * zRenderer.setPointStyle(PointStyle.CIRCLE);
+	 * zRenderer.setFillPoints(true); zRenderer.setLineWidth(1);
+	 * zRenderer.setDisplayChartValues(false);
+	 * 
+	 * XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+	 * multiRenderer.setXLabels(0); multiRenderer.setLabelsColor(Color.RED);
+	 * multiRenderer.setChartTitle("t vs (x,y,z)");
+	 * multiRenderer.setXTitle("Sensor Data");
+	 * multiRenderer.setYTitle("Values of Acceleration");
+	 * multiRenderer.setZoomButtonsVisible(true); for (int i = 0; i <
+	 * sensorDatas.size(); i++) {
+	 * 
+	 * multiRenderer.addXTextLabel(i + 1, "" +
+	 * (sensorDatas.get(i).getTimestamp() - t)); } for (int i = 0; i < 12; i++)
+	 * { multiRenderer.addYTextLabel(i + 1, ""+i); }
+	 * 
+	 * multiRenderer.addSeriesRenderer(xRenderer);
+	 * multiRenderer.addSeriesRenderer(yRenderer);
+	 * multiRenderer.addSeriesRenderer(zRenderer);
+	 * 
+	 * // Getting a reference to LinearLayout of the MainActivity Layout
+	 * 
+	 * 
+	 * // Creating a Line Chart GraphicalView mCharts =
+	 * ChartFactory.getLineChartView(getBaseContext(), dataset, multiRenderer);
+	 * 
+	 * // Adding the Line Chart to the LinearLayout layout.addView(mCharts);
+	 * 
+	 * 
+	 * }
+	 */
 }
-
-
