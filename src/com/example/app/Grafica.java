@@ -57,7 +57,7 @@ public class Grafica extends Activity implements OnClickListener,
 	Button reiniciar;
 	private static final int DATA_R = 3;
 	private boolean[] mGraphs = { true, true, true, true };
-
+	boolean parado;
 	// Declaramos los checkbox
 	CheckBox ejex;
 	CheckBox ejey;
@@ -73,6 +73,7 @@ public class Grafica extends Activity implements OnClickListener,
 	int vector;
 	long previoustime;
 	long firstTime;
+	int sensor;
 
 	GraphicalView view;
 	Graph mGraph;
@@ -127,6 +128,7 @@ public class Grafica extends Activity implements OnClickListener,
 		Log.d("tiempo", "tiempoInicio " + tiempoInicio);
 		tiempoParada = graficas.getInt("tiempo");
 		Log.d("tiempo", "tiempoParada " + tiempoParada);
+		sensor = graficas.getInt("sensor");
 
 		// si el tiempo de inicio es mayor que cero vamos a contadores si no lo
 		// dejamos como está
@@ -151,6 +153,12 @@ public class Grafica extends Activity implements OnClickListener,
 							switch (buttonView.getId()) {
 							case R.id.ejex:
 								mGraphs[SensorManager.DATA_X] = isChecked;
+								if (parado == true) {
+									mGraph.setProperties(mGraphs);
+									mGraph.initData(sensorDatas);
+									view = mGraph.getGraph();
+									layout.addView(view);
+								}
 								break;
 							case R.id.ejey:
 								mGraphs[SensorManager.DATA_Y] = isChecked;
@@ -165,6 +173,7 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					});
 		}
+
 	}
 
 	private void contadores() {
@@ -250,43 +259,79 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		// TODO Auto-generated method stub
-		double x = event.values[0];
-		double y = event.values[1];
-		double z = event.values[2];
-		long timestamp = System.currentTimeMillis();
 
-		AccelData data = new AccelData(timestamp, x, y, z);
-		sensorDatas.add(data);
-		Log.d("sensordatassss", "sensor: " + data);
-		mGraph = new Graph(this);
-		mGraph.initData(sensorDatas);
-		mGraph.setProperties(mGraphs);
-		if (!init) {
-			view = mGraph.getGraph();
-			layout.addView(view);
-			init = true;
-		} else {
-			layout.removeView(view);
-			view = mGraph.getGraph();
-			layout.addView(view);
+		switch (event.sensor.getType()) {
+		case Sensor.TYPE_ACCELEROMETER:
+			double x = event.values[0];
+			double y = event.values[1];
+			double z = event.values[2];
+			long timestamp = System.currentTimeMillis();
+
+			AccelData data = new AccelData(timestamp, x, y, z);
+			sensorDatas.add(data);
+			Log.d("sensordatassss", "sensor: " + data);
+			mGraph = new Graph(this);
+			mGraph.initData(sensorDatas);
+			mGraph.setProperties(mGraphs);
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+				mGraph.setProperties(mGraphs);
+			}
+
+			break;
+		case Sensor.TYPE_GYROSCOPE:
+			double x2 = event.values[0];
+			double y2 = event.values[1];
+			double z2 = event.values[2];
+			long timestamp2 = System.currentTimeMillis();
+
+			AccelData data2 = new AccelData(timestamp2, x2, y2, z2);
+			sensorDatas.add(data2);
+			Log.d("sensordatassss", "sensor: " + data2);
+			mGraph = new Graph(this);
+			mGraph.initData(sensorDatas);
+			mGraph.setProperties(mGraphs);
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+				mGraph.setProperties(mGraphs);
+			}
+			break;
+		case Sensor.TYPE_LIGHT:
+			double x3 = event.values[0];
+			double y3 = event.values[1];
+			double z3 = event.values[2];
+			long timestamp3 = System.currentTimeMillis();
+
+			AccelData data3 = new AccelData(timestamp3, x3, y3, z3);
+			sensorDatas.add(data3);
+			Log.d("sensordatassss", "sensor: " + data3);
+			mGraph = new Graph(this);
+			mGraph.initData(sensorDatas);
+			mGraph.setProperties(mGraphs);
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+				mGraph.setProperties(mGraphs);
+			}
+			break;
 		}
-
-		// long deltaTime = currentTime - previoustime;
-
-		/*
-		 * switch (event.sensor.getType()) { case Sensor.TYPE_ACCELEROMETER:
-		 * xSeries.add(currentTime, event.values[0]); Log.d("sensorchanged",
-		 * "xxx " + " " + xSeries);
-		 * 
-		 * synchronized (this) { } sensorData.addSeries(xSeries);
-		 * XYSeriesRenderer xRenderer = new XYSeriesRenderer();
-		 * xRenderer.setColor(Color.CYAN);
-		 * xRenderer.setPointStyle(PointStyle.CIRCLE);
-		 * xRenderer.setDisplayChartValues(true); xRenderer.setLineWidth(2);
-		 * xRenderer.setFillPoints(true);
-		 * mRenderer.addSeriesRenderer(xRenderer); break; }
-		 */
-
 	}
 
 	@Override
@@ -342,14 +387,42 @@ public class Grafica extends Activity implements OnClickListener,
 	// Función para guardar los datos obtenidos de los sensores
 
 	protected void Parar_sensores() {
-		sensorManager.unregisterListener(this,
-				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+		switch (sensor) {
+		case Sensor.TYPE_ACCELEROMETER:
+			sensorManager.unregisterListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+			break;
+		case Sensor.TYPE_GYROSCOPE:
+			sensorManager.unregisterListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
+			break;
+		case Sensor.TYPE_LIGHT:
+			sensorManager.unregisterListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
+			break;
+		}
+		
 	}
 
 	protected void Iniciar_sensores() {
-		sensorManager.registerListener(this,
-				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				frecuencia);
+		switch (sensor) {
+		case Sensor.TYPE_ACCELEROMETER:
+			sensorManager.registerListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+					frecuencia);
+			break;
+		case Sensor.TYPE_GYROSCOPE:
+			sensorManager.registerListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+					frecuencia);
+			break;
+		case Sensor.TYPE_LIGHT:
+			sensorManager.registerListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+					frecuencia);
+			break;
+		}
+
 	}
 
 	private class SaveThread extends Thread {
@@ -454,9 +527,12 @@ public class Grafica extends Activity implements OnClickListener,
 			iniciar.setEnabled(true);
 			parar.setEnabled(false);
 			onStop();
+
+			parado = true;
 			// openChart();
 			break;
 		case (R.id.inicio):
+			parado = false;
 			parar.setEnabled(true);
 			iniciar.setEnabled(false);
 			// sensorDatas = new ArrayList<AccelData>();

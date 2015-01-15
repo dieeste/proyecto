@@ -141,6 +141,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafica.putExtra("tipo", tipo);
 			grafica.putExtra("tiempo", tiempoParada);
 			grafica.putExtra("temporizador", tiempoInicio);
+			grafica.putExtra("sensor", Sensor.TYPE_ACCELEROMETER);
 			startActivity(grafica);
 			break;
 		case R.id.graficaGiroscopio:
@@ -148,6 +149,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaGir.putExtra("tipo", tipo);
 			graficaGir.putExtra("tiempo", tiempoParada);
 			graficaGir.putExtra("temporizador", tiempoInicio);
+			graficaGir.putExtra("sensor", Sensor.TYPE_GYROSCOPE);
 			startActivity(graficaGir);
 			break;
 		case R.id.graficaLuminosidad:
@@ -155,6 +157,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaLu.putExtra("tipo", tipo);
 			graficaLu.putExtra("tiempo", tiempoParada);
 			graficaLu.putExtra("temporizador", tiempoInicio);
+			graficaLu.putExtra("sensor", Sensor.TYPE_LIGHT);
 			startActivity(graficaLu);
 			break;
 		case R.id.graficaMagnetico:
