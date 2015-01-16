@@ -401,7 +401,7 @@ public class Grafica extends Activity implements OnClickListener,
 					sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
 			break;
 		}
-		
+
 	}
 
 	protected void Iniciar_sensores() {
@@ -429,26 +429,18 @@ public class Grafica extends Activity implements OnClickListener,
 
 		@Override
 		public void run() {
+			long t = sensorDatas.peek().getTimestamp();
+
 			StringBuilder csvData = new StringBuilder();
-			csvData.append("tiempo");
-			csvData.append(",");
-			csvData.append("X");
-			csvData.append(",");
-			csvData.append("Y");
-			csvData.append(",");
-			csvData.append("Z");
-			csvData.append("\n");
+			csvData.append("Tiempo, X, Y, Z \n");
 			for (AccelData values : sensorDatas) {
-				csvData.append(String.valueOf(values.getTimestamp()));
-				csvData.append(",");
-				csvData.append(String.valueOf(values.getTimestamp()));
-				csvData.append(",");
-				csvData.append(String.valueOf(values.getX()));
-				csvData.append(",");
-				csvData.append(String.valueOf(values.getY()));
-				csvData.append(",");
-				csvData.append(String.valueOf(values.getZ()));
-				csvData.append("\n");
+				long f = (values.getTimestamp() - t) / 1000;
+				double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+				double fin = f + d;
+				csvData.append(String.valueOf(fin) + ", "
+						+ String.valueOf(values.getX()) + ", "
+						+ String.valueOf(values.getY()) + ", "
+						+ String.valueOf(values.getZ()) + "\n");
 			}
 
 			Bundle bundle = new Bundle();
@@ -465,7 +457,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 
 				String fileName = DateFormat
-						.format("yyyy-MM-dd-kk mm ss",
+						.format("dd-MM-yyyy HH-mm-ss",
 								System.currentTimeMillis()).toString()
 						.concat(".csv");
 

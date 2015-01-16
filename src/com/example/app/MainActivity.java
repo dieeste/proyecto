@@ -15,6 +15,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button simulacion;
 	Button teoria;
 	Button listasensores;
+	Button cargargraficas;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +26,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		simulacion = (Button) findViewById(R.id.medicion);
 		teoria = (Button) findViewById(R.id.teoria);
 		listasensores = (Button) findViewById(R.id.sensoresdisponibles);
+		cargargraficas = (Button) findViewById(R.id.cargargrafica);
 
 		// Escuchamos los botones
 		simulacion.setOnClickListener(this);
 		teoria.setOnClickListener(this);
 		listasensores.setOnClickListener(this);
+		cargargraficas.setOnClickListener(this);
 	}
 
 	@Override
@@ -76,6 +79,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			Intent sensoresdisponibles = new Intent(this, Listasensores.class);
 			startActivity(sensoresdisponibles);
 			break;
+		case R.id.cargargrafica:
+			Intent cargar = new Intent(this, CargarGraficas.class);
+			startActivity(cargar);
 		default:
 			break;
 		}

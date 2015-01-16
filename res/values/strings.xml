@@ -42,5 +42,6 @@
     <string name="reanudar">Reanudar</string>
     <string name="modulo">Módulo</string>
     <string name="grafica">Gráfica</string>
+    <string name="cargargraficas">Cargar gráficas</string>
 
 </resources>

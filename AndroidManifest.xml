@@ -101,6 +101,11 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
+        <activity android:name="CargarGraficas" >
+            <action android:name=".CargarGraficas" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
     </application>
 
 </manifest>

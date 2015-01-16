@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="#ffffff"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:layout_below="@+id/sensoresdisponibles"
         android:text="@string/medicion" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/teoria"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:textColor="#ffffff"
         android:layout_below="@+id/medicion"
         android:text="@string/teoria" />
@@ -27,8 +27,18 @@
         android:id="@+id/sensoresdisponibles"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="45dp"
+        android:text="@string/sensores"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/cargargrafica"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:textColor="#ffffff"
-    	android:text="@string/sensores" />
+        android:layout_below="@+id/teoria"
+        android:text="@string/cargargraficas" />
 
 </RelativeLayout>
