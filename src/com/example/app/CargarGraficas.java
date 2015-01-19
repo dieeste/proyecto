@@ -1,50 +1,81 @@
 package com.example.app;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class CargarGraficas extends Thread{
-	/*@Override
-	public void run() {
-		
-		for (AccelData values : sensorDatas) {
-			long f = (values.getTimestamp() - t) / 1000;
-			double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-			double fin = f + d;
-			csvData.append(String.valueOf(fin) + ", "
-					+ String.valueOf(values.getX()) + ", "
-					+ String.valueOf(values.getY()) + ", "
-					+ String.valueOf(values.getZ()) + "\n");
-		}
+import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
 
-		Bundle bundle = new Bundle();
-		Message msg = new Message();
+public class CargarGraficas extends ListActivity {
 
+	private File currentDir;
+	private FileArrayAdapter adapter;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		currentDir = new File(Environment.getExternalStorageDirectory()
+				.toString() + "/" + getResources().getString(R.string.app_name));
+		ficheros(currentDir);
+	}
+
+	private void ficheros(File f) {
+		File[] dirs = f.listFiles();
+		this.setTitle("Directorio actual: " + f.getName());
+		List<Opciones> dir = new ArrayList<Opciones>();
+		List<Opciones> fls = new ArrayList<Opciones>();
 		try {
-
-			String appName = getResources().getString(R.string.app_name);
-			String dirPath = Environment.getExternalStorageDirectory()
-					.toString() + "/" + appName;
-			File dir = new File(dirPath);
-			if (!dir.exists()) {
-				dir.mkdirs();
+			for (File ff : dirs) {
+				if (ff.isDirectory())
+					dir.add(new Opciones(ff.getName(), "Carpeta", ff
+							.getAbsolutePath()));
+				else {
+					fls.add(new Opciones(ff.getName(),
+							"Tamaño: " + ff.length(), ff.getAbsolutePath()));
+				}
 			}
+		} catch (Exception e) {
 
-			String fileName = DateFormat
-					.format("dd-MM-yyyy HH-mm-ss",
-							System.currentTimeMillis()).toString()
-					.concat(".csv");
+		}
+		Collections.sort(dir);
+		Collections.sort(fls);
+		dir.addAll(fls);
+		if (!f.getName().equalsIgnoreCase("sdcard"))
+			dir.add(0, new Opciones("..", "Parent Directory", f.getParent()));
+		adapter = new FileArrayAdapter(CargarGraficas.this,
+				R.layout.cargagrafica, dir);
+		this.setListAdapter(adapter);
 
-			File file = new File(dirPath, fileName);
-			if (file.createNewFile()) {
-				FileOutputStream fileOutputStream = new FileOutputStream(
-						file);
+	}
 
-				fileOutputStream.write(csvData.toString().getBytes());
-				fileOutputStream.close();
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		// TODO Auto-generated method stub
+		super.onListItemClick(l, v, position, id);
+		Opciones o = adapter.getItem(position);
+		if (o.getData().equalsIgnoreCase("folder")
+				|| o.getData().equalsIgnoreCase("parent directory")) {
+			currentDir = new File(o.getPath());
+			ficheros(currentDir);
+		} else {
+			onFileClick(o);
+		}
+	}
 
-			}
-			catch (Exception e) {
-				// Si no se ha podido guardar entonces nos envía un mensaje
-				// diciendo que no se ha guardado
-				
-			}*/
+	private void onFileClick(Opciones o) {
+		Toast.makeText(this, "File Clicked: " + o.getName(), Toast.LENGTH_SHORT)
+				.show();
+		Intent i = new Intent(CargarGraficas.this,LeerCsv.class);
+		i.putExtra("fichero", o.getPath());
+		startActivity(i);
+	}
+
 }

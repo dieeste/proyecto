@@ -457,7 +457,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 
 				String fileName = DateFormat
-						.format("dd-MM-yyyy HH-mm-ss",
+						.format("dd-MM-yyyy kk-mm-ss",
 								System.currentTimeMillis()).toString()
 						.concat(".csv");
 

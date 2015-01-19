@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CheckBox;
 
 public class Graph extends Grafica {
 	private Context context;
@@ -31,7 +30,6 @@ public class Graph extends Grafica {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		ejex = (CheckBox) findViewById(R.id.ejex);
 	}
 
 	public void initData(ConcurrentLinkedQueue<AccelData> sensorDatas) {
@@ -134,6 +132,48 @@ public class Graph extends Grafica {
 		renderer.setZoomButtonsVisible(true);
 	}
 
+	public void setProperties2() {
+		// renderer.setClickEnabled(ClickEnabled);
+
+		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
+			renderer1.setColor(Color.RED);
+			renderer1.setLineWidth(1);
+			renderer1.setDisplayChartValues(false);
+			renderer.addSeriesRenderer(renderer1);
+		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
+
+			renderer2.setColor(Color.GREEN);
+			renderer.addSeriesRenderer(renderer2);
+			renderer.addSeriesRenderer(renderer2);
+		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
+
+			renderer3.setColor(Color.BLUE);
+			renderer.addSeriesRenderer(renderer3);
+			renderer.addSeriesRenderer(renderer3);
+		XYSeriesRenderer modulo = new XYSeriesRenderer();
+
+			modulo.setColor(Color.MAGENTA);
+			renderer.addSeriesRenderer(modulo);
+			renderer.addSeriesRenderer(modulo);
+		renderer.setBackgroundColor(Color.WHITE);
+		renderer.setMarginsColor(Color.WHITE);
+		renderer.setApplyBackgroundColor(true);
+		// renderer.setXAxisMin(0.0);
+		renderer.setXAxisMax(greater);
+		renderer.setChartTitle("AccelerometerData ");
+		renderer.setGridColor(Color.DKGRAY);
+		renderer.setShowGrid(true);
+		renderer.setYTitle("Acelerómetro");
+		renderer.setXTitle("Tiempo (segundos)");
+		renderer.setXLabels(5);
+		renderer.setBackgroundColor(Color.BLACK);
+
+		renderer.setYLabelsAlign(Paint.Align.RIGHT);
+		renderer.setAxesColor(Color.BLACK);
+		renderer.setLabelsColor(Color.RED);
+		renderer.setZoomButtonsVisible(true);
+	}
+	
 	public GraphicalView getGraph() {
 
 		return ChartFactory.getLineChartView(context, dataset, renderer);
