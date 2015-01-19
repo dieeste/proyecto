@@ -259,12 +259,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 			case Sensor.TYPE_ACCELEROMETER:
 
 				txt += "Acelerómetro\n";
-				txt += "\n x: " + event.values[0]
-						+ getString(R.string.unit_acceleration);
-				txt += "\n y: " + event.values[1]
-						+ getString(R.string.unit_acceleration);
-				txt += "\n z: " + event.values[2]
-						+ getString(R.string.unit_acceleration);
+				txt += "\n X: " + event.values[0]
+						+ " "+ getString(R.string.unit_acceleration);
+				txt += "\n Y: " + event.values[1]
+						+ " "+ getString(R.string.unit_acceleration);
+				txt += "\n Z: " + event.values[2]
+						+ " "+ getString(R.string.unit_acceleration);
 				acelerometro.setText(txt);
 				break;
 

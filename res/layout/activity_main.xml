@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context="com.example.app.MainActivity" 
-    android:background="@drawable/pmenu">
+    android:background="@drawable/f">
 
     <Button
         android:id="@+id/medicion"

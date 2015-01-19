@@ -1,12 +1,10 @@
 package com.example.app;
 
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 
-public class Exportar extends AsyncTask<ConcurrentLinkedQueue<float[]>, Integer, String>{
+public class Exportar{
 	
 	private Grafica activity;
 
@@ -14,26 +12,25 @@ public class Exportar extends AsyncTask<ConcurrentLinkedQueue<float[]>, Integer,
 		this.activity = activity;
 	}
 
-	@Override
-	protected String doInBackground(ConcurrentLinkedQueue<float[]>... params) {
+	protected void hacer(ConcurrentLinkedQueue<AccelData> sensorDatas) {
 		// TODO Auto-generated method stub
-		StringBuilder datos = new StringBuilder();
-		Iterator<float[]> iterator = params[0].iterator();
-		while (iterator.hasNext()) {
-			float[] values = iterator.next();
-			for (int i = 0; i< 3; i++) {
-				datos.append(String.valueOf(values[i]));
-				if (i < 3) {
-					datos.append(",");
-				}
-			}
-			datos.append("\n");
+		long t = sensorDatas.peek().getTimestamp();
+
+		StringBuilder csvData = new StringBuilder();
+		csvData.append("Tiempo, X, Y, Z \n");
+		for (AccelData values : sensorDatas) {
+			long f = (values.getTimestamp() - t) / 1000;
+			double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+			double fin = f + d;
+			csvData.append(String.valueOf(fin) + ", "
+					+ String.valueOf(values.getX()) + ", "
+					+ String.valueOf(values.getY()) + ", "
+					+ String.valueOf(values.getZ()) + "\n");
 		}
-		return datos.toString();
+		enviar(csvData.toString());
 	}
 	
-	@Override
-	protected void onPostExecute(String result) {
+	protected void enviar(String result) {
 		// TODO Auto-generated method stub
 		activity.setProgressBarVisibility(false);
 		Intent sendIntent = new Intent();
@@ -41,7 +38,7 @@ public class Exportar extends AsyncTask<ConcurrentLinkedQueue<float[]>, Integer,
 		sendIntent.putExtra(Intent.EXTRA_TEXT, result);
 		sendIntent.setType("text/plain");
 		activity.startActivity(sendIntent);
-		super.onPostExecute(result);
 	}
+
 
 }

@@ -558,7 +558,7 @@ public class Grafica extends Activity implements OnClickListener,
 			saveHistory();
 			break;
 		case (R.id.enviar):
-			// new Exportar(this).execute(sensorDatas);
+			new Exportar(this).hacer(sensorDatas);
 			break;
 		/*
 		 * case (R.id.configurate): Log.d("algo", "boton conf"); Intent i = new
