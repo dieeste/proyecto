@@ -20,30 +20,37 @@
             android:textColor="#000000"
             android:textStyle="bold" />
 
-         <LinearLayout
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginBottom="10dp"
-             android:orientation="horizontal" >
+        <CheckBox
+            android:id="@+id/checkAcelerometro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkAcelerometro"
+            android:textColor="#ffffff" />
 
-             <TextView
-                 android:id="@+id/acelerometro"
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_gravity="fill_vertical"
-                 android:layout_weight="3"
-                 android:textColor="#ccff33"
-                 android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/acelerometro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
+                android:layout_weight="3"
+                android:textColor="#ccff33"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/graficaAcelerometro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:drawableTop="@drawable/iconografic"
+                android:drawableBottom="@drawable/iconografic"
+                android:minHeight="60dp"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
 
         <Button
@@ -52,6 +59,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/b"
             android:text="@string/giroscopio"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/checkGiroscopio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkGiroscopio"
             android:textColor="#ffffff" />
 
         <LinearLayout
@@ -86,6 +100,13 @@
             android:text="@string/magnetico"
             android:textColor="#ffffff" />
 
+        <CheckBox
+            android:id="@+id/checkMagetico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkMagnetometro"
+            android:textColor="#ffffff" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,6 +137,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/b"
             android:text="@string/proximidad"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/checkProximidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkProximidad" 
             android:textColor="#ffffff" />
 
         <TextView
@@ -154,6 +182,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/b"
             android:text="@string/luminosidad"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/checkLuz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkLuz"
             android:textColor="#ffffff" />
 
         <LinearLayout

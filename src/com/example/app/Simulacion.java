@@ -17,10 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 public class Simulacion extends Activity implements SensorEventListener,
-		OnClickListener {
+		OnClickListener, OnCheckedChangeListener {
 
 	SensorManager mSensorManager;
 	TextView detecta;
@@ -44,6 +47,17 @@ public class Simulacion extends Activity implements SensorEventListener,
 	Button grafMagnetico;
 	Button grafProximidad;
 	Button grafLuz;
+	CheckBox acelero;
+	CheckBox giro;
+	CheckBox magneto;
+	CheckBox luz;
+	CheckBox prox;
+	boolean acce= false;
+	boolean gi= false;
+	boolean mag = false;
+	boolean lu= false;
+	boolean proxi= false;
+
 
 	// Recogemos las preferencias
 	int tiempoInicio, tiempoParada;
@@ -96,9 +110,25 @@ public class Simulacion extends Activity implements SensorEventListener,
 		grafMagnetico.setOnClickListener(this);
 		grafProximidad.setOnClickListener(this);
 		grafLuz.setOnClickListener(this);
+		
+		
 
-		tipo=SensorManager.SENSOR_DELAY_NORMAL;
-		Log.d("tiempo","inicio: "+tipo);
+		tipo = SensorManager.SENSOR_DELAY_NORMAL;
+		Log.d("tiempo", "inicio: " + tipo);
+
+		
+		acelero = (CheckBox) findViewById(R.id.checkAcelerometro);
+		giro = (CheckBox) findViewById(R.id.checkGiroscopio);
+		magneto = (CheckBox) findViewById(R.id.checkMagetico);
+		luz = (CheckBox) findViewById(R.id.checkLuz);
+		prox = (CheckBox) findViewById(R.id.checkProximidad);
+		
+		acelero.setOnClickListener(this);
+		giro.setOnClickListener(this);
+		magneto.setOnClickListener(this);
+		luz.setOnClickListener(this);
+		prox.setOnClickListener(this);
+
 	}
 
 	@Override
@@ -142,6 +172,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafica.putExtra("tiempo", tiempoParada);
 			grafica.putExtra("temporizador", tiempoInicio);
 			grafica.putExtra("sensor", Sensor.TYPE_ACCELEROMETER);
+			grafica.putExtra("acelerometro", acce);
+			grafica.putExtra("giroscopio", gi);
+			grafica.putExtra("magnetometro", mag);
+			grafica.putExtra("luz", lu);
+			grafica.putExtra("proximo", proxi);
+			
 			startActivity(grafica);
 			break;
 		case R.id.graficaGiroscopio:
@@ -150,6 +186,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaGir.putExtra("tiempo", tiempoParada);
 			graficaGir.putExtra("temporizador", tiempoInicio);
 			graficaGir.putExtra("sensor", Sensor.TYPE_GYROSCOPE);
+			graficaGir.putExtra("acelerometro", acce);
+			graficaGir.putExtra("giroscopio", gi);
+			graficaGir.putExtra("magnetometro", mag);
+			graficaGir.putExtra("luz", lu);
+			graficaGir.putExtra("proximo", proxi);
 			startActivity(graficaGir);
 			break;
 		case R.id.graficaLuminosidad:
@@ -158,6 +199,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaLu.putExtra("tiempo", tiempoParada);
 			graficaLu.putExtra("temporizador", tiempoInicio);
 			graficaLu.putExtra("sensor", Sensor.TYPE_LIGHT);
+			graficaLu.putExtra("acelerometro", acce);
+			graficaLu.putExtra("giroscopio", gi);
+			graficaLu.putExtra("magnetometro", mag);
+			graficaLu.putExtra("luz", lu);
+			graficaLu.putExtra("proximo", proxi);
 			startActivity(graficaLu);
 			break;
 		case R.id.graficaMagnetico:
@@ -166,6 +212,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaMa.putExtra("tiempo", tiempoParada);
 			graficaMa.putExtra("temporizador", tiempoInicio);
 			graficaMa.putExtra("sensor", Sensor.TYPE_MAGNETIC_FIELD);
+			graficaMa.putExtra("acelerometro", acce);
+			graficaMa.putExtra("giroscopio", gi);
+			graficaMa.putExtra("magnetometro", mag);
+			graficaMa.putExtra("luz", lu);
+			graficaMa.putExtra("proximo", proxi);
 			startActivity(graficaMa);
 			break;
 		case R.id.graficaProximidad:
@@ -174,6 +225,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaPr.putExtra("tiempo", tiempoParada);
 			graficaPr.putExtra("temporizador", tiempoInicio);
 			graficaPr.putExtra("sensor", Sensor.TYPE_PROXIMITY);
+			graficaPr.putExtra("acelerometro", acce);
+			graficaPr.putExtra("giroscopio", gi);
+			graficaPr.putExtra("magnetometro", mag);
+			graficaPr.putExtra("luz", lu);
+			graficaPr.putExtra("proximo", proxi);
 			startActivity(graficaPr);
 			break;
 		}
@@ -261,12 +317,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 			case Sensor.TYPE_ACCELEROMETER:
 
 				txt += "Acelerómetro\n";
-				txt += "\n X: " + event.values[0]
-						+ " "+ getString(R.string.unit_acceleration);
-				txt += "\n Y: " + event.values[1]
-						+ " "+ getString(R.string.unit_acceleration);
-				txt += "\n Z: " + event.values[2]
-						+ " "+ getString(R.string.unit_acceleration);
+				txt += "\n X: " + event.values[0] + " "
+						+ getString(R.string.unit_acceleration);
+				txt += "\n Y: " + event.values[1] + " "
+						+ getString(R.string.unit_acceleration);
+				txt += "\n Z: " + event.values[2] + " "
+						+ getString(R.string.unit_acceleration);
 				acelerometro.setText(txt);
 				break;
 
@@ -373,15 +429,16 @@ public class Simulacion extends Activity implements SensorEventListener,
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 
-		String type=pref.getString("frecuencia", "SensorManager.SENSOR_DELAY_NORMAL");
-		if(type.equals("SensorManager.SENSOR_DELAY_NORMAL")){
-			tipo=SensorManager.SENSOR_DELAY_NORMAL;
-		}else if (type.equals("SensorManager.SENSOR_DELAY_UI")){
-			tipo=SensorManager.SENSOR_DELAY_UI;
-		}else if (type.equals("SensorManager.SENSOR_DELAY_GAME")){
-			tipo=SensorManager.SENSOR_DELAY_GAME;
-		}else if (type.equals("SensorManager.SENSOR_DELAY_FASTEST")){
-			tipo=SensorManager.SENSOR_DELAY_FASTEST;
+		String type = pref.getString("frecuencia",
+				"SensorManager.SENSOR_DELAY_NORMAL");
+		if (type.equals("SensorManager.SENSOR_DELAY_NORMAL")) {
+			tipo = SensorManager.SENSOR_DELAY_NORMAL;
+		} else if (type.equals("SensorManager.SENSOR_DELAY_UI")) {
+			tipo = SensorManager.SENSOR_DELAY_UI;
+		} else if (type.equals("SensorManager.SENSOR_DELAY_GAME")) {
+			tipo = SensorManager.SENSOR_DELAY_GAME;
+		} else if (type.equals("SensorManager.SENSOR_DELAY_FASTEST")) {
+			tipo = SensorManager.SENSOR_DELAY_FASTEST;
 		}
 		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));
 		tiempoParada = Integer.parseInt(pref.getString("tiempo", "0"));
@@ -389,6 +446,32 @@ public class Simulacion extends Activity implements SensorEventListener,
 		Log.d("tiempo", "tiempoInicio " + tiempoInicio);
 		Log.d("tiempo", "tiempoParada " + tiempoParada);
 		Log.d("tiempo", "tiempofre " + tipo);
+
 	}
 
-}
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		// TODO Auto-generated method stub
+			if (buttonView==acelero){ 
+				if(isChecked){
+				acce=true;
+				Log.d("putttt", "putttt " + acce);
+				}
+			else 
+			{acce = false;}}
+			
+/*			case R.id.checkGiroscopio:
+				gi=giro.isChecked();
+				break;
+			case R.id.checkMagetico:
+				mag=magneto.isChecked();
+				break;
+			case R.id.checkLuz:
+				lu=luz.isChecked();
+				break;
+			case R.id.checkProximidad:
+				proxi=prox.isChecked();
+				break;
+			}
+		*/
+}}

@@ -43,5 +43,10 @@
     <string name="modulo">Módulo</string>
     <string name="grafica">Gráfica</string>
     <string name="cargargraficas">Cargar gráficas</string>
+    <string name="checkAcelerometro">Guardar datos del acelerómetro</string>
+    <string name="checkGiroscopio">Guardar datos del giroscopio</string>
+    <string name="checkMagnetometro">Guardar datos del magnetómetro</string>
+    <string name="checkLuz">Guardar datos del sensor de luz</string>
+    <string name="checkProximidad">Guardar datos del proximidad</string>
 
 </resources>

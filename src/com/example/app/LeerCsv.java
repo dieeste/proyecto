@@ -44,7 +44,6 @@ public class LeerCsv extends Activity {
 			fichero.close();
 			mGraph = new Graph(this);
 			mGraph.initData(datos);
-			mGraph.setProperties2();
 			view = mGraph.getGraph();
 			layout.addView(view);
 			
