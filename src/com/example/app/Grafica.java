@@ -142,12 +142,13 @@ public class Grafica extends Activity implements OnClickListener,
 		tiempoParada = graficas.getInt("tiempo");
 		Log.d("tiempo", "tiempoParada " + tiempoParada);
 		sensor = graficas.getInt("sensor");
-		acce = graficas.getBoolean("acce");
+		acce = graficas.getBoolean("acelerometro");
 		Log.d("boolean", "boole: "+acce);
-		giro = graficas.getBoolean("gi");
-		magne = graficas.getBoolean("mag");
-		luz = graficas.getBoolean("lu");
-		proxi = graficas.getBoolean("proxi");
+		giro = graficas.getBoolean("giroscopio");
+		Log.d("boolean", "boole: "+giro);
+		magne = graficas.getBoolean("magnetometro");
+		luz = graficas.getBoolean("luz");
+		proxi = graficas.getBoolean("proximidad");
 		
 
 		// si el tiempo de inicio es mayor que cero vamos a contadores si no lo
@@ -531,8 +532,8 @@ public class Grafica extends Activity implements OnClickListener,
 					dir.mkdirs();
 				}
 
-				String fileName = DateFormat
-						.format("Acelerometro dd-MM-yyyy kk-mm-ss",
+				String fileName = "Acelerometro "+ DateFormat
+						.format("dd-MM-yyyy kk-mm-ss",
 								System.currentTimeMillis()).toString()
 						.concat(".csv");
 
@@ -593,8 +594,8 @@ public class Grafica extends Activity implements OnClickListener,
 					dir.mkdirs();
 				}
 
-				String fileName = DateFormat
-						.format("Giroscopio dd-MM-yyyy kk-mm-ss",
+				String fileName = "Giroscopio "+ DateFormat
+						.format("dd-MM-yyyy kk-mm-ss",
 								System.currentTimeMillis()).toString()
 						.concat(".csv");
 
@@ -654,8 +655,8 @@ public class Grafica extends Activity implements OnClickListener,
 				dir.mkdirs();
 			}
 
-			String fileName = DateFormat
-					.format("Magnetometro dd-MM-yyyy kk-mm-ss",
+			String fileName = "Magnetometro "+DateFormat
+					.format("dd-MM-yyyy kk-mm-ss",
 							System.currentTimeMillis()).toString()
 					.concat(".csv");
 
@@ -715,8 +716,8 @@ if (luz==true){
 			dir.mkdirs();
 		}
 
-		String fileName = DateFormat
-				.format("Luz dd-MM-yyyy kk-mm-ss",
+		String fileName = "Sensor luz "+DateFormat
+				.format("dd-MM-yyyy kk-mm-ss",
 						System.currentTimeMillis()).toString()
 				.concat(".csv");
 
@@ -776,8 +777,8 @@ if (proxi==true){
 			dir.mkdirs();
 		}
 
-		String fileName = DateFormat
-				.format("Proximidad dd-MM-yyyy kk-mm-ss",
+		String fileName = "Sensor proximidad "+DateFormat
+				.format("dd-MM-yyyy kk-mm-ss",
 						System.currentTimeMillis()).toString()
 				.concat(".csv");
 

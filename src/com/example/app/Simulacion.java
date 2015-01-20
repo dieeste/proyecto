@@ -23,7 +23,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 public class Simulacion extends Activity implements SensorEventListener,
-		OnClickListener, OnCheckedChangeListener {
+		OnClickListener, OnCheckedChangeListener{
 
 	SensorManager mSensorManager;
 	TextView detecta;
@@ -52,12 +52,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 	CheckBox magneto;
 	CheckBox luz;
 	CheckBox prox;
-	boolean acce= false;
-	boolean gi= false;
+	boolean acce;
+	boolean gi = false;
 	boolean mag = false;
-	boolean lu= false;
-	boolean proxi= false;
-
+	boolean lu = false;
+	boolean proxi = false;
 
 	// Recogemos las preferencias
 	int tiempoInicio, tiempoParada;
@@ -110,24 +109,21 @@ public class Simulacion extends Activity implements SensorEventListener,
 		grafMagnetico.setOnClickListener(this);
 		grafProximidad.setOnClickListener(this);
 		grafLuz.setOnClickListener(this);
-		
-		
 
 		tipo = SensorManager.SENSOR_DELAY_NORMAL;
 		Log.d("tiempo", "inicio: " + tipo);
 
-		
 		acelero = (CheckBox) findViewById(R.id.checkAcelerometro);
 		giro = (CheckBox) findViewById(R.id.checkGiroscopio);
 		magneto = (CheckBox) findViewById(R.id.checkMagetico);
 		luz = (CheckBox) findViewById(R.id.checkLuz);
 		prox = (CheckBox) findViewById(R.id.checkProximidad);
-		
-		acelero.setOnClickListener(this);
-		giro.setOnClickListener(this);
-		magneto.setOnClickListener(this);
-		luz.setOnClickListener(this);
-		prox.setOnClickListener(this);
+
+		acelero.setOnCheckedChangeListener(this);
+		giro.setOnCheckedChangeListener(this);
+		magneto.setOnCheckedChangeListener(this);
+		luz.setOnCheckedChangeListener(this);
+		prox.setOnCheckedChangeListener(this);
 
 	}
 
@@ -176,8 +172,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafica.putExtra("giroscopio", gi);
 			grafica.putExtra("magnetometro", mag);
 			grafica.putExtra("luz", lu);
-			grafica.putExtra("proximo", proxi);
-			
+			grafica.putExtra("proximidad", proxi);
+
 			startActivity(grafica);
 			break;
 		case R.id.graficaGiroscopio:
@@ -452,26 +448,24 @@ public class Simulacion extends Activity implements SensorEventListener,
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		// TODO Auto-generated method stub
-			if (buttonView==acelero){ 
-				if(isChecked){
-				acce=true;
-				Log.d("putttt", "putttt " + acce);
-				}
-			else 
-			{acce = false;}}
-			
-/*			case R.id.checkGiroscopio:
-				gi=giro.isChecked();
-				break;
-			case R.id.checkMagetico:
-				mag=magneto.isChecked();
-				break;
-			case R.id.checkLuz:
-				lu=luz.isChecked();
-				break;
-			case R.id.checkProximidad:
-				proxi=prox.isChecked();
-				break;
-			}
-		*/
-}}
+		switch (buttonView.getId()) {
+		case R.id.checkAcelerometro:
+			acce = isChecked;
+			Log.d("boooooo", "booooooooo: "+acce);
+			break;
+		case R.id.checkGiroscopio:
+			gi = isChecked;
+			Log.d("boooooo", "booooooooo: "+gi);
+			break;
+		case R.id.checkMagetico:
+			mag = isChecked;
+			break;
+		case R.id.checkLuz:
+			lu = isChecked;
+			break;
+		case R.id.checkProximidad:
+			proxi = isChecked;
+			break;
+		}
+	}
+}
