@@ -165,6 +165,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaMa.putExtra("tipo", tipo);
 			graficaMa.putExtra("tiempo", tiempoParada);
 			graficaMa.putExtra("temporizador", tiempoInicio);
+			graficaMa.putExtra("sensor", Sensor.TYPE_MAGNETIC_FIELD);
 			startActivity(graficaMa);
 			break;
 		case R.id.graficaProximidad:
@@ -172,6 +173,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaPr.putExtra("tipo", tipo);
 			graficaPr.putExtra("tiempo", tiempoParada);
 			graficaPr.putExtra("temporizador", tiempoInicio);
+			graficaPr.putExtra("sensor", Sensor.TYPE_PROXIMITY);
 			startActivity(graficaPr);
 			break;
 		}

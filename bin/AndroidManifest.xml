@@ -111,6 +111,11 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
+        <activity android:name="ar.com.daidalos.afiledialog.FileChooserActivity" >
+            <action android:name="ar.com.daidalos.afiledialog.FileChooserActivity" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
     </application>
 
 </manifest>

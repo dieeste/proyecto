@@ -1,19 +1,64 @@
 package com.example.app;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 
+import com.csvreader.CsvReader;
+
 public class LeerCsv extends Activity {
+	static Graph mGraph;
+	Bundle graficas = getIntent().getExtras();
+	String nombre= graficas.getString("fichero");
+	LinearLayout layout;
+	GraphicalView view;
+	ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();
+	
+	public void main(String args) {
+		Log.d("hola", "entra");
+		
+		try {
+			
+			CsvReader fichero = new CsvReader(args);
+		
+			fichero.readHeaders();
+
+			while (fichero.readRecord())
+			{
+				long tiempo = Long.parseLong(fichero.get("Tiempo"));
+				double x = Double.parseDouble(fichero.get("X"));
+				double y = Double.parseDouble(fichero.get("Y"));
+				double z = Double.parseDouble(fichero.get("Z"));
+				AccelData data = new AccelData(tiempo, x, y, z);
+				chart(data);
+				datos.add(data);
+			}
+			
+			fichero.close();
+			mGraph = new Graph(this);
+			mGraph.initData(datos);
+			mGraph.setProperties2();
+			view = mGraph.getGraph();
+			layout.addView(view);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void chart(AccelData data){
+		
+	}
 	/*
 		private ArrayList<ArrayList<String>> arrListData;
 		private File archivo;

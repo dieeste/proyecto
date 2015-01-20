@@ -12,6 +12,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,7 +21,6 @@ public class Graph extends Grafica {
 	XYMultipleSeriesDataset dataset;
 	XYMultipleSeriesRenderer renderer;
 	double greater;
-	public static boolean ClickEnabled = true;
 
 	public Graph(Context context) {
 		this.context = context;
@@ -66,6 +66,7 @@ public class Graph extends Grafica {
 
 		renderer = new XYMultipleSeriesRenderer();
 	}
+
 
 	public void setProperties(boolean click[]) {
 		// renderer.setClickEnabled(ClickEnabled);
@@ -136,25 +137,25 @@ public class Graph extends Grafica {
 		// renderer.setClickEnabled(ClickEnabled);
 
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
-			renderer1.setColor(Color.RED);
-			renderer1.setLineWidth(1);
-			renderer1.setDisplayChartValues(false);
-			renderer.addSeriesRenderer(renderer1);
+		renderer1.setColor(Color.RED);
+		renderer1.setLineWidth(1);
+		renderer1.setDisplayChartValues(false);
+		renderer.addSeriesRenderer(renderer1);
 		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
 
-			renderer2.setColor(Color.GREEN);
-			renderer.addSeriesRenderer(renderer2);
-			renderer.addSeriesRenderer(renderer2);
+		renderer2.setColor(Color.GREEN);
+		renderer.addSeriesRenderer(renderer2);
+		renderer.addSeriesRenderer(renderer2);
 		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
 
-			renderer3.setColor(Color.BLUE);
-			renderer.addSeriesRenderer(renderer3);
-			renderer.addSeriesRenderer(renderer3);
+		renderer3.setColor(Color.BLUE);
+		renderer.addSeriesRenderer(renderer3);
+		renderer.addSeriesRenderer(renderer3);
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
 
-			modulo.setColor(Color.MAGENTA);
-			renderer.addSeriesRenderer(modulo);
-			renderer.addSeriesRenderer(modulo);
+		modulo.setColor(Color.MAGENTA);
+		renderer.addSeriesRenderer(modulo);
+		renderer.addSeriesRenderer(modulo);
 		renderer.setBackgroundColor(Color.WHITE);
 		renderer.setMarginsColor(Color.WHITE);
 		renderer.setApplyBackgroundColor(true);
@@ -173,7 +174,7 @@ public class Graph extends Grafica {
 		renderer.setLabelsColor(Color.RED);
 		renderer.setZoomButtonsVisible(true);
 	}
-	
+
 	public GraphicalView getGraph() {
 
 		return ChartFactory.getLineChartView(context, dataset, renderer);

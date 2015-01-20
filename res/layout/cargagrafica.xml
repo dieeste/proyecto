@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/n" >
+    android:background="@drawable/n"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/TextView01"
@@ -14,6 +14,7 @@
         android:layout_marginTop="5dip"
         android:singleLine="true"
         android:text="@+id/TextView01"
+        android:textColor="#ffffff"
         android:textStyle="bold" >
     </TextView>
 
@@ -23,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:text="@+id/TextView02" >
+        android:text="@+id/TextView02"
+        android:textColor="#ffffff" >
     </TextView>
 
 </LinearLayout>

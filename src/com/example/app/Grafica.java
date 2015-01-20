@@ -331,6 +331,52 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.setProperties(mGraphs);
 			}
 			break;
+		case Sensor.TYPE_MAGNETIC_FIELD:
+			double x4 = event.values[0];
+			double y4 = event.values[1];
+			double z4 = event.values[2];
+			long timestamp4 = System.currentTimeMillis();
+
+			AccelData data4 = new AccelData(timestamp4, x4, y4, z4);
+			sensorDatas.add(data4);
+			Log.d("sensordatassss", "sensor: " + data4);
+			mGraph = new Graph(this);
+			mGraph.initData(sensorDatas);
+			mGraph.setProperties(mGraphs);
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+				mGraph.setProperties(mGraphs);
+			}
+			break;
+		case Sensor.TYPE_PROXIMITY:
+			double x5 = event.values[0];
+			double y5 = event.values[1];
+			double z5 = event.values[2];
+			long timestamp5 = System.currentTimeMillis();
+
+			AccelData data5 = new AccelData(timestamp5, x5, y5, z5);
+			sensorDatas.add(data5);
+			Log.d("sensordatassss", "sensor: " + data5);
+			mGraph = new Graph(this);
+			mGraph.initData(sensorDatas);
+			mGraph.setProperties(mGraphs);
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+				mGraph.setProperties(mGraphs);
+			}
+			break;
 		}
 	}
 
@@ -400,6 +446,14 @@ public class Grafica extends Activity implements OnClickListener,
 			sensorManager.unregisterListener(this,
 					sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
 			break;
+		case Sensor.TYPE_MAGNETIC_FIELD:
+			sensorManager.unregisterListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
+			break;
+		case Sensor.TYPE_PROXIMITY:
+			sensorManager.unregisterListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
+			break;
 		}
 
 	}
@@ -419,6 +473,16 @@ public class Grafica extends Activity implements OnClickListener,
 		case Sensor.TYPE_LIGHT:
 			sensorManager.registerListener(this,
 					sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+					frecuencia);
+			break;
+		case Sensor.TYPE_MAGNETIC_FIELD:
+			sensorManager.registerListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+					frecuencia);
+			break;
+		case Sensor.TYPE_PROXIMITY:
+			sensorManager.registerListener(this,
+					sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
 					frecuencia);
 			break;
 		}
