@@ -242,10 +242,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 		} else {
 			if (acce == false) {
 				grafAcelerometro.setEnabled(false);
-			} else {
+			}
 				mSensorManager.registerListener(this, mSensorManager
 						.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), tipo);
-			}
 		}
 		// iniciar giroscopio
 		if (giroscope == null) {
@@ -255,11 +254,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 		} else {
 			if (gi == false) {
 				grafGiroscopio.setEnabled(false);
-			} else {
+			}
 				mSensorManager.registerListener(this,
 						mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
 						tipo);
-			}
 		}
 		// iniciar magnetometro
 		if (magnetometro == null) {
@@ -269,10 +267,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 		} else {
 			if (mag == false) {
 				grafMagnetico.setEnabled(false);
-			} else {
+			} 
 				mSensorManager.registerListener(this, mSensorManager
 						.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), tipo);
-			}
 		}
 		// iniciar proximidad
 		if (proximo == null) {
@@ -283,11 +280,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 		} else {
 			if (proxi == false) {
 				grafProximidad.setEnabled(false);
-			} else {
+			} 
 				mSensorManager.registerListener(this,
 						mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
 						tipo);
-			}
 		}
 		// iniciar luces
 		if (luces == null) {
@@ -297,11 +293,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 		} else {
 			if (lu == false) {
 				grafLuz.setEnabled(false);
-			} else {
+			} 
 				mSensorManager.registerListener(this,
 						mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
 						tipo);
-			}
 		}
 	}
 
