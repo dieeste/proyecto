@@ -852,6 +852,9 @@ public class Grafica extends Activity implements OnClickListener,
 				contadores2();
 			break;
 		case (R.id.reiniciar):
+			iniciar.setEnabled(true);
+			parar.setEnabled(false);
+			reiniciar.setEnabled(false);
 			layout.removeView(view);
 			for (AccelData data : sensorDatas) {
 				sensorDatas.remove(data);

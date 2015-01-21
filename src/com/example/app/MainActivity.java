@@ -80,9 +80,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity(sensoresdisponibles);
 			break;
 		case R.id.cargargrafica:
-			/*Intent intent = new Intent(this, FileChooserActivity.class);
-			 this.startActivityForResult(intent, 0);
-			 break;*/
+			Intent intent = new Intent(this, CargarGraficas.class);
+			 this.startActivity(intent);
+			 break;
 		default:
 			break;
 		}

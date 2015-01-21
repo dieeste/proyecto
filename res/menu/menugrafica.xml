@@ -9,12 +9,7 @@
     <item
         android:id="@+id/enviar"
         android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/enviar">
-    </item>
-    <item
-        android:id="@+id/configurate"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="@string/config">
+        android:title="@string/compartir">
     </item>
 
 </menu>

@@ -25,7 +25,8 @@ public class Exportar{
 			csvData.append(String.valueOf(fin) + ", "
 					+ String.valueOf(values.getX()) + ", "
 					+ String.valueOf(values.getY()) + ", "
-					+ String.valueOf(values.getZ()) + "\n");
+					+ String.valueOf(values.getZ()) + ", "
+					+ String.valueOf(values.getModulo()) + "\n");
 		}
 		enviar(csvData.toString());
 	}

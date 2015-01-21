@@ -20,7 +20,7 @@
     <string name="proximidad">Sensor de proximidad</string>
     <string name="giroscopio">Giroscopio</string>
     <string name="magnetico">Magnetómetro</string>
-    <string name="enviar">Enviar</string>
+    <string name="compartir">Compartir</string>
     <string name="guardar">Guardar</string>
     <string name="save_complate">Guardado</string>
     <string name="save_imcomplate">Error al guardar, no guardado</string>

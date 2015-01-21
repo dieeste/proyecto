@@ -148,11 +148,11 @@ public final class R {
         public static final int checkLuz=0x7f08002d;
         public static final int checkMagnetometro=0x7f08002c;
         public static final int checkProximidad=0x7f08002e;
+        public static final int compartir=0x7f080013;
         public static final int config=0x7f080003;
         public static final int cuenta=0x7f08000c;
         public static final int ejemplos=0x7f080006;
         public static final int empezar=0x7f08000a;
-        public static final int enviar=0x7f080013;
         public static final int explicacion=0x7f080008;
         public static final int frecuencias=0x7f08001e;
         public static final int giroscopio=0x7f080011;
@@ -218,7 +218,6 @@ public final class R {
         public static final int MooTheme=0x7f090002;
     }
     public static final class xml {
-        public static final int configuraciongrafica=0x7f040000;
-        public static final int confsimulacion=0x7f040001;
+        public static final int confsimulacion=0x7f040000;
     }
 }

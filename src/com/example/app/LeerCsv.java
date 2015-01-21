@@ -15,15 +15,24 @@ import com.csvreader.CsvReader;
 
 public class LeerCsv extends Activity {
 	static Graph mGraph;
-	Bundle graficas = getIntent().getExtras();
-	String nombre= graficas.getString("fichero");
 	LinearLayout layout;
 	GraphicalView view;
-	ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();
+	static ConcurrentLinkedQueue<AccelData> datos;
+	String nombre;
 	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		Bundle graficas = getIntent().getExtras();
+		nombre= graficas.getString("fichero");
+		Log.d("este es el archivo", "eso es: "+nombre);
+		
+	}
+
 	public void main(String args) {
 		Log.d("hola", "entra");
-		
+		datos = new ConcurrentLinkedQueue<AccelData>();
 		try {
 			
 			CsvReader fichero = new CsvReader(args);
@@ -38,16 +47,12 @@ public class LeerCsv extends Activity {
 				double z = Double.parseDouble(fichero.get("Z"));
 				double modulo = Double.parseDouble(fichero.get("modulo"));
 				AccelData data = new AccelData(tiempo, x, y, z, modulo);
-				chart(data);
+				
 				datos.add(data);
 			}
 			
 			fichero.close();
-			mGraph = new Graph(this);
-			mGraph.initData(datos);
-			view = mGraph.getGraph();
-			layout.addView(view);
-			
+			chart(datos);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -56,7 +61,11 @@ public class LeerCsv extends Activity {
 		
 	}
 	
-	public void chart(AccelData data){
+	public void chart(ConcurrentLinkedQueue<AccelData> datos2){
+		mGraph = new Graph(this);
+		mGraph.initData(datos);
+		view = mGraph.getGraph();
+		layout.addView(view);
 		
 	}
 	/*
