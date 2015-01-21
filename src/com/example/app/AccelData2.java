@@ -3,10 +3,11 @@ package com.example.app;
 public class AccelData2 {
 	private long timestamp;
 	private double x;
+	private double modulo;
 	
 	
 	
-	public AccelData2(long timestamp, double x) {
+	public AccelData2(long timestamp, double x, double modulo) {
 		this.timestamp = timestamp;
 		this.x = x;
 	}
@@ -22,9 +23,15 @@ public class AccelData2 {
 	public void setX(double x) {
 		this.x = x;
 	}
+	public double getModulo() {
+		return modulo;
+	}
+	public void setModulo(double modulo) {
+		this.modulo= modulo;
+	}
 	public String toString()
 	{
-		return "t="+timestamp+", x="+x;
+		return "t="+timestamp+", x="+x+", modulo="+modulo;
 	}
 	
 }

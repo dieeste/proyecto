@@ -36,7 +36,8 @@ public class LeerCsv extends Activity {
 				double x = Double.parseDouble(fichero.get("X"));
 				double y = Double.parseDouble(fichero.get("Y"));
 				double z = Double.parseDouble(fichero.get("Z"));
-				AccelData data = new AccelData(tiempo, x, y, z);
+				double modulo = Double.parseDouble(fichero.get("modulo"));
+				AccelData data = new AccelData(tiempo, x, y, z, modulo);
 				chart(data);
 				datos.add(data);
 			}

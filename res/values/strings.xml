@@ -28,7 +28,7 @@
     <string name="channel_y_axis">Y</string>
     <string name="channel_z_axis">Z</string>
     <string name="channel_default">Channel</string>
-    <string name="unit_acceleration">m/s²</string>
+    <string name="unidad_acelerometro">m/s²</string>
     <string name="gpss">¿DESEA ACTIVAR EL GPS?</string>
     <string name="tiempo">¿DESEA MARCAR UN TIEMPO DETERMINADO?</string>
     <string name="frecuencias">SELECCIONE LA FRECUENCA</string>
@@ -48,5 +48,9 @@
     <string name="checkMagnetometro">Guardar datos del magnetómetro</string>
     <string name="checkLuz">Guardar datos del sensor de luz</string>
     <string name="checkProximidad">Guardar datos del proximidad</string>
+    <string name="unidad_giroscopio">rad/s</string>
+    <string name="unidad_campo_magnetico">µT</string>
+    <string name="unidad_luz">Lux</string>
+    <string name="unidad_priximidad">cm</string>
 
 </resources>

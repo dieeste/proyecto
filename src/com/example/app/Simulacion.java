@@ -23,7 +23,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 public class Simulacion extends Activity implements SensorEventListener,
-		OnClickListener, OnCheckedChangeListener{
+		OnClickListener, OnCheckedChangeListener {
 
 	SensorManager mSensorManager;
 	TextView detecta;
@@ -52,7 +52,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 	CheckBox magneto;
 	CheckBox luz;
 	CheckBox prox;
-	boolean acce;
+	boolean acce = false;
 	boolean gi = false;
 	boolean mag = false;
 	boolean lu = false;
@@ -238,46 +238,70 @@ public class Simulacion extends Activity implements SensorEventListener,
 		if (aceleromete == null) {
 			acelerometer.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
 			grafAcelerometro.setVisibility(Button.GONE);
+			acelero.setVisibility(CheckBox.GONE);
 		} else {
-			mSensorManager.registerListener(this,
-					mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-					tipo);
+			if (acce == false) {
+				grafAcelerometro.setEnabled(false);
+			} else {
+				mSensorManager.registerListener(this, mSensorManager
+						.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), tipo);
+			}
 		}
 		// iniciar giroscopio
 		if (giroscope == null) {
 			giroscopo.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
 			grafGiroscopio.setVisibility(Button.GONE);
+			giro.setVisibility(CheckBox.GONE);
 		} else {
-			mSensorManager.registerListener(this,
-					mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
-					tipo);
+			if (gi == false) {
+				grafGiroscopio.setEnabled(false);
+			} else {
+				mSensorManager.registerListener(this,
+						mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+						tipo);
+			}
 		}
 		// iniciar magnetometro
 		if (magnetometro == null) {
 			magnetic.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
 			grafMagnetico.setVisibility(Button.GONE);
+			magneto.setVisibility(CheckBox.GONE);
 		} else {
-			mSensorManager
-					.registerListener(this, mSensorManager
-							.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), tipo);
+			if (mag == false) {
+				grafMagnetico.setEnabled(false);
+			} else {
+				mSensorManager.registerListener(this, mSensorManager
+						.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), tipo);
+			}
 		}
 		// iniciar proximidad
 		if (proximo == null) {
 			proximity.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
 			grafProximidad.setVisibility(Button.GONE);
 			detecta.setVisibility(View.GONE);
+			prox.setVisibility(CheckBox.GONE);
 		} else {
-			mSensorManager.registerListener(this,
-					mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
-					tipo);
+			if (proxi == false) {
+				grafProximidad.setEnabled(false);
+			} else {
+				mSensorManager.registerListener(this,
+						mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
+						tipo);
+			}
 		}
 		// iniciar luces
 		if (luces == null) {
 			luminosidad.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
 			grafLuz.setVisibility(Button.GONE);
+			luz.setVisibility(CheckBox.GONE);
 		} else {
-			mSensorManager.registerListener(this,
-					mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), tipo);
+			if (lu == false) {
+				grafLuz.setEnabled(false);
+			} else {
+				mSensorManager.registerListener(this,
+						mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+						tipo);
+			}
 		}
 	}
 
@@ -314,42 +338,50 @@ public class Simulacion extends Activity implements SensorEventListener,
 
 				txt += "Acelerómetro\n";
 				txt += "\n X: " + event.values[0] + " "
-						+ getString(R.string.unit_acceleration);
+						+ getString(R.string.unidad_acelerometro);
 				txt += "\n Y: " + event.values[1] + " "
-						+ getString(R.string.unit_acceleration);
+						+ getString(R.string.unidad_acelerometro);
 				txt += "\n Z: " + event.values[2] + " "
-						+ getString(R.string.unit_acceleration);
+						+ getString(R.string.unidad_acelerometro);
 				acelerometro.setText(txt);
 				break;
 
 			case Sensor.TYPE_GYROSCOPE:
 				txt += "Giroscopio\n";
-				txt += "\n x: " + event.values[0] + " rad/s";
-				txt += "\n y: " + event.values[1] + " rad/s";
-				txt += "\n z: " + event.values[2] + " rad/s";
+				txt += "\n x: " + event.values[0] + " "
+						+ getString(R.string.unidad_giroscopio);
+				txt += "\n y: " + event.values[1] + " "
+						+ getString(R.string.unidad_giroscopio);
+				txt += "\n z: " + event.values[2] + " "
+						+ getString(R.string.unidad_giroscopio);
 				giroscopo.setText(txt);
 				break;
 
 			case Sensor.TYPE_MAGNETIC_FIELD:
 				txt += "Campo magnético\n";
-				txt += "\n" + event.values[0] + " µT";
+				txt += "\n" + event.values[0] + " "
+						+ getString(R.string.unidad_campo_magnetico);
 				magnetico.setText(txt);
 				break;
 
 			case Sensor.TYPE_PROXIMITY:
 				txt += "Proximidad\n";
-				txt += "\n" + event.values[0] + " cm";
+				txt += "\n" + event.values[0] + " "
+						+ getString(R.string.unidad_priximidad);
 				proximidad.setText(txt);
 				// Si detecta 0 lo represento
 				if (event.values[0] == 0) {
 					detecta.setBackgroundColor(Color.parseColor("#cf091c"));
 					detecta.setText("Proximidad Detectada");
+				} else {
+					detecta.setVisibility(TextView.GONE);
 				}
 				break;
 
 			case Sensor.TYPE_LIGHT:
 				txt += "Luminosidad\n";
-				txt += "\n" + event.values[0] + " Lux";
+				txt += "\n" + event.values[0] + " "
+						+ getString(R.string.unidad_luz);
 				luminosidad.setText(txt);
 				break;
 			}
@@ -451,20 +483,28 @@ public class Simulacion extends Activity implements SensorEventListener,
 		switch (buttonView.getId()) {
 		case R.id.checkAcelerometro:
 			acce = isChecked;
-			Log.d("boooooo", "booooooooo: "+acce);
+			if (acce == true)
+				grafAcelerometro.setEnabled(true);
 			break;
 		case R.id.checkGiroscopio:
 			gi = isChecked;
-			Log.d("boooooo", "booooooooo: "+gi);
+			if (gi == true)
+				grafGiroscopio.setEnabled(true);
 			break;
 		case R.id.checkMagetico:
 			mag = isChecked;
+			if (mag == true)
+				grafMagnetico.setEnabled(true);
 			break;
 		case R.id.checkLuz:
 			lu = isChecked;
+			if (lu == true)
+				grafLuz.setEnabled(true);
 			break;
 		case R.id.checkProximidad:
 			proxi = isChecked;
+			if (proxi == true)
+				grafProximidad.setEnabled(true);
 			break;
 		}
 	}

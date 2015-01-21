@@ -2,7 +2,6 @@ package com.example.app;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
@@ -86,7 +85,6 @@ public class Grafica extends Activity implements OnClickListener,
 
 	GraphicalView view;
 	Graph mGraph;
-	ArrayList<Double> x, y, z;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,44 +116,36 @@ public class Grafica extends Activity implements OnClickListener,
 		iniciar.setOnClickListener(this);
 		reiniciar.setOnClickListener(this);
 
-		// Escuchamos los checkbox
-		/*
-		 * ejex = (CheckBox) findViewById(R.id.ejex); ejey = (CheckBox)
-		 * findViewById(R.id.ejey); ejez = (CheckBox) findViewById(R.id.ejez);
-		 * modulo = (CheckBox) findViewById(R.id.modulo);
-		 */
-
-		// Recogemos el tipo de frecuencia (normal, ui, game, fastest) que hemos
-		// pasado desde la actividad de acelerómetro y los tiempos
+		// Recogemos datos de la actividad anterior
 
 		Bundle graficas = getIntent().getExtras();
 
 		// Frecuencia es los distintos tipos de frecuencia que recogemos de la
 		// actividad anteerior que a su vez es recogido de la configuración
 		frecuencia = graficas.getInt("tipo");
-		Log.d("tiem", "tifercuencia " + frecuencia);
 		// tiempoParada y tiempoInicio es el tiempo que recogemos de la
 		// actividad anterior y que será el tiempo durante el que vamos a medir
 		// los sensores y el tiempo que pasará antes de inciar los sensores
 		tiempoInicio = graficas.getInt("temporizador");
-		Log.d("tiempo", "tiempoInicio " + tiempoInicio);
 		tiempoParada = graficas.getInt("tiempo");
-		Log.d("tiempo", "tiempoParada " + tiempoParada);
+
+		// también recogemos el tipo de sensor y si están seleccionados más de
+		// un sensor para recoger los datos
 		sensor = graficas.getInt("sensor");
 		acce = graficas.getBoolean("acelerometro");
-		Log.d("boolean", "boole: "+acce);
 		giro = graficas.getBoolean("giroscopio");
-		Log.d("boolean", "boole: "+giro);
 		magne = graficas.getBoolean("magnetometro");
 		luz = graficas.getBoolean("luz");
-		proxi = graficas.getBoolean("proximidad");
-		
+		proxi = graficas.getBoolean("proximo");
 
 		// si el tiempo de inicio es mayor que cero vamos a contadores si no lo
 		// dejamos como está
 		if (tiempoInicio > 0) {
 			contadores();
 		}
+
+		// Escuchamos los checkbox y creamos un array para enviar a la
+		// representación de la gráfica
 		CheckBox[] checkboxes = new CheckBox[4];
 		checkboxes[SensorManager.DATA_X] = (CheckBox) findViewById(R.id.ejex);
 		checkboxes[SensorManager.DATA_Y] = (CheckBox) findViewById(R.id.ejey);
@@ -203,8 +193,6 @@ public class Grafica extends Activity implements OnClickListener,
 			@Override
 			public void onFinish() {
 				// TODO Auto-generated method stub
-
-				Log.d("tiempo", "inciamos por tiempo");
 
 				// Con este temporizador medimos el tiempo de medida de los
 				// sensores
@@ -256,7 +244,6 @@ public class Grafica extends Activity implements OnClickListener,
 			// Cuando llega al tiempo especificado paramos los sensores
 			@Override
 			public void onFinish() { // TODO Auto-generated method stub
-				Log.d("tiempo", "Paramos por tiempo");
 				onStop();
 				reiniciar.setEnabled(true);
 				iniciar.setEnabled(false);
@@ -277,115 +264,132 @@ public class Grafica extends Activity implements OnClickListener,
 
 		switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
-			double x = event.values[0];
-			double y = event.values[1];
-			double z = event.values[2];
-			long timestamp = System.currentTimeMillis();
+			if (acce == true) {
+				double x = event.values[0];
+				double y = event.values[1];
+				double z = event.values[2];
+				double modulo = Double.valueOf(Math.abs(Math.sqrt(Math
+						.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
+				long timestamp = System.currentTimeMillis();
 
-			AccelData data = new AccelData(timestamp, x, y, z);
-			sensorDatas.add(data);
-			Log.d("sensordatassss", "sensora: " + data);
-			mGraph = new Graph(this);
-			mGraph.initData(sensorDatas);
-			mGraph.setProperties(mGraphs);
-			if (!init) {
-				view = mGraph.getGraph();
-				layout.addView(view);
-				init = true;
-			} else {
-				layout.removeView(view);
-				view = mGraph.getGraph();
-				layout.addView(view);
-				mGraph.setProperties(mGraphs);
+				AccelData data = new AccelData(timestamp, x, y, z, modulo);
+				sensorDatas.add(data);
+				Log.d("sensor aceler", "sensorproooo: " + data);
+				mGraph = new Graph(this);
+				mGraph.initData(sensorDatas);
+				mGraph.setProperties(mGraphs, "Acelerómetro "
+						+ getString(R.string.unidad_acelerometro));
+				if (!init) {
+					view = mGraph.getGraph();
+					layout.addView(view);
+					init = true;
+				} else {
+					layout.removeView(view);
+					view = mGraph.getGraph();
+					layout.addView(view);
+				}
 			}
-
 			break;
 		case Sensor.TYPE_GYROSCOPE:
-			double x2 = event.values[0];
-			double y2 = event.values[1];
-			double z2 = event.values[2];
-			long timestamp2 = System.currentTimeMillis();
+			if (giro == true) {
+				double x2 = event.values[0];
+				double y2 = event.values[1];
+				double z2 = event.values[2];
+				double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x2,
+						2) + Math.pow(y2, 2) + Math.pow(z2, 2))));
+				long timestamp2 = System.currentTimeMillis();
 
-			AccelData data2 = new AccelData(timestamp2, x2, y2, z2);
-			sensorGiroscopio.add(data2);
-			Log.d("sensordatassss", "sensor: " + data2);
-			mGraph = new Graph(this);
-			mGraph.initData(sensorGiroscopio);
-			mGraph.setProperties(mGraphs);
-			if (!init) {
-				view = mGraph.getGraph();
-				layout.addView(view);
-				init = true;
-			} else {
-				layout.removeView(view);
-				view = mGraph.getGraph();
-				layout.addView(view);
-				mGraph.setProperties(mGraphs);
+				AccelData data2 = new AccelData(timestamp2, x2, y2, z2, modulo2);
+				sensorGiroscopio.add(data2);
+				Log.d("sensor giroscopio", "sensorproooo: " + data2);
+				mGraph = new Graph(this);
+				mGraph.initData(sensorGiroscopio);
+				mGraph.setProperties(mGraphs, "Giroscopio "
+						+ getString(R.string.unidad_giroscopio));
+				if (!init) {
+					view = mGraph.getGraph();
+					layout.addView(view);
+					init = true;
+				} else {
+					layout.removeView(view);
+					view = mGraph.getGraph();
+					layout.addView(view);
+				}
 			}
 			break;
 		case Sensor.TYPE_LIGHT:
-			double x3 = event.values[0];
-			long timestamp3 = System.currentTimeMillis();
+			if (luz == true) {
+				double x3 = event.values[0];
+				double modulo3 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x3,
+						2))));
+				long timestamp3 = System.currentTimeMillis();
 
-			AccelData2 data3 = new AccelData2(timestamp3, x3);
-			sensorLuz.add(data3);
-			Log.d("sensordatassss", "sensor: " + data3);
-			mGraph = new Graph(this);
-			mGraph.initData2(sensorLuz);
-			mGraph.setProperties2(mGraphs);
-			if (!init) {
-				view = mGraph.getGraph();
-				layout.addView(view);
-				init = true;
-			} else {
-				layout.removeView(view);
-				view = mGraph.getGraph();
-				layout.addView(view);
-				mGraph.setProperties(mGraphs);
+				AccelData2 data3 = new AccelData2(timestamp3, x3, modulo3);
+				sensorLuz.add(data3);
+				Log.d("sensorluuuu", "sensorprooooluuu: " + data3);
+				mGraph = new Graph(this);
+				mGraph.initData2(sensorLuz);
+				mGraph.setProperties2(mGraphs, "Luz "
+						+ getString(R.string.unidad_luz));
+				if (!init) {
+					view = mGraph.getGraph();
+					layout.addView(view);
+					init = true;
+				} else {
+					layout.removeView(view);
+					view = mGraph.getGraph();
+					layout.addView(view);
+				}
 			}
 			break;
 		case Sensor.TYPE_MAGNETIC_FIELD:
-			double x4 = event.values[0];
-			double y4 = event.values[1];
-			double z4 = event.values[2];
-			long timestamp4 = System.currentTimeMillis();
+			if (magne == true) {
+				double x4 = event.values[0];
+				double y4 = event.values[1];
+				double z4 = event.values[2];
+				double modulo4 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x4,
+						2) + Math.pow(y4, 2) + Math.pow(z4, 2))));
+				long timestamp4 = System.currentTimeMillis();
 
-			AccelData data4 = new AccelData(timestamp4, x4, y4, z4);
-			sensorMagnetico.add(data4);
-			Log.d("sensordatassss", "sensor: " + data4);
-			mGraph = new Graph(this);
-			mGraph.initData(sensorMagnetico);
-			mGraph.setProperties(mGraphs);
-			if (!init) {
-				view = mGraph.getGraph();
-				layout.addView(view);
-				init = true;
-			} else {
-				layout.removeView(view);
-				view = mGraph.getGraph();
-				layout.addView(view);
-				mGraph.setProperties(mGraphs);
+				AccelData data4 = new AccelData(timestamp4, x4, y4, z4, modulo4);
+				sensorMagnetico.add(data4);
+				mGraph = new Graph(this);
+				mGraph.initData(sensorMagnetico);
+				mGraph.setProperties(mGraphs, "Campo magnético "
+						+ getString(R.string.unidad_campo_magnetico));
+				if (!init) {
+					view = mGraph.getGraph();
+					layout.addView(view);
+					init = true;
+				} else {
+					layout.removeView(view);
+					view = mGraph.getGraph();
+					layout.addView(view);
+				}
 			}
 			break;
 		case Sensor.TYPE_PROXIMITY:
-			double x5 = event.values[0];
-			long timestamp5 = System.currentTimeMillis();
+			if (proxi == true) {
+				double x5 = event.values[0];
+				double modulo5 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x5,
+						2))));
+				long timestamp5 = System.currentTimeMillis();
 
-			AccelData2 data5 = new AccelData2(timestamp5, x5);
-			sensorProximidad.add(data5);
-			Log.d("sensordatassss", "sensor: " + data5);
-			mGraph = new Graph(this);
-			mGraph.initData2(sensorProximidad);
-			mGraph.setProperties2(mGraphs);
-			if (!init) {
-				view = mGraph.getGraph();
-				layout.addView(view);
-				init = true;
-			} else {
-				layout.removeView(view);
-				view = mGraph.getGraph();
-				layout.addView(view);
-				mGraph.setProperties(mGraphs);
+				AccelData2 data5 = new AccelData2(timestamp5, x5, modulo5);
+				sensorProximidad.add(data5);
+				mGraph = new Graph(this);
+				mGraph.initData2(sensorProximidad);
+				mGraph.setProperties2(mGraphs, "Proximidad "
+						+ getString(R.string.unidad_priximidad));
+				if (!init) {
+					view = mGraph.getGraph();
+					layout.addView(view);
+					init = true;
+				} else {
+					layout.removeView(view);
+					view = mGraph.getGraph();
+					layout.addView(view);
+				}
 			}
 			break;
 		}
@@ -504,313 +508,308 @@ public class Grafica extends Activity implements OnClickListener,
 
 		@Override
 		public void run() {
-			if (acce==true){
-			long t = sensorDatas.peek().getTimestamp();
+			if (acce == true) {
+				long t = sensorDatas.peek().getTimestamp();
 
-			StringBuilder csvData = new StringBuilder();
-			csvData.append("Tiempo, X, Y, Z \n");
-			for (AccelData values : sensorDatas) {
-				long f = (values.getTimestamp() - t) / 1000;
-				double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-				double fin = f + d;
-				csvData.append(String.valueOf(fin) + ", "
-						+ String.valueOf(values.getX()) + ", "
-						+ String.valueOf(values.getY()) + ", "
-						+ String.valueOf(values.getZ()) + "\n");
-			}
-
-			Bundle bundle = new Bundle();
-			Message msg = new Message();
-
-			try {
-
-				String appName = getResources().getString(R.string.app_name);
-				String dirPath = Environment.getExternalStorageDirectory()
-						.toString() + "/" + appName;
-				File dir = new File(dirPath);
-				if (!dir.exists()) {
-					dir.mkdirs();
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Tiempo, X, Y, Z, Módulo \n");
+				for (AccelData values : sensorDatas) {
+					long f = (values.getTimestamp() - t) / 1000;
+					double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+					double fin = f + d;
+					csvData.append(String.valueOf(fin) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getY()) + ", "
+							+ String.valueOf(values.getZ()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
 				}
 
-				String fileName = "Acelerometro "+ DateFormat
-						.format("dd-MM-yyyy kk-mm-ss",
-								System.currentTimeMillis()).toString()
-						.concat(".csv");
+				Bundle bundle = new Bundle();
+				Message msg = new Message();
 
-				File file = new File(dirPath, fileName);
-				if (file.createNewFile()) {
-					FileOutputStream fileOutputStream = new FileOutputStream(
-							file);
+				try {
 
-					fileOutputStream.write(csvData.toString().getBytes());
-					fileOutputStream.close();
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
 
+					String fileName = "Acelerometro "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
+
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
+
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
+
+					}
+
+					// Si se ha guardado con éxito enviamos un mensaje al
+					// controlador de mensajes y lo muestra
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_complate));
+				} catch (Exception e) {
+					// Si no se ha podido guardar entonces nos envía un mensaje
+					// diciendo que no se ha guardado
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_imcomplate));
 				}
-			
-				// Si se ha guardado con éxito enviamos un mensaje al
-				// controlador de mensajes y lo muestra
-				bundle.putString(
-						"msg",
-						Grafica.this.getResources().getString(
-								R.string.save_complate));
-			} catch (Exception e) {
-				// Si no se ha podido guardar entonces nos envía un mensaje
-				// diciendo que no se ha guardado
-				bundle.putString(
-						"msg",
-						Grafica.this.getResources().getString(
-								R.string.save_imcomplate));
-			}
-			msg.setData(bundle);
-			// Envía el mensaje al controlador
-			mensajeria.sendMessage(msg);
-		}
-		
-		if (giro==true){
-			long t = sensorDatas.peek().getTimestamp();
-
-			StringBuilder csvData = new StringBuilder();
-			csvData.append("Tiempo, X, Y, Z \n");
-			for (AccelData values : sensorDatas) {
-				long f = (values.getTimestamp() - t) / 1000;
-				double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-				double fin = f + d;
-				csvData.append(String.valueOf(fin) + ", "
-						+ String.valueOf(values.getX()) + ", "
-						+ String.valueOf(values.getY()) + ", "
-						+ String.valueOf(values.getZ()) + "\n");
+				msg.setData(bundle);
+				// Envía el mensaje al controlador
+				mensajeria.sendMessage(msg);
 			}
 
-			Bundle bundle = new Bundle();
-			Message msg = new Message();
+			if (giro == true) {
+				long t = sensorDatas.peek().getTimestamp();
 
-			try {
-
-				String appName = getResources().getString(R.string.app_name);
-				String dirPath = Environment.getExternalStorageDirectory()
-						.toString() + "/" + appName;
-				File dir = new File(dirPath);
-				if (!dir.exists()) {
-					dir.mkdirs();
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Tiempo, X, Y, Z, Módulo \n");
+				for (AccelData values : sensorDatas) {
+					long f = (values.getTimestamp() - t) / 1000;
+					double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+					double fin = f + d;
+					csvData.append(String.valueOf(fin) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getY()) + ", "
+							+ String.valueOf(values.getZ()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
 				}
 
-				String fileName = "Giroscopio "+ DateFormat
-						.format("dd-MM-yyyy kk-mm-ss",
-								System.currentTimeMillis()).toString()
-						.concat(".csv");
+				Bundle bundle = new Bundle();
+				Message msg = new Message();
 
-				File file = new File(dirPath, fileName);
-				if (file.createNewFile()) {
-					FileOutputStream fileOutputStream = new FileOutputStream(
-							file);
+				try {
 
-					fileOutputStream.write(csvData.toString().getBytes());
-					fileOutputStream.close();
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
 
+					String fileName = "Giroscopio "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
+
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
+
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
+
+					}
+
+					// Si se ha guardado con éxito enviamos un mensaje al
+					// controlador de mensajes y lo muestra
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_complate));
+				} catch (Exception e) {
+					// Si no se ha podido guardar entonces nos envía un mensaje
+					// diciendo que no se ha guardado
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_imcomplate));
 				}
-			
-				// Si se ha guardado con éxito enviamos un mensaje al
-				// controlador de mensajes y lo muestra
-				bundle.putString(
-						"msg",
-						Grafica.this.getResources().getString(
-								R.string.save_complate));
-			} catch (Exception e) {
-				// Si no se ha podido guardar entonces nos envía un mensaje
-				// diciendo que no se ha guardado
-				bundle.putString(
-						"msg",
-						Grafica.this.getResources().getString(
-								R.string.save_imcomplate));
+				msg.setData(bundle);
+				// Envía el mensaje al controlador
+				mensajeria.sendMessage(msg);
 			}
-			msg.setData(bundle);
-			// Envía el mensaje al controlador
-			mensajeria.sendMessage(msg);
-		}
-	if (magne==true){
-		long t = sensorDatas.peek().getTimestamp();
+			if (magne == true) {
+				long t = sensorDatas.peek().getTimestamp();
 
-		StringBuilder csvData = new StringBuilder();
-		csvData.append("Tiempo, X, Y, Z \n");
-		for (AccelData values : sensorDatas) {
-			long f = (values.getTimestamp() - t) / 1000;
-			double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-			double fin = f + d;
-			csvData.append(String.valueOf(fin) + ", "
-					+ String.valueOf(values.getX()) + ", "
-					+ String.valueOf(values.getY()) + ", "
-					+ String.valueOf(values.getZ()) + "\n");
-		}
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Tiempo, X, Y, Z, Módulo \n");
+				for (AccelData values : sensorDatas) {
+					long f = (values.getTimestamp() - t) / 1000;
+					double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+					double fin = f + d;
+					csvData.append(String.valueOf(fin) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getY()) + ", "
+							+ String.valueOf(values.getZ()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
+				}
 
-		Bundle bundle = new Bundle();
-		Message msg = new Message();
+				Bundle bundle = new Bundle();
+				Message msg = new Message();
 
-		try {
+				try {
 
-			String appName = getResources().getString(R.string.app_name);
-			String dirPath = Environment.getExternalStorageDirectory()
-					.toString() + "/" + appName;
-			File dir = new File(dirPath);
-			if (!dir.exists()) {
-				dir.mkdirs();
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
+
+					String fileName = "Magnetometro "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
+
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
+
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
+
+					}
+
+					// Si se ha guardado con éxito enviamos un mensaje al
+					// controlador de mensajes y lo muestra
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_complate));
+				} catch (Exception e) {
+					// Si no se ha podido guardar entonces nos envía un mensaje
+					// diciendo que no se ha guardado
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_imcomplate));
+				}
+				msg.setData(bundle);
+				// Envía el mensaje al controlador
+				mensajeria.sendMessage(msg);
 			}
+			if (luz == true) {
+				long t = sensorDatas.peek().getTimestamp();
 
-			String fileName = "Magnetometro "+DateFormat
-					.format("dd-MM-yyyy kk-mm-ss",
-							System.currentTimeMillis()).toString()
-					.concat(".csv");
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Tiempo, X, Y, Z, Módulo \n");
+				for (AccelData values : sensorDatas) {
+					long f = (values.getTimestamp() - t) / 1000;
+					double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+					double fin = f + d;
+					csvData.append(String.valueOf(fin) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getY()) + ", "
+							+ String.valueOf(values.getZ()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
+				}
 
-			File file = new File(dirPath, fileName);
-			if (file.createNewFile()) {
-				FileOutputStream fileOutputStream = new FileOutputStream(
-						file);
+				Bundle bundle = new Bundle();
+				Message msg = new Message();
 
-				fileOutputStream.write(csvData.toString().getBytes());
-				fileOutputStream.close();
+				try {
 
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
+
+					String fileName = "Sensor luz "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
+
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
+
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
+
+					}
+
+					// Si se ha guardado con éxito enviamos un mensaje al
+					// controlador de mensajes y lo muestra
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_complate));
+				} catch (Exception e) {
+					// Si no se ha podido guardar entonces nos envía un mensaje
+					// diciendo que no se ha guardado
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_imcomplate));
+				}
+				msg.setData(bundle);
+				// Envía el mensaje al controlador
+				mensajeria.sendMessage(msg);
 			}
-		
-			// Si se ha guardado con éxito enviamos un mensaje al
-			// controlador de mensajes y lo muestra
-			bundle.putString(
-					"msg",
-					Grafica.this.getResources().getString(
-							R.string.save_complate));
-		} catch (Exception e) {
-			// Si no se ha podido guardar entonces nos envía un mensaje
-			// diciendo que no se ha guardado
-			bundle.putString(
-					"msg",
-					Grafica.this.getResources().getString(
-							R.string.save_imcomplate));
+			if (proxi == true) {
+				long t = sensorDatas.peek().getTimestamp();
+
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Tiempo, X, Y, Z, Módulo \n");
+				for (AccelData values : sensorDatas) {
+					long f = (values.getTimestamp() - t) / 1000;
+					double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+					double fin = f + d;
+					csvData.append(String.valueOf(fin) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getY()) + ", "
+							+ String.valueOf(values.getZ()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
+				}
+
+				Bundle bundle = new Bundle();
+				Message msg = new Message();
+
+				try {
+
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
+
+					String fileName = "Sensor proximidad "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
+
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
+
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
+
+					}
+
+					// Si se ha guardado con éxito enviamos un mensaje al
+					// controlador de mensajes y lo muestra
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_complate));
+				} catch (Exception e) {
+					// Si no se ha podido guardar entonces nos envía un mensaje
+					// diciendo que no se ha guardado
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.save_imcomplate));
+				}
+				msg.setData(bundle);
+				// Envía el mensaje al controlador
+				mensajeria.sendMessage(msg);
+			}
 		}
-		msg.setData(bundle);
-		// Envía el mensaje al controlador
-		mensajeria.sendMessage(msg);
-	}
-if (luz==true){
-	long t = sensorDatas.peek().getTimestamp();
-
-	StringBuilder csvData = new StringBuilder();
-	csvData.append("Tiempo, X, Y, Z \n");
-	for (AccelData values : sensorDatas) {
-		long f = (values.getTimestamp() - t) / 1000;
-		double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-		double fin = f + d;
-		csvData.append(String.valueOf(fin) + ", "
-				+ String.valueOf(values.getX()) + ", "
-				+ String.valueOf(values.getY()) + ", "
-				+ String.valueOf(values.getZ()) + "\n");
-	}
-
-	Bundle bundle = new Bundle();
-	Message msg = new Message();
-
-	try {
-
-		String appName = getResources().getString(R.string.app_name);
-		String dirPath = Environment.getExternalStorageDirectory()
-				.toString() + "/" + appName;
-		File dir = new File(dirPath);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-
-		String fileName = "Sensor luz "+DateFormat
-				.format("dd-MM-yyyy kk-mm-ss",
-						System.currentTimeMillis()).toString()
-				.concat(".csv");
-
-		File file = new File(dirPath, fileName);
-		if (file.createNewFile()) {
-			FileOutputStream fileOutputStream = new FileOutputStream(
-					file);
-
-			fileOutputStream.write(csvData.toString().getBytes());
-			fileOutputStream.close();
-
-		}
-	
-		// Si se ha guardado con éxito enviamos un mensaje al
-		// controlador de mensajes y lo muestra
-		bundle.putString(
-				"msg",
-				Grafica.this.getResources().getString(
-						R.string.save_complate));
-	} catch (Exception e) {
-		// Si no se ha podido guardar entonces nos envía un mensaje
-		// diciendo que no se ha guardado
-		bundle.putString(
-				"msg",
-				Grafica.this.getResources().getString(
-						R.string.save_imcomplate));
-	}
-	msg.setData(bundle);
-	// Envía el mensaje al controlador
-	mensajeria.sendMessage(msg);
-}
-if (proxi==true){
-	long t = sensorDatas.peek().getTimestamp();
-
-	StringBuilder csvData = new StringBuilder();
-	csvData.append("Tiempo, X, Y, Z \n");
-	for (AccelData values : sensorDatas) {
-		long f = (values.getTimestamp() - t) / 1000;
-		double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-		double fin = f + d;
-		csvData.append(String.valueOf(fin) + ", "
-				+ String.valueOf(values.getX()) + ", "
-				+ String.valueOf(values.getY()) + ", "
-				+ String.valueOf(values.getZ()) + "\n");
-	}
-
-	Bundle bundle = new Bundle();
-	Message msg = new Message();
-
-	try {
-
-		String appName = getResources().getString(R.string.app_name);
-		String dirPath = Environment.getExternalStorageDirectory()
-				.toString() + "/" + appName;
-		File dir = new File(dirPath);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-
-		String fileName = "Sensor proximidad "+DateFormat
-				.format("dd-MM-yyyy kk-mm-ss",
-						System.currentTimeMillis()).toString()
-				.concat(".csv");
-
-		File file = new File(dirPath, fileName);
-		if (file.createNewFile()) {
-			FileOutputStream fileOutputStream = new FileOutputStream(
-					file);
-
-			fileOutputStream.write(csvData.toString().getBytes());
-			fileOutputStream.close();
-
-		}
-	
-		// Si se ha guardado con éxito enviamos un mensaje al
-		// controlador de mensajes y lo muestra
-		bundle.putString(
-				"msg",
-				Grafica.this.getResources().getString(
-						R.string.save_complate));
-	} catch (Exception e) {
-		// Si no se ha podido guardar entonces nos envía un mensaje
-		// diciendo que no se ha guardado
-		bundle.putString(
-				"msg",
-				Grafica.this.getResources().getString(
-						R.string.save_imcomplate));
-	}
-	msg.setData(bundle);
-	// Envía el mensaje al controlador
-	mensajeria.sendMessage(msg);
-}
-}
 
 	}
 
@@ -841,22 +840,34 @@ if (proxi==true){
 		case (R.id.parar):
 			iniciar.setEnabled(true);
 			parar.setEnabled(false);
+			reiniciar.setEnabled(true);
 			onStop();
-
-			parado = true;
-			// openChart();
 			break;
 		case (R.id.inicio):
-			parado = false;
-			parar.setEnabled(true);
 			iniciar.setEnabled(false);
-			// sensorDatas = new ArrayList<AccelData>();
+			parar.setEnabled(true);
+			reiniciar.setEnabled(false);
 			Iniciar_sensores();
-			reiniciar.setEnabled(true);
 			if (tiempoParada > 0)
 				contadores2();
 			break;
 		case (R.id.reiniciar):
+			layout.removeView(view);
+			for (AccelData data : sensorDatas) {
+				sensorDatas.remove(data);
+			}
+			for (AccelData data : sensorGiroscopio) {
+				sensorGiroscopio.remove(data);
+			}
+			for (AccelData data : sensorMagnetico) {
+				sensorMagnetico.remove(data);
+			}
+			for (AccelData2 data : sensorLuz) {
+				sensorLuz.remove(data);
+			}
+			for (AccelData2 data : sensorProximidad) {
+				sensorProximidad.remove(data);
+			}
 			break;
 		}
 	}
@@ -883,25 +894,9 @@ if (proxi==true){
 		case (R.id.enviar):
 			new Exportar(this).hacer(sensorDatas);
 			break;
-		/*
-		 * case (R.id.configurate): Log.d("algo", "boton conf"); Intent i = new
-		 * Intent(this, PrefGrafica.class); // Iniciamos la actividad y
-		 * esperamos respuesta con los datos startActivityForResult(i, 0);
-		 * break;
-		 */
 		}
 		return true;
 		/** true -> consumimos el item, no se propaga */
 	}
 
-	/*
-	 * @SuppressLint("NewApi") @Override protected void onActivityResult(int
-	 * requestCode, int resultCode, Intent data) { // TODO Auto-generated method
-	 * stub super.onActivityResult(requestCode, resultCode, data);
-	 * SharedPreferences pref = PreferenceManager
-	 * .getDefaultSharedPreferences(this); boolean v =
-	 * pref.getBoolean("sensores", false); Log.d("vec", "este es: " + v);
-	 * 
-	 * }
-	 */
 }

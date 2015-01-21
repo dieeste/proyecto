@@ -12,7 +12,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.hardware.SensorEvent;
+import android.opengl.GLSurfaceView.Renderer;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -21,6 +21,8 @@ public class Graph extends Grafica {
 	XYMultipleSeriesDataset dataset;
 	XYMultipleSeriesRenderer renderer;
 	double greater;
+	double ejeymax;
+	double ejeymin;
 
 	public Graph(Context context) {
 		this.context = context;
@@ -39,16 +41,13 @@ public class Graph extends Grafica {
 		XYSeries modulo = new XYSeries("Modulo");
 
 		for (AccelData2 data : sensorDatas) {
-			// Log.d("sensordatas", "sensor: "+sensorDatas);
-			Double dReal = new Double(Math.abs(Math.sqrt(Math.pow(data.getX(),
-					2))));
-			float fReal = dReal.floatValue();
+		
 			long f = (data.getTimestamp() - t) / 1000;
 			double d = ((data.getTimestamp() - t) % 1000) * 0.001;
 			double fin = f + d;
 			Log.d("tiempo", "timestamp: " + fin);
 			xSeries.add(fin, data.getX());
-			modulo.add(fin, fReal);
+			modulo.add(fin, data.getModulo());
 
 			greater = fin;
 		}
@@ -69,10 +68,6 @@ public class Graph extends Grafica {
 		XYSeries modulo = new XYSeries("Modulo");
 
 		for (AccelData data : sensorDatas) {
-			// Log.d("sensordatas", "sensor: "+sensorDatas);
-			Double dReal = new Double(Math.abs(Math.sqrt(Math.pow(data.getX(),
-					2) + Math.pow(data.getY(), 2) + Math.pow(data.getZ(), 2))));
-			float fReal = dReal.floatValue();
 			long f = (data.getTimestamp() - t) / 1000;
 			double d = ((data.getTimestamp() - t) % 1000) * 0.001;
 			double fin = f + d;
@@ -80,12 +75,12 @@ public class Graph extends Grafica {
 			xSeries.add(fin, data.getX());
 			ySeries.add(fin, data.getY());
 			zSeries.add(fin, data.getZ());
-			modulo.add(fin, fReal);
+			modulo.add(fin, data.getModulo());
 
 			greater = fin;
+			
 		}
 
-		// Log.d("sensordatas", "greaterr: "+ greater);
 		dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(xSeries);
 		dataset.addSeries(ySeries);
@@ -96,20 +91,19 @@ public class Graph extends Grafica {
 	}
 
 
-	public void setProperties(boolean click[]) {
-		// renderer.setClickEnabled(ClickEnabled);
+	public void setProperties(boolean click[], String titulo) {
 
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
 			renderer1.setLineWidth(1);
 			renderer1.setDisplayChartValues(false);
-			Log.d("bool", "esta: " + click[0]);
 			renderer.addSeriesRenderer(renderer1);
 		} else {
 			renderer1.setColor(0);
 			renderer.addSeriesRenderer(renderer1);
 		}
+		
 		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
 
 		if (click[1] == true) {
@@ -119,8 +113,8 @@ public class Graph extends Grafica {
 			renderer2.setColor(0);
 			renderer.addSeriesRenderer(renderer2);
 		}
+		
 		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
-
 		if (click[2] == true) {
 			renderer3.setColor(Color.BLUE);
 			renderer.addSeriesRenderer(renderer3);
@@ -128,8 +122,8 @@ public class Graph extends Grafica {
 			renderer3.setColor(0);
 			renderer.addSeriesRenderer(renderer3);
 		}
+		
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
-
 		if (click[3] == true) {
 			modulo.setColor(Color.MAGENTA);
 			renderer.addSeriesRenderer(modulo);
@@ -147,10 +141,9 @@ public class Graph extends Grafica {
 			renderer.setXAxisMin(greater - 5);
 			renderer.setXAxisMax(greater);
 		}
-		renderer.setChartTitle("AccelerometerData ");
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
-		renderer.setYTitle("Acelerómetro");
+		renderer.setYTitle(titulo);
 		renderer.setXTitle("Tiempo (segundos)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);
@@ -161,15 +154,13 @@ public class Graph extends Grafica {
 		renderer.setZoomButtonsVisible(true);
 	}
 
-	public void setProperties2(boolean click[]) {
-		// renderer.setClickEnabled(ClickEnabled);
+	public void setProperties2(boolean click[], String titulo) {
 
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
 			renderer1.setLineWidth(1);
 			renderer1.setDisplayChartValues(false);
-			Log.d("bool", "esta: " + click[0]);
 			renderer.addSeriesRenderer(renderer1);
 		} else {
 			renderer1.setColor(0);
@@ -195,10 +186,9 @@ public class Graph extends Grafica {
 			renderer.setXAxisMin(greater - 5);
 			renderer.setXAxisMax(greater);
 		}
-		renderer.setChartTitle("AccelerometerData ");
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
-		renderer.setYTitle("Acelerómetro");
+		renderer.setYTitle(titulo);
 		renderer.setXTitle("Tiempo (segundos)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);

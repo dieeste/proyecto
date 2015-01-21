@@ -5,14 +5,16 @@ public class AccelData {
 	private double x;
 	private double y;
 	private double z;
+	private double modulo;
 	
 	
 	
-	public AccelData(long timestamp, double x, double y, double z) {
+	public AccelData(long timestamp, double x, double y, double z, double modulo) {
 		this.timestamp = timestamp;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.modulo = modulo;
 	}
 	public long getTimestamp() {
 		return timestamp;
@@ -38,10 +40,16 @@ public class AccelData {
 	public void setZ(double z) {
 		this.z = z;
 	}
+	public double getModulo() {
+		return modulo;
+	}
+	public void setModulo(double modulo) {
+		this.modulo= modulo;
+	}
 	
 	public String toString()
 	{
-		return "t="+timestamp+", x="+x+", y="+y+", z="+z;
+		return "t="+timestamp+", x="+x+", y="+y+", z="+z+", modulo="+modulo;
 	}
 	
 

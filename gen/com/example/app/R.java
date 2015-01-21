@@ -180,7 +180,11 @@ public final class R {
         public static final int sensores=0x7f080009;
         public static final int teoria=0x7f080007;
         public static final int tiempo=0x7f08001d;
-        public static final int unit_acceleration=0x7f08001b;
+        public static final int unidad_acelerometro=0x7f08001b;
+        public static final int unidad_campo_magnetico=0x7f080030;
+        public static final int unidad_giroscopio=0x7f08002f;
+        public static final int unidad_luz=0x7f080031;
+        public static final int unidad_priximidad=0x7f080032;
     }
     public static final class style {
         /** 

@@ -24,6 +24,7 @@
             android:id="@+id/checkAcelerometro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="false"
             android:text="@string/checkAcelerometro"
             android:textColor="#ffffff" />
 
@@ -59,12 +60,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/b"
             android:text="@string/giroscopio"
-            android:textColor="#ffffff" />
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkGiroscopio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="false"
             android:text="@string/checkGiroscopio"
             android:textColor="#ffffff" />
 
@@ -80,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ffffff" />
+                android:textColor="#ccff33" />
 
             <Button
                 android:id="@+id/graficaGiroscopio"
@@ -98,12 +101,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/b"
             android:text="@string/magnetico"
-            android:textColor="#ffffff" />
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkMagetico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="false"
             android:text="@string/checkMagnetometro"
             android:textColor="#ffffff" />
 
@@ -119,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ffffff" />
+                android:textColor="#ccff33" />
 
             <Button
                 android:id="@+id/graficaMagnetico"
@@ -137,20 +142,23 @@
             android:layout_height="wrap_content"
             android:background="@drawable/b"
             android:text="@string/proximidad"
-            android:textColor="#ffffff" />
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkProximidad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/checkProximidad" 
+            android:checked="false"
+            android:text="@string/checkProximidad"
             android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/detecta"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -164,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ffffff" />
+                android:textColor="#ccff33" />
 
             <Button
                 android:id="@+id/graficaProximidad"
@@ -182,12 +190,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/b"
             android:text="@string/luminosidad"
-            android:textColor="#ffffff" />
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkLuz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="false"
             android:text="@string/checkLuz"
             android:textColor="#ffffff" />
 
@@ -203,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ffffff" />
+                android:textColor="#ccff33" />
 
             <Button
                 android:id="@+id/graficaLuminosidad"
