@@ -124,7 +124,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 		magneto.setOnCheckedChangeListener(this);
 		luz.setOnCheckedChangeListener(this);
 		prox.setOnCheckedChangeListener(this);
-
+		   
+		
+	
 	}
 
 	@Override
@@ -239,6 +241,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			acelerometer.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
 			grafAcelerometro.setVisibility(Button.GONE);
 			acelero.setVisibility(CheckBox.GONE);
+			
 		} else {
 			if (acce == false) {
 				grafAcelerometro.setEnabled(false);
@@ -369,6 +372,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 				if (event.values[0] == 0) {
 					detecta.setBackgroundColor(Color.parseColor("#cf091c"));
 					detecta.setText("Proximidad Detectada");
+					detecta.setVisibility(TextView.VISIBLE);
 				} else {
 					detecta.setVisibility(TextView.GONE);
 				}
@@ -478,9 +482,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 		// TODO Auto-generated method stub
 		switch (buttonView.getId()) {
 		case R.id.checkAcelerometro:
+			  
 			acce = isChecked;
+			
 			if (acce == true) {
 				grafAcelerometro.setEnabled(true);
+				
 			} else {
 				grafAcelerometro.setEnabled(false);
 			}

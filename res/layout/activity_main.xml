@@ -9,19 +9,22 @@
         android:id="@+id/medicion"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:layout_marginTop="32dp"
         android:layout_below="@+id/sensoresdisponibles"
-        android:text="@string/medicion" />
+        android:layout_marginTop="32dp"
+        android:background="@drawable/botonamarillo"
+        android:text="@string/medicion"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/teoria"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textColor="#ffffff"
         android:layout_below="@+id/medicion"
-        android:text="@string/teoria" />
+        android:layout_marginTop="32dp"
+        android:background="@drawable/botonamarillo"
+        android:text="@string/teoria"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/sensoresdisponibles"
@@ -29,16 +32,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="45dp"
+        android:background="@drawable/botonamarillo"
         android:text="@string/sensores"
-        android:textColor="#ffffff" />
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/cargargrafica"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textColor="#ffffff"
         android:layout_below="@+id/teoria"
-        android:text="@string/cargargraficas" />
+        android:layout_marginTop="32dp"
+        android:background="@drawable/botonamarillo"
+        android:text="@string/cargargraficas"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
 </RelativeLayout>

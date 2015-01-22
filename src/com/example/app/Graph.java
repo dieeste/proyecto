@@ -92,7 +92,9 @@ public class Graph extends Grafica {
 
 
 	public void setProperties(boolean click[], String titulo) {
-
+		double[] limites ={0,1000000,-20,20};
+		double[] limites2 ={0,greater,-15,15};
+		double[] limites3 ={greater-5,greater,-15,15};
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
@@ -131,31 +133,33 @@ public class Graph extends Grafica {
 			modulo.setColor(0);
 			renderer.addSeriesRenderer(modulo);
 		}
-		renderer.setBackgroundColor(Color.WHITE);
-		renderer.setMarginsColor(Color.WHITE);
+		renderer.setBackgroundColor(Color.BLACK);
+		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
 		// renderer.setXAxisMin(0.0);
 		if (greater <= 5) {
-			renderer.setXAxisMax(5);
+			//renderer.setXAxisMax(5);
+			renderer.setRange(limites2);
 		} else {
-			renderer.setXAxisMin(greater - 5);
-			renderer.setXAxisMax(greater);
+			//renderer.setXAxisMin(greater - 5);
+			//renderer.setXAxisMax(greater);
+			renderer.setRange(limites3);
 		}
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);
 		renderer.setXTitle("Tiempo (segundos)");
 		renderer.setXLabels(5);
+		
 		renderer.setBackgroundColor(Color.BLACK);
-
+		renderer.setPanLimits(limites);
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
-		renderer.setAxesColor(Color.BLACK);
+		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
-		renderer.setZoomButtonsVisible(true);
 	}
 
 	public void setProperties2(boolean click[], String titulo) {
-
+		double[] limites ={0,1000000,-5000,5000};
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
@@ -176,8 +180,8 @@ public class Graph extends Grafica {
 			modulo.setColor(0);
 			renderer.addSeriesRenderer(modulo);
 		}
-		renderer.setBackgroundColor(Color.WHITE);
-		renderer.setMarginsColor(Color.WHITE);
+		renderer.setBackgroundColor(Color.BLACK);
+		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
 		// renderer.setXAxisMin(0.0);
 		if (greater <= 5) {
@@ -192,11 +196,11 @@ public class Graph extends Grafica {
 		renderer.setXTitle("Tiempo (segundos)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);
-
+		renderer.setPanLimits(limites);
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
-		renderer.setAxesColor(Color.BLACK);
+		renderer.setAxesColor(Color.WHITE);
+		renderer.setRange(limites);
 		renderer.setLabelsColor(Color.RED);
-		renderer.setZoomButtonsVisible(true);
 	}
 
 	public GraphicalView getGraph() {

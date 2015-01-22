@@ -2,7 +2,8 @@
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/n" >
+    android:background="@drawable/fondobueno2"
+    android:visibility="visible" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -15,7 +16,7 @@
             android:id="@+id/acelerometer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/b"
+            android:background="@drawable/botonamarillo"
             android:text="@string/acelerometro"
             android:textColor="#000000"
             android:textStyle="bold" />
@@ -58,7 +59,7 @@
             android:id="@+id/giroscopio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/b"
+            android:background="@drawable/botonamarillo"
             android:text="@string/giroscopio"
             android:textColor="#000000"
             android:textStyle="bold" />
@@ -69,7 +70,8 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/checkGiroscopio"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textColorHint="@color/accele_y" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,16 +92,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:drawableTop="@drawable/iconografic"
+                android:drawableBottom="@drawable/iconografic"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
+
         </LinearLayout>
 
         <Button
             android:id="@+id/magnetic"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/b"
+            android:background="@drawable/botonamarillo"
             android:text="@string/magnetico"
             android:textColor="#000000"
             android:textStyle="bold" />
@@ -110,7 +113,8 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/checkMagnetometro"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textColorHint="@color/accele_x" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,16 +135,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:drawableTop="@drawable/iconografic"
+                android:drawableBottom="@drawable/iconografic"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
+
         </LinearLayout>
 
         <Button
             android:id="@+id/proximity"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/b"
+            android:background="@drawable/botonamarillo"
             android:text="@string/proximidad"
             android:textColor="#000000"
             android:textStyle="bold" />
@@ -179,16 +184,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:drawableTop="@drawable/iconografic"
+                android:drawableBottom="@drawable/iconografic"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
+
         </LinearLayout>
 
         <Button
             android:id="@+id/luminosity"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/b"
+            android:background="@drawable/botonamarillo"
             android:text="@string/luminosidad"
             android:textColor="#000000"
             android:textStyle="bold" />
@@ -220,9 +226,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:drawableTop="@drawable/iconografic"
+                android:drawableBottom="@drawable/iconografic"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
+
         </LinearLayout>
     </LinearLayout>
 
