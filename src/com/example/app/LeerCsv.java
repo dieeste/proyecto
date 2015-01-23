@@ -17,145 +17,54 @@ public class LeerCsv extends Activity {
 	static Graph mGraph;
 	LinearLayout layout;
 	GraphicalView view;
-	static ConcurrentLinkedQueue<AccelData> datos;
+	static ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();
 	String nombre;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		Bundle graficas = getIntent().getExtras();
-		nombre= graficas.getString("fichero");
-		Log.d("este es el archivo", "eso es: "+nombre);
-		
+		nombre = graficas.getString("file");
+		Log.d("este es el archivo", "eso es: " + nombre);
+		setContentView(R.layout.graficaarchivo);
+		layout = (LinearLayout) findViewById(R.id.chart);
+		lee(nombre);
 	}
 
-	public void main(String args) {
-		Log.d("hola", "entra");
-		datos = new ConcurrentLinkedQueue<AccelData>();
+	public void lee(String file) {
 		try {
-			
-			CsvReader fichero = new CsvReader(args);
-		
+
+			CsvReader fichero = new CsvReader(file);
+
 			fichero.readHeaders();
 
-			while (fichero.readRecord())
-			{
-				long tiempo = Long.parseLong(fichero.get("Tiempo"));
+			while (fichero.readRecord()) {
+
+				double tiempo = Double.parseDouble(fichero.get("Tiempo"));
 				double x = Double.parseDouble(fichero.get("X"));
 				double y = Double.parseDouble(fichero.get("Y"));
 				double z = Double.parseDouble(fichero.get("Z"));
-				double modulo = Double.parseDouble(fichero.get("modulo"));
+				Log.d("zzzzzz", "esto es: " + z);
+				double modulo = Double.parseDouble(fichero.get("Modulo"));
+
 				AccelData data = new AccelData(tiempo, x, y, z, modulo);
-				
+
 				datos.add(data);
+				mGraph = new Graph(this);
+				mGraph.iniciar(datos);
+				mGraph.propiedades();
+				view = mGraph.getGraph();
+				layout.addView(view);
 			}
-			
+
 			fichero.close();
-			chart(datos);
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
-	public void chart(ConcurrentLinkedQueue<AccelData> datos2){
-		mGraph = new Graph(this);
-		mGraph.initData(datos);
-		view = mGraph.getGraph();
-		layout.addView(view);
-		
-	}
-	/*
-		private ArrayList<ArrayList<String>> arrListData;
-		private File archivo;
-		private FileReader fr;
-		private BufferedReader br;
-		static Graph mGraph;
-		String nombre;
-		LinearLayout layout;
-		GraphicalView view;
-		ConcurrentLinkedQueue<AccelData> datos;
-		
-		public LeerCsv(){}
-		
-		
-		
-		public ArrayList<ArrayList<String>> cargarArchivo(String file){
-			
-			try {
-				// Apertura del fichero y creacion de BufferedReader para poder
-				// hacer una lectura comoda (disponer del metodo readLine()).
-				Bundle graficas = getIntent().getExtras();
-				nombre = graficas.getString("fichero");
-				archivo = new File (nombre);
-				fr = new FileReader (archivo);
-				br = new BufferedReader(fr);
-				setContentView(R.layout.grafica);
-				layout = (LinearLayout) findViewById(R.id.chart);
-				
-				datos = new ConcurrentLinkedQueue<AccelData>();
-				
-				arrListData = new ArrayList<> ();
 
-				// Lectura del fichero
-				String linea;
-				
-				while((linea = br.readLine())!=null){
-					
-					StringTokenizer strTok = new StringTokenizer(linea, ",");
-					
-	
-					
-					// use comma as separator
-				
-					long tiempo =
-					double x = Double.parseDouble(country[1]);
-					double y = Double.parseDouble(country[2]);
-					double z = Double.parseDouble(country[3]);
-					AccelData data = new AccelData(tiempo, x, y, z);
-					datos.add(data);
-					mGraph = new Graph(this);
-					mGraph.initData(datos);
-					mGraph.setProperties2();
-					view = mGraph.getGraph();
-					layout.addView(view);
-					
-					while (strTok.hasMoreTokens()) {
-						datos.get( datos.size()-1 ).add( strTok.nextToken() );
-					}
-					
-				}
-			
-			} catch(Exception e){
-				e.printStackTrace();
-				arrListData = null;
-			} finally{
-				// En el finally cerramos el fichero, para asegurarnos
-				// que se cierra tanto si todo va bien como si salta 
-				// una excepcion.
-				try{                    
-					if( null != fr ){   
-						fr.close();     
-					}
-					
-					return arrListData;
-					
-				} catch (Exception e2){ 
-					e2.printStackTrace();
-					return arrListData;
-				}
-			}
-		} // cierre de metodo
-		
-		*/
 }
-		
-	
-	
-
-
-
-	

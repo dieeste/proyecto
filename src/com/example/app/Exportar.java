@@ -14,15 +14,15 @@ public class Exportar{
 
 	protected void hacer(ConcurrentLinkedQueue<AccelData> sensorDatas) {
 		// TODO Auto-generated method stub
-		long t = sensorDatas.peek().getTimestamp();
+		double t = sensorDatas.peek().getTimestamp();
 
 		StringBuilder csvData = new StringBuilder();
-		csvData.append("Tiempo, X, Y, Z \n");
+		csvData.append("Tiempo, X, Y, Z, Modulo \n");
 		for (AccelData values : sensorDatas) {
-			long f = (values.getTimestamp() - t) / 1000;
-			double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-			double fin = f + d;
-			csvData.append(String.valueOf(fin) + ", "
+			double tiempo = (values.getTimestamp() - t) / 1000;
+			/*double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+			double fin = f + d;*/
+			csvData.append(String.valueOf(tiempo) + ", "
 					+ String.valueOf(values.getX()) + ", "
 					+ String.valueOf(values.getY()) + ", "
 					+ String.valueOf(values.getZ()) + ", "

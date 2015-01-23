@@ -134,9 +134,10 @@ public final class R {
         public static final int defmagnetico=0x7f030007;
         public static final int defproximidad=0x7f030008;
         public static final int grafica=0x7f030009;
-        public static final int list=0x7f03000a;
-        public static final int simulacion=0x7f03000b;
-        public static final int teoria=0x7f03000c;
+        public static final int graficaarchivo=0x7f03000a;
+        public static final int list=0x7f03000b;
+        public static final int simulacion=0x7f03000c;
+        public static final int teoria=0x7f03000d;
     }
     public static final class menu {
         public static final int menu=0x7f0a0000;

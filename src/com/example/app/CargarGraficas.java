@@ -4,12 +4,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.achartengine.GraphicalView;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,6 +21,12 @@ public class CargarGraficas extends ListActivity {
 
 	private File currentDir;
 	private FileArrayAdapter adapter;
+	Graph mGraph;
+	LinearLayout layout;
+	GraphicalView view;
+	ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();;
+	String nombre;
+	LeerCsv read;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +35,7 @@ public class CargarGraficas extends ListActivity {
 		currentDir = new File(Environment.getExternalStorageDirectory()
 				.toString() + "/" + getResources().getString(R.string.app_name));
 		ficheros(currentDir);
+	
 	}
 
 	private void ficheros(File f) {
@@ -71,11 +82,11 @@ public class CargarGraficas extends ListActivity {
 	}
 
 	private void onFileClick(Opciones o) {
-		Toast.makeText(this, "File Clicked: " + o.getName(), Toast.LENGTH_SHORT)
-				.show();
-		Intent i = new Intent(CargarGraficas.this,LeerCsv.class);
-		i.putExtra("fichero", o.getPath());
-		startActivity(i);
+		/*Toast.makeText(this, "File Clicked: " + o.getName(), Toast.LENGTH_SHORT)
+				.show();*/
+		Intent vamos = new Intent(CargarGraficas.this, LeerCsv.class);
+		vamos.putExtra("file", o.getPath());
+		startActivity(vamos);
 	}
-
+	
 }

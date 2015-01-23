@@ -1,7 +1,7 @@
 package com.example.app;
 
 public class AccelData {
-	private long timestamp;
+	private double timestamp;
 	private double x;
 	private double y;
 	private double z;
@@ -9,17 +9,17 @@ public class AccelData {
 	
 	
 	
-	public AccelData(long timestamp, double x, double y, double z, double modulo) {
+	public AccelData(double timestamp, double x, double y, double z, double modulo) {
 		this.timestamp = timestamp;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.modulo = modulo;
 	}
-	public long getTimestamp() {
+	public double getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(double timestamp) {
 		this.timestamp = timestamp;
 	}
 	public double getX() {
