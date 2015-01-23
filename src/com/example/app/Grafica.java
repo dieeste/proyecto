@@ -276,6 +276,8 @@ public class Grafica extends Activity implements OnClickListener,
 				sensorDatas.add(data);
 				Log.d("sensor aceler", "sensorproooo: " + data);
 				mGraph = new Graph(this);
+				mGraph.ejeY(sensorDatas);
+				mGraph.ejeX(sensorDatas);
 				mGraph.initData(sensorDatas);
 				mGraph.setProperties(mGraphs, "Acelerómetro "
 						+ getString(R.string.unidad_acelerometro));
@@ -303,6 +305,8 @@ public class Grafica extends Activity implements OnClickListener,
 				sensorGiroscopio.add(data2);
 				Log.d("sensor giroscopio", "sensorproooo: " + data2);
 				mGraph = new Graph(this);
+				mGraph.ejeY(sensorGiroscopio);
+				mGraph.ejeX(sensorGiroscopio);
 				mGraph.initData(sensorGiroscopio);
 				mGraph.setProperties(mGraphs, "Giroscopio "
 						+ getString(R.string.unidad_giroscopio));
@@ -328,6 +332,8 @@ public class Grafica extends Activity implements OnClickListener,
 				sensorLuz.add(data3);
 				Log.d("sensorluuuu", "sensorprooooluuu: " + data3);
 				mGraph = new Graph(this);
+				mGraph.ejeY2(sensorLuz);
+				mGraph.ejeX2(sensorLuz);
 				mGraph.initData2(sensorLuz);
 				mGraph.setProperties2(mGraphs, "Luz "
 						+ getString(R.string.unidad_luz));
@@ -354,6 +360,8 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData data4 = new AccelData(timestamp4, x4, y4, z4, modulo4);
 				sensorMagnetico.add(data4);
 				mGraph = new Graph(this);
+				mGraph.ejeY(sensorMagnetico);
+				mGraph.ejeX(sensorMagnetico);
 				mGraph.initData(sensorMagnetico);
 				mGraph.setProperties(mGraphs, "Campo magnético "
 						+ getString(R.string.unidad_campo_magnetico));
@@ -378,6 +386,8 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData2 data5 = new AccelData2(timestamp5, x5, modulo5);
 				sensorProximidad.add(data5);
 				mGraph = new Graph(this);
+				mGraph.ejeY2(sensorProximidad);
+				mGraph.ejeX2(sensorProximidad);
 				mGraph.initData2(sensorProximidad);
 				mGraph.setProperties2(mGraphs, "Proximidad "
 						+ getString(R.string.unidad_priximidad));
@@ -557,12 +567,12 @@ public class Grafica extends Activity implements OnClickListener,
 					// Si se ha guardado con éxito enviamos un mensaje al
 					// controlador de mensajes y lo muestra
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_complate));
+							.getString(R.string.guardado_acelerometro));
 				} catch (Exception e) {
 					// Si no se ha podido guardar entonces nos envía un mensaje
 					// diciendo que no se ha guardado
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_imcomplate));
+							.getString(R.string.error_guardar));
 				}
 				msg.setData(bundle);
 				// Envía el mensaje al controlador
@@ -618,12 +628,12 @@ public class Grafica extends Activity implements OnClickListener,
 					// Si se ha guardado con éxito enviamos un mensaje al
 					// controlador de mensajes y lo muestra
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_complate));
+							.getString(R.string.guardado_giroscopio));
 				} catch (Exception e) {
 					// Si no se ha podido guardar entonces nos envía un mensaje
 					// diciendo que no se ha guardado
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_imcomplate));
+							.getString(R.string.error_guardar));
 				}
 				msg.setData(bundle);
 				// Envía el mensaje al controlador
@@ -678,12 +688,12 @@ public class Grafica extends Activity implements OnClickListener,
 					// Si se ha guardado con éxito enviamos un mensaje al
 					// controlador de mensajes y lo muestra
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_complate));
+							.getString(R.string.guardado_magnetometro));
 				} catch (Exception e) {
 					// Si no se ha podido guardar entonces nos envía un mensaje
 					// diciendo que no se ha guardado
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_imcomplate));
+							.getString(R.string.error_guardar));
 				}
 				msg.setData(bundle);
 				// Envía el mensaje al controlador
@@ -738,12 +748,12 @@ public class Grafica extends Activity implements OnClickListener,
 					// Si se ha guardado con éxito enviamos un mensaje al
 					// controlador de mensajes y lo muestra
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_complate));
+							.getString(R.string.guardar_luz));
 				} catch (Exception e) {
 					// Si no se ha podido guardar entonces nos envía un mensaje
 					// diciendo que no se ha guardado
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_imcomplate));
+							.getString(R.string.error_guardar));
 				}
 				msg.setData(bundle);
 				// Envía el mensaje al controlador
@@ -798,12 +808,12 @@ public class Grafica extends Activity implements OnClickListener,
 					// Si se ha guardado con éxito enviamos un mensaje al
 					// controlador de mensajes y lo muestra
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_complate));
+							.getString(R.string.guardar_proximidad));
 				} catch (Exception e) {
 					// Si no se ha podido guardar entonces nos envía un mensaje
 					// diciendo que no se ha guardado
 					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.save_imcomplate));
+							.getString(R.string.error_guardar));
 				}
 				msg.setData(bundle);
 				// Envía el mensaje al controlador

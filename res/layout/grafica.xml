@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-      android:background="@drawable/n"  >
+    android:background="@drawable/n" >
 
     <LinearLayout
         android:id="@+id/chart"
@@ -58,7 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="@string/channel_x_axis" />
+            android:text="@string/channel_x_axis"
+            android:textColor="#ffffff" />
 
         <CheckBox
             android:id="@+id/ejey"
@@ -66,7 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="@string/channel_y_axis" />
+            android:text="@string/channel_y_axis"
+            android:textColor="#ffffff" />
 
         <CheckBox
             android:id="@+id/ejez"
@@ -74,7 +76,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="@string/channel_z_axis" />
+            android:text="@string/channel_z_axis"
+            android:textColor="#ffffff" />
 
         <CheckBox
             android:id="@+id/modulo"
@@ -82,8 +85,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="@string/modulo" />
-
+            android:text="@string/modulo"
+            android:textColor="#ffffff"
+            android:lines="4" />
     </LinearLayout>
 
 </RelativeLayout>
