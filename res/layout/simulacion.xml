@@ -154,6 +154,7 @@
             android:id="@+id/checkProximidad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/accele_x"
             android:checked="false"
             android:text="@string/checkProximidad"
             android:textColor="#ffffff" />

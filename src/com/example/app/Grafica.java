@@ -578,11 +578,11 @@ public class Grafica extends Activity implements OnClickListener,
 			}
 
 			if (giro == true) {
-				double t = sensorDatas.peek().getTimestamp();
+				double t = sensorGiroscopio.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
 				csvData.append("Tiempo,X,Y,Z,Modulo\n");
-				for (AccelData values : sensorDatas) {
+				for (AccelData values : sensorGiroscopio) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					
 					csvData.append(String.valueOf(tiempo) + ","
@@ -637,11 +637,11 @@ public class Grafica extends Activity implements OnClickListener,
 				mensajeria.sendMessage(msg);
 			}
 			if (magne == true) {
-				double t = sensorDatas.peek().getTimestamp();
+				double t = sensorMagnetico.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
 				csvData.append("Tiempo,X,Y,Z,Modulo \n");
-				for (AccelData values : sensorDatas) {
+				for (AccelData values : sensorMagnetico) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					
 					csvData.append(String.valueOf(tiempo) + ","
@@ -696,18 +696,16 @@ public class Grafica extends Activity implements OnClickListener,
 				mensajeria.sendMessage(msg);
 			}
 			if (luz == true) {
-				double t = sensorDatas.peek().getTimestamp();
+				double t = sensorLuz.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
 				csvData.append("Tiempo,X,Y,Z,Modulo\n");
-				for (AccelData values : sensorDatas) {
+				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					/*double d = ((values.getTimestamp() - t) % 1000) * 0.001;
 					double fin = f + d;*/
 					csvData.append(String.valueOf(tiempo) + ","
 							+ String.valueOf(values.getX()) + ","
-							+ String.valueOf(values.getY()) + ","
-							+ String.valueOf(values.getZ()) + ","
 							+ String.valueOf(values.getModulo()) + "\n");
 				}
 
@@ -756,17 +754,15 @@ public class Grafica extends Activity implements OnClickListener,
 				mensajeria.sendMessage(msg);
 			}
 			if (proxi == true) {
-				double t = sensorDatas.peek().getTimestamp();
+				double t = sensorProximidad.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
 				csvData.append("Tiempo,X,Y,Z,Modulo\n");
-				for (AccelData values : sensorDatas) {
+				for (AccelData2 values : sensorProximidad) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					
 					csvData.append(String.valueOf(tiempo) + ","
 							+ String.valueOf(values.getX()) + ","
-							+ String.valueOf(values.getY()) + ","
-							+ String.valueOf(values.getZ()) + ","
 							+ String.valueOf(values.getModulo()) + "\n");
 				}
 
