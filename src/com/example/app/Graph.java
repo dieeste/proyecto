@@ -121,7 +121,7 @@ public class Graph extends Grafica {
 
 			double tiempo = (data.getTimestamp() - t) / 1000;
 			
-			Log.d("tiempo", "timestamp: " + tiempo);
+			//Log.d("tiempo", "timestamp: " + tiempo);
 			xSeries.add(tiempo, data.getX());
 			modulo.add(tiempo, data.getModulo());
 		}
@@ -142,7 +142,7 @@ public class Graph extends Grafica {
 		for (AccelData data : sensorDatas) {
 			double tiempo = (data.getTimestamp() - t) / 1000;
 
-			Log.d("tiempo", "timestamp: " + tiempo);
+			//Log.d("tiempo", "timestamp: " + tiempo);
 			xSeries.add(tiempo, data.getX());
 			ySeries.add(tiempo, data.getY());
 			zSeries.add(tiempo, data.getZ());

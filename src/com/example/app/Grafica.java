@@ -261,147 +261,160 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		// TODO Auto-generated method stub
-
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-			if (acce == true) {
-				double x = event.values[0];
-				double y = event.values[1];
-				double z = event.values[2];
-				double modulo = Double.valueOf(Math.abs(Math.sqrt(Math
-						.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
-				double timestamp = System.currentTimeMillis();
-
-				AccelData data = new AccelData(timestamp, x, y, z, modulo);
-				sensorDatas.add(data);
-				Log.d("sensor aceler", "sensorproooo: " + data);
-				mGraph = new Graph(this);
-				mGraph.ejeY(sensorDatas);
-				mGraph.ejeX(sensorDatas);
-				mGraph.initData(sensorDatas);
-				mGraph.setProperties(mGraphs, "Acelerómetro "
-						+ getString(R.string.unidad_acelerometro));
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
+		synchronized (this) {
+			switch (event.sensor.getType()) {
+			case Sensor.TYPE_ACCELEROMETER:
+				if (acce == true) {
+					double x = event.values[0];
+					double y = event.values[1];
+					double z = event.values[2];
+					double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
+							x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
+					double timestamp = System.currentTimeMillis();
+					Log.d("acce", "vector accel: " + x);
+					AccelData data = new AccelData(timestamp, x, y, z, modulo);
+					sensorDatas.add(data);
+					if (sensor == Sensor.TYPE_ACCELEROMETER) {
+						// Log.d("sensor aceler", "sensoracce: " + data);
+						mGraph = new Graph(this);
+						mGraph.ejeY(sensorDatas);
+						mGraph.ejeX(sensorDatas);
+						mGraph.initData(sensorDatas);
+						mGraph.setProperties(mGraphs, "Acelerómetro "
+								+ getString(R.string.unidad_acelerometro));
+						if (!init) {
+							view = mGraph.getGraph();
+							layout.addView(view);
+							init = true;
+						} else {
+							layout.removeView(view);
+							view = mGraph.getGraph();
+							layout.addView(view);
+						}
+					}
 				}
-			}
-			break;
-		case Sensor.TYPE_GYROSCOPE:
-			if (giro == true) {
-				double x2 = event.values[0];
-				double y2 = event.values[1];
-				double z2 = event.values[2];
-				double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x2,
-						2) + Math.pow(y2, 2) + Math.pow(z2, 2))));
-				double timestamp2 = System.currentTimeMillis();
-
-				AccelData data2 = new AccelData(timestamp2, x2, y2, z2, modulo2);
-				sensorGiroscopio.add(data2);
-				Log.d("sensor giroscopio", "sensorproooo: " + data2);
-				mGraph = new Graph(this);
-				mGraph.ejeY(sensorGiroscopio);
-				mGraph.ejeX(sensorGiroscopio);
-				mGraph.initData(sensorGiroscopio);
-				mGraph.setProperties(mGraphs, "Giroscopio "
-						+ getString(R.string.unidad_giroscopio));
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
+				break;
+			case Sensor.TYPE_GYROSCOPE:
+				if (giro == true) {
+					double x2 = event.values[0];
+					double y2 = event.values[1];
+					double z2 = event.values[2];
+					double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math
+							.pow(x2, 2) + Math.pow(y2, 2) + Math.pow(z2, 2))));
+					double timestamp2 = System.currentTimeMillis();
+					Log.d("giro", "vector giro: " + x2);
+					AccelData data2 = new AccelData(timestamp2, x2, y2, z2,
+							modulo2);
+					sensorGiroscopio.add(data2);
+					if (sensor == Sensor.TYPE_GYROSCOPE) {
+						// Log.d("sensor giroscopio", "sensorgiro: " + data2);
+						mGraph = new Graph(this);
+						mGraph.ejeY(sensorGiroscopio);
+						mGraph.ejeX(sensorGiroscopio);
+						mGraph.initData(sensorGiroscopio);
+						mGraph.setProperties(mGraphs, "Giroscopio "
+								+ getString(R.string.unidad_giroscopio));
+						if (!init) {
+							view = mGraph.getGraph();
+							layout.addView(view);
+							init = true;
+						} else {
+							layout.removeView(view);
+							view = mGraph.getGraph();
+							layout.addView(view);
+						}
+					}
 				}
-			}
-			break;
-		case Sensor.TYPE_LIGHT:
-			if (luz == true) {
-				double x3 = event.values[0];
-				double modulo3 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x3,
-						2))));
-				double timestamp3 = System.currentTimeMillis();
+				break;
+			case Sensor.TYPE_LIGHT:
+				if (luz == true) {
+					double x3 = event.values[0];
+					double modulo3 = Double.valueOf(Math.abs(Math.sqrt(Math
+							.pow(x3, 2))));
+					double timestamp3 = System.currentTimeMillis();
 
-				AccelData2 data3 = new AccelData2(timestamp3, x3, modulo3);
-				sensorLuz.add(data3);
-				Log.d("sensorluuuu", "sensorprooooluuu: " + data3);
-				mGraph = new Graph(this);
-				mGraph.ejeY2(sensorLuz);
-				mGraph.ejeX2(sensorLuz);
-				mGraph.initData2(sensorLuz);
-				mGraph.setProperties2(mGraphs, "Luz "
-						+ getString(R.string.unidad_luz));
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
+					AccelData2 data3 = new AccelData2(timestamp3, x3, modulo3);
+					sensorLuz.add(data3);
+					Log.d("sensorluuuu", "sensorprooooluuu: " + data3);
+					if (sensor == Sensor.TYPE_LIGHT) {
+						mGraph = new Graph(this);
+						mGraph.ejeY2(sensorLuz);
+						mGraph.ejeX2(sensorLuz);
+						mGraph.initData2(sensorLuz);
+						mGraph.setProperties2(mGraphs, "Luz "
+								+ getString(R.string.unidad_luz));
+						if (!init) {
+							view = mGraph.getGraph();
+							layout.addView(view);
+							init = true;
+						} else {
+							layout.removeView(view);
+							view = mGraph.getGraph();
+							layout.addView(view);
+						}
+					}
 				}
-			}
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			if (magne == true) {
-				double x4 = event.values[0];
-				double y4 = event.values[1];
-				double z4 = event.values[2];
-				double modulo4 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x4,
-						2) + Math.pow(y4, 2) + Math.pow(z4, 2))));
-				double timestamp4 = System.currentTimeMillis();
+				break;
+			case Sensor.TYPE_MAGNETIC_FIELD:
+				if (magne == true) {
+					double x4 = event.values[0];
+					double y4 = event.values[1];
+					double z4 = event.values[2];
+					double modulo4 = Double.valueOf(Math.abs(Math.sqrt(Math
+							.pow(x4, 2) + Math.pow(y4, 2) + Math.pow(z4, 2))));
+					double timestamp4 = System.currentTimeMillis();
 
-				AccelData data4 = new AccelData(timestamp4, x4, y4, z4, modulo4);
-				sensorMagnetico.add(data4);
-				mGraph = new Graph(this);
-				mGraph.ejeY(sensorMagnetico);
-				mGraph.ejeX(sensorMagnetico);
-				mGraph.initData(sensorMagnetico);
-				mGraph.setProperties(mGraphs, "Campo magnético "
-						+ getString(R.string.unidad_campo_magnetico));
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
+					AccelData data4 = new AccelData(timestamp4, x4, y4, z4,
+							modulo4);
+					sensorMagnetico.add(data4);
+					if (sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+						mGraph = new Graph(this);
+						mGraph.ejeY(sensorMagnetico);
+						mGraph.ejeX(sensorMagnetico);
+						mGraph.initData(sensorMagnetico);
+						mGraph.setProperties(mGraphs, "Campo magnético "
+								+ getString(R.string.unidad_campo_magnetico));
+						if (!init) {
+							view = mGraph.getGraph();
+							layout.addView(view);
+							init = true;
+						} else {
+							layout.removeView(view);
+							view = mGraph.getGraph();
+							layout.addView(view);
+						}
+					}
 				}
-			}
-			break;
-		case Sensor.TYPE_PROXIMITY:
-			if (proxi == true) {
-				double x5 = event.values[0];
-				double modulo5 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x5,
-						2))));
-				double timestamp5 = System.currentTimeMillis();
+				break;
+			case Sensor.TYPE_PROXIMITY:
+				if (proxi == true) {
+					double x5 = event.values[0];
+					double modulo5 = Double.valueOf(Math.abs(Math.sqrt(Math
+							.pow(x5, 2))));
+					double timestamp5 = System.currentTimeMillis();
 
-				AccelData2 data5 = new AccelData2(timestamp5, x5, modulo5);
-				sensorProximidad.add(data5);
-				mGraph = new Graph(this);
-				mGraph.ejeY2(sensorProximidad);
-				mGraph.ejeX2(sensorProximidad);
-				mGraph.initData2(sensorProximidad);
-				mGraph.setProperties2(mGraphs, "Proximidad "
-						+ getString(R.string.unidad_priximidad));
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
+					AccelData2 data5 = new AccelData2(timestamp5, x5, modulo5);
+					sensorProximidad.add(data5);
+					if (sensor == Sensor.TYPE_PROXIMITY) {
+						mGraph = new Graph(this);
+						mGraph.ejeY2(sensorProximidad);
+						mGraph.ejeX2(sensorProximidad);
+						mGraph.initData2(sensorProximidad);
+						mGraph.setProperties2(mGraphs, "Proximidad "
+								+ getString(R.string.unidad_priximidad));
+						if (!init) {
+							view = mGraph.getGraph();
+							layout.addView(view);
+							init = true;
+						} else {
+							layout.removeView(view);
+							view = mGraph.getGraph();
+							layout.addView(view);
+						}
+					}
 				}
+				break;
 			}
-			break;
 		}
 	}
 
@@ -458,60 +471,34 @@ public class Grafica extends Activity implements OnClickListener,
 	// Función para guardar los datos obtenidos de los sensores
 
 	protected void Parar_sensores() {
-		switch (sensor) {
-		case Sensor.TYPE_ACCELEROMETER:
-			sensorManager.unregisterListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-			break;
-		case Sensor.TYPE_GYROSCOPE:
-			sensorManager.unregisterListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
-			break;
-		case Sensor.TYPE_LIGHT:
-			sensorManager.unregisterListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			sensorManager.unregisterListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
-			break;
-		case Sensor.TYPE_PROXIMITY:
-			sensorManager.unregisterListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
-			break;
-		}
+		sensorManager.unregisterListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+		sensorManager.unregisterListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
+		sensorManager.unregisterListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
+		sensorManager.unregisterListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
+		sensorManager.unregisterListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
 
 	}
 
 	protected void Iniciar_sensores() {
-		switch (sensor) {
-		case Sensor.TYPE_ACCELEROMETER:
-			sensorManager.registerListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-					frecuencia);
-			break;
-		case Sensor.TYPE_GYROSCOPE:
-			sensorManager.registerListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
-					frecuencia);
-			break;
-		case Sensor.TYPE_LIGHT:
-			sensorManager.registerListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
-					frecuencia);
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			sensorManager.registerListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-					frecuencia);
-			break;
-		case Sensor.TYPE_PROXIMITY:
-			sensorManager.registerListener(this,
-					sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
-					frecuencia);
-			break;
-		}
-
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				frecuencia);
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+				frecuencia);
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), frecuencia);
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+				frecuencia);
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
+				frecuencia);
 	}
 
 	private class SaveThread extends Thread {
@@ -584,7 +571,7 @@ public class Grafica extends Activity implements OnClickListener,
 				csvData.append("Tiempo,X,Y,Z,Modulo\n");
 				for (AccelData values : sensorGiroscopio) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					
+
 					csvData.append(String.valueOf(tiempo) + ","
 							+ String.valueOf(values.getX()) + ","
 							+ String.valueOf(values.getY()) + ","
@@ -643,7 +630,7 @@ public class Grafica extends Activity implements OnClickListener,
 				csvData.append("Tiempo,X,Y,Z,Modulo \n");
 				for (AccelData values : sensorMagnetico) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					
+
 					csvData.append(String.valueOf(tiempo) + ","
 							+ String.valueOf(values.getX()) + ","
 							+ String.valueOf(values.getY()) + ","
@@ -699,11 +686,13 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorLuz.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
-				csvData.append("Tiempo,X,Y,Z,Modulo\n");
+				csvData.append("Tiempo,X,Modulo\n");
 				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					/*double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-					double fin = f + d;*/
+					/*
+					 * double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+					 * double fin = f + d;
+					 */
 					csvData.append(String.valueOf(tiempo) + ","
 							+ String.valueOf(values.getX()) + ","
 							+ String.valueOf(values.getModulo()) + "\n");
@@ -757,10 +746,10 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorProximidad.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
-				csvData.append("Tiempo,X,Y,Z,Modulo\n");
+				csvData.append("Tiempo,X,Modulo\n");
 				for (AccelData2 values : sensorProximidad) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					
+
 					csvData.append(String.valueOf(tiempo) + ","
 							+ String.valueOf(values.getX()) + ","
 							+ String.valueOf(values.getModulo()) + "\n");

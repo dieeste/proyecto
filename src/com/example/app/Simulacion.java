@@ -238,7 +238,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 	protected void Iniciar_sensores() {
 		// iniciar acelerometro
 		if (aceleromete == null) {
-			acelerometer.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			acelerometro.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			acelerometro.setTextColor(Color.RED);
 			grafAcelerometro.setVisibility(Button.GONE);
 			acelero.setVisibility(CheckBox.GONE);
 			
@@ -253,6 +254,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		// iniciar giroscopio
 		if (giroscope == null) {
 			giroscopo.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			giroscopo.setTextColor(Color.RED);
 			grafGiroscopio.setVisibility(Button.GONE);
 			giro.setVisibility(CheckBox.GONE);
 		} else {
@@ -265,7 +267,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 		}
 		// iniciar magnetometro
 		if (magnetometro == null) {
-			magnetic.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			magnetico.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			magnetico.setTextColor(Color.RED);
 			grafMagnetico.setVisibility(Button.GONE);
 			magneto.setVisibility(CheckBox.GONE);
 		} else {
@@ -278,7 +281,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 		}
 		// iniciar proximidad
 		if (proximo == null) {
-			proximity.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			proximidad.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			proximidad.setTextColor(Color.RED);
 			grafProximidad.setVisibility(Button.GONE);
 			detecta.setVisibility(View.GONE);
 			prox.setVisibility(CheckBox.GONE);
@@ -293,6 +297,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		// iniciar luces
 		if (luces == null) {
 			luminosidad.setText("\nNO ESTA DISPONIBLE EL SENSOR\n");
+			luminosidad.setTextColor(Color.RED);
 			grafLuz.setVisibility(Button.GONE);
 			luz.setVisibility(CheckBox.GONE);
 		} else {

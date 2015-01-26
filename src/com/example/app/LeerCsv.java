@@ -18,7 +18,7 @@ public class LeerCsv extends Activity {
 	static Graph mGraph;
 	LinearLayout layout;
 	GraphicalView view;
-	static ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();
+	static ConcurrentLinkedQueue<AccelData> datos;
 	String nombre;
 
 	@Override
@@ -31,6 +31,7 @@ public class LeerCsv extends Activity {
 		Log.d("este es el archivo", "eso es: " + nombre);
 		setContentView(R.layout.graficaarchivo);
 		layout = (LinearLayout) findViewById(R.id.chart);
+		datos= new ConcurrentLinkedQueue<AccelData>();
 		lee(nombre);
 	}
 
@@ -62,7 +63,9 @@ public class LeerCsv extends Activity {
 			mGraph.propiedades();
 			view = mGraph.getGraph();
 			layout.addView(view);
-
+			for (AccelData data : datos) {
+				datos.remove(data);
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

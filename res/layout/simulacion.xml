@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ccff33"
+                android:textColor="#ffffff"
                 android:textStyle="bold" />
 
             <Button
@@ -68,6 +68,7 @@
             android:id="@+id/checkGiroscopio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#CC00FF"
             android:checked="false"
             android:text="@string/checkGiroscopio"
             android:textColor="#ffffff"
@@ -85,7 +86,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ccff33" />
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/graficaGiroscopio"
@@ -128,7 +130,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ccff33" />
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/graficaMagnetico"
@@ -154,7 +157,7 @@
             android:id="@+id/checkProximidad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/accele_x"
+            android:background="#CC00FF"
             android:checked="false"
             android:text="@string/checkProximidad"
             android:textColor="#ffffff" />
@@ -178,7 +181,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ccff33" />
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/graficaProximidad"
@@ -220,7 +224,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
-                android:textColor="#ccff33" />
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/graficaLuminosidad"

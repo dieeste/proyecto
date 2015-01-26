@@ -41,11 +41,11 @@
     <string name="modulo">Módulo</string>
     <string name="grafica">Gráfica</string>
     <string name="cargargraficas">Cargar gráficas</string>
-    <string name="checkAcelerometro">Guardar datos del acelerómetro</string>
-    <string name="checkGiroscopio">Guardar datos del giroscopio</string>
-    <string name="checkMagnetometro">Guardar datos del magnetómetro</string>
-    <string name="checkLuz">Guardar datos del sensor de luz</string>
-    <string name="checkProximidad">Guardar datos del proximidad</string>
+    <string name="checkAcelerometro">Guardar/ver datos del acelerómetro</string>
+    <string name="checkGiroscopio">Guardar/ver datos del giroscopio</string>
+    <string name="checkMagnetometro">Guardar/ver datos del magnetómetro</string>
+    <string name="checkLuz">Guardar/ver datos del sensor de luz</string>
+    <string name="checkProximidad">Guardar/ver datos del proximidad</string>
     <string name="unidad_giroscopio">rad/s</string>
     <string name="unidad_campo_magnetico">µT</string>
     <string name="unidad_luz">Lux</string>
