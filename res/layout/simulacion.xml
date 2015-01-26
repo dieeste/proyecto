@@ -68,11 +68,9 @@
             android:id="@+id/checkGiroscopio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#CC00FF"
             android:checked="false"
             android:text="@string/checkGiroscopio"
-            android:textColor="#ffffff"
-            android:textColorHint="@color/accele_y" />
+            android:textColor="#ffffff" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -157,7 +155,6 @@
             android:id="@+id/checkProximidad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#CC00FF"
             android:checked="false"
             android:text="@string/checkProximidad"
             android:textColor="#ffffff" />

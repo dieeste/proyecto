@@ -9,7 +9,8 @@
     <string name="medicion">Medición de datos</string>
     <string name="ejemplos">Ejemplos</string>
     <string name="teoria">Teoría</string>
-    <string name="explicacion">Este programa ha sido desarrollado como ejemplo en el curso de Android para demostrar cómo se pueden lanzar nuevas actividades desde la actividad principal.</string>
+    <string name="explicacion">un acelerómetro es un dispositivo que mide la aceleración y la fuerzas inducidas por las gravedad. Vale pero, ¿qué demonios significa esto? Pues en palabras simples, nos permite detectar el movimiento y el giro."\n"
+Casi todos nosotros conocemos la Wii, la consola de Nintendo que utiliza un mando que podemos mover en el aire para controlar a nuestro personaje en pantalla. Pues en su interior se encuentra un acelerómetro para detectar esos movimientos.</string>
     <string name="sensores">Sensores disponibles</string>
     <string name="empezar">Empezar</string>
     <string name="parar">Parar</string>
@@ -41,11 +42,11 @@
     <string name="modulo">Módulo</string>
     <string name="grafica">Gráfica</string>
     <string name="cargargraficas">Cargar gráficas</string>
-    <string name="checkAcelerometro">Guardar/ver datos del acelerómetro</string>
-    <string name="checkGiroscopio">Guardar/ver datos del giroscopio</string>
-    <string name="checkMagnetometro">Guardar/ver datos del magnetómetro</string>
-    <string name="checkLuz">Guardar/ver datos del sensor de luz</string>
-    <string name="checkProximidad">Guardar/ver datos del proximidad</string>
+    <string name="checkAcelerometro">Guardar/Ver gráfica del acelerómetro</string>
+    <string name="checkGiroscopio">Guardar/Ver gráfica del giroscopio</string>
+    <string name="checkMagnetometro">Guardar/Ver gráfica del magnetómetro</string>
+    <string name="checkLuz">Guardar/Ver gráfica del sensor de luz</string>
+    <string name="checkProximidad">Guardar/Ver gráfica del proximidad</string>
     <string name="unidad_giroscopio">rad/s</string>
     <string name="unidad_campo_magnetico">µT</string>
     <string name="unidad_luz">Lux</string>

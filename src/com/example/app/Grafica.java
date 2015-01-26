@@ -8,6 +8,7 @@ import org.achartengine.GraphicalView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
@@ -82,7 +83,7 @@ public class Grafica extends Activity implements OnClickListener,
 	boolean magne;
 	boolean luz;
 	boolean proxi;
-
+	Exportar expo;
 	GraphicalView view;
 	Graph mGraph;
 
@@ -878,6 +879,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		double t = sensorDatas.peek().getTimestamp();
 		// Elegimos entre las opciones disponibles en esta pantalla
 		switch (item.getItemId()) {
 		case (R.id.guardar):
@@ -885,11 +887,55 @@ public class Grafica extends Activity implements OnClickListener,
 			saveHistory();
 			break;
 		case (R.id.enviar):
-			new Exportar(this).hacer(sensorDatas);
+			//new Exportar(this).hacer(sensorDatas);
+	//	new Exportar(this).hacer(sensorGiroscopio);
+		//new Exportar(this).hacer(sensorMagnetico);
+		//new Exportar(this).hacer(sensorLuz);
+
+		StringBuilder csvData = new StringBuilder();
+		
+		if (acce==true){
+			csvData.append("Tiempo, X, Y, Z, Modulo \n");
+		for (AccelData values : sensorDatas) {
+			double tiempo = (values.getTimestamp() - t) / 1000;
+			/*double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+			double fin = f + d;*/
+			csvData.append(String.valueOf(tiempo) + ", "
+					+ String.valueOf(values.getX()) + ", "
+					+ String.valueOf(values.getY()) + ", "
+					+ String.valueOf(values.getZ()) + ", "
+					+ String.valueOf(values.getModulo()) + "\n");
+		}
+		}
+		if (giro==true){
+			csvData.append("Tiempo, X.giro, Y.giro, Z.giro, Modulo.giro \n");
+		for (AccelData values : sensorGiroscopio) {
+			double tiempo = (values.getTimestamp() - t) / 1000;
+			/*double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+			double fin = f + d;*/
+			csvData.append(String.valueOf(tiempo) + ", "
+					+ String.valueOf(values.getX()) + ", "
+					+ String.valueOf(values.getY()) + ", "
+					+ String.valueOf(values.getZ()) + ", "
+					+ String.valueOf(values.getModulo()) + "\n");
+		}
+		}
+		enviar(csvData.toString());
+		
+	//	new Exportar(this).hacer(sensorProximidad);
 			break;
 		}
 		return true;
 		/** true -> consumimos el item, no se propaga */
+	}
+	protected void enviar(String result) {
+		// TODO Auto-generated method stub
+		this.setProgressBarVisibility(false);
+		Intent sendIntent = new Intent();
+		sendIntent.setAction(Intent.ACTION_SEND);
+		sendIntent.putExtra(Intent.EXTRA_TEXT, result);
+		sendIntent.setType("text/plain");
+		this.startActivity(sendIntent);
 	}
 
 }

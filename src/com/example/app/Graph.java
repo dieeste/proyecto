@@ -321,6 +321,54 @@ public class Graph extends Grafica {
 		renderer.setLabelsColor(Color.RED);
 	}
 
+	public void iniciar2(ConcurrentLinkedQueue<AccelData2> sensorDatas) {
+		XYSeries xSeries = new XYSeries("X");
+		XYSeries modulo = new XYSeries("Modulo");
+
+		for (AccelData2 data : sensorDatas) {
+			
+			double tiempo = (data.getTimestamp());
+
+			xSeries.add(tiempo, data.getX());
+			modulo.add(tiempo, data.getModulo());
+
+		}
+
+		dataset = new XYMultipleSeriesDataset();
+		dataset.addSeries(xSeries);
+		dataset.addSeries(modulo);
+
+	}
+
+	public void propiedades2() {
+		double[] limites = { 0, 1000000, -2000, 2000 };
+		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
+		renderer1.setColor(Color.RED);
+		renderer1.setLineWidth(1);
+		renderer1.setDisplayChartValues(false);
+		renderer.addSeriesRenderer(renderer1);
+
+
+		XYSeriesRenderer modulo = new XYSeriesRenderer();
+		modulo.setColor(Color.MAGENTA);
+		renderer.addSeriesRenderer(modulo);
+		renderer.setBackgroundColor(Color.BLACK);
+		renderer.setMarginsColor(Color.BLACK);
+		renderer.setApplyBackgroundColor(true);
+		// renderer.setXAxisMin(0.0);
+
+		renderer.setGridColor(Color.DKGRAY);
+		renderer.setShowGrid(true);
+		//renderer.setYTitle(titulo);
+		renderer.setXTitle("Tiempo (segundos)");
+		renderer.setXLabels(5);
+		renderer.setBackgroundColor(Color.BLACK);
+		renderer.setPanLimits(limites);
+		renderer.setYLabelsAlign(Paint.Align.RIGHT);
+		renderer.setAxesColor(Color.WHITE);
+		renderer.setLabelsColor(Color.RED);
+	}
+	
 	public GraphicalView getGraph() {
 
 		return ChartFactory.getLineChartView(context, dataset, renderer);

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/n" >
+    android:background="@drawable/f" >
 
     <LinearLayout
         android:id="@+id/chart"
@@ -23,8 +23,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/botonamarillo"
             android:enabled="true"
-            android:text="@string/empezar" />
+            android:text="@string/empezar"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/parar"
@@ -32,8 +34,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/botonamarillo"
             android:enabled="false"
-            android:text="@string/parar" />
+            android:text="@string/parar"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/reiniciar"
@@ -41,8 +45,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/botonamarillo"
             android:enabled="false"
-            android:text="@string/reiniciar" />
+            android:text="@string/reiniciar"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
