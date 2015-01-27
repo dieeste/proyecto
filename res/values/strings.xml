@@ -9,9 +9,7 @@
     <string name="medicion">Medición de datos</string>
     <string name="ejemplos">Ejemplos</string>
     <string name="teoria">Teoría</string>
-    <string name="explicacion">un acelerómetro es un dispositivo que mide la aceleración y la fuerzas inducidas por las gravedad. Vale pero, ¿qué demonios significa esto? Pues en palabras simples, nos permite detectar el movimiento y el giro."\n"
-Casi todos nosotros conocemos la Wii, la consola de Nintendo que utiliza un mando que podemos mover en el aire para controlar a nuestro personaje en pantalla. Pues en su interior se encuentra un acelerómetro para detectar esos movimientos.</string>
-    <string name="sensores">Sensores disponibles</string>
+    <string name="explicacion">Esto es acerda de</string>
     <string name="empezar">Empezar</string>
     <string name="parar">Parar</string>
     <string name="cuenta">Tiempo en segundos: </string>
@@ -55,5 +53,14 @@ Casi todos nosotros conocemos la Wii, la consola de Nintendo que utiliza un mand
     <string name="guardado_magnetometro">Magnetómetro guardado</string>
     <string name="guardar_luz">Sensor de luz guardado</string>
     <string name="guardar_proximidad">Sensor de proximidad guardado</string>
-
+    <string name="titulo1">¿QUÉ ES EL ACELERÓMETRO?\n\n</string>
+    <string name="explicacion1">Es un dispositivo que mide la aceleración que es la tasa de cambio de la velocidad de un objeto, y la fuerzas inducidas por las gravedad, es decir nos permite detectar el movimiento y el giro. Esto se mide en metros por segundo al cuadrado (m/s²) o en las fuerzas G (g).\n\n</string>
+    <string name="titulo2">¿CÓMO FUNCIONA EL ACELERÓMETRO?\n\n</string>
+    <string name="explicacion2">La base de su funcionamiento es un condensador, un dispositivo que generalmente está integrado por dos placas metálicas fijas, una en frente de la otra; y por un material dieléctrico.\n\n
+Una de esas placas es móvil, de tal forma que cuando tú apliques una fuerza sobre tu teléfono, la capacidad del condensador cambiará. Se hará mayor o menor en función del movimiento.\n\n
+Al interior del condensador llega energía a través de esas placas, procedente en última instancia de la batería del móvil. En función de si la capacidad del condensador es mayor o menor el material dialéctrico que existe entre esas placas será capaz de almacenar una carga u otra.\n\n
+Así es posible que el sensor mida qué cantidad de carga eléctrica (voltaje) se ha almacenado en el material dieléctrico y envíe esa información al microprocesador del dispositivo para que determine la fuerza y la aceleración a la que ha sido sometido el teléfono. El microprocesador ha registrado el voltaje obtenido y lo ha guardado en una base de datos donde ya tenía registrados otros voltajes, que corresponden a una fuerza y a una aceleración determinadas.\n\n</string>
+    <string name="titulo3">¿PARA QUE SIRVE EL ACELERÓMETRO?\n\n</string>
+    <string name="explicacion3">Un acelerómetro puede cambiar automáticamente la orientación del dispositivo de vertical a horizontal.\n\n</string>
+    <string name="sensores">Lista de sensores</string>
 </resources>

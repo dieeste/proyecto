@@ -94,21 +94,12 @@ public class Grafica extends Activity implements OnClickListener,
 	GraphicalView view;
 	Graph mGraph;
 	
-	AlertDialog alert = null;
-	public LocationListener locListener =  null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-		if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-		      AlertNoGps();
-		  }
-		// inicializamos el GPS
-		if(locListener == null)
-			locListener = new MiLocationListener(this);
 
 		// Mantenemos la pantalla encendida
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -184,9 +175,6 @@ public class Grafica extends Activity implements OnClickListener,
 							switch (buttonView.getId()) {
 							case R.id.ejex:
 								mGraphs[SensorManager.DATA_X] = isChecked;
-								if (funciona == false) {
-									
-								}
 								break;
 							case R.id.ejey:
 								mGraphs[SensorManager.DATA_Y] = isChecked;
@@ -204,33 +192,6 @@ public class Grafica extends Activity implements OnClickListener,
 	
 	}
 	
-	  @Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		 if(alert != null) 
-		  {
-		      alert.dismiss ();
-		  }
-	}
-
-	private void AlertNoGps() {
-		    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		    builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
-		           .setCancelable(false)
-		           .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-		               public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-		                   startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-		               }
-		           })
-		           .setNegativeButton("No", new DialogInterface.OnClickListener() {
-		               public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-		                    dialog.cancel();
-		               }
-		           });
-		    alert = builder.create();
-		    alert.show();
-		  }
 
 	private void contadores() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
@@ -890,8 +851,6 @@ public class Grafica extends Activity implements OnClickListener,
 			parar.setEnabled(true);
 			reiniciar.setEnabled(false);
 			Iniciar_sensores();
-			// Para sacar la localización
-			Location loc = locListener.getLocation();
 			if (tiempoParada > 0)
 				contadores2();
 			break;
