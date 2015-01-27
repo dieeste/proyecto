@@ -7,7 +7,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.achartengine.GraphicalView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -15,6 +17,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -42,6 +48,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	// Declaración de las series que usamos en la representación de la gráfica
 	public boolean init = false;
+	public boolean funciona = false;
 
 	private ConcurrentLinkedQueue<AccelData> sensorDatas;
 	private ConcurrentLinkedQueue<AccelData> sensorGiroscopio;
@@ -86,11 +93,23 @@ public class Grafica extends Activity implements OnClickListener,
 	Exportar expo;
 	GraphicalView view;
 	Graph mGraph;
-
+	
+	AlertDialog alert = null;
+	public LocationListener locListener =  null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+		if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+		      AlertNoGps();
+		  }
+		// inicializamos el GPS
+		if(locListener == null)
+			locListener = new MiLocationListener(this);
+
 		// Mantenemos la pantalla encendida
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -165,6 +184,9 @@ public class Grafica extends Activity implements OnClickListener,
 							switch (buttonView.getId()) {
 							case R.id.ejex:
 								mGraphs[SensorManager.DATA_X] = isChecked;
+								if (funciona == false) {
+									
+								}
 								break;
 							case R.id.ejey:
 								mGraphs[SensorManager.DATA_Y] = isChecked;
@@ -179,8 +201,36 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					});
 		}
-
+	
 	}
+	
+	  @Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		 if(alert != null) 
+		  {
+		      alert.dismiss ();
+		  }
+	}
+
+	private void AlertNoGps() {
+		    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		    builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
+		           .setCancelable(false)
+		           .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+		               public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+		                   startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+		               }
+		           })
+		           .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		               public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+		                    dialog.cancel();
+		               }
+		           });
+		    alert = builder.create();
+		    alert.show();
+		  }
 
 	private void contadores() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
@@ -272,7 +322,6 @@ public class Grafica extends Activity implements OnClickListener,
 					double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
 							x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
 					double timestamp = System.currentTimeMillis();
-					Log.d("acce", "vector accel: " + x);
 					AccelData data = new AccelData(timestamp, x, y, z, modulo);
 					sensorDatas.add(data);
 					if (sensor == Sensor.TYPE_ACCELEROMETER) {
@@ -472,6 +521,7 @@ public class Grafica extends Activity implements OnClickListener,
 	// Función para guardar los datos obtenidos de los sensores
 
 	protected void Parar_sensores() {
+		funciona = false;
 		sensorManager.unregisterListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
 		sensorManager.unregisterListener(this,
@@ -486,6 +536,7 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	protected void Iniciar_sensores() {
+		funciona = true;
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				frecuencia);
@@ -839,6 +890,8 @@ public class Grafica extends Activity implements OnClickListener,
 			parar.setEnabled(true);
 			reiniciar.setEnabled(false);
 			Iniciar_sensores();
+			// Para sacar la localización
+			Location loc = locListener.getLocation();
 			if (tiempoParada > 0)
 				contadores2();
 			break;
@@ -887,47 +940,79 @@ public class Grafica extends Activity implements OnClickListener,
 			saveHistory();
 			break;
 		case (R.id.enviar):
-			//new Exportar(this).hacer(sensorDatas);
-	//	new Exportar(this).hacer(sensorGiroscopio);
-		//new Exportar(this).hacer(sensorMagnetico);
-		//new Exportar(this).hacer(sensorLuz);
+			StringBuilder csvData = new StringBuilder();
 
-		StringBuilder csvData = new StringBuilder();
-		
-		if (acce==true){
-			csvData.append("Tiempo, X, Y, Z, Modulo \n");
-		for (AccelData values : sensorDatas) {
-			double tiempo = (values.getTimestamp() - t) / 1000;
-			/*double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-			double fin = f + d;*/
-			csvData.append(String.valueOf(tiempo) + ", "
-					+ String.valueOf(values.getX()) + ", "
-					+ String.valueOf(values.getY()) + ", "
-					+ String.valueOf(values.getZ()) + ", "
-					+ String.valueOf(values.getModulo()) + "\n");
-		}
-		}
-		if (giro==true){
-			csvData.append("Tiempo, X.giro, Y.giro, Z.giro, Modulo.giro \n");
-		for (AccelData values : sensorGiroscopio) {
-			double tiempo = (values.getTimestamp() - t) / 1000;
-			/*double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-			double fin = f + d;*/
-			csvData.append(String.valueOf(tiempo) + ", "
-					+ String.valueOf(values.getX()) + ", "
-					+ String.valueOf(values.getY()) + ", "
-					+ String.valueOf(values.getZ()) + ", "
-					+ String.valueOf(values.getModulo()) + "\n");
-		}
-		}
-		enviar(csvData.toString());
-		
-	//	new Exportar(this).hacer(sensorProximidad);
+			if (acce == true) {
+				csvData.append("Acelerómetro\n");
+				csvData.append("Tiempo, X, Y, Z, Modulo \n");
+				for (AccelData values : sensorDatas) {
+					double tiempo = (values.getTimestamp() - t) / 1000;
+					/*
+					 * double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+					 * double fin = f + d;
+					 */
+					csvData.append(String.valueOf(tiempo) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getY()) + ", "
+							+ String.valueOf(values.getZ()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
+				}
+			}
+			if (giro == true) {
+				csvData.append("Giroscopio\n");
+				csvData.append("Tiempo, X, Y, Z, Modulo\n");
+				for (AccelData values : sensorGiroscopio) {
+					double tiempo = (values.getTimestamp() - t) / 1000;
+					/*
+					 * double d = ((values.getTimestamp() - t) % 1000) * 0.001;
+					 * double fin = f + d;
+					 */
+					csvData.append(String.valueOf(tiempo) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getY()) + ", "
+							+ String.valueOf(values.getZ()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
+				}
+			}
+			if (magne == true) {
+				csvData.append("Magnetómetro\n");
+				csvData.append("Tiempo, X, Y, Z, Modulo\n");
+				for (AccelData values : sensorMagnetico) {
+					double tiempo = (values.getTimestamp() - t) / 1000;
+					csvData.append(String.valueOf(tiempo) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getY()) + ", "
+							+ String.valueOf(values.getZ()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
+				}
+			}
+			if (luz == true) {
+				csvData.append("Sensor de luz\n");
+				csvData.append("Tiempo, X, Y, Z, Modulo\n");
+				for (AccelData2 values : sensorLuz) {
+					double tiempo = (values.getTimestamp() - t) / 1000;
+					csvData.append(String.valueOf(tiempo) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
+				}
+			}
+			if (proxi == true) {
+				csvData.append("Sensor de proximidad\n");
+				csvData.append("Tiempo, X, Y, Z, Modulo\n");
+				for (AccelData2 values : sensorProximidad) {
+					double tiempo = (values.getTimestamp() - t) / 1000;
+					csvData.append(String.valueOf(tiempo) + ", "
+							+ String.valueOf(values.getX()) + ", "
+							+ String.valueOf(values.getModulo()) + "\n");
+				}
+			}
+			enviar(csvData.toString());
 			break;
 		}
 		return true;
 		/** true -> consumimos el item, no se propaga */
 	}
+
 	protected void enviar(String result) {
 		// TODO Auto-generated method stub
 		this.setProgressBarVisibility(false);
