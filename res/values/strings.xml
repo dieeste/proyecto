@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">App</string>
+    <string name="app_name">Sensor Mobile</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="config">Configuración</string>
@@ -62,7 +62,7 @@ Al interior del condensador llega energía a través de esas placas, procedente 
 Así es posible que el sensor mida qué cantidad de carga eléctrica (voltaje) se ha almacenado en el material dieléctrico y envíe esa información al microprocesador del dispositivo para que determine la fuerza y la aceleración a la que ha sido sometido el teléfono. El microprocesador ha registrado el voltaje obtenido y lo ha guardado en una base de datos donde ya tenía registrados otros voltajes, que corresponden a una fuerza y a una aceleración determinadas.\n\n</string>
     <string name="titulo3">¿PARA QUE SIRVE EL ACELERÓMETRO?\n\n</string>
     <string name="explicacion3">Un acelerómetro puede cambiar automáticamente la orientación del dispositivo de vertical a horizontal.\n\n</string>
-    <string name="sensores">Lista de sensores</string>
+    <string name="sensores">Sensores del dispositivo</string>
     <string name="titulogiro1"></string>
     <string name="explicaciongiro1"></string>
     <string name="titulogiro2"></string>

@@ -891,7 +891,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		double t = sensorDatas.peek().getTimestamp();
+		
 		// Elegimos entre las opciones disponibles en esta pantalla
 		switch (item.getItemId()) {
 		case (R.id.guardar):
@@ -902,6 +902,7 @@ public class Grafica extends Activity implements OnClickListener,
 			StringBuilder csvData = new StringBuilder();
 
 			if (acce == true) {
+				double t = sensorDatas.peek().getTimestamp();
 				csvData.append("Acelerómetro\n");
 				csvData.append("Tiempo, X, Y, Z, Modulo \n");
 				for (AccelData values : sensorDatas) {
@@ -918,6 +919,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 			}
 			if (giro == true) {
+				double t = sensorGiroscopio.peek().getTimestamp();
 				csvData.append("Giroscopio\n");
 				csvData.append("Tiempo, X, Y, Z, Modulo\n");
 				for (AccelData values : sensorGiroscopio) {
@@ -934,6 +936,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 			}
 			if (magne == true) {
+				double t = sensorMagnetico.peek().getTimestamp();
 				csvData.append("Magnetómetro\n");
 				csvData.append("Tiempo, X, Y, Z, Modulo\n");
 				for (AccelData values : sensorMagnetico) {
@@ -946,6 +949,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 			}
 			if (luz == true) {
+				double t = sensorLuz.peek().getTimestamp();
 				csvData.append("Sensor de luz\n");
 				csvData.append("Tiempo, X, Y, Z, Modulo\n");
 				for (AccelData2 values : sensorLuz) {
@@ -956,6 +960,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 			}
 			if (proxi == true) {
+				double t = sensorProximidad.peek().getTimestamp();
 				csvData.append("Sensor de proximidad\n");
 				csvData.append("Tiempo, X, Y, Z, Modulo\n");
 				for (AccelData2 values : sensorProximidad) {
