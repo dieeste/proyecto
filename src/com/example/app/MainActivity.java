@@ -80,9 +80,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity(sensoresdisponibles);
 			break;
 		case R.id.cargargrafica:
-			Intent intent = new Intent(this, CargarGraficas.class);
-			 this.startActivity(intent);
-			 break;
+			/*Intent intent = new Intent(this, CargarGraficas.class);
+			this.startActivity(intent);*/
+			Intent intent = new Intent(this, PoIExplorer.class);
+			this.startActivity(intent);
+			break;
 		default:
 			break;
 		}

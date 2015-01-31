@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
@@ -26,6 +27,7 @@ public class CargarGraficas extends ListActivity {
 	ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();;
 	String nombre;
 	LeerCsv read;
+	Stack<File> dirStack = new Stack<File>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class CargarGraficas extends ListActivity {
 		currentDir = new File(Environment.getExternalStorageDirectory()
 				.toString() + "/" + getResources().getString(R.string.app_name));
 		ficheros(currentDir);
-	
+
 	}
 
 	private void ficheros(File f) {
@@ -71,21 +73,41 @@ public class CargarGraficas extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
 		Opciones o = adapter.getItem(position);
-		if (o.getData().equalsIgnoreCase("folder")
-				|| o.getData().equalsIgnoreCase("parent directory")) {
+		if (o.getData().equalsIgnoreCase("folder")) {
+			dirStack.push(currentDir);
 			currentDir = new File(o.getPath());
 			ficheros(currentDir);
+
+		} else if (o.getData().equalsIgnoreCase("parent directory")) {
+			currentDir = dirStack.pop();
+			ficheros(currentDir);
+
 		} else {
 			onFileClick(o);
 		}
 	}
 
 	private void onFileClick(Opciones o) {
-		/*Toast.makeText(this, "File Clicked: " + o.getName(), Toast.LENGTH_SHORT)
-				.show();*/
+		/*
+		 * Toast.makeText(this, "File Clicked: " + o.getName(),
+		 * Toast.LENGTH_SHORT) .show();
+		 */
 		Intent vamos = new Intent(CargarGraficas.this, LeerCsv.class);
 		vamos.putExtra("file", o.getPath());
 		startActivity(vamos);
 	}
-	
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if (dirStack.size() == 0) {
+			finish();
+			return;
+		}
+		currentDir = dirStack.pop();
+		ficheros(currentDir);
+
+	}
+
 }

@@ -7,9 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.achartengine.GraphicalView;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -17,10 +15,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -93,13 +87,11 @@ public class Grafica extends Activity implements OnClickListener,
 	Exportar expo;
 	GraphicalView view;
 	Graph mGraph;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
 
 		// Mantenemos la pantalla encendida
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -189,9 +181,8 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					});
 		}
-	
+
 	}
-	
 
 	private void contadores() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
@@ -823,9 +814,8 @@ public class Grafica extends Activity implements OnClickListener,
 		// este mensaje y solo se podrían compartir los datos
 		if (!stadoSD.equals(Environment.MEDIA_MOUNTED)
 				&& !stadoSD.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
-			Toast.makeText(
-					this,
-					"No puedo leer en la memoria externa, solo se puede exportar",
+			Toast.makeText(this,
+					"Inserte una tarjeta SD o comparta los datos.",
 					Toast.LENGTH_LONG).show();
 			return;
 		}
@@ -891,7 +881,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
+
 		// Elegimos entre las opciones disponibles en esta pantalla
 		switch (item.getItemId()) {
 		case (R.id.guardar):
