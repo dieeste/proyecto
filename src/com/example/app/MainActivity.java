@@ -13,7 +13,6 @@ import android.widget.Button;
 public class MainActivity extends Activity implements OnClickListener {
 	// Declaramos los botones, los hacemos globales para ser usados mas adelante
 	Button simulacion;
-	Button teoria;
 	Button listasensores;
 	Button cargargraficas;
 
@@ -24,13 +23,11 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// Recogemos los botones
 		simulacion = (Button) findViewById(R.id.medicion);
-		teoria = (Button) findViewById(R.id.teoria);
 		listasensores = (Button) findViewById(R.id.sensoresdisponibles);
 		cargargraficas = (Button) findViewById(R.id.cargargrafica);
 
 		// Escuchamos los botones
 		simulacion.setOnClickListener(this);
-		teoria.setOnClickListener(this);
 		listasensores.setOnClickListener(this);
 		cargargraficas.setOnClickListener(this);
 	}
@@ -71,10 +68,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			Intent simulacion = new Intent(this, Simulacion.class);
 			startActivity(simulacion);
 			break;
-		case R.id.teoria:
-			Intent teo = new Intent(this, Teoria.class);
-			startActivity(teo);
-			break;
 		case R.id.sensoresdisponibles:
 			Intent sensoresdisponibles = new Intent(this, Listasensores.class);
 			startActivity(sensoresdisponibles);
@@ -82,7 +75,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.cargargrafica:
 			/*Intent intent = new Intent(this, CargarGraficas.class);
 			this.startActivity(intent);*/
-			Intent intent = new Intent(this, PoIExplorer.class);
+			Intent intent = new Intent(this, CargarGraficas.class);
 			this.startActivity(intent);
 			break;
 		default:

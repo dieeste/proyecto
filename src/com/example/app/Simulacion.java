@@ -124,9 +124,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		magneto.setOnCheckedChangeListener(this);
 		luz.setOnCheckedChangeListener(this);
 		prox.setOnCheckedChangeListener(this);
-		   
-		
-	
+
 	}
 
 	@Override
@@ -242,7 +240,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			acelerometro.setTextColor(Color.RED);
 			grafAcelerometro.setVisibility(Button.GONE);
 			acelero.setVisibility(CheckBox.GONE);
-			
+
 		} else {
 			if (acce == false) {
 				grafAcelerometro.setEnabled(false);
@@ -334,44 +332,84 @@ public class Simulacion extends Activity implements SensorEventListener,
 		// TODO Auto-generated method stub
 		String txt = "\nSensor: ";
 		synchronized (this) {
-			Log.d("sensor", event.sensor.getName());
+			
 
 			switch (event.sensor.getType()) {
 
 			case Sensor.TYPE_ACCELEROMETER:
+				double m = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
+						event.values[0], 2)
+						+ Math.pow(event.values[1], 2)
+						+ Math.pow(event.values[2], 2))));
+				double x = Math.round(event.values[0]*1000000.0)/1000000.0;
+				double y = Math.round(event.values[1]*1000000.0)/1000000.0;
+				double z = Math.round(event.values[2]*1000000.0)/1000000.0;
+				double modulo = Math.round(m*1000000.0)/1000000.0;
 
 				txt += "Acelerómetro\n";
-				txt += "\n X: " + event.values[0] + " "
+				txt += "\n X: " + x + " "
 						+ getString(R.string.unidad_acelerometro);
-				txt += "\n Y: " + event.values[1] + " "
+				txt += "\n Y: " + y + " "
 						+ getString(R.string.unidad_acelerometro);
-				txt += "\n Z: " + event.values[2] + " "
+				txt += "\n Z: " + z + " "
+						+ getString(R.string.unidad_acelerometro);
+				txt += "\n Módulo: " + modulo + " "
 						+ getString(R.string.unidad_acelerometro);
 				acelerometro.setText(txt);
 				break;
 
 			case Sensor.TYPE_GYROSCOPE:
+				double m2 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
+						event.values[0], 2)
+						+ Math.pow(event.values[1], 2)
+						+ Math.pow(event.values[2], 2))));
+				double x2 = Math.round(event.values[0]*1000000.0)/1000000.0;
+				double y2 = Math.round(event.values[1]*1000000.0)/1000000.0;
+				double z2 = Math.round(event.values[2]*1000000.0)/1000000.0;
+				double modulo2 = Math.round(m2*1000000.0)/1000000.0;
 				txt += "Giroscopio\n";
-				txt += "\n x: " + event.values[0] + " "
+				txt += "\n X: " + x2 + " "
 						+ getString(R.string.unidad_giroscopio);
-				txt += "\n y: " + event.values[1] + " "
+				txt += "\n Y: " + y2 + " "
 						+ getString(R.string.unidad_giroscopio);
-				txt += "\n z: " + event.values[2] + " "
+				txt += "\n Z: " + z2 + " "
+						+ getString(R.string.unidad_giroscopio);
+				txt += "\n Módulo: " + modulo2 + " "
 						+ getString(R.string.unidad_giroscopio);
 				giroscopo.setText(txt);
 				break;
 
 			case Sensor.TYPE_MAGNETIC_FIELD:
+				double m3 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
+						event.values[0], 2)
+						+ Math.pow(event.values[1], 2)
+						+ Math.pow(event.values[2], 2))));
+				double x3 = Math.round(event.values[0]*1000000.0)/1000000.0;
+				double y3 = Math.round(event.values[1]*1000000.0)/1000000.0;
+				double z3 = Math.round(event.values[2]*1000000.0)/1000000.0;
+				double modulo3 = Math.round(m3*1000000.0)/1000000.0;
 				txt += "Campo magnético\n";
-				txt += "\n" + event.values[0] + " "
+				txt += "\n X: " + x3 + " "
+						+ getString(R.string.unidad_campo_magnetico);
+				txt += "\n Y: " + y3 + " "
+						+ getString(R.string.unidad_campo_magnetico);
+				txt += "\n Z: " + z3 + " "
+						+ getString(R.string.unidad_campo_magnetico);
+				txt += "\n Módulo: " + modulo3 + " "
 						+ getString(R.string.unidad_campo_magnetico);
 				magnetico.setText(txt);
 				break;
 
 			case Sensor.TYPE_PROXIMITY:
+				double m4 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
+						event.values[0], 2))));
+				double x4 = Math.round(event.values[0]*1000000.0)/1000000.0;
+				double modulo4 = Math.round(m4*1000000.0)/1000000.0;
 				txt += "Proximidad\n";
-				txt += "\n" + event.values[0] + " "
-						+ getString(R.string.unidad_priximidad);
+				txt += "\n X: " + x4 + " "
+						+ getString(R.string.unidad_proximidad);
+				txt += "\n Módulo: " + modulo4 + " "
+						+ getString(R.string.unidad_proximidad);
 				proximidad.setText(txt);
 				// Si detecta 0 lo represento
 				if (event.values[0] == 0) {
@@ -384,8 +422,14 @@ public class Simulacion extends Activity implements SensorEventListener,
 				break;
 
 			case Sensor.TYPE_LIGHT:
+				double m5 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
+						event.values[0], 2))));
+				double x5 = Math.round(event.values[0]*1000000.0)/1000000.0;
+				double modulo5 = Math.round(m5*1000000.0)/1000000.0;
 				txt += "Luminosidad\n";
-				txt += "\n" + event.values[0] + " "
+				txt += "\n X: " + x5 + " "
+						+ getString(R.string.unidad_luz);
+				txt += "\n Módulo: " + modulo5 + " "
 						+ getString(R.string.unidad_luz);
 				luminosidad.setText(txt);
 				break;
@@ -487,12 +531,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 		// TODO Auto-generated method stub
 		switch (buttonView.getId()) {
 		case R.id.checkAcelerometro:
-			  
+
 			acce = isChecked;
-			
+
 			if (acce == true) {
 				grafAcelerometro.setEnabled(true);
-				
+
 			} else {
 				grafAcelerometro.setEnabled(false);
 			}

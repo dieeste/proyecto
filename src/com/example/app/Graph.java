@@ -13,7 +13,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 
 public class Graph extends Grafica {
 	private Context context;
@@ -213,6 +212,7 @@ public class Graph extends Grafica {
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
+		renderer.setZoomEnabled(false, true);
 	}
 
 	public void setProperties2(boolean click[], String titulo) {

@@ -4,109 +4,120 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import org.achartengine.GraphicalView;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class CargarGraficas extends ListActivity {
 
-	private File currentDir;
-	private FileArrayAdapter adapter;
-	Graph mGraph;
-	LinearLayout layout;
-	GraphicalView view;
-	ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();;
-	String nombre;
-	LeerCsv read;
-	Stack<File> dirStack = new Stack<File>();
-
+	private List<String> listaNombresArchivos;
+	private List<String> listaRutasArchivos;
+	private ArrayAdapter<String> adaptador;
+	private String directorioRaiz;
+	private TextView carpetaActual;
+	String root;
+	ImageView imagen;
+	
+	/*public void listV(String name, int icono) {
+        R.id.firstLine = name;
+        R.id.icon=icono;
+    }*/
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		currentDir = new File(Environment.getExternalStorageDirectory()
-				.toString() + "/" + getResources().getString(R.string.app_name));
-		ficheros(currentDir);
-
+		setContentView(R.layout.carga);
+		carpetaActual = (TextView) findViewById(R.id.rutaActual);
+		root= Environment.getExternalStorageDirectory().getPath();
+		directorioRaiz = (Environment.getExternalStorageDirectory()
+				.toString() + "/" + getResources().getString(R.string.app_name)).toString();
+	//	imagen = (ImageView) findViewById(R.id.icon);
+		verArchivosDirectorio(directorioRaiz);
 	}
 
-	private void ficheros(File f) {
-		File[] dirs = f.listFiles();
-		this.setTitle("Directorio actual: " + f.getName());
-		List<Opciones> dir = new ArrayList<Opciones>();
-		List<Opciones> fls = new ArrayList<Opciones>();
-		try {
-			for (File ff : dirs) {
-				if (ff.isDirectory())
-					dir.add(new Opciones(ff.getName(), "Carpeta", ff
-							.getAbsolutePath()));
-				else {
-					fls.add(new Opciones(ff.getName(),
-							"Tamaño: " + ff.length(), ff.getAbsolutePath()));
-				}
-			}
-		} catch (Exception e) {
+	/**
+	 * Muestra los archivos del directorio pasado como parametro en un listView
+	 * 
+	 * @param rutaDirectorio
+	 */
+	private void verArchivosDirectorio(String rutaDirectorio) {
+		carpetaActual.setText("Estas en: " + rutaDirectorio);
+		listaNombresArchivos = new ArrayList<String>();
+		listaRutasArchivos = new ArrayList<String>();
+		File directorioActual = new File(rutaDirectorio);
+		File[] listaArchivos = directorioActual.listFiles();
 
+		int x = 0;
+		
+		// Si no es nuestro directorio raiz creamos un elemento que nos
+		// permita volver al directorio padre del directorio actual
+		if (!rutaDirectorio.equals(root)) {
+			listaNombresArchivos.add("../           Ver otras carpetas de la memoria");
+			listaRutasArchivos.add(directorioActual.getParent());
+			x = 1;
 		}
-		Collections.sort(dir);
-		Collections.sort(fls);
-		dir.addAll(fls);
-		if (!f.getName().equalsIgnoreCase("sdcard"))
-			dir.add(0, new Opciones("..", "Parent Directory", f.getParent()));
-		adapter = new FileArrayAdapter(CargarGraficas.this,
-				R.layout.cargagrafica, dir);
-		this.setListAdapter(adapter);
+		
+		// Almacenamos las rutas de todos los archivos y carpetas del directorio
+		for (File archivo : listaArchivos) {
+			listaRutasArchivos.add(archivo.getPath());
+		}
+			
+		// Ordenamos la lista de archivos para que se muestren en orden alfabetico
+		Collections.sort(listaRutasArchivos, String.CASE_INSENSITIVE_ORDER);
+		
+		
+		// Recorredos la lista de archivos ordenada para crear la lista de los nombres
+		// de los archivos que mostraremos en el listView
+		for (int i = x; i < listaRutasArchivos.size(); i++){
+			File archivo = new File(listaRutasArchivos.get(i));
+			if (archivo.isFile()) {
+				listaNombresArchivos.add(archivo.getName());
+			//	listaNombresArchivos.add(R.drawable.file);
+			} else {
+				listaNombresArchivos.add("/" + archivo.getName());
+			}
+		}
+		
+		// Si no hay ningun archivo en el directorio lo indicamos 
+		if (listaArchivos.length < 1) {
+			listaNombresArchivos.add("No hay ningun archivo");
+			listaRutasArchivos.add(rutaDirectorio);
+		}
+		
 
+		// Creamos el adaptador y le asignamos la lista de los nombres de los
+		// archivos y el layout para los elementos de la lista
+		adaptador = new ArrayAdapter<String>(this,
+				R.layout.text_view_lista_archivos, listaNombresArchivos);
+		setListAdapter(adaptador);
 	}
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		// TODO Auto-generated method stub
-		super.onListItemClick(l, v, position, id);
-		Opciones o = adapter.getItem(position);
-		if (o.getData().equalsIgnoreCase("folder")) {
-			dirStack.push(currentDir);
-			currentDir = new File(o.getPath());
-			ficheros(currentDir);
 
-		} else if (o.getData().equalsIgnoreCase("parent directory")) {
-			currentDir = dirStack.pop();
-			ficheros(currentDir);
-
+		// Obtenemos la ruta del archivo en el que hemos hecho click en el
+		// listView
+		File archivo = new File(listaRutasArchivos.get(position));
+		
+		// Si es un archivo se muestra un Toast con su nombre y si es un directorio
+		// se cargan los archivos que contiene en el listView
+		if (archivo.isFile()) {
+			Intent vamos = new Intent(this, LeerCsv.class);
+			vamos.putExtra("file", archivo.getPath());
+			startActivity(vamos);
+		/*	Toast.makeText(this,
+					"Has seleccionado el archivo: " + archivo.getName(),
+					Toast.LENGTH_LONG).show();*/
 		} else {
-			onFileClick(o);
+			// Si no es un directorio mostramos todos los archivos que contiene
+			verArchivosDirectorio(listaRutasArchivos.get(position));
 		}
-	}
-
-	private void onFileClick(Opciones o) {
-		/*
-		 * Toast.makeText(this, "File Clicked: " + o.getName(),
-		 * Toast.LENGTH_SHORT) .show();
-		 */
-		Intent vamos = new Intent(CargarGraficas.this, LeerCsv.class);
-		vamos.putExtra("file", o.getPath());
-		startActivity(vamos);
-	}
-
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-		if (dirStack.size() == 0) {
-			finish();
-			return;
-		}
-		currentDir = dirStack.pop();
-		ficheros(currentDir);
 
 	}
 

@@ -48,7 +48,7 @@
     <string name="unidad_giroscopio">rad/s</string>
     <string name="unidad_campo_magnetico">µT</string>
     <string name="unidad_luz">Lux</string>
-    <string name="unidad_priximidad">cm</string>
+    <string name="unidad_proximidad">cm</string>
     <string name="guardado_giroscopio">Giroscopio guardado</string>
     <string name="guardado_magnetometro">Magnetómetro guardado</string>
     <string name="guardar_luz">Sensor de luz guardado</string>

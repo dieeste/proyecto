@@ -30,19 +30,12 @@
             android:name="AcercaDe"
             android:label="Acerca de" >
         </activity>
-        <activity
-            android:name="Teoria"
-            android:label="Teoría" >
-            <action android:name=".Teoria" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-        </activity>
         <activity android:name="Listasensores" >
             <action android:name=".Listasensores" />
         </activity>
         <activity
             android:name="Simulacion"
-            android:label="Simulación sensores" >
+            android:label="Medición de datos" >
             <action android:name=".Simulacion" />
         </activity>
         <activity
@@ -108,11 +101,6 @@
         </activity>
         <activity android:name="LeerCsv" >
             <action android:name=".LeerCsv" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-        </activity>
-        <activity android:name="PoIExplorer" >
-            <action android:name=".PoIExplorer" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
