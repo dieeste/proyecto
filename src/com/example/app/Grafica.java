@@ -922,21 +922,48 @@ public class Grafica extends Activity implements OnClickListener,
 			StringBuilder csvData = new StringBuilder();
 
 			if (acce == true) {
+				// crear el fichero escribirle
 				double t = sensorDatas.peek().getTimestamp();
-				csvData.append("Acelerómetro\n");
-				csvData.append("Tiempo, X, Y, Z, Modulo \n");
+
+				StringBuilder csvDataexportar = new StringBuilder();
+				csvDataexportar.append("Tiempo,X,Y,Z,Modulo,"
+						+ getResources()
+								.getString(R.string.unidad_acelerometro) + "\n");
 				for (AccelData values : sensorDatas) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					/*
-					 * double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-					 * double fin = f + d;
-					 */
-					csvData.append(String.valueOf(tiempo) + ", "
-							+ String.valueOf(values.getX()) + ", "
-							+ String.valueOf(values.getY()) + ", "
-							+ String.valueOf(values.getZ()) + ", "
-							+ String.valueOf(values.getModulo()) + "\n");
+					csvDataexportar.append(String.valueOf(tiempo)
+							+ ","
+							+ String.valueOf(Math.round(values.getX() * 1000000.0) / 1000000.0)
+							+ ","
+							+ String.valueOf(Math.round(values.getY() * 1000000.0) / 1000000.0)
+							+ ","
+							+ String.valueOf(Math.round(values.getZ() * 1000000.0) / 1000000.0)
+							+ ","
+							+ String.valueOf(Math.round(values.getModulo() * 1000000.0) / 1000000.0)
+							+ "\n");
 				}
+				try {
+					String fileName = "Acelerometro "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
+					File file = new File(getDir("ap",MODE_WORLD_READABLE),fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
+
+						fileOutputStream.write(csvDataexportar.toString().getBytes());
+						fileOutputStream.close();
+
+					}
+					enviar(file);
+					Log.d("pepe","jholl"+file);
+				} catch (Exception e) {
+				
+				}
+		
+				
 			}
 			if (giro == true) {
 				double t = sensorGiroscopio.peek().getTimestamp();
@@ -990,21 +1017,24 @@ public class Grafica extends Activity implements OnClickListener,
 							+ String.valueOf(values.getModulo()) + "\n");
 				}
 			}
-			enviar(csvData.toString());
+		
 			break;
 		}
 		return true;
 		/** true -> consumimos el item, no se propaga */
 	}
 
-	protected void enviar(String result) {
+	protected void enviar(File csvexportar) {
 		// TODO Auto-generated method stub
+		
 		this.setProgressBarVisibility(false);
 		Intent sendIntent = new Intent();
 		sendIntent.setAction(Intent.ACTION_SEND);
-		sendIntent.putExtra(Intent.EXTRA_TEXT, result);
-		sendIntent.setType("text/plain");
-		this.startActivity(sendIntent);
+		sendIntent.putExtra(Intent.EXTRA_SUBJECT, "TO MADRE");
+		
+		sendIntent.setType("file/*");
+		sendIntent.putExtra(Intent.EXTRA_INTENT,csvexportar);
+		startActivity(sendIntent);
 	}
 
 }

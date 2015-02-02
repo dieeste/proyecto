@@ -200,6 +200,7 @@ public class Graph extends Grafica {
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
+	
 		// renderer.setXAxisMin(0.0);
 
 		renderer.setGridColor(Color.DKGRAY);
@@ -290,6 +291,7 @@ public class Graph extends Grafica {
 		renderer1.setColor(Color.RED);
 		renderer1.setLineWidth(1);
 		renderer1.setDisplayChartValues(false);
+	
 		renderer.addSeriesRenderer(renderer1);
 
 		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
@@ -307,6 +309,7 @@ public class Graph extends Grafica {
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
+	
 		// renderer.setXAxisMin(0.0);
 
 		renderer.setGridColor(Color.DKGRAY);
