@@ -47,16 +47,21 @@ public final class R {
     }
     public static final class drawable {
         public static final int botonamarillo=0x7f020000;
-        public static final int carpeta=0x7f020001;
-        public static final int ejesacelerometro=0x7f020002;
-        public static final int f=0x7f020003;
-        public static final int file=0x7f020004;
-        public static final int fondobueno2=0x7f020005;
-        public static final int fondobueno3=0x7f020006;
-        public static final int ic_launcher=0x7f020007;
-        public static final int ico=0x7f020008;
-        public static final int icongraf=0x7f020009;
-        public static final int iconografic=0x7f02000a;
+        public static final int botoninf=0x7f020001;
+        public static final int carpeta=0x7f020002;
+        public static final int check1=0x7f020003;
+        public static final int check2=0x7f020004;
+        public static final int checkbox_selector=0x7f020005;
+        public static final int ejesacelerometro=0x7f020006;
+        public static final int f=0x7f020007;
+        public static final int file=0x7f020008;
+        public static final int fondobueno2=0x7f020009;
+        public static final int fondobueno3=0x7f02000a;
+        public static final int ic_launcher=0x7f02000b;
+        public static final int ico=0x7f02000c;
+        public static final int icongraf=0x7f02000d;
+        public static final int iconografic=0x7f02000e;
+        public static final int inf=0x7f02000f;
     }
     public static final class id {
         public static final int TextView01=0x7f0b0000;
@@ -253,7 +258,6 @@ public final class R {
         public static final int MooTheme=0x7f090002;
     }
     public static final class xml {
-        public static final int confgrafica=0x7f040000;
-        public static final int confsimulacion=0x7f040001;
+        public static final int confsimulacion=0x7f040000;
     }
 }

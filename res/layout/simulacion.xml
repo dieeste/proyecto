@@ -17,6 +17,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
             android:text="@string/acelerometro"
             android:textColor="#000000"
             android:textStyle="bold" />
@@ -25,7 +26,9 @@
             android:id="@+id/checkAcelerometro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
             android:checked="false"
+            android:paddingLeft="40dp"
             android:text="@string/checkAcelerometro"
             android:textColor="#ffffff" />
 
@@ -60,15 +63,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
             android:text="@string/giroscopio"
             android:textColor="#000000"
             android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkGiroscopio"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
             android:checked="false"
+            android:paddingLeft="40dp"
             android:text="@string/checkGiroscopio"
             android:textColor="#ffffff" />
 
@@ -95,7 +101,6 @@
                 android:drawableBottom="@drawable/iconografic"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
 
         <Button
@@ -103,15 +108,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
             android:text="@string/magnetico"
             android:textColor="#000000"
             android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkMagetico"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
             android:checked="false"
+            android:paddingLeft="40dp"
             android:text="@string/checkMagnetometro"
             android:textColor="#ffffff"
             android:textColorHint="@color/accele_x" />
@@ -139,7 +147,6 @@
                 android:drawableBottom="@drawable/iconografic"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
 
         <Button
@@ -147,15 +154,19 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
             android:text="@string/proximidad"
             android:textColor="#000000"
             android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkProximidad"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
             android:checked="false"
+            android:paddingLeft="40dp"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
             android:text="@string/checkProximidad"
             android:textColor="#ffffff" />
 
@@ -189,7 +200,6 @@
                 android:drawableBottom="@drawable/iconografic"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
 
         <Button
@@ -197,15 +207,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
             android:text="@string/luminosidad"
             android:textColor="#000000"
             android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkLuz"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
             android:checked="false"
+            android:paddingLeft="40dp"
             android:text="@string/checkLuz"
             android:textColor="#ffffff" />
 
@@ -232,7 +245,6 @@
                 android:drawableBottom="@drawable/iconografic"
                 android:text="@string/grafica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
     </LinearLayout>
 

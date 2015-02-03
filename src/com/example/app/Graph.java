@@ -202,7 +202,7 @@ public class Graph extends Grafica {
 		renderer.setApplyBackgroundColor(true);
 	
 		// renderer.setXAxisMin(0.0);
-
+		renderer.setLabelsTextSize(30);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);

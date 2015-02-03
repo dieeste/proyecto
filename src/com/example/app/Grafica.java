@@ -186,27 +186,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
 
-		String tipoSensor = pref.getString("sensores",
-				"Sensor.TYPE_ACCELEROMETER");
-		if (tipoSensor.equals("Sensor.TYPE_ACCELEROMETER")) {
-			sensor = Sensor.TYPE_ACCELEROMETER;
-		} else if (tipoSensor.equals("Sensor.TYPE_GYROSCOPE")) {
-			sensor = Sensor.TYPE_GYROSCOPE;
-		} else if (tipoSensor.equals("Sensor.TYPE_MAGNETIC_FIELD")) {
-			sensor = Sensor.TYPE_MAGNETIC_FIELD;
-		} else if (tipoSensor.equals("Sensor.TYPE_PROXIMITY")) {
-			sensor = Sensor.TYPE_PROXIMITY;
-		} else if (tipoSensor.equals("Sensor.TYPE_LIGHT")) {
-			sensor = Sensor.TYPE_LIGHT;
-		}
-	}
 
 	private void contadores() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
@@ -928,31 +908,103 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.acele):
 			sensor = Sensor.TYPE_ACCELEROMETER;
 		if(funciona == false){
-			mGraph.iniciar(sensorDatas);
-			mGraph.propiedades();
+			// Log.d("sensor aceler", "sensoracce: " + data);
+			mGraph = new Graph(this);
+			mGraph.ejeY(sensorDatas);
+			mGraph.ejeX(sensorDatas);
+			mGraph.initData(sensorDatas);
+			mGraph.setProperties(mGraphs, "Acelerómetro "
+					+ getString(R.string.unidad_acelerometro));
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+			}
 		}
 			break;
 		case (R.id.giro):
 			sensor = Sensor.TYPE_GYROSCOPE;
 		if(funciona == false){
-			mGraph.iniciar(sensorGiroscopio);
-			mGraph.propiedades();
+			mGraph = new Graph(this);
+			mGraph.ejeY(sensorGiroscopio);
+			mGraph.ejeX(sensorGiroscopio);
+			mGraph.initData(sensorGiroscopio);
+			mGraph.setProperties(mGraphs, "Giroscopio "
+					+ getString(R.string.unidad_giroscopio));
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+			}
 		}
 			break;
 		case (R.id.mag):
 			sensor = Sensor.TYPE_MAGNETIC_FIELD;
 		if(funciona == false){
-			Log.d("funciona falso","estamos en magn");
+			mGraph = new Graph(this);
+			mGraph.ejeY(sensorMagnetico);
+			mGraph.ejeX(sensorMagnetico);
 			mGraph.initData(sensorMagnetico);
 			mGraph.setProperties(mGraphs, "Campo magnético "
-							+ getString(R.string.unidad_campo_magnetico));
+					+ getString(R.string.unidad_campo_magnetico));
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+			}
 		}
 			break;
 		case (R.id.proxi):
 			sensor = Sensor.TYPE_PROXIMITY;
+		if(funciona==false){
+			mGraph = new Graph(this);
+			mGraph.ejeY2(sensorProximidad);
+			mGraph.ejeX2(sensorProximidad);
+			mGraph.initData2(sensorProximidad);
+			mGraph.setProperties2(mGraphs, "Proximidad "
+					+ getString(R.string.unidad_proximidad));
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+			}
+		}
 			break;
 		case (R.id.luz):
 			sensor = Sensor.TYPE_LIGHT;
+		if (funciona==false){
+			mGraph = new Graph(this);
+			mGraph.ejeY2(sensorLuz);
+			mGraph.ejeX2(sensorLuz);
+			mGraph.initData2(sensorLuz);
+			mGraph.setProperties2(mGraphs, "Luz "
+					+ getString(R.string.unidad_luz));
+			if (!init) {
+				view = mGraph.getGraph();
+				layout.addView(view);
+				init = true;
+			} else {
+				layout.removeView(view);
+				view = mGraph.getGraph();
+				layout.addView(view);
+			}
+		}
 			break;
 	/*	case (R.id.cambiar):
 			Intent i = new Intent(this, PreferenciasGrafica.class);
