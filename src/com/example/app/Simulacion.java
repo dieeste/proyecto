@@ -242,9 +242,6 @@ public class Simulacion extends Activity implements SensorEventListener,
 			acelero.setVisibility(CheckBox.GONE);
 
 		} else {
-			if (acce == false) {
-				grafAcelerometro.setEnabled(false);
-			}
 			mSensorManager.registerListener(this,
 					mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 					tipo);
@@ -256,9 +253,6 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafGiroscopio.setVisibility(Button.GONE);
 			giro.setVisibility(CheckBox.GONE);
 		} else {
-			if (gi == false) {
-				grafGiroscopio.setEnabled(false);
-			}
 			mSensorManager.registerListener(this,
 					mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
 					tipo);
@@ -270,9 +264,6 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafMagnetico.setVisibility(Button.GONE);
 			magneto.setVisibility(CheckBox.GONE);
 		} else {
-			if (mag == false) {
-				grafMagnetico.setEnabled(false);
-			}
 			mSensorManager
 					.registerListener(this, mSensorManager
 							.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), tipo);
@@ -285,9 +276,6 @@ public class Simulacion extends Activity implements SensorEventListener,
 			detecta.setVisibility(View.GONE);
 			prox.setVisibility(CheckBox.GONE);
 		} else {
-			if (proxi == false) {
-				grafProximidad.setEnabled(false);
-			}
 			mSensorManager.registerListener(this,
 					mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
 					tipo);
@@ -299,9 +287,6 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafLuz.setVisibility(Button.GONE);
 			luz.setVisibility(CheckBox.GONE);
 		} else {
-			if (lu == false) {
-				grafLuz.setEnabled(false);
-			}
 			mSensorManager.registerListener(this,
 					mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), tipo);
 		}
@@ -531,47 +516,19 @@ public class Simulacion extends Activity implements SensorEventListener,
 		// TODO Auto-generated method stub
 		switch (buttonView.getId()) {
 		case R.id.checkAcelerometro:
-
 			acce = isChecked;
-
-			if (acce == true) {
-				grafAcelerometro.setEnabled(true);
-
-			} else {
-				grafAcelerometro.setEnabled(false);
-			}
 			break;
 		case R.id.checkGiroscopio:
 			gi = isChecked;
-			if (gi == true) {
-				grafGiroscopio.setEnabled(true);
-			} else {
-				grafGiroscopio.setEnabled(false);
-			}
 			break;
 		case R.id.checkMagetico:
 			mag = isChecked;
-			if (mag == true) {
-				grafMagnetico.setEnabled(true);
-			} else {
-				grafMagnetico.setEnabled(false);
-			}
 			break;
 		case R.id.checkLuz:
 			lu = isChecked;
-			if (lu == true) {
-				grafLuz.setEnabled(true);
-			} else {
-				grafLuz.setEnabled(false);
-			}
 			break;
 		case R.id.checkProximidad:
 			proxi = isChecked;
-			if (proxi == true) {
-				grafProximidad.setEnabled(true);
-			} else {
-				grafProximidad.setEnabled(false);
-			}
 			break;
 		}
 	}

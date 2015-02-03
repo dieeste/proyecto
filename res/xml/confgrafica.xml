@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ListPreference android:entryValues="@array/valorsensores" android:entries="@array/sensores" android:key="sensores" android:title="SENSOR A MOSTRAR" android:summary="Elige un sensor para mostrar su gráfica"/>
+    
+
+</PreferenceScreen>

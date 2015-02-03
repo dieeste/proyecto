@@ -20,7 +20,8 @@
     <string name="giroscopio">Giroscopio</string>
     <string name="magnetico">Magnetómetro</string>
     <string name="compartir">Compartir</string>
-    <string name="guardar">Guardar</string>
+    <string name="guardar">Guardar en .csv</string>
+    <string name="cambiar">Cambiar gráfica sensor</string>
     <string name="guardado_acelerometro">Acelerómetro guardado</string>
     <string name="error_guardar">Error al guardar, no guardado</string>
     <string name="channel_x_axis">X</string>

@@ -46,6 +46,13 @@
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
+            android:name="PreferenciasGrafica"
+            android:label="Preferencias gráfica" >
+            <action android:name=".PreferenciasGrafica" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
+        <activity
             android:name="PrefGrafica"
             android:label="Preferencias" >
             <action android:name=".PrefGrafica" />

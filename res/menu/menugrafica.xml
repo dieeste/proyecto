@@ -11,5 +11,23 @@
         android:icon="@android:drawable/ic_menu_share"
         android:title="@string/compartir">
     </item>
+ <!--   <item
+        android:id="@+id/cambiar"
+        android:title="@string/cambiar">
+    </item>-->  
+    <item
+        android:id="@+id/acele"
+        android:title="Acelerómetro">
+    </item>
+    <item
+        android:id="@+id/giro"
+        android:title="Giroscopio">
+    </item>
+    <item
+        android:id="@+id/mag"
+        android:title="Magnetómetro">
+    </item>
+    <item android:id="@+id/proxi" android:title="Sensor de proximidad"></item>
+    <item android:id="@+id/luz" android:title="Sensor de luz"></item>
 
 </menu>
