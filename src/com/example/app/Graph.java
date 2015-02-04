@@ -13,6 +13,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class Graph extends Grafica {
 	private Context context;
@@ -21,16 +22,27 @@ public class Graph extends Grafica {
 	double greater;
 	double ejeymax;
 	double ejeymin;
-
 	public Graph(Context context) {
 		this.context = context;
+		
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		float textSize = new TextView(this).getTextSize();
+		float upscale = textSize / renderer.getLegendTextSize();
+		renderer.setLabelsTextSize(textSize);
+		renderer.setLegendTextSize(textSize);
+		renderer.setChartTitleTextSize(textSize);
+		renderer.setAxisTitleTextSize(textSize);
+		renderer.setFitLegend(true);
+		int[] margins = renderer.getMargins();
+		margins[0] *= upscale;
+		margins[1] *= upscale;
+		margins[2] = (int) (2 * renderer.getLegendTextSize());
+		renderer.setMargins(margins);
 	}
 
 	public void ejeY(ConcurrentLinkedQueue<AccelData> sensorDatas) {
@@ -200,9 +212,21 @@ public class Graph extends Grafica {
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
-	
+		
+	/*	if (densidad.equalsIgnoreCase("alta")){
+			renderer.setLabelsTextSize(30);
+			renderer.setLabelsTextSize(30);
+		}else if(densidad.equalsIgnoreCase("media")) {
+			renderer.setLabelsTextSize(20);
+			renderer.setLabelsTextSize(20);
+		} else if (densidad.equalsIgnoreCase("baja")){
+			renderer.setLabelsTextSize(5);
+			renderer.setLabelsTextSize(5);
+		}*/
 		// renderer.setXAxisMin(0.0);
-		renderer.setLabelsTextSize(30);
+		
+		//float upscale = textSize / renderer.getLegendTextSize();
+	
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);
@@ -285,7 +309,7 @@ public class Graph extends Grafica {
 
 	}
 
-	public void propiedades() {
+	public void propiedades(String titulo) {
 		double[] limites = { 0, 1000000, -2000, 2000 };
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		renderer1.setColor(Color.RED);
@@ -314,7 +338,7 @@ public class Graph extends Grafica {
 
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
-		//renderer.setYTitle(titulo);
+		renderer.setYTitle(titulo);
 		renderer.setXTitle("Tiempo (segundos)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);
@@ -343,7 +367,7 @@ public class Graph extends Grafica {
 
 	}
 
-	public void propiedades2() {
+	public void propiedades2(String titulo) {
 		double[] limites = { 0, 1000000, -2000, 2000 };
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		renderer1.setColor(Color.RED);
@@ -362,7 +386,7 @@ public class Graph extends Grafica {
 
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
-		//renderer.setYTitle(titulo);
+		renderer.setYTitle(titulo);
 		renderer.setXTitle("Tiempo (segundos)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);

@@ -25,6 +25,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="@string/explicacion1"
             android:textColor="#ffffff" />
 
@@ -42,8 +44,18 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="@string/explicacion2"
             android:textColor="#ffffff" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="50dp"
+            android:src="@drawable/ejesacelerometro" />
 
         <TextView
             android:id="@+id/textView5"
@@ -59,17 +71,36 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="@string/explicacion3"
             android:textColor="#ffffff" />
 
-        <ImageView
-            android:id="@+id/imageView1"
+        <TextView
+            android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingBottom="20dp"
-            android:src="@drawable/ejesacelerometro" />
+            android:paddingLeft="30dp"
+            android:text="@string/titulo4"
+            android:textColor="#ffd700"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/explicacion4"
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="198dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/acele" />
     </LinearLayout>
 
 </ScrollView>

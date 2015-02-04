@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
-            android:text="TextView"
+            android:text="@string/titulogiro1"
             android:textColor="#ffd700"
             android:textStyle="bold" />
 
@@ -24,17 +24,17 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="TextView" />
+            android:text="@string/explicaciongiro1"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
-            android:text="TextView"
+            android:text="@string/titulogiro2"
             android:textColor="#ffd700"
             android:textStyle="bold" />
 
@@ -42,17 +42,17 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="#ffffff"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"
+            android:text="@string/explicaciongiro2"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
-            android:text="TextView"
+            android:text="@string/titulogiro3"
             android:textColor="#ffd700"
             android:textStyle="bold" />
 
@@ -60,10 +60,37 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="TextView" />
+            android:text="@string/explicaciongiro3"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:text="@string/titulogiro4"
+            android:textColor="#ffd700"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/explicaciongiro4"
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/giro" />
+
     </LinearLayout>
 
 </ScrollView>
