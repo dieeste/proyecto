@@ -22,9 +22,10 @@ public class Graph extends Grafica {
 	double greater;
 	double ejeymax;
 	double ejeymin;
+
 	public Graph(Context context) {
 		this.context = context;
-		
+
 	}
 
 	@Override
@@ -108,7 +109,7 @@ public class Graph extends Grafica {
 		for (AccelData2 data : sensorDatas) {
 
 			double tiempo = (data.getTimestamp() - t) / 1000;
-			
+
 			greater = tiempo;
 
 		}
@@ -131,8 +132,8 @@ public class Graph extends Grafica {
 		for (AccelData2 data : sensorDatas) {
 
 			double tiempo = (data.getTimestamp() - t) / 1000;
-			
-			//Log.d("tiempo", "timestamp: " + tiempo);
+
+			// Log.d("tiempo", "timestamp: " + tiempo);
 			xSeries.add(tiempo, data.getX());
 			modulo.add(tiempo, data.getModulo());
 		}
@@ -153,7 +154,7 @@ public class Graph extends Grafica {
 		for (AccelData data : sensorDatas) {
 			double tiempo = (data.getTimestamp() - t) / 1000;
 
-			//Log.d("tiempo", "timestamp: " + tiempo);
+			// Log.d("tiempo", "timestamp: " + tiempo);
 			xSeries.add(tiempo, data.getX());
 			ySeries.add(tiempo, data.getY());
 			zSeries.add(tiempo, data.getZ());
@@ -212,21 +213,19 @@ public class Graph extends Grafica {
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
-		
-	/*	if (densidad.equalsIgnoreCase("alta")){
-			renderer.setLabelsTextSize(30);
-			renderer.setLabelsTextSize(30);
-		}else if(densidad.equalsIgnoreCase("media")) {
-			renderer.setLabelsTextSize(20);
-			renderer.setLabelsTextSize(20);
-		} else if (densidad.equalsIgnoreCase("baja")){
-			renderer.setLabelsTextSize(5);
-			renderer.setLabelsTextSize(5);
-		}*/
+
+		/*
+		 * if (densidad.equalsIgnoreCase("alta")){
+		 * renderer.setLabelsTextSize(30); renderer.setLabelsTextSize(30); }else
+		 * if(densidad.equalsIgnoreCase("media")) {
+		 * renderer.setLabelsTextSize(20); renderer.setLabelsTextSize(20); }
+		 * else if (densidad.equalsIgnoreCase("baja")){
+		 * renderer.setLabelsTextSize(5); renderer.setLabelsTextSize(5); }
+		 */
 		// renderer.setXAxisMin(0.0);
-		
-		//float upscale = textSize / renderer.getLegendTextSize();
-	
+
+		// float upscale = textSize / renderer.getLegendTextSize();
+
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);
@@ -237,7 +236,9 @@ public class Graph extends Grafica {
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
-		renderer.setZoomEnabled(false, true);
+		renderer.setZoomEnabled(true);
+		// renderer.setz
+		renderer.setZoomButtonsVisible(true);
 	}
 
 	public void setProperties2(boolean click[], String titulo) {
@@ -282,8 +283,9 @@ public class Graph extends Grafica {
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
+		renderer.setZoomEnabled(true);
 	}
-	
+
 	public void iniciar(ConcurrentLinkedQueue<AccelData> sensorDatas) {
 		XYSeries xSeries = new XYSeries("X");
 		XYSeries ySeries = new XYSeries("Y");
@@ -291,7 +293,7 @@ public class Graph extends Grafica {
 		XYSeries modulo = new XYSeries("Modulo");
 
 		for (AccelData data : sensorDatas) {
-			
+
 			double tiempo = (data.getTimestamp());
 
 			xSeries.add(tiempo, data.getX());
@@ -315,7 +317,7 @@ public class Graph extends Grafica {
 		renderer1.setColor(Color.RED);
 		renderer1.setLineWidth(1);
 		renderer1.setDisplayChartValues(false);
-	
+
 		renderer.addSeriesRenderer(renderer1);
 
 		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
@@ -333,7 +335,7 @@ public class Graph extends Grafica {
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
-	
+
 		// renderer.setXAxisMin(0.0);
 
 		renderer.setGridColor(Color.DKGRAY);
@@ -353,7 +355,7 @@ public class Graph extends Grafica {
 		XYSeries modulo = new XYSeries("Modulo");
 
 		for (AccelData2 data : sensorDatas) {
-			
+
 			double tiempo = (data.getTimestamp());
 
 			xSeries.add(tiempo, data.getX());
@@ -375,7 +377,6 @@ public class Graph extends Grafica {
 		renderer1.setDisplayChartValues(false);
 		renderer.addSeriesRenderer(renderer1);
 
-
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
 		modulo.setColor(Color.MAGENTA);
 		renderer.addSeriesRenderer(modulo);
@@ -395,7 +396,104 @@ public class Graph extends Grafica {
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
 	}
-	
+
+	public void propiedadesParado(ConcurrentLinkedQueue<AccelData> sensor,
+			boolean click[], String titulo) {
+		
+		
+		double[] limites = { 0, 1000000, -2000, 2000 };
+		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
+		if (click[0] == true) {
+			XYSeries xSeries = new XYSeries("X");
+			for (AccelData data : sensor) {
+				double tiempo = (data.getTimestamp());
+				xSeries.add(tiempo, data.getX());
+			}
+			dataset.addSeries(xSeries);
+			renderer1.setColor(Color.RED);
+			renderer1.setLineWidth(1);
+			renderer1.setDisplayChartValues(false);
+			renderer.addSeriesRenderer(renderer1);
+		} else {
+			renderer1.setColor(0);
+			renderer.addSeriesRenderer(renderer1);
+		}
+
+		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
+
+		if (click[1] == true) {
+			XYSeries ySeries = new XYSeries("Y");
+			for (AccelData data : sensor) {
+				double tiempo = (data.getTimestamp());
+				ySeries.add(tiempo, data.getY());
+			}
+			dataset.addSeries(ySeries);
+			renderer2.setColor(Color.GREEN);
+			renderer.addSeriesRenderer(renderer2);
+		} else {
+			renderer2.setColor(0);
+			renderer.addSeriesRenderer(renderer2);
+		}
+
+		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
+		if (click[2] == true) {
+			XYSeries zSeries = new XYSeries("Z");
+			for (AccelData data : sensor) {
+				double tiempo = (data.getTimestamp());
+				zSeries.add(tiempo, data.getZ());
+			}
+			dataset.addSeries(zSeries);
+			renderer3.setColor(Color.BLUE);
+			renderer.addSeriesRenderer(renderer3);
+		} else {
+			renderer3.setColor(0);
+			renderer.addSeriesRenderer(renderer3);
+		}
+
+		XYSeriesRenderer modulo = new XYSeriesRenderer();
+		if (click[3] == true) {
+			XYSeries xmodulo = new XYSeries("Modulo");
+			for (AccelData data : sensor) {
+				double tiempo = (data.getTimestamp());
+				xmodulo.add(tiempo, data.getModulo());
+			}
+			dataset.addSeries(xmodulo);
+			modulo.setColor(Color.MAGENTA);
+			renderer.addSeriesRenderer(modulo);
+		} else {
+			modulo.setColor(0);
+			renderer.addSeriesRenderer(modulo);
+		}
+
+		
+
+		dataset = new XYMultipleSeriesDataset();
+		
+		
+		
+		
+		
+		renderer.setBackgroundColor(Color.BLACK);
+		renderer.setMarginsColor(Color.BLACK);
+		renderer.setApplyBackgroundColor(true);
+
+		// renderer.setXAxisMin(0.0);
+
+		renderer.setGridColor(Color.DKGRAY);
+		renderer.setShowGrid(true);
+		renderer.setYTitle(titulo);
+		renderer.setXTitle("Tiempo (segundos)");
+		renderer.setXLabels(5);
+		renderer.setBackgroundColor(Color.BLACK);
+		renderer.setPanLimits(limites);
+		renderer.setYLabelsAlign(Paint.Align.RIGHT);
+		renderer.setAxesColor(Color.WHITE);
+		renderer.setLabelsColor(Color.RED);
+		renderer.setZoomEnabled(true);
+		// renderer.setz
+		renderer.setZoomButtonsVisible(true);
+	}
+
 	public GraphicalView getGraph() {
 
 		return ChartFactory.getLineChartView(context, dataset, renderer);

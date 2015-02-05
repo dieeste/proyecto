@@ -59,14 +59,18 @@ public final class R {
         public static final int fondobueno2=0x7f02000a;
         public static final int fondobueno3=0x7f02000b;
         public static final int giro=0x7f02000c;
-        public static final int ic_launcher=0x7f02000d;
-        public static final int ico=0x7f02000e;
-        public static final int icongraf=0x7f02000f;
-        public static final int iconografic=0x7f020010;
-        public static final int inf=0x7f020011;
-        public static final int luz=0x7f020012;
-        public static final int magne=0x7f020013;
-        public static final int prox=0x7f020014;
+        public static final int gyroscope=0x7f02000d;
+        public static final int ic_launcher=0x7f02000e;
+        public static final int ico=0x7f02000f;
+        public static final int icongraf=0x7f020010;
+        public static final int iconografic=0x7f020011;
+        public static final int inf=0x7f020012;
+        public static final int luz=0x7f020013;
+        public static final int magne=0x7f020014;
+        public static final int magnetometro=0x7f020015;
+        public static final int prox=0x7f020016;
+        public static final int sensorluz=0x7f020017;
+        public static final int sensorproximidad=0x7f020018;
     }
     public static final class id {
         public static final int TextView01=0x7f0b0000;

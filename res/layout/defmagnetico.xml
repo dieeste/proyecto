@@ -65,6 +65,14 @@
             android:text="@string/explicacionmange3"
             android:textColor="#ffffff" />
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="148dp"
+            android:layout_height="261dp"
+            android:layout_gravity="center"
+            android:paddingBottom="15dp"
+            android:src="@drawable/magnetometro" />
+
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"

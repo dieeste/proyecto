@@ -12,7 +12,5 @@ public class DefinicionGiroscopio extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.defgiroscopio);
-
     }
-
-}
+    }

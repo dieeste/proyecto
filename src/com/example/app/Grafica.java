@@ -69,7 +69,7 @@ public class Grafica extends Activity implements OnClickListener,
 	// Declaramos los checkbox
 	CheckBox ejex;
 	CheckBox ejey;
-	CheckBox ejez;
+	CheckBox  ejez;
 	CheckBox modulo;
 
 	// Declaramos los temporizadores tanto para empezar a tomar datos como para
@@ -96,38 +96,6 @@ public class Grafica extends Activity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		/*
-		 * Display display = ((WindowManager)
-		 * getSystemService(Context.WINDOW_SERVICE)) .getDefaultDisplay(); float
-		 * scale = getApplicationContext().getResources()
-		 * .getDisplayMetrics().density; DisplayMetrics metrics = new
-		 * DisplayMetrics();
-		 * getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		 * 
-		 * int dips = 40; Log.d(getClass().getSimpleName(), "dips:" +
-		 * Integer.toString(dips));
-		 * 
-		 * // ENCONTRAR LOS PIXELES POR UN VALOR A DPI float pixels =
-		 * TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips,
-		 * metrics);
-		 * 
-		 * // TRATAR DE ENCONTRAR EL MISMO RESULTADO float pixelBoton = 0; float
-		 * scaleDensity = 0;
-		 * 
-		 * switch (metrics.densityDpi) { case DisplayMetrics.DENSITY_XHIGH:
-		 * densidad = "muy alta";
-		 * 
-		 * case DisplayMetrics.DENSITY_HIGH: // HDPI densidad = "alta";
-		 * Log.d("esto es", "densidad "+densidad); scaleDensity = scale * 240;
-		 * pixelBoton = dips * (scaleDensity / 240); break; case
-		 * DisplayMetrics.DENSITY_MEDIUM: // MDPI densidad = "media";
-		 * scaleDensity = scale * 160; pixelBoton = dips * (scaleDensity / 160);
-		 * break;
-		 * 
-		 * case DisplayMetrics.DENSITY_LOW: // LDPI densidad = "baja";
-		 * scaleDensity = scale * 120; pixelBoton = dips * (scaleDensity / 120);
-		 * break; }
-		 */
 
 		// Mantenemos la pantalla encendida
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -149,11 +117,11 @@ public class Grafica extends Activity implements OnClickListener,
 		parar = (Button) findViewById(R.id.parar);
 		iniciar = (Button) findViewById(R.id.inicio);
 		reiniciar = (Button) findViewById(R.id.reiniciar);
-
 		// Escuchamos los botones
 		parar.setOnClickListener(this);
 		iniciar.setOnClickListener(this);
 		reiniciar.setOnClickListener(this);
+		
 
 		// Recogemos datos de la actividad anterior
 
@@ -183,7 +151,6 @@ public class Grafica extends Activity implements OnClickListener,
 			contadores();
 		}
 
-		// Escuchamos los checkbox y creamos un array para enviar a la
 		// representación de la gráfica
 		CheckBox[] checkboxes = new CheckBox[4];
 		checkboxes[SensorManager.DATA_X] = (CheckBox) findViewById(R.id.ejex);
@@ -314,7 +281,7 @@ public class Grafica extends Activity implements OnClickListener,
 				if (sensor == Sensor.TYPE_ACCELEROMETER) {
 					// Log.d("sensor aceler", "sensoracce: " + data);
 					mGraph = new Graph(this);
-					mGraph.ejeY(sensorDatas);
+					//mGraph.ejeY(sensorDatas);
 					mGraph.ejeX(sensorDatas);
 					mGraph.initData(sensorDatas);
 					mGraph.setProperties(mGraphs, "Acelerómetro "
@@ -935,8 +902,7 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph = new Graph(this);
 				mGraph.ejeY(sensorDatas);
 				mGraph.ejeX(sensorDatas);
-				mGraph.initData(sensorDatas);
-				mGraph.setProperties(mGraphs, "Acelerómetro "
+				mGraph.propiedadesParado(sensorDatas,mGraphs, "Acelerómetro "
 						+ getString(R.string.unidad_acelerometro));
 				if (!init) {
 					view = mGraph.getGraph();

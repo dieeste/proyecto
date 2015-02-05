@@ -59,42 +59,42 @@
         android:layout_below="@+id/buttons"
         android:orientation="horizontal" >
 
-        <CheckBox
+        <Button
             android:id="@+id/ejex"
-            android:layout_width="0dp"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checked="true"
-            android:text="@string/channel_x_axis"
+            android:text="X"
             android:textColor="#ffffff" />
 
-        <CheckBox
+        <Button
             android:id="@+id/ejey"
-            android:layout_width="0dp"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checked="true"
-            android:text="@string/channel_y_axis"
+            android:text="Y"
             android:textColor="#ffffff" />
 
-        <CheckBox
+        <Button
             android:id="@+id/ejez"
-            android:layout_width="0dp"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checked="true"
-            android:text="@string/channel_z_axis"
+            android:text="Z"
             android:textColor="#ffffff" />
 
-        <CheckBox
+        <Button
             android:id="@+id/modulo"
-            android:layout_width="fill_parent"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checked="true"
-            android:text="@string/modulo"
-            android:textColor="#ffffff"
-            android:lines="4" />
+            android:text="Módulo"
+            android:textColor="#ffffff" />
+
     </LinearLayout>
 
 </RelativeLayout>
