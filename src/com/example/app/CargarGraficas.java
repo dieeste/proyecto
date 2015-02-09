@@ -37,7 +37,11 @@ public class CargarGraficas extends ListActivity {
 		root= Environment.getExternalStorageDirectory().getPath();
 		directorioRaiz = (Environment.getExternalStorageDirectory()
 				.toString() + "/" + getResources().getString(R.string.app_name)).toString();
-	//	imagen = (ImageView) findViewById(R.id.icon);
+		
+		File dir = new File(directorioRaiz);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
 		verArchivosDirectorio(directorioRaiz);
 	}
 

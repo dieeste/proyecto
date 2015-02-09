@@ -22,6 +22,9 @@ public class Graph extends Grafica {
 	double greater;
 	double ejeymax;
 	double ejeymin;
+	public static final int ZOOM_AXIS_X = 1;
+	public static final int ZOOM_AXIS_Y = 2;
+	
 
 	public Graph(Context context) {
 		this.context = context;
@@ -489,8 +492,8 @@ public class Graph extends Grafica {
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
-		renderer.setZoomEnabled(true);
-		// renderer.setz
+		//renderer.setZoomEnabled(true);
+		//renderer.apply(ZOOM_AXIS_Y);
 		renderer.setZoomButtonsVisible(true);
 	}
 

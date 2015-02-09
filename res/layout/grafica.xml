@@ -59,39 +59,35 @@
         android:layout_below="@+id/buttons"
         android:orientation="horizontal" >
 
-        <Button
+        <CheckBox
             android:id="@+id/ejex"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:checked="true"
             android:text="X"
             android:textColor="#ffffff" />
 
-        <Button
+        <CheckBox
             android:id="@+id/ejey"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:checked="true"
             android:text="Y"
             android:textColor="#ffffff" />
 
-        <Button
+        <CheckBox
             android:id="@+id/ejez"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:checked="true"
             android:text="Z"
             android:textColor="#ffffff" />
 
-        <Button
+        <CheckBox
             android:id="@+id/modulo"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:checked="true"
             android:text="Módulo"
             android:textColor="#ffffff" />
 
