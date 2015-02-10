@@ -159,10 +159,6 @@ public final class R {
         public static final int app_name=0x7f080000;
         public static final int cambiar=0x7f080014;
         public static final int cargargraficas=0x7f080027;
-        public static final int channel_default=0x7f08001a;
-        public static final int channel_x_axis=0x7f080017;
-        public static final int channel_y_axis=0x7f080018;
-        public static final int channel_z_axis=0x7f080019;
         public static final int checkAcelerometro=0x7f080028;
         public static final int checkGiroscopio=0x7f080029;
         public static final int checkLuz=0x7f08002b;
@@ -171,6 +167,10 @@ public final class R {
         public static final int compartir=0x7f080012;
         public static final int config=0x7f080003;
         public static final int cuenta=0x7f08000b;
+        public static final int eje_modulo=0x7f08001a;
+        public static final int eje_x=0x7f080017;
+        public static final int eje_y=0x7f080018;
+        public static final int eje_z=0x7f080019;
         public static final int ejemplos=0x7f080006;
         public static final int empezar=0x7f080009;
         public static final int error_guardar=0x7f080016;

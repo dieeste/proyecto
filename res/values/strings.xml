@@ -24,10 +24,10 @@
     <string name="cambiar">Cambiar gráfica sensor</string>
     <string name="guardado_acelerometro">Acelerómetro guardado</string>
     <string name="error_guardar">Error al guardar, no guardado</string>
-    <string name="channel_x_axis">X</string>
-    <string name="channel_y_axis">Y</string>
-    <string name="channel_z_axis">Z</string>
-    <string name="channel_default">Channel</string>
+    <string name="eje_x">X</string>
+    <string name="eje_y">Y</string>
+    <string name="eje_z">Z</string>
+    <string name="eje_modulo">Módulo</string>
     <string name="unidad_acelerometro">m/s²</string>
     <string name="gpss">¿DESEA ACTIVAR EL GPS?</string>
     <string name="tiempo">¿DESEA MARCAR UN TIEMPO DETERMINADO?</string>
@@ -55,13 +55,13 @@
     <string name="guardar_luz">Sensor de luz guardado</string>
     <string name="guardar_proximidad">Sensor de proximidad guardado</string>
     <string name="titulo1">\n¿QUÉ ES EL ACELERÓMETRO?\n</string>
-    <string name="explicacion1">Es un dispositivo que mide la aceleración, que es la tasa de cambio de la velocidad de un objeto, y las fuerzas inducidas por la gravedad, es decir nos permite detectar el movimiento y el giro. Esto se mide en metros por segundo al cuadrado (m/s2) o en fuerzas G (g).\n</string>
+    <string name="explicacion1">Es un dispositivo que mide la aceleración, tasa de cambio de la velocidad de un objeto, y las fuerzas inducidas por la gravedad, es decir, nos permite detectar el movimiento y el giro.\n Esto se mide en metros por segundo al cuadrado (m/s2) o en fuerzas G (g).\n</string>
     <string name="titulo2">¿CÓMO FUNCIONA EL ACELERÓMETRO?\n</string>
-    <string name="explicacion2">La base de su funcionamiento es un condensador, un dispositivo que generalmente está integrado por dos placas metálicas fijas, una enfrente de la otra; y por un material dieléctrico.\n
+    <string name="explicacion2">La base de su funcionamiento es un condensador, un dispositivo que generalmente está integrado por dos placas metálicas fijas, una enfrente de la otra, y por un material dieléctrico.\n
 Una de esas placas es móvil, de forma que cuando apliques una fuerza sobre el dispositivo, la capacidad del condensador cambiará. Se hará mayor o menor en función del movimiento.\n
 Al interior del condensador llega energía a través de esas placas procedente en última instancia de la batería del dispositivo. En función de si la capacidad del condensador es mayor o menor el material dieléctrico que existe entre esas placas será capaz de almacenar una carga u otra.\n
 Así es posible que el sensor mida qué cantidad de carga eléctrica (voltaje) se ha almacenado en el material dieléctrico y envíe esa información al microprocesador del dispositivo para que determine la fuerza y la aceleración a la que ha sido sometido. El microprocesador ha registrado el voltaje obtenido y lo ha guardado en una base de datos donde ya tenía registrado otros voltajes, que corresponde a una fuerza y a una aceleración determinadas.\n</string>
-    <string name="titulo3">\n¿PARA QUE SIRVE EL ACELERÓMETRO?\n</string>
+    <string name="titulo3">\n¿PARA QUÉ SIRVE EL ACELERÓMETRO?\n</string>
     <string name="explicacion3">Un acelerómetro puede cambiar automáticamente la orientación de la pantalla y detectar la posición vertical u horizontal de la pantalla.\n</string>
     <string name="titulo4">¿QUÉ DATOS NOS MUESTRA?\n</string>
     <string name="explicacion4">El acelerómetro mide la aceleración aplicada al dispositivo y sus propiedades se resumen en la tabla.</string>

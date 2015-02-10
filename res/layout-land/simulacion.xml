@@ -1,0 +1,251 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondobueno2"
+    android:visibility="visible" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:baselineAligned="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/acelerometer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
+            android:text="@string/acelerometro"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkAcelerometro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
+            android:checked="false"
+            android:paddingLeft="40dp"
+            android:text="@string/checkAcelerometro"
+            android:textColor="#ffffff" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/acelerometro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
+                android:layout_weight="3"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/graficaAcelerometro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:drawableBottom="@drawable/iconografic"
+                android:minHeight="60dp"
+                android:text="@string/grafica"
+                android:textColor="#ffff" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/giroscopio"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
+            android:text="@string/giroscopio"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkGiroscopio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
+            android:checked="false"
+            android:paddingLeft="40dp"
+            android:text="@string/checkGiroscopio"
+            android:textColor="#ffffff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/giroscopo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
+                android:layout_weight="3"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/graficaGiroscopio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:drawableBottom="@drawable/iconografic"
+                android:text="@string/grafica"
+                android:textColor="#ffff" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/magnetic"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
+            android:text="@string/magnetico"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkMagetico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
+            android:checked="false"
+            android:paddingLeft="40dp"
+            android:text="@string/checkMagnetometro"
+            android:textColor="#ffffff"
+            android:textColorHint="@color/accele_x" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/magnetico"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
+                android:layout_weight="3"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/graficaMagnetico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:drawableBottom="@drawable/iconografic"
+                android:text="@string/grafica"
+                android:textColor="#ffff" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/proximity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
+            android:text="@string/proximidad"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkProximidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
+            android:checked="false"
+            android:paddingLeft="40dp"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:text="@string/checkProximidad"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/detecta"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/proximidad"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
+                android:layout_weight="3"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/graficaProximidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:drawableBottom="@drawable/iconografic"
+                android:text="@string/grafica"
+                android:textColor="#ffff" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/luminosity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/botonamarillo"
+            android:drawableRight="@drawable/inf"
+            android:text="@string/luminosidad"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkLuz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_selector"
+            android:checked="false"
+            android:paddingLeft="40dp"
+            android:text="@string/checkLuz"
+            android:textColor="#ffffff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/luminosidad"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
+                android:layout_weight="3"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/graficaLuminosidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:drawableBottom="@drawable/iconografic"
+                android:text="@string/grafica"
+                android:textColor="#ffff" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -62,35 +62,35 @@
         </activity>
         <activity
             android:name="DefinicionAcelerometro"
-            android:label="Definición Acelerómetro" >
+            android:label="Definición del acelerómetro" >
             <action android:name=".DefinicionAcelerometro" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
             android:name="DefinicionGiroscopio"
-            android:label="Definición Giroscopio" >
+            android:label="Definición del giroscopio" >
             <action android:name=".DefinicionGiroscopio" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
             android:name="DefinicionMagnetico"
-            android:label="Definición Magnético" >
+            android:label="Definición del magnetómetro" >
             <action android:name=".DefinicionMagnetico" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
             android:name="DefinicionProximidad"
-            android:label="Definición Proximidad" >
+            android:label="Definición sensor de proximidad" >
             <action android:name=".DefinicionProximidad" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
             android:name="DefinicionLuz"
-            android:label="Definición Luz" >
+            android:label="Definición sensor de luz" >
             <action android:name=".DefinicionLuz" />
 
             <category android:name="android.intent.category.DEFAULT" />
@@ -102,7 +102,9 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
-        <activity android:name="CargarGraficas" >
+        <activity
+            android:name="CargarGraficas"
+            android:label="Cargar gráficas" >
             <action android:name=".CargarGraficas" />
 
             <category android:name="android.intent.category.DEFAULT" />
