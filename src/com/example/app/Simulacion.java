@@ -412,7 +412,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double x5 = Math.round(event.values[0]*100.0)/100.0;
 				double modulo5 = Math.round(m5*100.0)/100.0;
 				txt += "Luminosidad\n";
-				txt += "\n Luz: " + x5 + " "
+				txt += "\n Luminosidad: " + x5 + " "
 						+ getString(R.string.unidad_luz);
 				txt += "\n Módulo: " + modulo5 + " "
 						+ getString(R.string.unidad_luz);
