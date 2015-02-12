@@ -174,7 +174,7 @@ public class Graph extends Grafica {
 	}
 
 	public void setProperties(boolean click[], String titulo) {
-		double[] limites = { 0, 1000000, -2000, 2000 };
+		double[] limites = { 0, greater+1, ejeymin-20, ejeymax+20};
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
@@ -198,7 +198,7 @@ public class Graph extends Grafica {
 
 		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
 		if (click[2] == true) {
-			renderer3.setColor(Color.BLUE);
+			renderer3.setColor(Color.WHITE);
 			renderer.addSeriesRenderer(renderer3);
 		} else {
 			renderer3.setColor(0);
@@ -228,7 +228,7 @@ public class Graph extends Grafica {
 		// renderer.setXAxisMin(0.0);
 
 		// float upscale = textSize / renderer.getLegendTextSize();
-
+		renderer.setChartTitle(titulo);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);
@@ -245,7 +245,7 @@ public class Graph extends Grafica {
 	}
 
 	public void setProperties2(boolean click[], String titulo) {
-		double[] limites = { 0, 1000000, -5000, 5000 };
+		double[] limites = { 0, greater+1, ejeymin-20, ejeymax+20};
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
@@ -270,12 +270,7 @@ public class Graph extends Grafica {
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
 		// renderer.setXAxisMin(0.0);
-		if (greater <= 5) {
-			renderer.setXAxisMax(5);
-		} else {
-			renderer.setXAxisMin(greater - 5);
-			renderer.setXAxisMax(greater);
-		}
+		renderer.setChartTitle(titulo);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);
@@ -303,7 +298,7 @@ public class Graph extends Grafica {
 			ySeries.add(tiempo, data.getY());
 			zSeries.add(tiempo, data.getZ());
 			modulo.add(tiempo, data.getModulo());
-
+			greater=tiempo;
 		}
 
 		dataset = new XYMultipleSeriesDataset();
@@ -315,7 +310,7 @@ public class Graph extends Grafica {
 	}
 
 	public void propiedades(String titulo) {
-		double[] limites = { 0, 1000000, -2000, 2000 };
+		double[] limites = { 0, greater+1, ejeymin-20, ejeymax+20};
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		renderer1.setColor(Color.RED);
 		renderer1.setLineWidth(1);
@@ -329,7 +324,7 @@ public class Graph extends Grafica {
 		renderer.addSeriesRenderer(renderer2);
 
 		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
-		renderer3.setColor(Color.BLUE);
+		renderer3.setColor(Color.WHITE);
 		renderer.addSeriesRenderer(renderer3);
 
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
@@ -340,7 +335,7 @@ public class Graph extends Grafica {
 		renderer.setApplyBackgroundColor(true);
 
 		// renderer.setXAxisMin(0.0);
-
+		renderer.setChartTitle(titulo);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);
@@ -363,7 +358,7 @@ public class Graph extends Grafica {
 
 			xSeries.add(tiempo, data.getX());
 			modulo.add(tiempo, data.getModulo());
-
+			greater=tiempo;
 		}
 
 		dataset = new XYMultipleSeriesDataset();
@@ -373,7 +368,7 @@ public class Graph extends Grafica {
 	}
 
 	public void propiedades2(String titulo) {
-		double[] limites = { 0, 1000000, -2000, 2000 };
+		double[] limites = { 0, greater+1, ejeymin-20, ejeymax+20};
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		renderer1.setColor(Color.RED);
 		renderer1.setLineWidth(1);
@@ -387,7 +382,7 @@ public class Graph extends Grafica {
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
 		// renderer.setXAxisMin(0.0);
-
+		renderer.setChartTitle(titulo);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);
@@ -446,7 +441,7 @@ public class Graph extends Grafica {
 				zSeries.add(tiempo, data.getZ());
 			}
 			dataset.addSeries(zSeries);
-			renderer3.setColor(Color.BLUE);
+			renderer3.setColor(Color.WHITE);
 			renderer.addSeriesRenderer(renderer3);
 		} else {
 			renderer3.setColor(0);

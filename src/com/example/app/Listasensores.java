@@ -60,7 +60,7 @@ public class Listasensores extends ListActivity {
 			
 
 			text.setText("\nNombre: " + s.getName()
-					+ "\n\tPotencia que consume: " + s.getPower() + " mA"
+					+ "\n\tEnergía utilizada por el sensor: " + s.getPower() + " mA"
 					+ "\n\tVersión: " + s.getVersion() + "\n\tDistribuidor: "
 					+ s.getVendor());
 			text.setTextColor(Color.WHITE);

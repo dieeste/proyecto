@@ -326,10 +326,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 						event.values[0], 2)
 						+ Math.pow(event.values[1], 2)
 						+ Math.pow(event.values[2], 2))));
-				double x = Math.round(event.values[0]*1000000.0)/1000000.0;
-				double y = Math.round(event.values[1]*1000000.0)/1000000.0;
-				double z = Math.round(event.values[2]*1000000.0)/1000000.0;
-				double modulo = Math.round(m*1000000.0)/1000000.0;
+				double x = Math.round(event.values[0]*100.0)/100.0;
+				double y = Math.round(event.values[1]*100.0)/100.0;
+				double z = Math.round(event.values[2]*100.0)/100.0;
+				double modulo = Math.round(m*100.0)/100.0;
 
 				txt += "Acelerómetro\n";
 				txt += "\n X: " + x + " "
@@ -348,10 +348,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 						event.values[0], 2)
 						+ Math.pow(event.values[1], 2)
 						+ Math.pow(event.values[2], 2))));
-				double x2 = Math.round(event.values[0]*1000000.0)/1000000.0;
-				double y2 = Math.round(event.values[1]*1000000.0)/1000000.0;
-				double z2 = Math.round(event.values[2]*1000000.0)/1000000.0;
-				double modulo2 = Math.round(m2*1000000.0)/1000000.0;
+				double x2 = Math.round(event.values[0]*100.0)/100.0;
+				double y2 = Math.round(event.values[1]*100.0)/100.0;
+				double z2 = Math.round(event.values[2]*100.0)/100.0;
+				double modulo2 = Math.round(m2*100.0)/100.0;
 				txt += "Giroscopio\n";
 				txt += "\n X: " + x2 + " "
 						+ getString(R.string.unidad_giroscopio);
@@ -369,10 +369,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 						event.values[0], 2)
 						+ Math.pow(event.values[1], 2)
 						+ Math.pow(event.values[2], 2))));
-				double x3 = Math.round(event.values[0]*1000000.0)/1000000.0;
-				double y3 = Math.round(event.values[1]*1000000.0)/1000000.0;
-				double z3 = Math.round(event.values[2]*1000000.0)/1000000.0;
-				double modulo3 = Math.round(m3*1000000.0)/1000000.0;
+				double x3 = Math.round(event.values[0]*100.0)/100.0;
+				double y3 = Math.round(event.values[1]*100.0)/100.0;
+				double z3 = Math.round(event.values[2]*100.0)/100.0;
+				double modulo3 = Math.round(m3*100.0)/100.0;
 				txt += "Campo magnético\n";
 				txt += "\n X: " + x3 + " "
 						+ getString(R.string.unidad_campo_magnetico);
@@ -388,10 +388,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 			case Sensor.TYPE_PROXIMITY:
 				double m4 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
 						event.values[0], 2))));
-				double x4 = Math.round(event.values[0]*1000000.0)/1000000.0;
-				double modulo4 = Math.round(m4*1000000.0)/1000000.0;
+				double x4 = Math.round(event.values[0]*100.0)/100.0;
+				double modulo4 = Math.round(m4*100.0)/100.0;
 				txt += "Proximidad\n";
-				txt += "\n X: " + x4 + " "
+				txt += "\n Distancia: " + x4 + " "
 						+ getString(R.string.unidad_proximidad);
 				txt += "\n Módulo: " + modulo4 + " "
 						+ getString(R.string.unidad_proximidad);
@@ -402,17 +402,17 @@ public class Simulacion extends Activity implements SensorEventListener,
 					detecta.setText("Proximidad Detectada");
 					detecta.setVisibility(TextView.VISIBLE);
 				} else {
-					detecta.setVisibility(TextView.GONE);
+					detecta.setVisibility(TextView.INVISIBLE);
 				}
 				break;
 
 			case Sensor.TYPE_LIGHT:
 				double m5 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
 						event.values[0], 2))));
-				double x5 = Math.round(event.values[0]*1000000.0)/1000000.0;
-				double modulo5 = Math.round(m5*1000000.0)/1000000.0;
+				double x5 = Math.round(event.values[0]*100.0)/100.0;
+				double modulo5 = Math.round(m5*100.0)/100.0;
 				txt += "Luminosidad\n";
-				txt += "\n X: " + x5 + " "
+				txt += "\n Luz: " + x5 + " "
 						+ getString(R.string.unidad_luz);
 				txt += "\n Módulo: " + modulo5 + " "
 						+ getString(R.string.unidad_luz);

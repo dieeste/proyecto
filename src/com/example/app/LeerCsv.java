@@ -51,27 +51,28 @@ public class LeerCsv extends Activity {
 		try {
 
 			CsvReader fichero = new CsvReader(file);
-
+			fichero.setDelimiter(';');
+			fichero.getHeaders();
+			fichero.skipLine();
 			fichero.readHeaders();
-
-			// if(numerolineas == 4){
 
 			while (fichero.readRecord()) {
 				numerolineas = fichero.getColumnCount();
 				Log.d("numeor", "columnas asdfadsfa: " + numerolineas);
-				if (numerolineas == 7) {
+				if (numerolineas == 6) {
 					double tiempo = Double.parseDouble(fichero.get("Tiempo"));
 					double x = Double.parseDouble(fichero.get("X"));
 					double y = Double.parseDouble(fichero.get("Y"));
 					double z = Double.parseDouble(fichero.get("Z"));
 					double modulo = Double.parseDouble(fichero.get("Modulo"));
-					unidad = fichero.get("Unidad sensor");
+					unidad = fichero.getHeader(8);
+					//unidad = fichero.get("Unidad sensor");
 					Log.d("asf","unidad "+unidad);
 
 					AccelData data = new AccelData(tiempo, x, y, z, modulo);
 
 					datos.add(data);
-				} else if (numerolineas == 5) {
+				} else if (numerolineas == 4) {
 					double tiempo = Double.parseDouble(fichero.get("Tiempo"));
 					double x = Double.parseDouble(fichero.get("X"));
 					double modulo = Double.parseDouble(fichero.get("Modulo"));
@@ -83,33 +84,31 @@ public class LeerCsv extends Activity {
 				}
 			}
 			fichero.close();
-			if (numerolineas == 7) {
+			if (numerolineas == 6) {
 				if (unidad.equalsIgnoreCase("m/sÂ²")) {
 					titulo = "Acelerometro "
 							+ getResources().getString(
 									R.string.unidad_acelerometro);
-					Log.d("asf","titulo "+titulo);
 				} else if (unidad.equalsIgnoreCase(getResources().getString(
 						R.string.unidad_giroscopio))) {
 					titulo = "Giroscopio "
 							+ getResources().getString(
 									R.string.unidad_giroscopio);
-					Log.d("asf","titulo "+titulo);
 				} else if (unidad.equalsIgnoreCase("ÂµT")) {
 					titulo = "Campo magnético "
 							+ getResources().getString(
 									R.string.unidad_campo_magnetico);
-					Log.d("asf","titulo "+titulo);
 				}
 				mGraph = new Graph(this);
 				mGraph.iniciar(datos);
+				mGraph.ejeY(datos);
 				mGraph.propiedades(titulo);
 				view = mGraph.getGraph();
 				layout.addView(view);
 				for (AccelData data : datos) {
 					datos.remove(data);
 				}
-			} else if (numerolineas == 5) {
+			} else if (numerolineas == 4) {
 				if (unidad.equalsIgnoreCase(getResources().getString(
 						R.string.unidad_luz))) {
 					titulo = "Sensor de luz "
@@ -123,6 +122,7 @@ public class LeerCsv extends Activity {
 				}
 				mGraph = new Graph(this);
 				mGraph.iniciar2(sensor);
+				mGraph.ejeY2(sensor);
 				mGraph.propiedades2(titulo);
 				view = mGraph.getGraph();
 				layout.addView(view);

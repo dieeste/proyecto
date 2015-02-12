@@ -7,7 +7,7 @@
         android:entryValues="@array/frecuencias"
         android:key="frecuencia"
         android:summary="Elige una frecuencia de los sensores."
-        android:title="TIPO FRECUENCIA" />
+        android:title="FRECUENCIA DE MUESTREO" />
     <ListPreference
         android:defaultValue="0"
         android:entries="@array/temporizador"
