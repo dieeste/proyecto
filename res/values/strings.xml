@@ -54,6 +54,7 @@
     <string name="guardado_magnetometro">Magnetómetro guardado</string>
     <string name="guardar_luz">Sensor de luz guardado</string>
     <string name="guardar_proximidad">Sensor de proximidad guardado</string>
+    <string name="guardado_gps">GPS guardado</string>
     <string name="titulo1">\n¿QUÉ ES EL ACELERÓMETRO?\n</string>
     <string name="explicacion1">Es un dispositivo que mide la aceleración, tasa de cambio de la velocidad de un objeto, y las fuerzas inducidas por la gravedad, es decir, nos permite detectar el movimiento y el giro.\n Esto se mide en metros por segundo al cuadrado (m/s2) o en fuerzas G (g).\n</string>
     <string name="titulo2">¿CÓMO FUNCIONA EL ACELERÓMETRO?\n</string>

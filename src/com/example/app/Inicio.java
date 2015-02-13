@@ -1,65 +1,47 @@
 package com.example.app;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.widget.ProgressBar;
+import android.view.Window;
 
 public class Inicio extends Activity{
-	 ProgressBar mProgressBar;
-	    int progreso=0;
-	    int paso = 500;
-	    final int WELCOME = 25;
+	private static final long SPLASH_SCREEN_DELAY = 3000;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+		// Set portrait orientation
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		// Hide title bar
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 		setContentView(R.layout.inicio);
-		 mProgressBar=(ProgressBar) findViewById(R.id.progressbar);
+
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+
+				// Start the next activity
+				Intent mainIntent = new Intent().setClass(Inicio.this,
+						MainActivity.class);
+				startActivity(mainIntent);
+
+				// Close the activity so the user won't able to go back this
+				// activity pressing Back button
+				finish();
+			}
+		};
+
+		// Simulate a long loading process on application startup.
+		Timer timer = new Timer();
+		timer.schedule(task, SPLASH_SCREEN_DELAY);
 	}
+
 	
-	private void cuentaAtras(long milisegundos){
-	    
-	    CountDownTimer mCountDownTimer;
-	    mProgressBar.setMax((int)milisegundos);
-	    mProgressBar.setProgress(paso);
-
-	    mCountDownTimer=new CountDownTimer(milisegundos, paso) {
-	        
-	        @Override
-	        public void onTick(long millisUntilFinished) {
-	            
-	            progreso+=paso;
-	            mProgressBar.setProgress(progreso);
-	        }
-
-	        @Override
-	        public void onFinish() {
-	    
-	            progreso+= paso;
-	            mProgressBar.setProgress(progreso);
-	            Intent i = new Intent (".MainActivity");
-	            startActivityForResult(i, WELCOME);}
-	           
-	        };
-	    mCountDownTimer.start();
-	    }
-	 @Override
-	    protected void onResume() {
-	        super.onResume();
-
-	     
-	        cuentaAtras(3000);   //3 sec.
-	    }
-	   @Override
-	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		   
-		   if (requestCode==WELCOME)
-				// volvemos a la pantalla de bienvenida desde la pantalla principal,
-				// la cerramos (no tiene sentido permanecer aquí):
-				finish();   
-			else
-				super.onActivityResult(requestCode, resultCode, data);
-	        }
 }

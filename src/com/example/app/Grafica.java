@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
+import org.w3c.dom.Text;
 
 import android.app.Activity;
 import android.content.Context;
@@ -38,6 +39,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Grafica extends Activity implements OnClickListener,
@@ -55,6 +57,7 @@ public class Grafica extends Activity implements OnClickListener,
 	private ConcurrentLinkedQueue<AccelData> sensorMagnetico;
 	private ConcurrentLinkedQueue<AccelData2> sensorLuz;
 	private ConcurrentLinkedQueue<AccelData2> sensorProximidad;
+	private ConcurrentLinkedQueue<GpsDatos> gpsdatos;
 
 	// Declaración del layout donde irá la gráfica
 	LinearLayout layout;
@@ -94,7 +97,8 @@ public class Grafica extends Activity implements OnClickListener,
 	GraphicalView view;
 	Graph mGraph;
 	String densidad;
-
+	TextView graba;
+	TextView gps;
 	double longitud;
 	double latitud;
 
@@ -119,6 +123,7 @@ public class Grafica extends Activity implements OnClickListener,
 		sensorMagnetico = new ConcurrentLinkedQueue<AccelData>();
 		sensorLuz = new ConcurrentLinkedQueue<AccelData2>();
 		sensorProximidad = new ConcurrentLinkedQueue<AccelData2>();
+		gpsdatos = new ConcurrentLinkedQueue<GpsDatos>();
 
 		// Declaramos objetos
 		layout = (LinearLayout) findViewById(R.id.chart);
@@ -131,6 +136,8 @@ public class Grafica extends Activity implements OnClickListener,
 		iniciar.setOnClickListener(this);
 		reiniciar.setOnClickListener(this);
 
+		graba = (TextView) findViewById(R.id.grabando);
+		gps = (TextView) findViewById(R.id.gpsestado);
 		// Recogemos datos de la actividad anterior
 
 		Bundle graficas = getIntent().getExtras();
@@ -196,7 +203,9 @@ public class Grafica extends Activity implements OnClickListener,
 		milocListener = new MiLocationListener();
 		milocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				milocListener);
-
+		if (latitud == 0 && longitud == 0) {
+			gps.setText("GPS buscando");
+		}
 	}
 
 	@Override
@@ -208,17 +217,20 @@ public class Grafica extends Activity implements OnClickListener,
 
 	public class MiLocationListener implements LocationListener {
 		public void onLocationChanged(Location loc) {
+			gps.setText("GPS señal");
+
 			latitud = loc.getLatitude();
 			longitud = loc.getLongitude();
-			String coordenadas = "Mis coordenadas son: Latitud = "
-					+ loc.getLatitude() + "Longitud =  " + loc.getLongitude();
-			Toast.makeText(getApplicationContext(), coordenadas,
-					Toast.LENGTH_LONG).show();
+
+			GpsDatos data = new GpsDatos(latitud, longitud);
+			gpsdatos.add(data);
+
 		}
 
 		public void onProviderDisabled(String provider) {
 			Toast.makeText(getApplicationContext(), "Gps Desactivado",
 					Toast.LENGTH_SHORT).show();
+			gps.setText("GPS apagado");
 		}
 
 		public void onProviderEnabled(String provider) {
@@ -322,6 +334,11 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData data = new AccelData(timestamp, x, y, z, modulo);
 				sensorDatas.add(data);
 				if (sensor == Sensor.TYPE_ACCELEROMETER) {
+					if (acce == true) {
+						graba.setText("Grabando SI");
+					} else {
+						graba.setText("Grabando NO");
+					}
 					// Log.d("sensor aceler", "sensoracce: " + data);
 					mGraph = new Graph(this);
 					mGraph.ejeY(sensorDatas);
@@ -350,6 +367,11 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData data2 = new AccelData(timestamp2, x2, y2, z2, modulo2);
 				sensorGiroscopio.add(data2);
 				if (sensor == Sensor.TYPE_GYROSCOPE) {
+					if (giro == true) {
+						graba.setText("Grabando SI");
+					} else {
+						graba.setText("Grabando NO");
+					}
 					// Log.d("sensor giroscopio", "sensorgiro: " + data2);
 					mGraph = new Graph(this);
 					mGraph.ejeY(sensorGiroscopio);
@@ -377,6 +399,11 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData2 data3 = new AccelData2(timestamp3, x3, modulo3);
 				sensorLuz.add(data3);
 				if (sensor == Sensor.TYPE_LIGHT) {
+					if (luz == true) {
+						graba.setText("Grabando SI");
+					} else {
+						graba.setText("Grabando NO");
+					}
 					mGraph = new Graph(this);
 					mGraph.ejeY2(sensorLuz);
 					mGraph.ejeX2(sensorLuz);
@@ -405,6 +432,11 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData data4 = new AccelData(timestamp4, x4, y4, z4, modulo4);
 				sensorMagnetico.add(data4);
 				if (sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+					if (magne == true) {
+						graba.setText("Grabando SI");
+					} else {
+						graba.setText("Grabando NO");
+					}
 					mGraph = new Graph(this);
 					mGraph.ejeY(sensorMagnetico);
 					mGraph.ejeX(sensorMagnetico);
@@ -431,6 +463,11 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData2 data5 = new AccelData2(timestamp5, x5, modulo5);
 				sensorProximidad.add(data5);
 				if (sensor == Sensor.TYPE_PROXIMITY) {
+					if (proxi == true) {
+						graba.setText("Grabando SI");
+					} else {
+						graba.setText("Grabando NO");
+					}
 					mGraph = new Graph(this);
 					mGraph.ejeY2(sensorProximidad);
 					mGraph.ejeX2(sensorProximidad);
@@ -541,12 +578,73 @@ public class Grafica extends Activity implements OnClickListener,
 
 		@Override
 		public void run() {
+			if (gpsdatos.size() > 0) {
+
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvData.append("Latitud;Longitud\n");
+				for (GpsDatos values : gpsdatos) {
+					csvData.append(String.valueOf(values.getLatitud()) + ";"
+							+ String.valueOf(values.getLongitud()) + "\n");
+				}
+
+				Bundle bundle = new Bundle();
+				Message msg = new Message();
+
+				try {
+
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
+
+					String fileName = "GPS "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
+
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
+
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
+
+					}
+
+					// Si se ha guardado con éxito enviamos un mensaje al
+					// controlador de mensajes y lo muestra
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.guardado_gps));
+				} catch (Exception e) {
+					// Si no se ha podido guardar entonces nos envía un mensaje
+					// diciendo que no se ha guardado
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.error_guardar));
+				}
+				msg.setData(bundle);
+				// Envía el mensaje al controlador
+				mensajeria.sendMessage(msg);
+			}
 			if (acce == true) {
 				double t = sensorDatas.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
-				csvData.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-									.toString()+"\n");
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
 				csvData.append("Tiempo;X;Y;Z;Modulo;Unidad sensor;m/s²\n");
 				for (AccelData values : sensorDatas) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
@@ -611,8 +709,11 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorGiroscopio.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
-				csvData.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
 				csvData.append("Tiempo;X;Y;Z;Modulo;Unidad sensor;rad/s\n");
 				for (AccelData values : sensorGiroscopio) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
@@ -678,8 +779,11 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorMagnetico.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
-				csvData.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
 				csvData.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
 				for (AccelData values : sensorMagnetico) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
@@ -744,8 +848,11 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorLuz.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
-				csvData.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
 				csvData.append("Tiempo;X;Modulo;Unidad sensor\n");
 				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
@@ -809,8 +916,11 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorProximidad.peek().getTimestamp();
 
 				StringBuilder csvData = new StringBuilder();
-				csvData.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
 				csvData.append("Tiempo;X;Modulo;Unidad sensor\n");
 				for (AccelData2 values : sensorProximidad) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
@@ -950,6 +1060,11 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.acele):
 			sensor = Sensor.TYPE_ACCELEROMETER;
 			if (funciona == false) {
+				if (acce== true) {
+					graba.setText("Grabando SI");
+				} else {
+					graba.setText("Grabando NO");
+				}
 				// Log.d("sensor aceler", "sensoracce: " + data);
 				mGraph = new Graph(this);
 				mGraph.ejeY(sensorDatas);
@@ -970,6 +1085,11 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.giro):
 			sensor = Sensor.TYPE_GYROSCOPE;
 			if (funciona == false) {
+				if (giro== true) {
+					graba.setText("Grabando SI");
+				} else {
+					graba.setText("Grabando NO");
+				}
 				mGraph = new Graph(this);
 				mGraph.ejeY(sensorGiroscopio);
 				mGraph.ejeX(sensorGiroscopio);
@@ -990,6 +1110,11 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.mag):
 			sensor = Sensor.TYPE_MAGNETIC_FIELD;
 			if (funciona == false) {
+				if (magne == true) {
+					graba.setText("Grabando SI");
+				} else {
+					graba.setText("Grabando NO");
+				}
 				mGraph = new Graph(this);
 				mGraph.ejeY(sensorMagnetico);
 				mGraph.ejeX(sensorMagnetico);
@@ -1010,6 +1135,11 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.proxi):
 			sensor = Sensor.TYPE_PROXIMITY;
 			if (funciona == false) {
+				if (proxi == true) {
+					graba.setText("Grabando SI");
+				} else {
+					graba.setText("Grabando NO");
+				}
 				mGraph = new Graph(this);
 				mGraph.ejeY2(sensorProximidad);
 				mGraph.ejeX2(sensorProximidad);
@@ -1030,6 +1160,11 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.luz):
 			sensor = Sensor.TYPE_LIGHT;
 			if (funciona == false) {
+				if (luz == true) {
+					graba.setText("Grabando SI");
+				} else {
+					graba.setText("Grabando NO");
+				}
 				mGraph = new Graph(this);
 				mGraph.ejeY2(sensorLuz);
 				mGraph.ejeX2(sensorLuz);
@@ -1059,15 +1194,61 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.enviar):
 			ArrayList<Uri> ficheros = new ArrayList<Uri>();
 
+			if (gpsdatos.size() > 0) {
+
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvData.append("Latitud;Longitud\n");
+				for (GpsDatos values : gpsdatos) {
+					csvData.append(String.valueOf(values.getLatitud()) + ";"
+							+ String.valueOf(values.getLongitud()) + "\n");
+				}
+				try {
+
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
+
+					String fileName = "GPS "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
+
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
+
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
+						Uri path = Uri.fromFile(file);
+						ficheros.add(path);
+					}
+
+				} catch (Exception e) {
+				}
+			}
 			if (acce == true) {
 				// crear el fichero escribirle
 				double t = sensorDatas.peek().getTimestamp();
 
 				StringBuilder csvDataexportar = new StringBuilder();
-				csvDataexportar.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
-				csvDataexportar
-						.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDataexportar.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvDataexportar.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
 				for (AccelData values : sensorDatas) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					csvDataexportar
@@ -1107,7 +1288,6 @@ public class Grafica extends Activity implements OnClickListener,
 						fileOutputStream.write(csvDataexportar.toString()
 								.getBytes());
 						fileOutputStream.close();
-						// enviar(file);
 						Uri path = Uri.fromFile(file);
 						ficheros.add(path);
 
@@ -1115,16 +1295,17 @@ public class Grafica extends Activity implements OnClickListener,
 				} catch (Exception e) {
 
 				}
-
 			}
 			if (giro == true) {
 				double t = sensorGiroscopio.peek().getTimestamp();
 
 				StringBuilder csvDatagiro = new StringBuilder();
-				csvDatagiro.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
-				csvDatagiro
-						.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDatagiro.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvDatagiro.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
 				for (AccelData values : sensorGiroscopio) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
@@ -1178,10 +1359,12 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorMagnetico.peek().getTimestamp();
 
 				StringBuilder csvDatamagne = new StringBuilder();
-				csvDatamagne.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
-				csvDatamagne
-						.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDatamagne.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvDatamagne.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
 				for (AccelData values : sensorMagnetico) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
@@ -1236,10 +1419,12 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorLuz.peek().getTimestamp();
 
 				StringBuilder csvDataluz = new StringBuilder();
-				csvDataluz.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
-				csvDataluz
-						.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDataluz.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvDataluz.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
 				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					csvDataluz
@@ -1289,10 +1474,12 @@ public class Grafica extends Activity implements OnClickListener,
 				double t = sensorProximidad.peek().getTimestamp();
 
 				StringBuilder csvDataproxi = new StringBuilder();
-				csvDataproxi.append("Nombre del dispositivo: "+android.os.Build.MODEL+",Fecha: "+DateFormat.format("dd/MM/yyyy", System.currentTimeMillis())
-						.toString()+"\n");
-				csvDataproxi
-						.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDataproxi.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ",Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvDataproxi.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
 				for (AccelData2 values : sensorProximidad) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 

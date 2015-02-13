@@ -241,7 +241,6 @@ public class Graph extends Grafica {
 		renderer.setLabelsColor(Color.RED);
 		renderer.setZoomEnabled(true);
 		// renderer.setz
-		renderer.setZoomButtonsVisible(true);
 	}
 
 	public void setProperties2(boolean click[], String titulo) {
@@ -489,7 +488,6 @@ public class Graph extends Grafica {
 		renderer.setLabelsColor(Color.RED);
 		//renderer.setZoomEnabled(true);
 		//renderer.apply(ZOOM_AXIS_Y);
-		renderer.setZoomButtonsVisible(true);
 	}
 
 	public GraphicalView getGraph() {
