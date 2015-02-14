@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
-import org.w3c.dom.Text;
 
 import android.app.Activity;
 import android.content.Context;
@@ -987,9 +986,8 @@ public class Grafica extends Activity implements OnClickListener,
 		// este mensaje y solo se podrían compartir los datos
 		if (!stadoSD.equals(Environment.MEDIA_MOUNTED)
 				&& !stadoSD.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
-			Toast.makeText(this,
-					"Inserte una tarjeta SD o comparta los datos.",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Inserte una tarjeta SD.", Toast.LENGTH_LONG)
+					.show();
 			return;
 		}
 
@@ -1037,6 +1035,11 @@ public class Grafica extends Activity implements OnClickListener,
 			for (AccelData2 data : sensorProximidad) {
 				sensorProximidad.remove(data);
 			}
+			if (gpsdatos.size() > 0) {
+				for (GpsDatos data : gpsdatos) {
+					gpsdatos.remove(data);
+				}
+			}
 			break;
 		}
 	}
@@ -1044,12 +1047,56 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Cargamos las opciones que vamos a usar en esta pantalla
-
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menugrafica, menu);
 		return true;
 		/** true -> el menú ya está visible */
+	}
+
+	// Comprobamos si hemos empezado a usar los sensores. Si las colas están
+	// vacías entonces en las opciones no aparecen esos sensores para que no
+	// aparezca un error y finalice la aplicación.
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		if (sensorDatas.size() > 0) {
+			MenuItem item = menu.findItem(R.id.acele);
+			item.setVisible(true);
+		} else {
+			MenuItem item = menu.findItem(R.id.acele);
+			item.setVisible(false);
+		}
+		if (sensorGiroscopio.size() > 0) {
+			MenuItem item = menu.findItem(R.id.giro);
+			item.setVisible(true);
+		} else {
+			MenuItem item = menu.findItem(R.id.giro);
+			item.setVisible(false);
+		}
+		if (sensorMagnetico.size() > 0) {
+			MenuItem item = menu.findItem(R.id.mag);
+			item.setVisible(true);
+		} else {
+			MenuItem item = menu.findItem(R.id.mag);
+			item.setVisible(false);
+		}
+		if (sensorProximidad.size() > 0) {
+			MenuItem item = menu.findItem(R.id.proxi);
+			item.setVisible(true);
+		} else {
+			MenuItem item = menu.findItem(R.id.proxi);
+			item.setVisible(false);
+		}
+		if (sensorLuz.size() > 0) {
+			MenuItem item = menu.findItem(R.id.luz);
+			item.setVisible(true);
+		} else {
+			MenuItem item = menu.findItem(R.id.luz);
+			item.setVisible(false);
+		}
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
@@ -1060,16 +1107,20 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.acele):
 			sensor = Sensor.TYPE_ACCELEROMETER;
 			if (funciona == false) {
-				if (acce== true) {
+				if (acce == true) {
 					graba.setText("Grabando SI");
 				} else {
 					graba.setText("Grabando NO");
 				}
-				// Log.d("sensor aceler", "sensoracce: " + data);
 				mGraph = new Graph(this);
 				mGraph.ejeY(sensorDatas);
 				mGraph.ejeX(sensorDatas);
-				mGraph.propiedadesParado(sensorDatas, mGraphs, "Acelerómetro "
+				mGraph.initData(sensorDatas);
+				/*
+				 * mGraph.propiedadesParado(sensorDatas, mGraphs,
+				 * "Acelerómetro " + getString(R.string.unidad_acelerometro));
+				 */
+				mGraph.setProperties(mGraphs, "Acelerómetro "
 						+ getString(R.string.unidad_acelerometro));
 				if (!init) {
 					view = mGraph.getGraph();
@@ -1085,7 +1136,7 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.giro):
 			sensor = Sensor.TYPE_GYROSCOPE;
 			if (funciona == false) {
-				if (giro== true) {
+				if (giro == true) {
 					graba.setText("Grabando SI");
 				} else {
 					graba.setText("Grabando NO");
@@ -1182,11 +1233,6 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 			}
 			break;
-		/*
-		 * case (R.id.cambiar): Intent i = new Intent(this,
-		 * PreferenciasGrafica.class); // Iniciamos la actividad y esperamos
-		 * respuesta con los datos startActivityForResult(i, 0); break;
-		 */
 		case (R.id.guardar):
 			Log.d("algo", "boton guardar");
 			saveHistory();

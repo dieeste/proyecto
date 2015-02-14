@@ -162,7 +162,7 @@ public class Graph extends Grafica {
 			ySeries.add(tiempo, data.getY());
 			zSeries.add(tiempo, data.getZ());
 			modulo.add(tiempo, data.getModulo());
-
+			
 		}
 
 		dataset = new XYMultipleSeriesDataset();
@@ -170,6 +170,10 @@ public class Graph extends Grafica {
 		dataset.addSeries(ySeries);
 		dataset.addSeries(zSeries);
 		dataset.addSeries(modulo);
+		xSeries.remove(0);
+		ySeries.remove(0);
+		zSeries.remove(0);
+		modulo.remove(0);
 
 	}
 
@@ -178,8 +182,6 @@ public class Graph extends Grafica {
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
-			renderer1.setLineWidth(1);
-			renderer1.setDisplayChartValues(false);
 			renderer.addSeriesRenderer(renderer1);
 		} else {
 			renderer1.setColor(0);
