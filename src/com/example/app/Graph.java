@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class Graph extends Grafica {
+	public static final String LOG_TAG = Graph.class.getSimpleName();
 	private Context context;
 	XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 	XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
@@ -24,7 +25,6 @@ public class Graph extends Grafica {
 	double ejeymin;
 	public static final int ZOOM_AXIS_X = 1;
 	public static final int ZOOM_AXIS_Y = 2;
-	
 
 	public Graph(Context context) {
 		this.context = context;
@@ -35,18 +35,7 @@ public class Graph extends Grafica {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		float textSize = new TextView(this).getTextSize();
-		float upscale = textSize / renderer.getLegendTextSize();
-		renderer.setLabelsTextSize(textSize);
-		renderer.setLegendTextSize(textSize);
-		renderer.setChartTitleTextSize(textSize);
-		renderer.setAxisTitleTextSize(textSize);
-		renderer.setFitLegend(true);
-		int[] margins = renderer.getMargins();
-		margins[0] *= upscale;
-		margins[1] *= upscale;
-		margins[2] = (int) (2 * renderer.getLegendTextSize());
-		renderer.setMargins(margins);
+		
 	}
 
 	public void ejeY(ConcurrentLinkedQueue<AccelData> sensorDatas) {
@@ -136,7 +125,6 @@ public class Graph extends Grafica {
 
 			double tiempo = (data.getTimestamp() - t) / 1000;
 
-			// Log.d("tiempo", "timestamp: " + tiempo);
 			xSeries.add(tiempo, data.getX());
 			modulo.add(tiempo, data.getModulo());
 		}
@@ -157,12 +145,11 @@ public class Graph extends Grafica {
 		for (AccelData data : sensorDatas) {
 			double tiempo = (data.getTimestamp() - t) / 1000;
 
-			// Log.d("tiempo", "timestamp: " + tiempo);
 			xSeries.add(tiempo, data.getX());
 			ySeries.add(tiempo, data.getY());
 			zSeries.add(tiempo, data.getZ());
 			modulo.add(tiempo, data.getModulo());
-			
+
 		}
 
 		dataset = new XYMultipleSeriesDataset();
@@ -170,15 +157,11 @@ public class Graph extends Grafica {
 		dataset.addSeries(ySeries);
 		dataset.addSeries(zSeries);
 		dataset.addSeries(modulo);
-		xSeries.remove(0);
-		ySeries.remove(0);
-		zSeries.remove(0);
-		modulo.remove(0);
 
 	}
 
-	public void setProperties(boolean click[], String titulo) {
-		double[] limites = { 0, greater+1, ejeymin-20, ejeymax+20};
+	public void setProperties(boolean click[], String titulo,String calidad) {
+		double[] limites = { 0, greater + 1, ejeymin - 20, ejeymax + 20 };
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
@@ -218,18 +201,39 @@ public class Graph extends Grafica {
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
-
-		/*
-		 * if (densidad.equalsIgnoreCase("alta")){
-		 * renderer.setLabelsTextSize(30); renderer.setLabelsTextSize(30); }else
-		 * if(densidad.equalsIgnoreCase("media")) {
-		 * renderer.setLabelsTextSize(20); renderer.setLabelsTextSize(20); }
-		 * else if (densidad.equalsIgnoreCase("baja")){
-		 * renderer.setLabelsTextSize(5); renderer.setLabelsTextSize(5); }
-		 */
+		if (calidad.equalsIgnoreCase("alta")) {
+			renderer.setLabelsTextSize(30);
+			renderer.setLabelsTextSize(30);
+			renderer.setAxisTitleTextSize(30);
+			renderer.setChartTitleTextSize(30);
+		} else if (calidad.equalsIgnoreCase("media")) {
+			renderer.setLabelsTextSize(15);
+			renderer.setLabelsTextSize(15);
+			renderer.setAxisTitleTextSize(15);
+			renderer.setChartTitleTextSize(15);
+		} else if (calidad.equalsIgnoreCase("baja")) {
+			renderer.setLabelsTextSize(15);
+			renderer.setLabelsTextSize(15);
+			renderer.setAxisTitleTextSize(15);
+			renderer.setChartTitleTextSize(15);
+		} else if (calidad.equalsIgnoreCase("xhigh")) {
+			renderer.setLabelsTextSize(20);
+			renderer.setLabelsTextSize(20);
+			renderer.setAxisTitleTextSize(30);
+			renderer.setChartTitleTextSize(30);
+		} else if (calidad.equalsIgnoreCase("xxhigh")) {
+			renderer.setLabelsTextSize(35);
+			renderer.setLabelsTextSize(35);
+			renderer.setAxisTitleTextSize(35);
+			renderer.setChartTitleTextSize(35);
+		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
+			renderer.setLabelsTextSize(40);
+			renderer.setLabelsTextSize(40);
+			renderer.setAxisTitleTextSize(40);
+			renderer.setChartTitleTextSize(40);
+		}
 		// renderer.setXAxisMin(0.0);
 
-		// float upscale = textSize / renderer.getLegendTextSize();
 		renderer.setChartTitle(titulo);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
@@ -242,11 +246,10 @@ public class Graph extends Grafica {
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
 		renderer.setZoomEnabled(true);
-		// renderer.setz
 	}
 
 	public void setProperties2(boolean click[], String titulo) {
-		double[] limites = { 0, greater+1, ejeymin-20, ejeymax+20};
+		double[] limites = { 0, greater + 1, ejeymin - 20, ejeymax + 20 };
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
 			renderer1.setColor(Color.RED);
@@ -299,7 +302,7 @@ public class Graph extends Grafica {
 			ySeries.add(tiempo, data.getY());
 			zSeries.add(tiempo, data.getZ());
 			modulo.add(tiempo, data.getModulo());
-			greater=tiempo;
+			greater = tiempo;
 		}
 
 		dataset = new XYMultipleSeriesDataset();
@@ -311,7 +314,7 @@ public class Graph extends Grafica {
 	}
 
 	public void propiedades(String titulo) {
-		double[] limites = { 0, greater+1, ejeymin-20, ejeymax+20};
+		double[] limites = { 0, greater + 1, ejeymin - 20, ejeymax + 20 };
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		renderer1.setColor(Color.RED);
 		renderer1.setLineWidth(1);
@@ -359,7 +362,7 @@ public class Graph extends Grafica {
 
 			xSeries.add(tiempo, data.getX());
 			modulo.add(tiempo, data.getModulo());
-			greater=tiempo;
+			greater = tiempo;
 		}
 
 		dataset = new XYMultipleSeriesDataset();
@@ -369,7 +372,7 @@ public class Graph extends Grafica {
 	}
 
 	public void propiedades2(String titulo) {
-		double[] limites = { 0, greater+1, ejeymin-20, ejeymax+20};
+		double[] limites = { 0, greater + 1, ejeymin - 20, ejeymax + 20 };
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		renderer1.setColor(Color.RED);
 		renderer1.setLineWidth(1);
@@ -398,8 +401,7 @@ public class Graph extends Grafica {
 
 	public void propiedadesParado(ConcurrentLinkedQueue<AccelData> sensor,
 			boolean click[], String titulo) {
-		
-		
+
 		double[] limites = { 0, 1000000, -2000, 2000 };
 		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
 		if (click[0] == true) {
@@ -464,14 +466,8 @@ public class Graph extends Grafica {
 			renderer.addSeriesRenderer(modulo);
 		}
 
-		
-
 		dataset = new XYMultipleSeriesDataset();
-		
-		
-		
-		
-		
+
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
@@ -488,8 +484,8 @@ public class Graph extends Grafica {
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
-		//renderer.setZoomEnabled(true);
-		//renderer.apply(ZOOM_AXIS_Y);
+		// renderer.setZoomEnabled(true);
+		// renderer.apply(ZOOM_AXIS_Y);
 	}
 
 	public GraphicalView getGraph() {

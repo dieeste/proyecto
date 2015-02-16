@@ -26,7 +26,10 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.DateFormat;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -95,7 +98,7 @@ public class Grafica extends Activity implements OnClickListener,
 	Exportar expo;
 	GraphicalView view;
 	Graph mGraph;
-	String densidad;
+	String calidad;
 	TextView graba;
 	TextView gps;
 	double longitud;
@@ -205,6 +208,52 @@ public class Grafica extends Activity implements OnClickListener,
 		if (latitud == 0 && longitud == 0) {
 			gps.setText("GPS buscando");
 		}
+		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		float scale = getApplicationContext().getResources().getDisplayMetrics().density;
+		DisplayMetrics metrics = new DisplayMetrics();
+    	getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    	int dips = 40;
+    	// ENCONTRAR LOS PIXELES POR UN VALOR A DPI
+    	float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, metrics);
+    	
+    	// TRATAR DE ENCONTRAR EL MISMO RESULTADO
+    	float pixelBoton = 0;
+    	float scaleDensity = 0;
+    	
+    	switch(metrics.densityDpi)
+    	{
+    	case DisplayMetrics.DENSITY_XXXHIGH:
+    		scaleDensity = scale * 640;
+    		pixelBoton = dips * (scaleDensity / 640);
+    		calidad = "xxxhigh";
+    		break;
+    	case DisplayMetrics.DENSITY_XXHIGH:
+    		scaleDensity = scale * 480;
+    		pixelBoton = dips * (scaleDensity / 480);
+    		calidad = "xxhigh";
+    		break;
+    	case DisplayMetrics.DENSITY_XHIGH:
+    		scaleDensity = scale * 320;
+    		pixelBoton = dips * (scaleDensity / 320);
+    		calidad = "xhigh";
+    		break;
+    	case DisplayMetrics.DENSITY_HIGH: //HDPI
+    		scaleDensity = scale * 240;
+    		pixelBoton = dips * (scaleDensity / 240);
+    		calidad = "alta";
+    		break;
+    	case DisplayMetrics.DENSITY_MEDIUM: //MDPI
+    		scaleDensity = scale * 160;
+    		pixelBoton = dips * (scaleDensity / 160);
+    		calidad = "media";
+    		break;
+    		
+    	case DisplayMetrics.DENSITY_LOW:  //LDPI
+    		scaleDensity = scale * 120;
+    		pixelBoton = dips * (scaleDensity / 120);
+    		calidad = "baja";
+    		break;
+    	}
 	}
 
 	@Override
@@ -344,7 +393,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorDatas);
 					mGraph.initData(sensorDatas);
 					mGraph.setProperties(mGraphs, "Acelerómetro "
-							+ getString(R.string.unidad_acelerometro));
+							+ getString(R.string.unidad_acelerometro),calidad);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -377,7 +426,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorGiroscopio);
 					mGraph.initData(sensorGiroscopio);
 					mGraph.setProperties(mGraphs, "Giroscopio "
-							+ getString(R.string.unidad_giroscopio));
+							+ getString(R.string.unidad_giroscopio),calidad);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -441,7 +490,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorMagnetico);
 					mGraph.initData(sensorMagnetico);
 					mGraph.setProperties(mGraphs, "Campo magnético "
-							+ getString(R.string.unidad_campo_magnetico));
+							+ getString(R.string.unidad_campo_magnetico),calidad);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -1121,7 +1170,7 @@ public class Grafica extends Activity implements OnClickListener,
 				 * "Acelerómetro " + getString(R.string.unidad_acelerometro));
 				 */
 				mGraph.setProperties(mGraphs, "Acelerómetro "
-						+ getString(R.string.unidad_acelerometro));
+						+ getString(R.string.unidad_acelerometro),calidad);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
@@ -1146,7 +1195,7 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeX(sensorGiroscopio);
 				mGraph.initData(sensorGiroscopio);
 				mGraph.setProperties(mGraphs, "Giroscopio "
-						+ getString(R.string.unidad_giroscopio));
+						+ getString(R.string.unidad_giroscopio),calidad);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
@@ -1171,7 +1220,7 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeX(sensorMagnetico);
 				mGraph.initData(sensorMagnetico);
 				mGraph.setProperties(mGraphs, "Campo magnético "
-						+ getString(R.string.unidad_campo_magnetico));
+						+ getString(R.string.unidad_campo_magnetico),calidad);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
