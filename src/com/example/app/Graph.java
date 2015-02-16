@@ -13,18 +13,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.widget.TextView;
 
 public class Graph extends Grafica {
-	public static final String LOG_TAG = Graph.class.getSimpleName();
+
 	private Context context;
 	XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 	XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-	double greater;
+	double maxejex;
 	double ejeymax;
 	double ejeymin;
-	public static final int ZOOM_AXIS_X = 1;
-	public static final int ZOOM_AXIS_Y = 2;
 
 	public Graph(Context context) {
 		this.context = context;
@@ -35,10 +32,14 @@ public class Graph extends Grafica {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 	}
 
 	public void ejeY(ConcurrentLinkedQueue<AccelData> sensorDatas) {
+
+		// se utiliza para el giroscopio, acelerometro y magnetometro, no hace
+		// el maximo y el minimo del eje Y, es decir centra la grafica.
+
 		double max = renderer.getYAxisMax();
 		double min = renderer.getYAxisMin();
 		for (AccelData data : sensorDatas) {
@@ -46,7 +47,7 @@ public class Graph extends Grafica {
 				max = data.getX();
 			if (data.getY() > max)
 				max = data.getY();
-			if (data.getX() > max)
+			if (data.getZ() > max)
 				max = data.getZ();
 			if (data.getModulo() > max)
 				max = data.getModulo();
@@ -63,14 +64,16 @@ public class Graph extends Grafica {
 	}
 
 	public void ejeY2(ConcurrentLinkedQueue<AccelData2> sensorDatas) {
+
+		// se utiliza para el sensor de luz y el sensor de proximidad, centra la
+		// grafica en el max y min del eje y.
+
 		double max = renderer.getYAxisMax();
 		double min = renderer.getYAxisMin();
 		for (AccelData2 data : sensorDatas) {
 			if (data.getX() > max)
 				max = data.getX();
-			if (data.getModulo() > max)
-				max = data.getModulo();
-			if (data.getModulo() < min)
+			if (data.getX() < min)
 				min = data.getModulo();
 		}
 		renderer.setYAxisMax(max + 1);
@@ -78,120 +81,121 @@ public class Graph extends Grafica {
 	}
 
 	public void ejeX(ConcurrentLinkedQueue<AccelData> sensorDatas) {
+
+		// recoge el tiempo del vector sensorDatas giroscopio, acelerometro y
+		// magnetometro y fija el maximo del eje x.
+
 		double t = sensorDatas.peek().getTimestamp();
 		for (AccelData data : sensorDatas) {
-
 			double tiempo = (data.getTimestamp() - t) / 1000;
-
-			greater = tiempo;
-
+			maxejex = tiempo;
 		}
-		if (greater <= 5) {
+		if (maxejex <= 5) {
 			renderer.setXAxisMax(5);
-			// renderer.setRange(limites2);
 		} else {
-			renderer.setXAxisMin(greater - 5);
-			renderer.setXAxisMax(greater);
-			// renderer.setRange(limites3);
+			renderer.setXAxisMin(maxejex - 5);
+			renderer.setXAxisMax(maxejex);
 		}
 	}
 
 	public void ejeX2(ConcurrentLinkedQueue<AccelData2> sensorDatas) {
+
+		// recoge el tiempo del vector sensorDatas sensor proximidad y sensor
+		// luz
+		// y fija el maximo del eje y.
+
 		double t = sensorDatas.peek().getTimestamp();
 		for (AccelData2 data : sensorDatas) {
-
 			double tiempo = (data.getTimestamp() - t) / 1000;
-
-			greater = tiempo;
-
+			maxejex = tiempo;
 		}
-		if (greater <= 5) {
+		if (maxejex <= 5) {
 			renderer.setXAxisMax(5);
-			// renderer.setRange(limites2);
 		} else {
-			renderer.setXAxisMin(greater - 5);
-			renderer.setXAxisMax(greater);
-			// renderer.setRange(limites3);
+			renderer.setXAxisMin(maxejex - 5);
+			renderer.setXAxisMax(maxejex);
 		}
-	}
-
-	public void initData2(ConcurrentLinkedQueue<AccelData2> sensorDatas) {
-		double t = sensorDatas.peek().getTimestamp();
-
-		XYSeries xSeries = new XYSeries("X");
-		XYSeries modulo = new XYSeries("Modulo");
-
-		for (AccelData2 data : sensorDatas) {
-
-			double tiempo = (data.getTimestamp() - t) / 1000;
-
-			xSeries.add(tiempo, data.getX());
-			modulo.add(tiempo, data.getModulo());
-		}
-
-		dataset = new XYMultipleSeriesDataset();
-		dataset.addSeries(xSeries);
-		dataset.addSeries(modulo);
-
 	}
 
 	public void initData(ConcurrentLinkedQueue<AccelData> sensorDatas) {
+
+		// recoge los valores de los sensores de sensor datas y los añade a
+		// XYMULTISERIES (acelerometro, magnetometro y giroscopio)
+
 		double t = sensorDatas.peek().getTimestamp();
 		XYSeries xSeries = new XYSeries("X");
 		XYSeries ySeries = new XYSeries("Y");
 		XYSeries zSeries = new XYSeries("Z");
 		XYSeries modulo = new XYSeries("Modulo");
-
 		for (AccelData data : sensorDatas) {
 			double tiempo = (data.getTimestamp() - t) / 1000;
-
 			xSeries.add(tiempo, data.getX());
 			ySeries.add(tiempo, data.getY());
 			zSeries.add(tiempo, data.getZ());
 			modulo.add(tiempo, data.getModulo());
-
 		}
-
 		dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(xSeries);
 		dataset.addSeries(ySeries);
 		dataset.addSeries(zSeries);
 		dataset.addSeries(modulo);
-
 	}
 
-	public void setProperties(boolean click[], String titulo,String calidad) {
-		double[] limites = { 0, greater + 1, ejeymin - 20, ejeymax + 20 };
-		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
-		if (click[0] == true) {
-			renderer1.setColor(Color.RED);
-			renderer.addSeriesRenderer(renderer1);
-		} else {
-			renderer1.setColor(0);
-			renderer.addSeriesRenderer(renderer1);
+	public void initData2(ConcurrentLinkedQueue<AccelData2> sensorDatas) {
+
+		// recoge los valores de los sensores de sensor datas y los añade a
+		// XYMULTISERIES (sensor luz y proximidad)
+
+		double t = sensorDatas.peek().getTimestamp();
+		XYSeries xSeries = new XYSeries("X");
+		XYSeries modulo = new XYSeries("Modulo");
+		for (AccelData2 data : sensorDatas) {
+			double tiempo = (data.getTimestamp() - t) / 1000;
+			xSeries.add(tiempo, data.getX());
+			modulo.add(tiempo, data.getModulo());
 		}
+		dataset = new XYMultipleSeriesDataset();
+		dataset.addSeries(xSeries);
+		dataset.addSeries(modulo);
+	}
 
-		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
+	public void setProperties(boolean click[], String titulo, String calidad,
+			String tamano) {
 
-		if (click[1] == true) {
-			renderer2.setColor(Color.GREEN);
-			renderer.addSeriesRenderer(renderer2);
+		// añade las propiedades de la grafica
+
+		double[] limites = { 0, maxejex + 5, ejeymin - 20, ejeymax + 20 };// limites
+																			// de
+																			// la
+																			// grafica.
+		int[] margenes = { 50, 50, 50, 50 };
+		int[] margenesbaja = { 30, 30, 30, 30 };
+		XYSeriesRenderer valoresX = new XYSeriesRenderer();
+		if (click[0] == true) { // checkboxX
+			valoresX.setColor(Color.RED);
+			renderer.addSeriesRenderer(valoresX);
 		} else {
-			renderer2.setColor(0);
-			renderer.addSeriesRenderer(renderer2);
+			valoresX.setColor(0);
+			renderer.addSeriesRenderer(valoresX);
 		}
-
-		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
-		if (click[2] == true) {
-			renderer3.setColor(Color.WHITE);
-			renderer.addSeriesRenderer(renderer3);
+		XYSeriesRenderer valoresY = new XYSeriesRenderer();
+		if (click[1] == true) { // checkboxY
+			valoresY.setColor(Color.GREEN);
+			renderer.addSeriesRenderer(valoresY);
 		} else {
-			renderer3.setColor(0);
-			renderer.addSeriesRenderer(renderer3);
+			valoresY.setColor(0);
+			renderer.addSeriesRenderer(valoresY);
 		}
-
+		XYSeriesRenderer valoresZ = new XYSeriesRenderer();
+		if (click[2] == true) { // checkboxZ
+			valoresZ.setColor(Color.WHITE);
+			renderer.addSeriesRenderer(valoresZ);
+		} else {
+			valoresZ.setColor(0);
+			renderer.addSeriesRenderer(valoresZ);
+		}
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
-		if (click[3] == true) {
+		if (click[3] == true) { // checkbox modulo
 			modulo.setColor(Color.MAGENTA);
 			renderer.addSeriesRenderer(modulo);
 		} else {
@@ -201,68 +205,106 @@ public class Graph extends Grafica {
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
+		if (tamano.equalsIgnoreCase("grande")) {
+			renderer.setMargins(margenes);
+		}
+		if (tamano.equalsIgnoreCase("pequena")) {
+			renderer.setMargins(margenes);
+		}
+		if (tamano.equalsIgnoreCase("normal")) {
+			renderer.setMargins(margenesbaja);
+		}
+		if (tamano.equalsIgnoreCase("extra")) {
+			renderer.setMargins(margenes);
+		}
 		if (calidad.equalsIgnoreCase("alta")) {
 			renderer.setLabelsTextSize(30);
 			renderer.setLabelsTextSize(30);
 			renderer.setAxisTitleTextSize(30);
 			renderer.setChartTitleTextSize(30);
+
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
 		} else if (calidad.equalsIgnoreCase("media")) {
 			renderer.setLabelsTextSize(15);
 			renderer.setLabelsTextSize(15);
 			renderer.setAxisTitleTextSize(15);
 			renderer.setChartTitleTextSize(15);
+
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
 		} else if (calidad.equalsIgnoreCase("baja")) {
-			renderer.setLabelsTextSize(15);
-			renderer.setLabelsTextSize(15);
-			renderer.setAxisTitleTextSize(15);
-			renderer.setChartTitleTextSize(15);
+			renderer.setLabelsTextSize(10);
+			renderer.setLabelsTextSize(10);
+			renderer.setAxisTitleTextSize(10);
+			renderer.setChartTitleTextSize(10);
+
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
 		} else if (calidad.equalsIgnoreCase("xhigh")) {
 			renderer.setLabelsTextSize(20);
 			renderer.setLabelsTextSize(20);
 			renderer.setAxisTitleTextSize(30);
 			renderer.setChartTitleTextSize(30);
+
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
 		} else if (calidad.equalsIgnoreCase("xxhigh")) {
 			renderer.setLabelsTextSize(35);
 			renderer.setLabelsTextSize(35);
 			renderer.setAxisTitleTextSize(35);
 			renderer.setChartTitleTextSize(35);
+
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
 		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
 			renderer.setLabelsTextSize(40);
 			renderer.setLabelsTextSize(40);
 			renderer.setAxisTitleTextSize(40);
 			renderer.setChartTitleTextSize(40);
-		}
-		// renderer.setXAxisMin(0.0);
 
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
+		}
 		renderer.setChartTitle(titulo);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(titulo);
-		renderer.setXTitle("Tiempo (segundos)");
+		renderer.setXTitle("Tiempo (s)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setPanLimits(limites);
+		renderer.setPanLimits(limites); // añade los limites de la grafica
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
-		renderer.setLabelsColor(Color.RED);
-		renderer.setZoomEnabled(true);
+		renderer.setLabelsColor(Color.YELLOW);
 	}
 
 	public void setProperties2(boolean click[], String titulo) {
-		double[] limites = { 0, greater + 1, ejeymin - 20, ejeymax + 20 };
-		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
+
+		// añade las propiedades de la grafica sensor de luz y sensor proximidad
+
+		double[] limites = { 0, maxejex + 5, ejeymin - 20, ejeymax + 20 };
+		XYSeriesRenderer valoresX = new XYSeriesRenderer();
 		if (click[0] == true) {
-			renderer1.setColor(Color.RED);
-			renderer1.setLineWidth(1);
-			renderer1.setDisplayChartValues(false);
-			renderer.addSeriesRenderer(renderer1);
+			valoresX.setColor(Color.RED);
+			renderer.addSeriesRenderer(valoresX);
 		} else {
-			renderer1.setColor(0);
-			renderer.addSeriesRenderer(renderer1);
+			valoresX.setColor(0);
+			renderer.addSeriesRenderer(valoresX);
 		}
-
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
-
 		if (click[3] == true) {
 			modulo.setColor(Color.MAGENTA);
 			renderer.addSeriesRenderer(modulo);
@@ -272,8 +314,8 @@ public class Graph extends Grafica {
 		}
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
+
 		renderer.setApplyBackgroundColor(true);
-		// renderer.setXAxisMin(0.0);
 		renderer.setChartTitle(titulo);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
@@ -302,7 +344,7 @@ public class Graph extends Grafica {
 			ySeries.add(tiempo, data.getY());
 			zSeries.add(tiempo, data.getZ());
 			modulo.add(tiempo, data.getModulo());
-			greater = tiempo;
+			maxejex = tiempo;
 		}
 
 		dataset = new XYMultipleSeriesDataset();
@@ -314,22 +356,22 @@ public class Graph extends Grafica {
 	}
 
 	public void propiedades(String titulo) {
-		double[] limites = { 0, greater + 1, ejeymin - 20, ejeymax + 20 };
-		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
-		renderer1.setColor(Color.RED);
-		renderer1.setLineWidth(1);
-		renderer1.setDisplayChartValues(false);
+		double[] limites = { 0, maxejex + 1, ejeymin - 20, ejeymax + 20 };
+		XYSeriesRenderer valoresX = new XYSeriesRenderer();
+		valoresX.setColor(Color.RED);
+		valoresX.setLineWidth(1);
+		valoresX.setDisplayChartValues(false);
 
-		renderer.addSeriesRenderer(renderer1);
+		renderer.addSeriesRenderer(valoresX);
 
-		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
+		XYSeriesRenderer valoresY = new XYSeriesRenderer();
 
-		renderer2.setColor(Color.GREEN);
-		renderer.addSeriesRenderer(renderer2);
+		valoresY.setColor(Color.GREEN);
+		renderer.addSeriesRenderer(valoresY);
 
-		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
-		renderer3.setColor(Color.WHITE);
-		renderer.addSeriesRenderer(renderer3);
+		XYSeriesRenderer valoresZ = new XYSeriesRenderer();
+		valoresZ.setColor(Color.WHITE);
+		renderer.addSeriesRenderer(valoresZ);
 
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
 		modulo.setColor(Color.MAGENTA);
@@ -362,7 +404,7 @@ public class Graph extends Grafica {
 
 			xSeries.add(tiempo, data.getX());
 			modulo.add(tiempo, data.getModulo());
-			greater = tiempo;
+			maxejex = tiempo;
 		}
 
 		dataset = new XYMultipleSeriesDataset();
@@ -372,12 +414,12 @@ public class Graph extends Grafica {
 	}
 
 	public void propiedades2(String titulo) {
-		double[] limites = { 0, greater + 1, ejeymin - 20, ejeymax + 20 };
-		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
-		renderer1.setColor(Color.RED);
-		renderer1.setLineWidth(1);
-		renderer1.setDisplayChartValues(false);
-		renderer.addSeriesRenderer(renderer1);
+		double[] limites = { 0, maxejex + 1, ejeymin - 20, ejeymax + 20 };
+		XYSeriesRenderer valoresX = new XYSeriesRenderer();
+		valoresX.setColor(Color.RED);
+		valoresX.setLineWidth(1);
+		valoresX.setDisplayChartValues(false);
+		renderer.addSeriesRenderer(valoresX);
 
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
 		modulo.setColor(Color.MAGENTA);
@@ -397,95 +439,6 @@ public class Graph extends Grafica {
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.RED);
-	}
-
-	public void propiedadesParado(ConcurrentLinkedQueue<AccelData> sensor,
-			boolean click[], String titulo) {
-
-		double[] limites = { 0, 1000000, -2000, 2000 };
-		XYSeriesRenderer renderer1 = new XYSeriesRenderer();
-		if (click[0] == true) {
-			XYSeries xSeries = new XYSeries("X");
-			for (AccelData data : sensor) {
-				double tiempo = (data.getTimestamp());
-				xSeries.add(tiempo, data.getX());
-			}
-			dataset.addSeries(xSeries);
-			renderer1.setColor(Color.RED);
-			renderer1.setLineWidth(1);
-			renderer1.setDisplayChartValues(false);
-			renderer.addSeriesRenderer(renderer1);
-		} else {
-			renderer1.setColor(0);
-			renderer.addSeriesRenderer(renderer1);
-		}
-
-		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
-
-		if (click[1] == true) {
-			XYSeries ySeries = new XYSeries("Y");
-			for (AccelData data : sensor) {
-				double tiempo = (data.getTimestamp());
-				ySeries.add(tiempo, data.getY());
-			}
-			dataset.addSeries(ySeries);
-			renderer2.setColor(Color.GREEN);
-			renderer.addSeriesRenderer(renderer2);
-		} else {
-			renderer2.setColor(0);
-			renderer.addSeriesRenderer(renderer2);
-		}
-
-		XYSeriesRenderer renderer3 = new XYSeriesRenderer();
-		if (click[2] == true) {
-			XYSeries zSeries = new XYSeries("Z");
-			for (AccelData data : sensor) {
-				double tiempo = (data.getTimestamp());
-				zSeries.add(tiempo, data.getZ());
-			}
-			dataset.addSeries(zSeries);
-			renderer3.setColor(Color.WHITE);
-			renderer.addSeriesRenderer(renderer3);
-		} else {
-			renderer3.setColor(0);
-			renderer.addSeriesRenderer(renderer3);
-		}
-
-		XYSeriesRenderer modulo = new XYSeriesRenderer();
-		if (click[3] == true) {
-			XYSeries xmodulo = new XYSeries("Modulo");
-			for (AccelData data : sensor) {
-				double tiempo = (data.getTimestamp());
-				xmodulo.add(tiempo, data.getModulo());
-			}
-			dataset.addSeries(xmodulo);
-			modulo.setColor(Color.MAGENTA);
-			renderer.addSeriesRenderer(modulo);
-		} else {
-			modulo.setColor(0);
-			renderer.addSeriesRenderer(modulo);
-		}
-
-		dataset = new XYMultipleSeriesDataset();
-
-		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setMarginsColor(Color.BLACK);
-		renderer.setApplyBackgroundColor(true);
-
-		// renderer.setXAxisMin(0.0);
-
-		renderer.setGridColor(Color.DKGRAY);
-		renderer.setShowGrid(true);
-		renderer.setYTitle(titulo);
-		renderer.setXTitle("Tiempo (segundos)");
-		renderer.setXLabels(5);
-		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setPanLimits(limites);
-		renderer.setYLabelsAlign(Paint.Align.RIGHT);
-		renderer.setAxesColor(Color.WHITE);
-		renderer.setLabelsColor(Color.RED);
-		// renderer.setZoomEnabled(true);
-		// renderer.apply(ZOOM_AXIS_Y);
 	}
 
 	public GraphicalView getGraph() {

@@ -99,6 +99,7 @@ public class Grafica extends Activity implements OnClickListener,
 	GraphicalView view;
 	Graph mGraph;
 	String calidad;
+	String tamano;
 	TextView graba;
 	TextView gps;
 	double longitud;
@@ -210,6 +211,26 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		float scale = getApplicationContext().getResources().getDisplayMetrics().density;
+		if ((getResources().getConfiguration().screenLayout & 
+			    Configuration.SCREENLAYOUT_SIZE_MASK) == 
+			        Configuration.SCREENLAYOUT_SIZE_LARGE) {
+		 tamano = "grande";
+			}
+		if ((getResources().getConfiguration().screenLayout & 
+			    Configuration.SCREENLAYOUT_SIZE_MASK) == 
+			        Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+		 tamano = "normal";
+			}
+		if ((getResources().getConfiguration().screenLayout & 
+			    Configuration.SCREENLAYOUT_SIZE_MASK) == 
+			        Configuration.SCREENLAYOUT_SIZE_SMALL) {
+		 tamano = "pequena";
+			}
+		if ((getResources().getConfiguration().screenLayout & 
+			    Configuration.SCREENLAYOUT_SIZE_MASK) == 
+			        Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+		 tamano = "extra";
+			}
 		DisplayMetrics metrics = new DisplayMetrics();
     	getWindowManager().getDefaultDisplay().getMetrics(metrics);
     	int dips = 40;
@@ -393,7 +414,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorDatas);
 					mGraph.initData(sensorDatas);
 					mGraph.setProperties(mGraphs, "Acelerómetro "
-							+ getString(R.string.unidad_acelerometro),calidad);
+							+ getString(R.string.unidad_acelerometro),calidad,tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -426,7 +447,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorGiroscopio);
 					mGraph.initData(sensorGiroscopio);
 					mGraph.setProperties(mGraphs, "Giroscopio "
-							+ getString(R.string.unidad_giroscopio),calidad);
+							+ getString(R.string.unidad_giroscopio),calidad,tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -490,7 +511,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorMagnetico);
 					mGraph.initData(sensorMagnetico);
 					mGraph.setProperties(mGraphs, "Campo magnético "
-							+ getString(R.string.unidad_campo_magnetico),calidad);
+							+ getString(R.string.unidad_campo_magnetico),calidad,tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -1170,7 +1191,7 @@ public class Grafica extends Activity implements OnClickListener,
 				 * "Acelerómetro " + getString(R.string.unidad_acelerometro));
 				 */
 				mGraph.setProperties(mGraphs, "Acelerómetro "
-						+ getString(R.string.unidad_acelerometro),calidad);
+						+ getString(R.string.unidad_acelerometro),calidad,tamano);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
@@ -1195,7 +1216,7 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeX(sensorGiroscopio);
 				mGraph.initData(sensorGiroscopio);
 				mGraph.setProperties(mGraphs, "Giroscopio "
-						+ getString(R.string.unidad_giroscopio),calidad);
+						+ getString(R.string.unidad_giroscopio),calidad,tamano);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
@@ -1220,7 +1241,7 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeX(sensorMagnetico);
 				mGraph.initData(sensorMagnetico);
 				mGraph.setProperties(mGraphs, "Campo magnético "
-						+ getString(R.string.unidad_campo_magnetico),calidad);
+						+ getString(R.string.unidad_campo_magnetico),calidad,tamano);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
