@@ -28,8 +28,6 @@ import android.os.Message;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,13 +45,13 @@ import android.widget.Toast;
 public class Grafica extends Activity implements OnClickListener,
 		SensorEventListener {
 
-	public static final String LOG_TAG = Grafica.class.getSimpleName();
-	// Declaración de la grafica
-
-	// Declaración de las series que usamos en la representación de la gráfica
+	// init y funciona se usan para representar si está parada o corriendo la
+	// gráfica
 	public boolean init = false;
 	public boolean funciona = false;
 
+	// Declaración de las colas que usamos para recoger los datos de todos los
+	// sensores
 	private ConcurrentLinkedQueue<AccelData> sensorDatas;
 	private ConcurrentLinkedQueue<AccelData> sensorGiroscopio;
 	private ConcurrentLinkedQueue<AccelData> sensorMagnetico;
@@ -71,6 +69,8 @@ public class Grafica extends Activity implements OnClickListener,
 	Button parar;
 	Button iniciar;
 	Button reiniciar;
+	// los cuatro checkbox que usamos para ver o quitar los datos de la x, y, z
+	// y módulo
 	private static final int DATA_R = 3;
 	private boolean[] mGraphs = { true, true, true, true };
 	boolean parado;
@@ -81,30 +81,33 @@ public class Grafica extends Activity implements OnClickListener,
 	CheckBox modulo;
 
 	// Declaramos los temporizadores tanto para empezar a tomar datos como para
-	// detener la toma de medidas
+	// detener la toma de medidas, la frecuencia de recogida
 	CountDownTimer temporizador, tiempo;
 	int frecuencia;
 	int tiempoInicio;
 	int tiempoParada;
-	int vector;
-	long previoustime;
-	long firstTime;
+	// sensor que estamos representando que nos viene de la actividad anterior
 	int sensor;
+	// detectamos que sensores están marcados para guardas sus datos
 	boolean acce;
 	boolean giro;
 	boolean magne;
 	boolean luz;
 	boolean proxi;
-	Exportar expo;
+	// vista donde colocamos la gráfica
 	GraphicalView view;
+	// clase donde representamos los datos
 	Graph mGraph;
+	// calidad de pantalla, tamaño de pantalla
 	String calidad;
 	String tamano;
+	// nos indica si un sensor está grabando y si el gps está encendido
 	TextView graba;
 	TextView gps;
+	// latitud y longitud del gps
 	double longitud;
 	double latitud;
-
+	// manejan la localización del gps
 	LocationManager milocManager;
 	LocationListener milocListener;
 
@@ -121,6 +124,7 @@ public class Grafica extends Activity implements OnClickListener,
 		// Elegimos el layout a mostrar en esta clase
 		setContentView(R.layout.grafica);
 
+		// escucha de los vectores declarados arriba
 		sensorDatas = new ConcurrentLinkedQueue<AccelData>();
 		sensorGiroscopio = new ConcurrentLinkedQueue<AccelData>();
 		sensorMagnetico = new ConcurrentLinkedQueue<AccelData>();
@@ -142,7 +146,6 @@ public class Grafica extends Activity implements OnClickListener,
 		graba = (TextView) findViewById(R.id.grabando);
 		gps = (TextView) findViewById(R.id.gpsestado);
 		// Recogemos datos de la actividad anterior
-
 		Bundle graficas = getIntent().getExtras();
 
 		// Frecuencia es los distintos tipos de frecuencia que recogemos de la
@@ -169,7 +172,7 @@ public class Grafica extends Activity implements OnClickListener,
 			contadores();
 		}
 
-		// representación de la gráfica
+		// escucha de los checkbox
 		CheckBox[] checkboxes = new CheckBox[4];
 		checkboxes[SensorManager.DATA_X] = (CheckBox) findViewById(R.id.ejex);
 		checkboxes[SensorManager.DATA_Y] = (CheckBox) findViewById(R.id.ejey);
@@ -202,6 +205,7 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					});
 		}
+		// declaramos el gps y sus escuchas
 		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		milocListener = new MiLocationListener();
 		milocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
@@ -209,72 +213,63 @@ public class Grafica extends Activity implements OnClickListener,
 		if (latitud == 0 && longitud == 0) {
 			gps.setText("GPS buscando");
 		}
-		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		float scale = getApplicationContext().getResources().getDisplayMetrics().density;
-		if ((getResources().getConfiguration().screenLayout & 
-			    Configuration.SCREENLAYOUT_SIZE_MASK) == 
-			        Configuration.SCREENLAYOUT_SIZE_LARGE) {
-		 tamano = "grande";
-			}
-		if ((getResources().getConfiguration().screenLayout & 
-			    Configuration.SCREENLAYOUT_SIZE_MASK) == 
-			        Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-		 tamano = "normal";
-			}
-		if ((getResources().getConfiguration().screenLayout & 
-			    Configuration.SCREENLAYOUT_SIZE_MASK) == 
-			        Configuration.SCREENLAYOUT_SIZE_SMALL) {
-		 tamano = "pequena";
-			}
-		if ((getResources().getConfiguration().screenLayout & 
-			    Configuration.SCREENLAYOUT_SIZE_MASK) == 
-			        Configuration.SCREENLAYOUT_SIZE_XLARGE) {
-		 tamano = "extra";
-			}
+		// medimos la calidad de la pantalla y su tamaño para poder estableces
+		// el tamaño y los márgenes de la gráfica
+		float scale = getApplicationContext().getResources()
+				.getDisplayMetrics().density;
+		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+			tamano = "grande";
+		}
+		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+			tamano = "normal";
+		}
+		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
+			tamano = "pequena";
+		}
+		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+			tamano = "extra";
+		}
 		DisplayMetrics metrics = new DisplayMetrics();
-    	getWindowManager().getDefaultDisplay().getMetrics(metrics);
-    	int dips = 40;
-    	// ENCONTRAR LOS PIXELES POR UN VALOR A DPI
-    	float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, metrics);
-    	
-    	// TRATAR DE ENCONTRAR EL MISMO RESULTADO
-    	float pixelBoton = 0;
-    	float scaleDensity = 0;
-    	
-    	switch(metrics.densityDpi)
-    	{
-    	case DisplayMetrics.DENSITY_XXXHIGH:
-    		scaleDensity = scale * 640;
-    		pixelBoton = dips * (scaleDensity / 640);
-    		calidad = "xxxhigh";
-    		break;
-    	case DisplayMetrics.DENSITY_XXHIGH:
-    		scaleDensity = scale * 480;
-    		pixelBoton = dips * (scaleDensity / 480);
-    		calidad = "xxhigh";
-    		break;
-    	case DisplayMetrics.DENSITY_XHIGH:
-    		scaleDensity = scale * 320;
-    		pixelBoton = dips * (scaleDensity / 320);
-    		calidad = "xhigh";
-    		break;
-    	case DisplayMetrics.DENSITY_HIGH: //HDPI
-    		scaleDensity = scale * 240;
-    		pixelBoton = dips * (scaleDensity / 240);
-    		calidad = "alta";
-    		break;
-    	case DisplayMetrics.DENSITY_MEDIUM: //MDPI
-    		scaleDensity = scale * 160;
-    		pixelBoton = dips * (scaleDensity / 160);
-    		calidad = "media";
-    		break;
-    		
-    	case DisplayMetrics.DENSITY_LOW:  //LDPI
-    		scaleDensity = scale * 120;
-    		pixelBoton = dips * (scaleDensity / 120);
-    		calidad = "baja";
-    		break;
-    	}
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		int dips = 40;
+
+		// TRATAR DE ENCONTRAR EL MISMO RESULTADO
+		float pixelBoton = 0;
+		float scaleDensity = 0;
+
+		switch (metrics.densityDpi) {
+		case DisplayMetrics.DENSITY_XXXHIGH:
+			scaleDensity = scale * 640;
+			pixelBoton = dips * (scaleDensity / 640);
+			calidad = "xxxhigh";
+			break;
+		case DisplayMetrics.DENSITY_XXHIGH:
+			scaleDensity = scale * 480;
+			pixelBoton = dips * (scaleDensity / 480);
+			calidad = "xxhigh";
+			break;
+		case DisplayMetrics.DENSITY_XHIGH:
+			scaleDensity = scale * 320;
+			pixelBoton = dips * (scaleDensity / 320);
+			calidad = "xhigh";
+			break;
+		case DisplayMetrics.DENSITY_HIGH: // HDPI
+			scaleDensity = scale * 240;
+			pixelBoton = dips * (scaleDensity / 240);
+			calidad = "alta";
+			break;
+		case DisplayMetrics.DENSITY_MEDIUM: // MDPI
+			scaleDensity = scale * 160;
+			pixelBoton = dips * (scaleDensity / 160);
+			calidad = "media";
+			break;
+
+		case DisplayMetrics.DENSITY_LOW: // LDPI
+			scaleDensity = scale * 120;
+			pixelBoton = dips * (scaleDensity / 120);
+			calidad = "baja";
+			break;
+		}
 	}
 
 	@Override
@@ -408,13 +403,14 @@ public class Grafica extends Activity implements OnClickListener,
 					} else {
 						graba.setText("Grabando NO");
 					}
-					// Log.d("sensor aceler", "sensoracce: " + data);
 					mGraph = new Graph(this);
 					mGraph.ejeY(sensorDatas);
 					mGraph.ejeX(sensorDatas);
 					mGraph.initData(sensorDatas);
-					mGraph.setProperties(mGraphs, "Acelerómetro "
-							+ getString(R.string.unidad_acelerometro),calidad,tamano);
+					mGraph.setProperties(mGraphs, "Acelerómetro",
+							"Aceleración "
+									+ getString(R.string.unidad_acelerometro),
+							calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -441,13 +437,14 @@ public class Grafica extends Activity implements OnClickListener,
 					} else {
 						graba.setText("Grabando NO");
 					}
-					// Log.d("sensor giroscopio", "sensorgiro: " + data2);
 					mGraph = new Graph(this);
 					mGraph.ejeY(sensorGiroscopio);
 					mGraph.ejeX(sensorGiroscopio);
 					mGraph.initData(sensorGiroscopio);
-					mGraph.setProperties(mGraphs, "Giroscopio "
-							+ getString(R.string.unidad_giroscopio),calidad,tamano);
+					mGraph.setProperties(mGraphs, "Giroscopio",
+							"Velocidad angular "
+									+ getString(R.string.unidad_giroscopio),
+							calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -477,8 +474,9 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY2(sensorLuz);
 					mGraph.ejeX2(sensorLuz);
 					mGraph.initData2(sensorLuz);
-					mGraph.setProperties2(mGraphs, "Luz "
-							+ getString(R.string.unidad_luz));
+					mGraph.setProperties2(mGraphs, "Sensor de luz",
+							"Iluminancia " + getString(R.string.unidad_luz),
+							calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -510,8 +508,12 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY(sensorMagnetico);
 					mGraph.ejeX(sensorMagnetico);
 					mGraph.initData(sensorMagnetico);
-					mGraph.setProperties(mGraphs, "Campo magnético "
-							+ getString(R.string.unidad_campo_magnetico),calidad,tamano);
+					mGraph.setProperties(
+							mGraphs,
+							"Magnetómetro",
+							"Inducción magnética "
+									+ getString(R.string.unidad_campo_magnetico),
+							calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -541,8 +543,10 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY2(sensorProximidad);
 					mGraph.ejeX2(sensorProximidad);
 					mGraph.initData2(sensorProximidad);
-					mGraph.setProperties2(mGraphs, "Proximidad "
-							+ getString(R.string.unidad_proximidad));
+					mGraph.setProperties2(mGraphs, "Sensor de proximidad",
+							"Distancia "
+									+ getString(R.string.unidad_proximidad),
+							calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -1186,12 +1190,9 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeY(sensorDatas);
 				mGraph.ejeX(sensorDatas);
 				mGraph.initData(sensorDatas);
-				/*
-				 * mGraph.propiedadesParado(sensorDatas, mGraphs,
-				 * "Acelerómetro " + getString(R.string.unidad_acelerometro));
-				 */
-				mGraph.setProperties(mGraphs, "Acelerómetro "
-						+ getString(R.string.unidad_acelerometro),calidad,tamano);
+				mGraph.setProperties(mGraphs, "Acelerómetro", "Aceleración "
+						+ getString(R.string.unidad_acelerometro), calidad,
+						tamano);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
@@ -1215,8 +1216,10 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeY(sensorGiroscopio);
 				mGraph.ejeX(sensorGiroscopio);
 				mGraph.initData(sensorGiroscopio);
-				mGraph.setProperties(mGraphs, "Giroscopio "
-						+ getString(R.string.unidad_giroscopio),calidad,tamano);
+				mGraph.setProperties(mGraphs, "Giroscopio",
+						"Velocidad angular "
+								+ getString(R.string.unidad_giroscopio),
+						calidad, tamano);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
@@ -1240,8 +1243,10 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeY(sensorMagnetico);
 				mGraph.ejeX(sensorMagnetico);
 				mGraph.initData(sensorMagnetico);
-				mGraph.setProperties(mGraphs, "Campo magnético "
-						+ getString(R.string.unidad_campo_magnetico),calidad,tamano);
+				mGraph.setProperties(mGraphs, "Magnetómetro",
+						"Inducción magnética "
+								+ getString(R.string.unidad_campo_magnetico),
+						calidad, tamano);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
@@ -1265,8 +1270,9 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeY2(sensorProximidad);
 				mGraph.ejeX2(sensorProximidad);
 				mGraph.initData2(sensorProximidad);
-				mGraph.setProperties2(mGraphs, "Proximidad "
-						+ getString(R.string.unidad_proximidad));
+				mGraph.setProperties2(mGraphs, "Sensor de proximidad",
+						"Distancia " + getString(R.string.unidad_proximidad),
+						calidad, tamano);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);
@@ -1290,8 +1296,8 @@ public class Grafica extends Activity implements OnClickListener,
 				mGraph.ejeY2(sensorLuz);
 				mGraph.ejeX2(sensorLuz);
 				mGraph.initData2(sensorLuz);
-				mGraph.setProperties2(mGraphs, "Luz "
-						+ getString(R.string.unidad_luz));
+				mGraph.setProperties2(mGraphs, "Sensor de luz", "Iluminancia "
+						+ getString(R.string.unidad_luz), calidad, tamano);
 				if (!init) {
 					view = mGraph.getGraph();
 					layout.addView(view);

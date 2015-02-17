@@ -159,17 +159,15 @@ public class Graph extends Grafica {
 		dataset.addSeries(modulo);
 	}
 
-	public void setProperties(boolean click[], String titulo, String calidad,
-			String tamano) {
-
+	public void setProperties(boolean click[], String titulografica,
+			String tituloejey, String calidad, String tamano) {
 		// añade las propiedades de la grafica
-
 		double[] limites = { 0, maxejex + 5, ejeymin - 20, ejeymax + 20 };// limites
-																			// de
-																			// la
-																			// grafica.
-		int[] margenes = { 50, 50, 50, 50 };
-		int[] margenesbaja = { 30, 30, 30, 30 };
+		// utilizamos diferentes márgenes para las diferentes pantallas
+		int[] margenes = { 55, 55, 55, 55 };
+		int[] margenesnormal = { 40, 50, 40, 40 };
+		int[] margenespeque = { 30, 35, 30, 25 };
+		int[] margenesextra = { 60, 60, 60, 60 };
 		XYSeriesRenderer valoresX = new XYSeriesRenderer();
 		if (click[0] == true) { // checkboxX
 			valoresX.setColor(Color.RED);
@@ -205,83 +203,84 @@ public class Graph extends Grafica {
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
+		// recogemos el tamaño de la pantalla, según sea este tamaño escribimos
+		// un texto más grande o más pequeño
 		if (tamano.equalsIgnoreCase("grande")) {
 			renderer.setMargins(margenes);
 		}
 		if (tamano.equalsIgnoreCase("pequena")) {
-			renderer.setMargins(margenes);
+			renderer.setMargins(margenespeque);
 		}
 		if (tamano.equalsIgnoreCase("normal")) {
-			renderer.setMargins(margenesbaja);
+			renderer.setMargins(margenesnormal);
 		}
 		if (tamano.equalsIgnoreCase("extra")) {
-			renderer.setMargins(margenes);
+			renderer.setMargins(margenesextra);
 		}
+		// recogemos la calidad de pantalla para escribir el grosor de las
+		// líneas
 		if (calidad.equalsIgnoreCase("alta")) {
-			renderer.setLabelsTextSize(30);
-			renderer.setLabelsTextSize(30);
-			renderer.setAxisTitleTextSize(30);
-			renderer.setChartTitleTextSize(30);
-
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
 			valoresZ.setLineWidth(5);
 			modulo.setLineWidth(5);
+			renderer.setLabelsTextSize(30);
+			renderer.setLabelsTextSize(30);
+			renderer.setAxisTitleTextSize(30);
+			renderer.setChartTitleTextSize(30);
 		} else if (calidad.equalsIgnoreCase("media")) {
+			valoresX.setLineWidth(3);
+			valoresY.setLineWidth(3);
+			valoresZ.setLineWidth(3);
+			modulo.setLineWidth(3);
+			renderer.setLabelsTextSize(20);
+			renderer.setLabelsTextSize(20);
+			renderer.setAxisTitleTextSize(20);
+			renderer.setChartTitleTextSize(20);
+			renderer.setFitLegend(true);
+		} else if (calidad.equalsIgnoreCase("baja")) {
+			valoresX.setLineWidth(3);
+			valoresY.setLineWidth(3);
+			valoresZ.setLineWidth(3);
+			modulo.setLineWidth(3);
 			renderer.setLabelsTextSize(15);
 			renderer.setLabelsTextSize(15);
 			renderer.setAxisTitleTextSize(15);
 			renderer.setChartTitleTextSize(15);
-
-			valoresX.setLineWidth(5);
-			valoresY.setLineWidth(5);
-			valoresZ.setLineWidth(5);
-			modulo.setLineWidth(5);
-		} else if (calidad.equalsIgnoreCase("baja")) {
-			renderer.setLabelsTextSize(10);
-			renderer.setLabelsTextSize(10);
-			renderer.setAxisTitleTextSize(10);
-			renderer.setChartTitleTextSize(10);
-
-			valoresX.setLineWidth(5);
-			valoresY.setLineWidth(5);
-			valoresZ.setLineWidth(5);
-			modulo.setLineWidth(5);
+			renderer.setFitLegend(true);
 		} else if (calidad.equalsIgnoreCase("xhigh")) {
-			renderer.setLabelsTextSize(20);
-			renderer.setLabelsTextSize(20);
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setLabelsTextSize(30);
+			renderer.setLabelsTextSize(30);
 			renderer.setAxisTitleTextSize(30);
 			renderer.setChartTitleTextSize(30);
-
-			valoresX.setLineWidth(5);
-			valoresY.setLineWidth(5);
-			valoresZ.setLineWidth(5);
-			modulo.setLineWidth(5);
+			renderer.setFitLegend(true);
 		} else if (calidad.equalsIgnoreCase("xxhigh")) {
-			renderer.setLabelsTextSize(35);
-			renderer.setLabelsTextSize(35);
-			renderer.setAxisTitleTextSize(35);
-			renderer.setChartTitleTextSize(35);
-
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
 			valoresZ.setLineWidth(5);
 			modulo.setLineWidth(5);
-		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
 			renderer.setLabelsTextSize(40);
 			renderer.setLabelsTextSize(40);
 			renderer.setAxisTitleTextSize(40);
 			renderer.setChartTitleTextSize(40);
-
+		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
 			valoresZ.setLineWidth(5);
 			modulo.setLineWidth(5);
+			renderer.setLabelsTextSize(40);
+			renderer.setLabelsTextSize(40);
+			renderer.setAxisTitleTextSize(40);
+			renderer.setChartTitleTextSize(40);
 		}
-		renderer.setChartTitle(titulo);
+		renderer.setChartTitle(titulografica);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
-		renderer.setYTitle(titulo);
+		renderer.setYTitle(tituloejey);
 		renderer.setXTitle("Tiempo (s)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);
@@ -291,13 +290,17 @@ public class Graph extends Grafica {
 		renderer.setLabelsColor(Color.YELLOW);
 	}
 
-	public void setProperties2(boolean click[], String titulo) {
-
+	public void setProperties2(boolean click[], String titulografica,
+			String tituloejey, String calidad, String tamano) {
 		// añade las propiedades de la grafica sensor de luz y sensor proximidad
-
 		double[] limites = { 0, maxejex + 5, ejeymin - 20, ejeymax + 20 };
+		// utilizamos diferentes márgenes para las diferentes pantallas
+		int[] margenes = { 55, 55, 55, 55 };
+		int[] margenesnormal = { 40, 50, 40, 40 };
+		int[] margenespeque = { 30, 35, 30, 25 };
+		int[] margenesextra = { 60, 60, 60, 60 };
 		XYSeriesRenderer valoresX = new XYSeriesRenderer();
-		if (click[0] == true) {
+		if (click[0] == true) { // checkbox x
 			valoresX.setColor(Color.RED);
 			renderer.addSeriesRenderer(valoresX);
 		} else {
@@ -305,31 +308,87 @@ public class Graph extends Grafica {
 			renderer.addSeriesRenderer(valoresX);
 		}
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
-		if (click[3] == true) {
+		if (click[3] == true) { // checkbox modulo
 			modulo.setColor(Color.MAGENTA);
 			renderer.addSeriesRenderer(modulo);
 		} else {
 			modulo.setColor(0);
 			renderer.addSeriesRenderer(modulo);
 		}
-		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setMarginsColor(Color.BLACK);
-
-		renderer.setApplyBackgroundColor(true);
-		renderer.setChartTitle(titulo);
+		// recogemos el tamaño de la pantalla, según sea este tamaño escribimos
+		// un texto más grande o más pequeño
+		if (tamano.equalsIgnoreCase("grande")) {
+			renderer.setMargins(margenes);
+		}
+		if (tamano.equalsIgnoreCase("pequena")) {
+			renderer.setMargins(margenespeque);
+		}
+		if (tamano.equalsIgnoreCase("normal")) {
+			renderer.setMargins(margenesnormal);
+		}
+		if (tamano.equalsIgnoreCase("extra")) {
+			renderer.setMargins(margenesextra);
+		}
+		// recogemos la calidad de pantalla para escribir el grosor de las
+		// líneas
+		if (calidad.equalsIgnoreCase("alta")) {
+			valoresX.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setLabelsTextSize(30);
+			renderer.setLabelsTextSize(30);
+			renderer.setAxisTitleTextSize(30);
+			renderer.setChartTitleTextSize(30);
+		} else if (calidad.equalsIgnoreCase("media")) {
+			valoresX.setLineWidth(3);
+			modulo.setLineWidth(3);
+			renderer.setLabelsTextSize(20);
+			renderer.setLabelsTextSize(20);
+			renderer.setAxisTitleTextSize(20);
+			renderer.setChartTitleTextSize(20);
+		} else if (calidad.equalsIgnoreCase("baja")) {
+			valoresX.setLineWidth(3);
+			modulo.setLineWidth(3);
+			renderer.setLabelsTextSize(15);
+			renderer.setLabelsTextSize(15);
+			renderer.setAxisTitleTextSize(15);
+			renderer.setChartTitleTextSize(15);
+		} else if (calidad.equalsIgnoreCase("xhigh")) {
+			valoresX.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setLabelsTextSize(30);
+			renderer.setLabelsTextSize(30);
+			renderer.setAxisTitleTextSize(30);
+			renderer.setChartTitleTextSize(30);
+		} else if (calidad.equalsIgnoreCase("xxhigh")) {
+			valoresX.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setLabelsTextSize(40);
+			renderer.setLabelsTextSize(40);
+			renderer.setAxisTitleTextSize(40);
+			renderer.setChartTitleTextSize(40);
+		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
+			valoresX.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setLabelsTextSize(40);
+			renderer.setLabelsTextSize(40);
+			renderer.setAxisTitleTextSize(40);
+			renderer.setChartTitleTextSize(40);
+		}
+		renderer.setChartTitle(titulografica);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
-		renderer.setYTitle(titulo);
-		renderer.setXTitle("Tiempo (segundos)");
+		renderer.setYTitle(tituloejey);
+		renderer.setXTitle("Tiempo (s)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setPanLimits(limites);
+		renderer.setPanLimits(limites); // añade los limites de la grafica
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
-		renderer.setLabelsColor(Color.RED);
-		renderer.setZoomEnabled(true);
+		renderer.setLabelsColor(Color.YELLOW);
 	}
 
+	// función donde recogemos los datos cargados de los ficheros para los
+	// sensores acelerómtro, giroscopio y magnetómetro
 	public void iniciar(ConcurrentLinkedQueue<AccelData> sensorDatas) {
 		XYSeries xSeries = new XYSeries("X");
 		XYSeries ySeries = new XYSeries("Y");
@@ -355,45 +414,8 @@ public class Graph extends Grafica {
 
 	}
 
-	public void propiedades(String titulo) {
-		double[] limites = { 0, maxejex + 1, ejeymin - 20, ejeymax + 20 };
-		XYSeriesRenderer valoresX = new XYSeriesRenderer();
-		valoresX.setColor(Color.RED);
-		valoresX.setLineWidth(1);
-		valoresX.setDisplayChartValues(false);
-
-		renderer.addSeriesRenderer(valoresX);
-
-		XYSeriesRenderer valoresY = new XYSeriesRenderer();
-
-		valoresY.setColor(Color.GREEN);
-		renderer.addSeriesRenderer(valoresY);
-
-		XYSeriesRenderer valoresZ = new XYSeriesRenderer();
-		valoresZ.setColor(Color.WHITE);
-		renderer.addSeriesRenderer(valoresZ);
-
-		XYSeriesRenderer modulo = new XYSeriesRenderer();
-		modulo.setColor(Color.MAGENTA);
-		renderer.addSeriesRenderer(modulo);
-		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setMarginsColor(Color.BLACK);
-		renderer.setApplyBackgroundColor(true);
-
-		// renderer.setXAxisMin(0.0);
-		renderer.setChartTitle(titulo);
-		renderer.setGridColor(Color.DKGRAY);
-		renderer.setShowGrid(true);
-		renderer.setYTitle(titulo);
-		renderer.setXTitle("Tiempo (segundos)");
-		renderer.setXLabels(5);
-		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setPanLimits(limites);
-		renderer.setYLabelsAlign(Paint.Align.RIGHT);
-		renderer.setAxesColor(Color.WHITE);
-		renderer.setLabelsColor(Color.RED);
-	}
-
+	// función donde recogemos los datos cargados de los ficheros para los
+	// sensores de proximidad y sensor de luz
 	public void iniciar2(ConcurrentLinkedQueue<AccelData2> sensorDatas) {
 		XYSeries xSeries = new XYSeries("X");
 		XYSeries modulo = new XYSeries("Modulo");
@@ -411,34 +433,6 @@ public class Graph extends Grafica {
 		dataset.addSeries(xSeries);
 		dataset.addSeries(modulo);
 
-	}
-
-	public void propiedades2(String titulo) {
-		double[] limites = { 0, maxejex + 1, ejeymin - 20, ejeymax + 20 };
-		XYSeriesRenderer valoresX = new XYSeriesRenderer();
-		valoresX.setColor(Color.RED);
-		valoresX.setLineWidth(1);
-		valoresX.setDisplayChartValues(false);
-		renderer.addSeriesRenderer(valoresX);
-
-		XYSeriesRenderer modulo = new XYSeriesRenderer();
-		modulo.setColor(Color.MAGENTA);
-		renderer.addSeriesRenderer(modulo);
-		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setMarginsColor(Color.BLACK);
-		renderer.setApplyBackgroundColor(true);
-		// renderer.setXAxisMin(0.0);
-		renderer.setChartTitle(titulo);
-		renderer.setGridColor(Color.DKGRAY);
-		renderer.setShowGrid(true);
-		renderer.setYTitle(titulo);
-		renderer.setXTitle("Tiempo (segundos)");
-		renderer.setXLabels(5);
-		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setPanLimits(limites);
-		renderer.setYLabelsAlign(Paint.Align.RIGHT);
-		renderer.setAxesColor(Color.WHITE);
-		renderer.setLabelsColor(Color.RED);
 	}
 
 	public GraphicalView getGraph() {
