@@ -98,8 +98,8 @@ public final class R {
         public static final int giro=0x7f0b0036;
         public static final int giroscopio=0x7f0b0021;
         public static final int giroscopo=0x7f0b0023;
-        public static final int gpsestado=0x7f0b001c;
-        public static final int grabando=0x7f0b001b;
+        public static final int gpsestado=0x7f0b001b;
+        public static final int grabando=0x7f0b001c;
         public static final int graficaAcelerometro=0x7f0b0020;
         public static final int graficaGiroscopio=0x7f0b0024;
         public static final int graficaLuminosidad=0x7f0b0031;

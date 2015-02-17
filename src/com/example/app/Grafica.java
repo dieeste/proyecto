@@ -1078,6 +1078,7 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.parar):
 			iniciar.setEnabled(true);
 			parar.setEnabled(false);
+
 			reiniciar.setEnabled(true);
 			onStop();
 			break;

@@ -96,25 +96,22 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/grabando"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttons"
-        android:layout_toRightOf="@+id/linear"
-        android:paddingLeft="5dp"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#ADFF2F" />
-
-    <TextView
         android:id="@+id/gpsestado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="22dp"
-        android:layout_marginRight="24dp"
+        android:layout_below="@+id/grabando"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#adff2f" />
+
+    <TextView
+        android:id="@+id/grabando"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/linear"
+        
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#ADFF2F" />
 
 </RelativeLayout>
