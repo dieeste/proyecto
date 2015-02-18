@@ -55,8 +55,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 	boolean acce = false;
 	boolean gi = false;
 	boolean mag = false;
-	boolean lu = false;
 	boolean proxi = false;
+	boolean lu = false;
+	
 
 	// Recogemos las preferencias
 	int tiempoInicio, tiempoParada;
@@ -116,14 +117,16 @@ public class Simulacion extends Activity implements SensorEventListener,
 		acelero = (CheckBox) findViewById(R.id.checkAcelerometro);
 		giro = (CheckBox) findViewById(R.id.checkGiroscopio);
 		magneto = (CheckBox) findViewById(R.id.checkMagetico);
-		luz = (CheckBox) findViewById(R.id.checkLuz);
 		prox = (CheckBox) findViewById(R.id.checkProximidad);
+		luz = (CheckBox) findViewById(R.id.checkLuz);
+		
 
 		acelero.setOnCheckedChangeListener(this);
 		giro.setOnCheckedChangeListener(this);
 		magneto.setOnCheckedChangeListener(this);
-		luz.setOnCheckedChangeListener(this);
 		prox.setOnCheckedChangeListener(this);
+		luz.setOnCheckedChangeListener(this);
+		
 
 	}
 
@@ -171,9 +174,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafica.putExtra("acelerometro", acce);
 			grafica.putExtra("giroscopio", gi);
 			grafica.putExtra("magnetometro", mag);
+			grafica.putExtra("proximo", proxi);
 			grafica.putExtra("luz", lu);
-			grafica.putExtra("proximidad", proxi);
-
 			startActivity(grafica);
 			break;
 		case R.id.graficaGiroscopio:
@@ -185,8 +187,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaGir.putExtra("acelerometro", acce);
 			graficaGir.putExtra("giroscopio", gi);
 			graficaGir.putExtra("magnetometro", mag);
-			graficaGir.putExtra("luz", lu);
 			graficaGir.putExtra("proximo", proxi);
+			graficaGir.putExtra("luz", lu);
 			startActivity(graficaGir);
 			break;
 		case R.id.graficaLuminosidad:
@@ -198,8 +200,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaLu.putExtra("acelerometro", acce);
 			graficaLu.putExtra("giroscopio", gi);
 			graficaLu.putExtra("magnetometro", mag);
-			graficaLu.putExtra("luz", lu);
 			graficaLu.putExtra("proximo", proxi);
+			graficaLu.putExtra("luz", lu);
 			startActivity(graficaLu);
 			break;
 		case R.id.graficaMagnetico:
@@ -211,8 +213,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaMa.putExtra("acelerometro", acce);
 			graficaMa.putExtra("giroscopio", gi);
 			graficaMa.putExtra("magnetometro", mag);
-			graficaMa.putExtra("luz", lu);
 			graficaMa.putExtra("proximo", proxi);
+			graficaMa.putExtra("luz", lu);
 			startActivity(graficaMa);
 			break;
 		case R.id.graficaProximidad:
@@ -224,8 +226,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaPr.putExtra("acelerometro", acce);
 			graficaPr.putExtra("giroscopio", gi);
 			graficaPr.putExtra("magnetometro", mag);
-			graficaPr.putExtra("luz", lu);
 			graficaPr.putExtra("proximo", proxi);
+			graficaPr.putExtra("luz", lu);
 			startActivity(graficaPr);
 			break;
 		}
@@ -317,10 +319,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		// TODO Auto-generated method stub
 		String txt = "\nSensor: ";
 		synchronized (this) {
-			
-
 			switch (event.sensor.getType()) {
-
 			case Sensor.TYPE_ACCELEROMETER:
 				double m = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
 						event.values[0], 2)
@@ -497,17 +496,13 @@ public class Simulacion extends Activity implements SensorEventListener,
 			tipo = SensorManager.SENSOR_DELAY_NORMAL;
 		} else if (type.equals("SensorManager.SENSOR_DELAY_UI")) {
 			tipo = SensorManager.SENSOR_DELAY_UI;
-		} else if (type.equals("SensorManager.SENSOR_DELAY_GAME")) {
-			tipo = SensorManager.SENSOR_DELAY_GAME;
-		} else if (type.equals("SensorManager.SENSOR_DELAY_FASTEST")) {
-			tipo = SensorManager.SENSOR_DELAY_FASTEST;
+	//	} else if (type.equals("SensorManager.SENSOR_DELAY_GAME")) {
+	//		tipo = SensorManager.SENSOR_DELAY_GAME;
+	//	} else if (type.equals("SensorManager.SENSOR_DELAY_FASTEST")) {
+	//		tipo = SensorManager.SENSOR_DELAY_FASTEST;
 		}
 		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));
 		tiempoParada = Integer.parseInt(pref.getString("tiempo", "0"));
-
-		Log.d("tiempo", "tiempoInicio " + tiempoInicio);
-		Log.d("tiempo", "tiempoParada " + tiempoParada);
-		Log.d("tiempo", "tiempofre " + tipo);
 
 	}
 
@@ -524,11 +519,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 		case R.id.checkMagetico:
 			mag = isChecked;
 			break;
-		case R.id.checkLuz:
-			lu = isChecked;
-			break;
 		case R.id.checkProximidad:
 			proxi = isChecked;
+			break;
+		case R.id.checkLuz:
+			lu = isChecked;
 			break;
 		}
 	}

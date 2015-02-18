@@ -1,37 +1,51 @@
 package com.example.app;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.R.string;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.format.DateFormat;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class CargarGraficas extends ListActivity {
+public class CargarGraficas extends ListActivity implements OnLongClickListener{
 
 	private List<String> listaNombresArchivos;
 	private List<String> listaRutasArchivos;
 	private ArrayAdapter<String> adaptador;
 	private String directorioRaiz;
 	private TextView carpetaActual;
+
 	String root;
 	ImageView imagen;
 	
-	/*public void listV(String name, int icono) {
-        R.id.firstLine = name;
-        R.id.icon=icono;
-    }*/
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.carga);
 		carpetaActual = (TextView) findViewById(R.id.rutaActual);
 		root= Environment.getExternalStorageDirectory().getPath();
@@ -124,5 +138,54 @@ public class CargarGraficas extends ListActivity {
 		}
 
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+
+	
+		// Elegimos entre las opciones disponibles en esta pantalla
+		switch (item.getItemId()) {
+			
+		case (R.id.enviar):
+		
+
+			
+			enviar((ArrayList<String>) listaNombresArchivos);
+			break;
+
+		}
+
+		return true;
+
+		/** true -> consumimos el item, no se propaga */
+	}
+	protected void enviar(ArrayList<String> csvexportar) {
+		// TODO Auto-generated method stub
+		this.setProgressBarVisibility(false);
+		Intent sendIntent = new Intent();
+		sendIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+
+		sendIntent.setType("file/*");
+		sendIntent.putExtra(Intent.EXTRA_STREAM, csvexportar);
+		startActivity(sendIntent);
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Cargamos las opciones que vamos a usar en esta pantalla
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menucargar, menu);
+		return true;
+		/** true -> el menú ya está visible */
+	}
+
+
+	@Override
+	public boolean onLongClick(View v) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

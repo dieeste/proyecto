@@ -95,7 +95,7 @@ public final class R {
         public static final int ejex=0x7f0b0018;
         public static final int ejey=0x7f0b0019;
         public static final int ejez=0x7f0b001a;
-        public static final int enviar=0x7f0b0035;
+        public static final int enviar=0x7f0b0034;
         public static final int giro=0x7f0b0037;
         public static final int giroscopio=0x7f0b0022;
         public static final int giroscopo=0x7f0b0024;
@@ -106,7 +106,7 @@ public final class R {
         public static final int graficaLuminosidad=0x7f0b0032;
         public static final int graficaMagnetico=0x7f0b0029;
         public static final int graficaProximidad=0x7f0b002e;
-        public static final int guardar=0x7f0b0034;
+        public static final int guardar=0x7f0b0035;
         public static final int imageView1=0x7f0b000a;
         public static final int imageView2=0x7f0b000f;
         public static final int inicio=0x7f0b0014;
@@ -155,8 +155,9 @@ public final class R {
     }
     public static final class menu {
         public static final int menu=0x7f0a0000;
-        public static final int menugrafica=0x7f0a0001;
-        public static final int menusimulacion=0x7f0a0002;
+        public static final int menucargar=0x7f0a0001;
+        public static final int menugrafica=0x7f0a0002;
+        public static final int menusimulacion=0x7f0a0003;
     }
     public static final class string {
         public static final int acelerometro=0x7f08000e;

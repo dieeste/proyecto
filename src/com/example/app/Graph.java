@@ -218,8 +218,6 @@ public class Graph extends Grafica {
 			renderer.setChartTitleTextSize(30);
 			renderer.setLegendTextSize(30);
 			renderer.setFitLegend(true);
-			renderer.isExternalZoomEnabled();
-
 		} else if (calidad.equalsIgnoreCase("media")) {
 			valoresX.setLineWidth(3);
 			valoresY.setLineWidth(3);
@@ -281,6 +279,7 @@ public class Graph extends Grafica {
 			renderer.setLegendTextSize(40);
 			renderer.setFitLegend(true);
 		}
+		
 		renderer.setChartTitle(titulografica);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);

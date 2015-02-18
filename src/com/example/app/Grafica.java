@@ -1195,13 +1195,13 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.proxi):
 			sensor = Sensor.TYPE_PROXIMITY;
 			if (funciona == false) {
-
+				proximidad();
 			}
 			break;
 		case (R.id.luz):
 			sensor = Sensor.TYPE_LIGHT;
 			if (funciona == false) {
-
+				luz();
 			}
 			break;
 		case (R.id.guardar):
