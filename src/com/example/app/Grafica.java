@@ -188,7 +188,8 @@ public class Grafica extends Activity implements OnClickListener,
 		ejey.setOnCheckedChangeListener(this);
 		ejez.setOnCheckedChangeListener(this);
 		modulo.setOnCheckedChangeListener(this);
-
+	
+		
 		// declaramos el gps y sus escuchas
 		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		milocListener = new MiLocationListener();
@@ -1070,6 +1071,14 @@ public class Grafica extends Activity implements OnClickListener,
 			onStop();
 			break;
 		case (R.id.inicio):
+			ejex.setVisibility(CheckBox.VISIBLE);
+			ejey.setVisibility(CheckBox.VISIBLE);
+			ejez.setVisibility(CheckBox.VISIBLE);
+			modulo.setVisibility(CheckBox.VISIBLE);
+			if (sensor == Sensor.TYPE_PROXIMITY || sensor == Sensor.TYPE_LIGHT){
+				ejey.setVisibility(CheckBox.GONE);
+				ejez.setVisibility(CheckBox.GONE);
+			}
 			iniciar.setVisibility(Button.GONE);
 			continuar.setVisibility(Button.VISIBLE);
 			continuar.setEnabled(false);
@@ -1134,37 +1143,77 @@ public class Grafica extends Activity implements OnClickListener,
 		if (sensorDatas.size() > 0) {
 			MenuItem item = menu.findItem(R.id.acele);
 			item.setVisible(true);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(true);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.acele);
 			item.setVisible(false);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(false);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(false);
 		}
 		if (sensorGiroscopio.size() > 0) {
 			MenuItem item = menu.findItem(R.id.giro);
 			item.setVisible(true);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(true);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.giro);
 			item.setVisible(false);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(false);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(false);
 		}
 		if (sensorMagnetico.size() > 0) {
 			MenuItem item = menu.findItem(R.id.mag);
 			item.setVisible(true);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(true);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.mag);
 			item.setVisible(false);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(false);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(false);
 		}
 		if (sensorProximidad.size() > 0) {
 			MenuItem item = menu.findItem(R.id.proxi);
 			item.setVisible(true);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(true);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.proxi);
 			item.setVisible(false);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(false);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(false);
 		}
 		if (sensorLuz.size() > 0) {
 			MenuItem item = menu.findItem(R.id.luz);
 			item.setVisible(true);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(true);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.luz);
 			item.setVisible(false);
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(false);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(false);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -1570,6 +1619,7 @@ public class Grafica extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 		switch (buttonView.getId()) {
 		case R.id.ejex:
+			
 			checkx = isChecked;
 			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
 				acelerometro();
@@ -1585,6 +1635,9 @@ public class Grafica extends Activity implements OnClickListener,
 			}
 			break;
 		case R.id.ejey:
+			
+			
+			
 			checky = isChecked;
 			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
 				acelerometro();
