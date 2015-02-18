@@ -159,8 +159,9 @@ public class Graph extends Grafica {
 		dataset.addSeries(modulo);
 	}
 
-	public void setProperties(boolean click[], String titulografica,
-			String tituloejey, String calidad, String tamano) {
+	public void setProperties(boolean ex, boolean ey, boolean ez, boolean em,
+			String titulografica, String tituloejey, String calidad,
+			String tamano) {
 		// añade las propiedades de la grafica
 		double[] limites = { 0, maxejex + 5, ejeymin - 200, ejeymax + 200 };// limites
 		// utilizamos diferentes márgenes para las diferentes pantallas
@@ -169,7 +170,7 @@ public class Graph extends Grafica {
 		int[] margenespeque = { 30, 40, 30, 20 };
 		int[] margenesextra = { 70, 80, 70, 60 };
 		XYSeriesRenderer valoresX = new XYSeriesRenderer();
-		if (click[0] == true) { // checkboxX
+		if (ex == true) { // checkboxX
 			valoresX.setColor(Color.RED);
 			renderer.addSeriesRenderer(valoresX);
 		} else {
@@ -177,7 +178,7 @@ public class Graph extends Grafica {
 			renderer.addSeriesRenderer(valoresX);
 		}
 		XYSeriesRenderer valoresY = new XYSeriesRenderer();
-		if (click[1] == true) { // checkboxY
+		if (ey == true) { // checkboxY
 			valoresY.setColor(Color.GREEN);
 			renderer.addSeriesRenderer(valoresY);
 		} else {
@@ -185,7 +186,7 @@ public class Graph extends Grafica {
 			renderer.addSeriesRenderer(valoresY);
 		}
 		XYSeriesRenderer valoresZ = new XYSeriesRenderer();
-		if (click[2] == true) { // checkboxZ
+		if (ez == true) { // checkboxZ
 			valoresZ.setColor(Color.WHITE);
 			renderer.addSeriesRenderer(valoresZ);
 		} else {
@@ -193,7 +194,7 @@ public class Graph extends Grafica {
 			renderer.addSeriesRenderer(valoresZ);
 		}
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
-		if (click[3] == true) { // checkbox modulo
+		if (em == true) { // checkbox modulo
 			modulo.setColor(Color.MAGENTA);
 			renderer.addSeriesRenderer(modulo);
 		} else {
@@ -218,7 +219,7 @@ public class Graph extends Grafica {
 			renderer.setLegendTextSize(30);
 			renderer.setFitLegend(true);
 			renderer.isExternalZoomEnabled();
-			
+
 		} else if (calidad.equalsIgnoreCase("media")) {
 			valoresX.setLineWidth(3);
 			valoresY.setLineWidth(3);
@@ -255,7 +256,7 @@ public class Graph extends Grafica {
 			renderer.setChartTitleTextSize(25);
 			renderer.setLegendTextSize(25);
 			renderer.setFitLegend(true);
- 		} else if (calidad.equalsIgnoreCase("xxhigh")) {
+		} else if (calidad.equalsIgnoreCase("xxhigh")) {
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
 			valoresZ.setLineWidth(5);
@@ -293,7 +294,7 @@ public class Graph extends Grafica {
 		renderer.setLabelsColor(Color.YELLOW);
 	}
 
-	public void setProperties2(boolean click[], String titulografica,
+	public void setProperties2(boolean ex, boolean em, String titulografica,
 			String tituloejey, String calidad, String tamano) {
 		// añade las propiedades de la grafica sensor de luz y sensor proximidad
 		double[] limites = { 0, maxejex + 5, ejeymin - 20, ejeymax + 20 };
@@ -303,7 +304,7 @@ public class Graph extends Grafica {
 		int[] margenespeque = { 30, 35, 30, 25 };
 		int[] margenesextra = { 60, 60, 60, 60 };
 		XYSeriesRenderer valoresX = new XYSeriesRenderer();
-		if (click[0] == true) { // checkbox x
+		if (ex == true) { // checkbox x
 			valoresX.setColor(Color.RED);
 			renderer.addSeriesRenderer(valoresX);
 		} else {
@@ -311,7 +312,7 @@ public class Graph extends Grafica {
 			renderer.addSeriesRenderer(valoresX);
 		}
 		XYSeriesRenderer modulo = new XYSeriesRenderer();
-		if (click[3] == true) { // checkbox modulo
+		if (em == true) { // checkbox modulo
 			modulo.setColor(Color.MAGENTA);
 			renderer.addSeriesRenderer(modulo);
 		} else {
@@ -322,70 +323,70 @@ public class Graph extends Grafica {
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
 		// recogemos la calidad de pantalla para escribir el grosor de las
-				// líneas
-				if (calidad.equalsIgnoreCase("alta")) {
-					valoresX.setLineWidth(5);
-					modulo.setLineWidth(5);
-					renderer.setMargins(margenesnormal);
-					renderer.setLabelsTextSize(30);
-					renderer.setLabelsTextSize(30);
-					renderer.setAxisTitleTextSize(30);
-					renderer.setChartTitleTextSize(30);
-					renderer.setLegendTextSize(30);
-					renderer.setFitLegend(true);
-					renderer.isExternalZoomEnabled();
-					
-				} else if (calidad.equalsIgnoreCase("media")) {
-					valoresX.setLineWidth(3);
-					modulo.setLineWidth(3);
-					renderer.setMargins(margenespeque);
-					renderer.setLabelsTextSize(20);
-					renderer.setLabelsTextSize(20);
-					renderer.setAxisTitleTextSize(20);
-					renderer.setChartTitleTextSize(20);
-					renderer.setLegendTextSize(20);
-					renderer.setFitLegend(true);
-				} else if (calidad.equalsIgnoreCase("baja")) {
-					valoresX.setLineWidth(3);
-					modulo.setLineWidth(3);
-					renderer.setMargins(margenespeque);
-					renderer.setLabelsTextSize(15);
-					renderer.setLabelsTextSize(15);
-					renderer.setAxisTitleTextSize(15);
-					renderer.setChartTitleTextSize(15);
-					renderer.setLegendTextSize(15);
-					renderer.setFitLegend(true);
-				} else if (calidad.equalsIgnoreCase("xhigh")) {
-					valoresX.setLineWidth(5);
-					modulo.setLineWidth(5);
-					renderer.setMargins(margenes);
-					renderer.setLabelsTextSize(25);
-					renderer.setLabelsTextSize(25);
-					renderer.setAxisTitleTextSize(25);
-					renderer.setChartTitleTextSize(25);
-					renderer.setLegendTextSize(25);
-					renderer.setFitLegend(true);
-		 		} else if (calidad.equalsIgnoreCase("xxhigh")) {
-					valoresX.setLineWidth(5);
-					modulo.setLineWidth(5);
-					renderer.setMargins(margenesextra);
-					renderer.setLabelsTextSize(40);
-					renderer.setLabelsTextSize(40);
-					renderer.setAxisTitleTextSize(40);
-					renderer.setChartTitleTextSize(40);
-					renderer.setLegendTextSize(40);
-					renderer.setFitLegend(true);
-				} else if (calidad.equalsIgnoreCase("xxxhigh")) {
-					valoresX.setLineWidth(5);
-					modulo.setLineWidth(5);
-					renderer.setMargins(margenesextra);
-					renderer.setLabelsTextSize(40);
-					renderer.setLabelsTextSize(40);
-					renderer.setAxisTitleTextSize(40);
-					renderer.setChartTitleTextSize(40);
-					renderer.setLegendTextSize(40);
-					renderer.setFitLegend(true);
-				}
+		// líneas
+		if (calidad.equalsIgnoreCase("alta")) {
+			valoresX.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setMargins(margenesnormal);
+			renderer.setLabelsTextSize(30);
+			renderer.setLabelsTextSize(30);
+			renderer.setAxisTitleTextSize(30);
+			renderer.setChartTitleTextSize(30);
+			renderer.setLegendTextSize(30);
+			renderer.setFitLegend(true);
+			renderer.isExternalZoomEnabled();
+
+		} else if (calidad.equalsIgnoreCase("media")) {
+			valoresX.setLineWidth(3);
+			modulo.setLineWidth(3);
+			renderer.setMargins(margenespeque);
+			renderer.setLabelsTextSize(20);
+			renderer.setLabelsTextSize(20);
+			renderer.setAxisTitleTextSize(20);
+			renderer.setChartTitleTextSize(20);
+			renderer.setLegendTextSize(20);
+			renderer.setFitLegend(true);
+		} else if (calidad.equalsIgnoreCase("baja")) {
+			valoresX.setLineWidth(3);
+			modulo.setLineWidth(3);
+			renderer.setMargins(margenespeque);
+			renderer.setLabelsTextSize(15);
+			renderer.setLabelsTextSize(15);
+			renderer.setAxisTitleTextSize(15);
+			renderer.setChartTitleTextSize(15);
+			renderer.setLegendTextSize(15);
+			renderer.setFitLegend(true);
+		} else if (calidad.equalsIgnoreCase("xhigh")) {
+			valoresX.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setMargins(margenes);
+			renderer.setLabelsTextSize(25);
+			renderer.setLabelsTextSize(25);
+			renderer.setAxisTitleTextSize(25);
+			renderer.setChartTitleTextSize(25);
+			renderer.setLegendTextSize(25);
+			renderer.setFitLegend(true);
+		} else if (calidad.equalsIgnoreCase("xxhigh")) {
+			valoresX.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setMargins(margenesextra);
+			renderer.setLabelsTextSize(40);
+			renderer.setLabelsTextSize(40);
+			renderer.setAxisTitleTextSize(40);
+			renderer.setChartTitleTextSize(40);
+			renderer.setLegendTextSize(40);
+			renderer.setFitLegend(true);
+		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
+			valoresX.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setMargins(margenesextra);
+			renderer.setLabelsTextSize(40);
+			renderer.setLabelsTextSize(40);
+			renderer.setAxisTitleTextSize(40);
+			renderer.setChartTitleTextSize(40);
+			renderer.setLegendTextSize(40);
+			renderer.setFitLegend(true);
+		}
 		renderer.setChartTitle(titulografica);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);

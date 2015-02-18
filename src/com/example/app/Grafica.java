@@ -38,12 +38,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Grafica extends Activity implements OnClickListener,
-		SensorEventListener {
+		SensorEventListener, OnCheckedChangeListener {
 
 	// init y funciona se usan para representar si está parada o corriendo la
 	// gráfica
@@ -69,16 +70,19 @@ public class Grafica extends Activity implements OnClickListener,
 	Button parar;
 	Button iniciar;
 	Button reiniciar;
+	Button continuar;
 	// los cuatro checkbox que usamos para ver o quitar los datos de la x, y, z
 	// y módulo
-	private static final int DATA_R = 3;
-	private boolean[] mGraphs = { true, true, true, true };
 	boolean parado;
 	// Declaramos los checkbox
 	CheckBox ejex;
 	CheckBox ejey;
 	CheckBox ejez;
 	CheckBox modulo;
+	boolean checkx = true;
+	boolean checky = true;
+	boolean checkz = true;
+	boolean checkmodulo = true;
 
 	// Declaramos los temporizadores tanto para empezar a tomar datos como para
 	// detener la toma de medidas, la frecuencia de recogida
@@ -138,10 +142,12 @@ public class Grafica extends Activity implements OnClickListener,
 		parar = (Button) findViewById(R.id.parar);
 		iniciar = (Button) findViewById(R.id.inicio);
 		reiniciar = (Button) findViewById(R.id.reiniciar);
+		continuar = (Button) findViewById(R.id.continuar);
 		// Escuchamos los botones
 		parar.setOnClickListener(this);
 		iniciar.setOnClickListener(this);
 		reiniciar.setOnClickListener(this);
+		continuar.setOnClickListener(this);
 
 		graba = (TextView) findViewById(R.id.grabando);
 		gps = (TextView) findViewById(R.id.gpsestado);
@@ -173,38 +179,16 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 
 		// escucha de los checkbox
-		CheckBox[] checkboxes = new CheckBox[4];
-		checkboxes[SensorManager.DATA_X] = (CheckBox) findViewById(R.id.ejex);
-		checkboxes[SensorManager.DATA_Y] = (CheckBox) findViewById(R.id.ejey);
-		checkboxes[SensorManager.DATA_Z] = (CheckBox) findViewById(R.id.ejez);
-		checkboxes[DATA_R] = (CheckBox) findViewById(R.id.modulo);
-		for (int i = 0; i < 4; i++) {
-			if (mGraphs[i]) {
-				checkboxes[i].setChecked(true);
-			}
+		ejex = (CheckBox) findViewById(R.id.ejex);
+		ejey = (CheckBox) findViewById(R.id.ejey);
+		ejez = (CheckBox) findViewById(R.id.ejez);
+		modulo = (CheckBox) findViewById(R.id.modulo);
 
-			checkboxes[i]
-					.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-						@Override
-						public void onCheckedChanged(CompoundButton buttonView,
-								boolean isChecked) {
-							switch (buttonView.getId()) {
-							case R.id.ejex:
-								mGraphs[SensorManager.DATA_X] = isChecked;
-								break;
-							case R.id.ejey:
-								mGraphs[SensorManager.DATA_Y] = isChecked;
-								break;
-							case R.id.ejez:
-								mGraphs[SensorManager.DATA_Z] = isChecked;
-								break;
-							case R.id.modulo:
-								mGraphs[DATA_R] = isChecked;
-								break;
-							}
-						}
-					});
-		}
+		ejex.setOnCheckedChangeListener(this);
+		ejey.setOnCheckedChangeListener(this);
+		ejez.setOnCheckedChangeListener(this);
+		modulo.setOnCheckedChangeListener(this);
+
 		// declaramos el gps y sus escuchas
 		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		milocListener = new MiLocationListener();
@@ -292,14 +276,10 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 
 		public void onProviderDisabled(String provider) {
-			Toast.makeText(getApplicationContext(), "Gps Desactivado",
-					Toast.LENGTH_SHORT).show();
 			gps.setText("GPS apagado");
 		}
 
 		public void onProviderEnabled(String provider) {
-			Toast.makeText(getApplicationContext(), "Gps Activo",
-					Toast.LENGTH_SHORT).show();
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -327,9 +307,7 @@ public class Grafica extends Activity implements OnClickListener,
 					iniciar.setEnabled(false);
 					parar.setEnabled(true);
 					reiniciar.setEnabled(false);
-
 				} else {
-
 					Iniciar_sensores();
 					iniciar.setEnabled(false);
 					parar.setEnabled(true);
@@ -407,8 +385,8 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY(sensorDatas);
 					mGraph.ejeX(sensorDatas);
 					mGraph.initData(sensorDatas);
-					mGraph.setProperties(mGraphs, "Acelerómetro",
-							"Aceleración "
+					mGraph.setProperties(checkx, checky, checkz, checkmodulo,
+							"Acelerómetro", "Aceleración "
 									+ getString(R.string.unidad_acelerometro),
 							calidad, tamano);
 					if (!init) {
@@ -441,8 +419,8 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY(sensorGiroscopio);
 					mGraph.ejeX(sensorGiroscopio);
 					mGraph.initData(sensorGiroscopio);
-					mGraph.setProperties(mGraphs, "Giroscopio",
-							"Velocidad angular "
+					mGraph.setProperties(checkx, checky, checkz, checkmodulo,
+							"Giroscopio", "Velocidad angular "
 									+ getString(R.string.unidad_giroscopio),
 							calidad, tamano);
 					if (!init) {
@@ -474,7 +452,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY2(sensorLuz);
 					mGraph.ejeX2(sensorLuz);
 					mGraph.initData2(sensorLuz);
-					mGraph.setProperties2(mGraphs, "Sensor de luz",
+					mGraph.setProperties2(checkx, checkmodulo, "Sensor de luz",
 							"Iluminancia " + getString(R.string.unidad_luz),
 							calidad, tamano);
 					if (!init) {
@@ -509,7 +487,10 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorMagnetico);
 					mGraph.initData(sensorMagnetico);
 					mGraph.setProperties(
-							mGraphs,
+							checkx,
+							checky,
+							checkz,
+							checkmodulo,
 							"Magnetómetro",
 							"Inducción magnética "
 									+ getString(R.string.unidad_campo_magnetico),
@@ -543,8 +524,8 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY2(sensorProximidad);
 					mGraph.ejeX2(sensorProximidad);
 					mGraph.initData2(sensorProximidad);
-					mGraph.setProperties2(mGraphs, "Sensor de proximidad",
-							"Distancia "
+					mGraph.setProperties2(checkx, checkmodulo,
+							"Sensor de proximidad", "Distancia "
 									+ getString(R.string.unidad_proximidad),
 							calidad, tamano);
 					if (!init) {
@@ -560,6 +541,13 @@ public class Grafica extends Activity implements OnClickListener,
 				break;
 			}
 		}
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		
 	}
 
 	@Override
@@ -1076,22 +1064,29 @@ public class Grafica extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 		switch (boton.getId()) {
 		case (R.id.parar):
-			iniciar.setEnabled(true);
+			continuar.setEnabled(true);
 			parar.setEnabled(false);
-
 			reiniciar.setEnabled(true);
 			onStop();
 			break;
 		case (R.id.inicio):
-			iniciar.setEnabled(false);
+			iniciar.setVisibility(Button.GONE);
+			continuar.setVisibility(Button.VISIBLE);
+			continuar.setEnabled(false);
 			parar.setEnabled(true);
 			reiniciar.setEnabled(false);
 			Iniciar_sensores();
 			if (tiempoParada > 0)
 				contadores2();
 			break;
+		case (R.id.continuar):
+			parar.setEnabled(true);
+			reiniciar.setEnabled(false);
+			Iniciar_sensores();
+			break;
 		case (R.id.reiniciar):
-			iniciar.setEnabled(true);
+			iniciar.setVisibility(Button.VISIBLE);
+			continuar.setVisibility(Button.GONE);
 			parar.setEnabled(false);
 			reiniciar.setEnabled(false);
 			layout.removeView(view);
@@ -1182,132 +1177,31 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.acele):
 			sensor = Sensor.TYPE_ACCELEROMETER;
 			if (funciona == false) {
-				if (acce == true) {
-					graba.setText("Grabando SI");
-				} else {
-					graba.setText("Grabando NO");
-				}
-				mGraph = new Graph(this);
-				mGraph.ejeY(sensorDatas);
-				mGraph.ejeX(sensorDatas);
-				mGraph.initData(sensorDatas);
-				mGraph.setProperties(mGraphs, "Acelerómetro", "Aceleración "
-						+ getString(R.string.unidad_acelerometro), calidad,
-						tamano);
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
-				}
+				acelerometro();
 			}
 			break;
 		case (R.id.giro):
 			sensor = Sensor.TYPE_GYROSCOPE;
 			if (funciona == false) {
-				if (giro == true) {
-					graba.setText("Grabando SI");
-				} else {
-					graba.setText("Grabando NO");
-				}
-				mGraph = new Graph(this);
-				mGraph.ejeY(sensorGiroscopio);
-				mGraph.ejeX(sensorGiroscopio);
-				mGraph.initData(sensorGiroscopio);
-				mGraph.setProperties(mGraphs, "Giroscopio",
-						"Velocidad angular "
-								+ getString(R.string.unidad_giroscopio),
-						calidad, tamano);
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
-				}
+				giroscopio();
 			}
 			break;
 		case (R.id.mag):
 			sensor = Sensor.TYPE_MAGNETIC_FIELD;
 			if (funciona == false) {
-				if (magne == true) {
-					graba.setText("Grabando SI");
-				} else {
-					graba.setText("Grabando NO");
-				}
-				mGraph = new Graph(this);
-				mGraph.ejeY(sensorMagnetico);
-				mGraph.ejeX(sensorMagnetico);
-				mGraph.initData(sensorMagnetico);
-				mGraph.setProperties(mGraphs, "Magnetómetro",
-						"Inducción magnética "
-								+ getString(R.string.unidad_campo_magnetico),
-						calidad, tamano);
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
-				}
+				magnetometro();
 			}
 			break;
 		case (R.id.proxi):
 			sensor = Sensor.TYPE_PROXIMITY;
 			if (funciona == false) {
-				if (proxi == true) {
-					graba.setText("Grabando SI");
-				} else {
-					graba.setText("Grabando NO");
-				}
-				mGraph = new Graph(this);
-				mGraph.ejeY2(sensorProximidad);
-				mGraph.ejeX2(sensorProximidad);
-				mGraph.initData2(sensorProximidad);
-				mGraph.setProperties2(mGraphs, "Sensor de proximidad",
-						"Distancia " + getString(R.string.unidad_proximidad),
-						calidad, tamano);
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
-				}
+
 			}
 			break;
 		case (R.id.luz):
 			sensor = Sensor.TYPE_LIGHT;
 			if (funciona == false) {
-				if (luz == true) {
-					graba.setText("Grabando SI");
-				} else {
-					graba.setText("Grabando NO");
-				}
-				mGraph = new Graph(this);
-				mGraph.ejeY2(sensorLuz);
-				mGraph.ejeX2(sensorLuz);
-				mGraph.initData2(sensorLuz);
-				mGraph.setProperties2(mGraphs, "Sensor de luz", "Iluminancia "
-						+ getString(R.string.unidad_luz), calidad, tamano);
-				if (!init) {
-					view = mGraph.getGraph();
-					layout.addView(view);
-					init = true;
-				} else {
-					layout.removeView(view);
-					view = mGraph.getGraph();
-					layout.addView(view);
-				}
+
 			}
 			break;
 		case (R.id.guardar):
@@ -1667,6 +1561,198 @@ public class Grafica extends Activity implements OnClickListener,
 		sendIntent.setType("file/*");
 		sendIntent.putExtra(Intent.EXTRA_STREAM, csvexportar);
 		startActivity(sendIntent);
+	}
+
+	// comprobamos si los chechbox cambian. Si cambian cuando los sensores están
+	// parados entonces llamamos a la función de cada sensor para representar
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		// TODO Auto-generated method stub
+		switch (buttonView.getId()) {
+		case R.id.ejex:
+			checkx = isChecked;
+			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
+				acelerometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_GYROSCOPE) {
+				giroscopio();
+			} else if (funciona == false
+					&& sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+				magnetometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_PROXIMITY) {
+				proximidad();
+			} else if (funciona == false && sensor == Sensor.TYPE_LIGHT) {
+				luz();
+			}
+			break;
+		case R.id.ejey:
+			checky = isChecked;
+			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
+				acelerometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_GYROSCOPE) {
+				giroscopio();
+			} else if (funciona == false
+					&& sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+				magnetometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_PROXIMITY) {
+				proximidad();
+			} else if (funciona == false && sensor == Sensor.TYPE_LIGHT) {
+				luz();
+			}
+			break;
+		case R.id.ejez:
+			checkz = isChecked;
+			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
+				acelerometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_GYROSCOPE) {
+				giroscopio();
+			} else if (funciona == false
+					&& sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+				magnetometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_PROXIMITY) {
+				proximidad();
+			} else if (funciona == false && sensor == Sensor.TYPE_LIGHT) {
+				luz();
+			}
+			break;
+		case R.id.modulo:
+			checkmodulo = isChecked;
+			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
+				acelerometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_GYROSCOPE) {
+				giroscopio();
+			} else if (funciona == false
+					&& sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+				magnetometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_PROXIMITY) {
+				proximidad();
+			} else if (funciona == false && sensor == Sensor.TYPE_LIGHT) {
+				luz();
+			}
+			break;
+		}
+
+	}
+
+	public void acelerometro() {
+		if (acce == true) {
+			graba.setText("Grabando SI");
+		} else {
+			graba.setText("Grabando NO");
+		}
+		mGraph = new Graph(this);
+		mGraph.ejeY(sensorDatas);
+		mGraph.ejeX(sensorDatas);
+		mGraph.initData(sensorDatas);
+		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
+				"Acelerómetro", "Aceleración "
+						+ getString(R.string.unidad_acelerometro), calidad,
+				tamano);
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
+	}
+
+	public void giroscopio() {
+		if (giro == true) {
+			graba.setText("Grabando SI");
+		} else {
+			graba.setText("Grabando NO");
+		}
+		mGraph = new Graph(this);
+		mGraph.ejeY(sensorGiroscopio);
+		mGraph.ejeX(sensorGiroscopio);
+		mGraph.initData(sensorGiroscopio);
+		mGraph.setProperties(checkx, checky, checkz, checkmodulo, "Giroscopio",
+				"Velocidad angular " + getString(R.string.unidad_giroscopio),
+				calidad, tamano);
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
+	}
+
+	public void magnetometro() {
+		if (magne == true) {
+			graba.setText("Grabando SI");
+		} else {
+			graba.setText("Grabando NO");
+		}
+		mGraph = new Graph(this);
+		mGraph.ejeY(sensorMagnetico);
+		mGraph.ejeX(sensorMagnetico);
+		mGraph.initData(sensorMagnetico);
+		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
+				"Magnetómetro", "Inducción magnética "
+						+ getString(R.string.unidad_campo_magnetico), calidad,
+				tamano);
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
+	}
+
+	public void proximidad() {
+		if (proxi == true) {
+			graba.setText("Grabando SI");
+		} else {
+			graba.setText("Grabando NO");
+		}
+		mGraph = new Graph(this);
+		mGraph.ejeY2(sensorProximidad);
+		mGraph.ejeX2(sensorProximidad);
+		mGraph.initData2(sensorProximidad);
+		mGraph.setProperties2(checkx, checkmodulo, "Sensor de proximidad",
+				"Distancia " + getString(R.string.unidad_proximidad), calidad,
+				tamano);
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
+	}
+
+	public void luz() {
+		if (luz == true) {
+			graba.setText("Grabando SI");
+		} else {
+			graba.setText("Grabando NO");
+		}
+		mGraph = new Graph(this);
+		mGraph.ejeY2(sensorLuz);
+		mGraph.ejeX2(sensorLuz);
+		mGraph.initData2(sensorLuz);
+		mGraph.setProperties2(checkx, checkmodulo, "Sensor de luz",
+				"Iluminancia " + getString(R.string.unidad_luz), calidad,
+				tamano);
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
 	}
 
 }

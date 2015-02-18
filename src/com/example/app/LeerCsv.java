@@ -159,7 +159,7 @@ public class LeerCsv extends Activity {
 				mGraph = new Graph(this);
 				mGraph.iniciar(datos);
 				mGraph.ejeY(datos);
-				mGraph.setProperties(check, titulografica, tituloejey, calidad,
+				mGraph.setProperties(true,true,true,true, titulografica, tituloejey, calidad,
 						tamano);
 				view = mGraph.getGraph();
 				layout.addView(view);
@@ -182,7 +182,7 @@ public class LeerCsv extends Activity {
 				mGraph = new Graph(this);
 				mGraph.iniciar2(sensor);
 				mGraph.ejeY2(sensor);
-				mGraph.setProperties2(check, titulografica, tituloejey,
+				mGraph.setProperties2(true,true, titulografica, tituloejey,
 						calidad, tamano);
 				view = mGraph.getGraph();
 				layout.addView(view);

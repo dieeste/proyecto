@@ -11,7 +11,8 @@
     <string name="teoria">Teoría</string>
     <string name="explicacion">Esto es acerda de</string>
     <string name="empezar">Empezar</string>
-    <string name="parar">Parar</string>
+    <string name="continuar">Continuar</string>
+    <string name="parar">Pausar/Parar</string>
     <string name="cuenta">Tiempo en segundos: </string>
     <string name="mostrar">&quot;&quot;</string>
     <string name="acelerometro">Acelerómetro</string>
