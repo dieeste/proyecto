@@ -83,7 +83,7 @@ public class Grafica extends Activity implements OnClickListener,
 	boolean checky = true;
 	boolean checkz = true;
 	boolean checkmodulo = true;
-
+	boolean vercargar = false;
 	// Declaramos los temporizadores tanto para empezar a tomar datos como para
 	// detener la toma de medidas, la frecuencia de recogida
 	CountDownTimer temporizador, tiempo;
@@ -1071,6 +1071,7 @@ public class Grafica extends Activity implements OnClickListener,
 			onStop();
 			break;
 		case (R.id.inicio):
+			vercargar = true;
 			ejex.setVisibility(CheckBox.VISIBLE);
 			ejey.setVisibility(CheckBox.VISIBLE);
 			ejez.setVisibility(CheckBox.VISIBLE);
@@ -1140,80 +1141,51 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		if (sensorDatas.size() > 0) {
-			MenuItem item = menu.findItem(R.id.acele);
-			item.setVisible(true);
+		if (vercargar == true) {
 			MenuItem item2 = menu.findItem(R.id.guardar);
 			item2.setVisible(true);
 			MenuItem item3 = menu.findItem(R.id.enviar);
 			item3.setVisible(true);
 		} else {
-			MenuItem item = menu.findItem(R.id.acele);
-			item.setVisible(false);
 			MenuItem item2 = menu.findItem(R.id.guardar);
 			item2.setVisible(false);
 			MenuItem item3 = menu.findItem(R.id.enviar);
 			item3.setVisible(false);
+		}
+		if (sensorDatas.size() > 0) {
+			MenuItem item = menu.findItem(R.id.acele);
+			item.setVisible(true);
+		} else {
+			MenuItem item = menu.findItem(R.id.acele);
+			item.setVisible(false);
 		}
 		if (sensorGiroscopio.size() > 0) {
 			MenuItem item = menu.findItem(R.id.giro);
 			item.setVisible(true);
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(true);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.giro);
 			item.setVisible(false);
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(false);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(false);
 		}
 		if (sensorMagnetico.size() > 0) {
 			MenuItem item = menu.findItem(R.id.mag);
 			item.setVisible(true);
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(true);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.mag);
 			item.setVisible(false);
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(false);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(false);
 		}
 		if (sensorProximidad.size() > 0) {
 			MenuItem item = menu.findItem(R.id.proxi);
 			item.setVisible(true);
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(true);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.proxi);
 			item.setVisible(false);
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(false);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(false);
 		}
 		if (sensorLuz.size() > 0) {
 			MenuItem item = menu.findItem(R.id.luz);
 			item.setVisible(true);
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(true);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(true);
 		} else {
 			MenuItem item = menu.findItem(R.id.luz);
 			item.setVisible(false);
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(false);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(false);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}

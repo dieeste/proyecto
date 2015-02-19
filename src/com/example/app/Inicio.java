@@ -10,12 +10,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.ImageView;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 public class Inicio extends Activity implements OnClickListener{
+	
+
 	private static final long SPLASH_SCREEN_DELAY = 3000;
 	TimerTask task;
-	ImageView im;
+	RelativeLayout init;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,9 +27,11 @@ public class Inicio extends Activity implements OnClickListener{
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		// Hide title bar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.inicio);
-		im = (ImageView) findViewById(R.id.imaginicio);
-		im.setOnClickListener(this);
+		init = (RelativeLayout) findViewById(R.id.init);
+		init.setOnClickListener(this);
 		task = new TimerTask() {
 			@Override
 			public void run() {
@@ -51,7 +56,7 @@ public class Inicio extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case (R.id.imaginicio):
+		case (R.id.init):
 			Intent mainIntent = new Intent().setClass(Inicio.this,
 					MainActivity.class);
 			startActivity(mainIntent);
@@ -59,6 +64,10 @@ public class Inicio extends Activity implements OnClickListener{
 			finish();
 			break;
 		}
+	}
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
 	}
 
 }

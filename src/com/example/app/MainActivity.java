@@ -1,8 +1,14 @@
 package com.example.app;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +21,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button simulacion;
 	Button listasensores;
 	Button cargargraficas;
-
+	SharedPreferences sharedPreference;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,7 +59,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			Intent i = new Intent(this, AcercaDe.class);
 			startActivity(i);
 			break;
+		case R.id.menu_settings:
+		    Intent i2 = new Intent(this,Setting.class);
+		    startActivity(i2);
+		break;
 		}
+		
 		return true;
 		/** true -> consumimos el item, no se propaga */
 	}
@@ -81,5 +92,25 @@ public class MainActivity extends Activity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+
+
+		 Resources resource = getResources();
+			Configuration config = resource.getConfiguration();
+			sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+	        if ("fr".equalsIgnoreCase(sharedPreference.getString("language", null))) {
+	        	config.locale = Locale.FRANCE;
+			} else if ("en".equalsIgnoreCase(sharedPreference.getString("language", null))) {
+				config.locale = Locale.ENGLISH;
+			} else {
+				config.locale = Locale.getDefault();
+			}
+	        getBaseContext().getResources().updateConfiguration(config, null);
+
 	}
 }

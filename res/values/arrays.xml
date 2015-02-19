@@ -4,13 +4,13 @@
     <string-array name="frecuencia_recogida">
         <item>NORMAL</item>
         <item>UI</item>
-        <!--<item>JUEGO</item>  -->
+        <!-- <item>JUEGO</item> -->
         <!-- <item>MÁS RÁPIDO</item> -->
     </string-array>
     <string-array name="frecuencias">
         <item>SensorManager.SENSOR_DELAY_NORMAL</item>
         <item>SensorManager.SENSOR_DELAY_UI</item>
-     <!--<item>SensorManager.SENSOR_DELAY_GAME</item>-->
+        <!-- <item>SensorManager.SENSOR_DELAY_GAME</item> -->
         <!-- <SensorManager.SENSOR_DELAY_FASTEST</item> -->
     </string-array>
     <string-array name="temporizador">
@@ -50,6 +50,18 @@
         <item>Sensor.TYPE_MAGNETIC_FIELD</item>
         <item>Sensor.TYPE_PROXIMITY</item>
         <item>Sensor.TYPE_LIGHT</item>
+    </string-array>
+    <string-array name="idiomas">
+        <item>Auto</item>
+        <item>Inglés</item>
+        <item>Francés</item>
+        <item>Español</item>
+    </string-array>
+    <string-array name="idiomasValores">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 
 </resources>
