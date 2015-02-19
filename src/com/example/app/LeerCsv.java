@@ -99,7 +99,6 @@ public class LeerCsv extends Activity {
 	}
 
 	public void lee(String file) {
-		boolean check[] = { true, true, true, true };
 		int numerolineas = 0;
 		for (AccelData2 data : sensor) {
 			datos.remove(data);

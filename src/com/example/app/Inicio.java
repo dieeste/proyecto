@@ -7,11 +7,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ImageView;
 
-public class Inicio extends Activity{
+public class Inicio extends Activity implements OnClickListener{
 	private static final long SPLASH_SCREEN_DELAY = 3000;
-
+	TimerTask task;
+	ImageView im;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,10 +24,10 @@ public class Inicio extends Activity{
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		// Hide title bar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		setContentView(R.layout.inicio);
-
-		TimerTask task = new TimerTask() {
+		im = (ImageView) findViewById(R.id.imaginicio);
+		im.setOnClickListener(this);
+		task = new TimerTask() {
 			@Override
 			public void run() {
 
@@ -43,5 +47,18 @@ public class Inicio extends Activity{
 		timer.schedule(task, SPLASH_SCREEN_DELAY);
 	}
 
-	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case (R.id.imaginicio):
+			Intent mainIntent = new Intent().setClass(Inicio.this,
+					MainActivity.class);
+			startActivity(mainIntent);
+			task.cancel();
+			finish();
+			break;
+		}
+	}
+
 }

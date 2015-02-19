@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Inicio" >
- 
+
     <ImageView
+        android:id="@+id/imaginicio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
         android:src="@drawable/iniciosensor" />
- 
+
 </RelativeLayout>
