@@ -283,7 +283,7 @@ public class Graph extends Grafica {
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(tituloejey);
-		renderer.setXTitle("Tiempo (s)");
+		renderer.setXTitle("t (s)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setPanLimits(limites); // añade los limites de la grafica
@@ -388,7 +388,7 @@ public class Graph extends Grafica {
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
 		renderer.setYTitle(tituloejey);
-		renderer.setXTitle("Tiempo (s)");
+		renderer.setXTitle("t (s)");
 		renderer.setXLabels(5);
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setPanLimits(limites); // añade los limites de la grafica

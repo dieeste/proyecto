@@ -124,7 +124,6 @@ public class LeerCsv extends Activity {
 					double z = Double.parseDouble(fichero.get("Z"));
 					double modulo = Double.parseDouble(fichero.get("Modulo"));
 					unidad = fichero.getHeader(6);
-					// unidad = fichero.get("Unidad sensor");
 					AccelData data = new AccelData(tiempo, x, y, z, modulo);
 					datos.add(data);
 				} else if (numerolineas == 4) {
@@ -139,21 +138,18 @@ public class LeerCsv extends Activity {
 			fichero.close();
 			if (numerolineas == 6) {
 				if (unidad.equalsIgnoreCase("m/sÂ²")) {
-					tituloejey = "Aceleración "
-							+ getResources().getString(
-									R.string.unidad_acelerometro);
-					titulografica = "Acelerómetro";
+					tituloejey = "a ("
+							+ getString(R.string.unidad_acelerometro)+")";
+					titulografica = getString(R.string.acelerometro);
 				} else if (unidad.equalsIgnoreCase(getResources().getString(
 						R.string.unidad_giroscopio))) {
-					tituloejey = "Velocidad angular "
-							+ getResources().getString(
-									R.string.unidad_giroscopio);
-					titulografica = "Giroscopio";
+					tituloejey = "ω ("
+							+ getString(R.string.unidad_giroscopio)+")";
+					titulografica = getString(R.string.giroscopio);
 				} else if (unidad.equalsIgnoreCase("ÂµT")) {
-					tituloejey = "Inducción magnética "
-							+ getResources().getString(
-									R.string.unidad_campo_magnetico);
-					titulografica = "Magnetómetro";
+					tituloejey = "B (" + getString(R.string.unidad_campo_magnetico)
+							+ ")";
+					titulografica = getString(R.string.magnetico);
 				}
 				mGraph = new Graph(this);
 				mGraph.iniciar(datos);
@@ -168,15 +164,14 @@ public class LeerCsv extends Activity {
 			} else if (numerolineas == 4) {
 				if (unidad.equalsIgnoreCase(getResources().getString(
 						R.string.unidad_luz))) {
-					tituloejey = "Iluminancia "
-							+ getResources().getString(R.string.unidad_luz);
-					titulografica = "Sensor de luz";
+					tituloejey = "E (" + getString(R.string.unidad_luz)+")";
+					titulografica = getString(R.string.luminosidad);
 				} else if (unidad.equalsIgnoreCase(getResources().getString(
 						R.string.unidad_proximidad))) {
-					tituloejey = "Distancia "
-							+ getResources().getString(
-									R.string.unidad_proximidad);
-					titulografica = "Sensor de proximidad";
+					tituloejey = "d ("
+							+ getString(R.string.unidad_proximidad)+")";
+					titulografica = getResources().getString(
+							R.string.proximidad);
 				}
 				mGraph = new Graph(this);
 				mGraph.iniciar2(sensor);

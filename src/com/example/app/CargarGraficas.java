@@ -53,7 +53,7 @@ public class CargarGraficas extends ListActivity{
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Log.d("vamos","esto es ");
+				
 				File archivo = new File(listaRutasArchivos.get(position));
 				if (archivo.isFile()) {
 					archivo.getPath();
@@ -106,7 +106,6 @@ public class CargarGraficas extends ListActivity{
 			File archivo = new File(listaRutasArchivos.get(i));
 			if (archivo.isFile()) {
 				listaNombresArchivos.add(archivo.getName());
-				// listaNombresArchivos.add(R.drawable.file);
 			} else {
 				listaNombresArchivos.add("/" + archivo.getName());
 			}
@@ -124,12 +123,6 @@ public class CargarGraficas extends ListActivity{
 				R.layout.text_view_lista_archivos, listaNombresArchivos);
 		setListAdapter(adaptador);
 	}
-
-	public void ver(int pos) {
-		Toast.makeText(this, "este es el archivo " + pos, Toast.LENGTH_SHORT)
-				.show();
-	}
-	
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {

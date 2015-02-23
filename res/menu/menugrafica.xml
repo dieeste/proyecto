@@ -13,23 +13,23 @@
     </item>
     <item
         android:id="@+id/acele"
-        android:title="Acelerómetro">
+        android:title="@string/acelerometro">
     </item>
     <item
         android:id="@+id/giro"
-        android:title="Giroscopio">
+        android:title="@string/giroscopio">
     </item>
     <item
         android:id="@+id/mag"
-        android:title="Magnetómetro">
+        android:title="@string/magnetico">
     </item>
     <item
         android:id="@+id/proxi"
-        android:title="Sensor de proximidad">
+        android:title="@string/proximidad">
     </item>
     <item
         android:id="@+id/luz"
-        android:title="Sensor de luz">
+        android:title="@string/luminosidad">
     </item>
 
 </menu>

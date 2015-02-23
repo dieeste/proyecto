@@ -21,14 +21,14 @@
     <string name="giroscopio">Giroscopio</string>
     <string name="magnetico">Magnetómetro</string>
     <string name="compartir">Compartir</string>
-    <string name="guardar">Guardar en .csv</string>
+    <string name="guardar">Guardar (csv)</string>
     <string name="cambiar">Cambiar gráfica sensor</string>
     <string name="guardado_acelerometro">Acelerómetro guardado</string>
     <string name="error_guardar">Error al guardar, no guardado</string>
     <string name="eje_x">X</string>
     <string name="eje_y">Y</string>
     <string name="eje_z">Z</string>
-    <string name="eje_modulo">Módulo</string>
+    <string name="eje_modulo">|V|</string>
     <string name="unidad_acelerometro">m/s²</string>
     <string name="gpss">¿DESEA ACTIVAR EL GPS?</string>
     <string name="tiempo">¿DESEA MARCAR UN TIEMPO DETERMINADO?</string>
@@ -39,7 +39,7 @@
     <string name="infoproximidad">¿QUÉ ES EL SENSOR DE PROXIMIDAD?</string>
     <string name="infoluz">¿QUÉ ES EL SENSOR DE LUZ?</string>
     <string name="reiniciar">Reiniciar</string>
-    <string name="modulo">Módulo</string>
+    <string name="modulo">|V|</string>
     <string name="grafica">Gráfica</string>
     <string name="cargargraficas">Cargar gráficas</string>
     <string name="checkAcelerometro">Guardar gráfica del acelerómetro</string>

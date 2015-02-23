@@ -124,7 +124,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/linear"
+        android:drawableLeft="@drawable/ic_on"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#ADFF2F" />
+        android:textColor="#ADFF2F"
+        android:visibility="gone" />
+
+     <TextView
+         android:id="@+id/grabando2"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_alignTop="@+id/linear"
+         android:drawableLeft="@drawable/ic_off"
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         android:textColor="#ADFF2F"
+         android:visibility="gone" />
 
 </RelativeLayout>

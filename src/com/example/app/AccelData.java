@@ -7,8 +7,6 @@ public class AccelData {
 	private double z;
 	private double modulo;
 	
-	
-	
 	public AccelData(double timestamp, double x, double y, double z, double modulo) {
 		this.timestamp = timestamp;
 		this.x = x;
