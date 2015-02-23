@@ -111,7 +111,8 @@
         </activity>
         <activity
             android:name="Grafica"
-            android:label="Gráfica" >
+            android:label=" "
+            android:icon="@drawable/iconografic" >
             <action android:name=".Grafica" />
 
             <category android:name="android.intent.category.DEFAULT" />

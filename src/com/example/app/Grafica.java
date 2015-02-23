@@ -83,7 +83,7 @@ public class Grafica extends Activity implements OnClickListener,
 	boolean checky = true;
 	boolean checkz = true;
 	boolean checkmodulo = true;
-	boolean vercargar = false;
+	public boolean vercargar = false;
 	// Declaramos los temporizadores tanto para empezar a tomar datos como para
 	// detener la toma de medidas, la frecuencia de recogida
 	CountDownTimer temporizador, tiempo;
@@ -188,8 +188,7 @@ public class Grafica extends Activity implements OnClickListener,
 		ejey.setOnCheckedChangeListener(this);
 		ejez.setOnCheckedChangeListener(this);
 		modulo.setOnCheckedChangeListener(this);
-	
-		
+
 		// declaramos el gps y sus escuchas
 		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		milocListener = new MiLocationListener();
@@ -548,7 +547,7 @@ public class Grafica extends Activity implements OnClickListener,
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		
+
 	}
 
 	@Override
@@ -1076,7 +1075,7 @@ public class Grafica extends Activity implements OnClickListener,
 			ejey.setVisibility(CheckBox.VISIBLE);
 			ejez.setVisibility(CheckBox.VISIBLE);
 			modulo.setVisibility(CheckBox.VISIBLE);
-			if (sensor == Sensor.TYPE_PROXIMITY || sensor == Sensor.TYPE_LIGHT){
+			if (sensor == Sensor.TYPE_PROXIMITY || sensor == Sensor.TYPE_LIGHT) {
 				ejey.setVisibility(CheckBox.GONE);
 				ejez.setVisibility(CheckBox.GONE);
 			}
@@ -1141,17 +1140,6 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		if (vercargar == true) {
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(true);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(true);
-		} else {
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(false);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(false);
-		}
 		if (sensorDatas.size() > 0) {
 			MenuItem item = menu.findItem(R.id.acele);
 			item.setVisible(true);
@@ -1187,6 +1175,14 @@ public class Grafica extends Activity implements OnClickListener,
 			MenuItem item = menu.findItem(R.id.luz);
 			item.setVisible(false);
 		}
+		if (sensorLuz.size() > 0 && sensorProximidad.size() > 0
+				&& sensorMagnetico.size() > 0 && sensorGiroscopio.size() > 0
+				&& sensorDatas.size() > 0) {
+			MenuItem item2 = menu.findItem(R.id.guardar);
+			item2.setVisible(true);
+			MenuItem item3 = menu.findItem(R.id.enviar);
+			item3.setVisible(true);
+		} 
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -1591,7 +1587,7 @@ public class Grafica extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 		switch (buttonView.getId()) {
 		case R.id.ejex:
-			
+
 			checkx = isChecked;
 			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
 				acelerometro();
@@ -1607,9 +1603,7 @@ public class Grafica extends Activity implements OnClickListener,
 			}
 			break;
 		case R.id.ejey:
-			
-			
-			
+
 			checky = isChecked;
 			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
 				acelerometro();

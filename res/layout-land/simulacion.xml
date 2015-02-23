@@ -54,7 +54,6 @@
                 android:layout_weight="0"
                 android:drawableBottom="@drawable/iconografic"
                 android:minHeight="60dp"
-                android:text="@string/grafica"
                 android:textColor="#ffff" />
         </LinearLayout>
 
@@ -99,7 +98,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:drawableBottom="@drawable/iconografic"
-                android:text="@string/grafica"
                 android:textColor="#ffff" />
         </LinearLayout>
 
@@ -145,7 +143,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:drawableBottom="@drawable/iconografic"
-                android:text="@string/grafica"
                 android:textColor="#ffff" />
         </LinearLayout>
 
@@ -190,8 +187,7 @@
                 android:layout_gravity="fill_vertical"
                 android:layout_weight="3"
                 android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:visibility="invisible" />
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/graficaProximidad"
@@ -199,7 +195,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:drawableBottom="@drawable/iconografic"
-                android:text="@string/grafica"
                 android:textColor="#ffff" />
         </LinearLayout>
 
@@ -244,7 +239,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:drawableBottom="@drawable/iconografic"
-                android:text="@string/grafica"
                 android:textColor="#ffff" />
         </LinearLayout>
     </LinearLayout>

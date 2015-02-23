@@ -330,15 +330,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double z = Math.round(event.values[2]*100.0)/100.0;
 				double modulo = Math.round(m*100.0)/100.0;
 
-				txt += "Acelerómetro\n";
-				txt += "\n X: " + x + " "
-						+ getString(R.string.unidad_acelerometro);
-				txt += "\n Y: " + y + " "
-						+ getString(R.string.unidad_acelerometro);
-				txt += "\n Z: " + z + " "
-						+ getString(R.string.unidad_acelerometro);
-				txt += "\n Módulo: " + modulo + " "
-						+ getString(R.string.unidad_acelerometro);
+				txt += "Acelerómetro (" + getString(R.string.unidad_acelerometro)+")\n";
+				txt += "\n X: " + x;
+				txt += "\n Y: " + y;
+				txt += "\n Z: " + z;
+				txt += "\n Módulo: " + modulo;
 				acelerometro.setText(txt);
 				break;
 
@@ -351,13 +347,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double y2 = Math.round(event.values[1]*100.0)/100.0;
 				double z2 = Math.round(event.values[2]*100.0)/100.0;
 				double modulo2 = Math.round(m2*100.0)/100.0;
-				txt += "Giroscopio\n";
-				txt += "\n X: " + x2 + " "
-						+ getString(R.string.unidad_giroscopio);
-				txt += "\n Y: " + y2 + " "
-						+ getString(R.string.unidad_giroscopio);
-				txt += "\n Z: " + z2 + " "
-						+ getString(R.string.unidad_giroscopio);
+				txt += "Giroscopio (" +getString(R.string.unidad_giroscopio)+")\n";
+				txt += "\n X: " + x2;
+				txt += "\n Y: " + y2;
+				txt += "\n Z: " + z2;
 				txt += "\n Módulo: " + modulo2 + " "
 						+ getString(R.string.unidad_giroscopio);
 				giroscopo.setText(txt);
@@ -372,15 +365,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double y3 = Math.round(event.values[1]*100.0)/100.0;
 				double z3 = Math.round(event.values[2]*100.0)/100.0;
 				double modulo3 = Math.round(m3*100.0)/100.0;
-				txt += "Campo magnético\n";
-				txt += "\n X: " + x3 + " "
-						+ getString(R.string.unidad_campo_magnetico);
-				txt += "\n Y: " + y3 + " "
-						+ getString(R.string.unidad_campo_magnetico);
-				txt += "\n Z: " + z3 + " "
-						+ getString(R.string.unidad_campo_magnetico);
-				txt += "\n Módulo: " + modulo3 + " "
-						+ getString(R.string.unidad_campo_magnetico);
+				txt += "Campo magnético ("+ getString(R.string.unidad_campo_magnetico)+")\n";
+				txt += "\n X: " + x3;
+				txt += "\n Y: " + y3;
+				txt += "\n Z: " + z3;
+				txt += "\n Módulo: " + modulo3;
 				magnetico.setText(txt);
 				break;
 
@@ -389,11 +378,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 						event.values[0], 2))));
 				double x4 = Math.round(event.values[0]*100.0)/100.0;
 				double modulo4 = Math.round(m4*100.0)/100.0;
-				txt += "Proximidad\n";
-				txt += "\n Distancia: " + x4 + " "
-						+ getString(R.string.unidad_proximidad);
-				txt += "\n Módulo: " + modulo4 + " "
-						+ getString(R.string.unidad_proximidad);
+				txt += "Proximidad ("+ getString(R.string.unidad_proximidad)+")\n";
+				txt += "\n Distancia: " + x4;
+				txt += "\n Módulo: " + modulo4;
 				proximidad.setText(txt);
 				// Si detecta 0 lo represento
 				if (event.values[0] == 0) {
@@ -410,11 +397,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 						event.values[0], 2))));
 				double x5 = Math.round(event.values[0]*100.0)/100.0;
 				double modulo5 = Math.round(m5*100.0)/100.0;
-				txt += "Luminosidad\n";
-				txt += "\n Luminosidad: " + x5 + " "
-						+ getString(R.string.unidad_luz);
-				txt += "\n Módulo: " + modulo5 + " "
-						+ getString(R.string.unidad_luz);
+				txt += "Luminosidad ("+ getString(R.string.unidad_luz)+")\n";
+				txt += "\n Luminosidad: " + x5;
+				txt += "\n Módulo: " + modulo5;
 				luminosidad.setText(txt);
 				break;
 			}

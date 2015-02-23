@@ -217,31 +217,30 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(30);
 			renderer.setChartTitleTextSize(30);
 			renderer.setLegendTextSize(30);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("media")) {
-			valoresX.setLineWidth(3);
-			valoresY.setLineWidth(3);
-			valoresZ.setLineWidth(3);
-			modulo.setLineWidth(3);
+			valoresX.setLineWidth(2);
+			valoresY.setLineWidth(2);
+			valoresZ.setLineWidth(2);
+			modulo.setLineWidth(2);
 			renderer.setMargins(margenespeque);
 			renderer.setLabelsTextSize(20);
 			renderer.setLabelsTextSize(20);
 			renderer.setAxisTitleTextSize(20);
 			renderer.setChartTitleTextSize(20);
-			renderer.setLegendTextSize(20);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("baja")) {
-			valoresX.setLineWidth(3);
-			valoresY.setLineWidth(3);
-			valoresZ.setLineWidth(3);
-			modulo.setLineWidth(3);
+			valoresX.setLineWidth(2);
+			valoresY.setLineWidth(2);
+			valoresZ.setLineWidth(2);
+			modulo.setLineWidth(2);
 			renderer.setMargins(margenespeque);
 			renderer.setLabelsTextSize(15);
 			renderer.setLabelsTextSize(15);
 			renderer.setAxisTitleTextSize(15);
 			renderer.setChartTitleTextSize(15);
 			renderer.setLegendTextSize(15);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xhigh")) {
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
@@ -253,7 +252,7 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(25);
 			renderer.setChartTitleTextSize(25);
 			renderer.setLegendTextSize(25);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xxhigh")) {
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
@@ -265,7 +264,7 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(40);
 			renderer.setChartTitleTextSize(40);
 			renderer.setLegendTextSize(40);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
@@ -277,7 +276,7 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(40);
 			renderer.setChartTitleTextSize(40);
 			renderer.setLegendTextSize(40);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		}
 		
 		renderer.setChartTitle(titulografica);
@@ -332,9 +331,8 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(30);
 			renderer.setChartTitleTextSize(30);
 			renderer.setLegendTextSize(30);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 			renderer.isExternalZoomEnabled();
-
 		} else if (calidad.equalsIgnoreCase("media")) {
 			valoresX.setLineWidth(3);
 			modulo.setLineWidth(3);
@@ -344,7 +342,7 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(20);
 			renderer.setChartTitleTextSize(20);
 			renderer.setLegendTextSize(20);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("baja")) {
 			valoresX.setLineWidth(3);
 			modulo.setLineWidth(3);
@@ -354,7 +352,7 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(15);
 			renderer.setChartTitleTextSize(15);
 			renderer.setLegendTextSize(15);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xhigh")) {
 			valoresX.setLineWidth(5);
 			modulo.setLineWidth(5);
@@ -364,7 +362,7 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(25);
 			renderer.setChartTitleTextSize(25);
 			renderer.setLegendTextSize(25);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xxhigh")) {
 			valoresX.setLineWidth(5);
 			modulo.setLineWidth(5);
@@ -374,7 +372,7 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(40);
 			renderer.setChartTitleTextSize(40);
 			renderer.setLegendTextSize(40);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
 			valoresX.setLineWidth(5);
 			modulo.setLineWidth(5);
@@ -384,7 +382,7 @@ public class Graph extends Grafica {
 			renderer.setAxisTitleTextSize(40);
 			renderer.setChartTitleTextSize(40);
 			renderer.setLegendTextSize(40);
-			renderer.setFitLegend(true);
+			renderer.setShowLegend(false);
 		}
 		renderer.setChartTitle(titulografica);
 		renderer.setGridColor(Color.DKGRAY);

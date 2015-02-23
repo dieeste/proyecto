@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/eje_x"
-            android:textColor="#ffffff"
+            android:textColor="#ffff0000"
             android:visibility="gone" />
 
         <CheckBox
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/eje_y"
-            android:textColor="#ffffff"
+            android:textColor="#ff00ff00"
             android:visibility="gone" />
 
         <CheckBox
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/eje_modulo"
-            android:textColor="#ffffff"
+            android:textColor="#ffff00ff"
             android:visibility="gone" />
 
     </LinearLayout>
