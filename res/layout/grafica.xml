@@ -110,13 +110,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/gpsestado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/grabando"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#adff2f" />
+         android:id="@+id/gpsestado"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_below="@+id/grabando"
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         android:textColor="#adff2f" />
 
     <TextView
         android:id="@+id/grabando"
@@ -127,7 +127,7 @@
         android:drawableLeft="@drawable/ic_on"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#ADFF2F"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
      <TextView
          android:id="@+id/grabando2"
@@ -138,6 +138,6 @@
          android:drawableLeft="@drawable/ic_off"
          android:textAppearance="?android:attr/textAppearanceSmall"
          android:textColor="#ADFF2F"
-         android:visibility="gone" />
+         android:visibility="invisible" />
 
 </RelativeLayout>

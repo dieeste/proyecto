@@ -2,6 +2,7 @@ package com.example.app;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
@@ -116,67 +117,66 @@ public class LeerCsv extends Activity {
 
 			while (fichero.readRecord()) {
 				numerolineas = fichero.getColumnCount();
-				Log.d("numeor", "columnas asdfadsfa: " + numerolineas);
-				if (numerolineas == 6) {
-					double tiempo = Double.parseDouble(fichero.get("Tiempo"));
-					double x = Double.parseDouble(fichero.get("X"));
-					double y = Double.parseDouble(fichero.get("Y"));
-					double z = Double.parseDouble(fichero.get("Z"));
-					double modulo = Double.parseDouble(fichero.get("Modulo"));
-					unidad = fichero.getHeader(6);
+				if (numerolineas == 5) {
+					double tiempo = Double.parseDouble(fichero.get("t (s)"));
+					double x = Double.parseDouble(fichero.get("X").replace(",", "."));
+					double y = Double.parseDouble(fichero.get("Y").replace(",", "."));
+					double z = Double.parseDouble(fichero.get("Z").replace(",", "."));
+					double modulo = Double.parseDouble(fichero.get("Modulo").replace(",", "."));
+					unidad = fichero.getHeader(5);
 					AccelData data = new AccelData(tiempo, x, y, z, modulo);
 					datos.add(data);
-				} else if (numerolineas == 4) {
-					double tiempo = Double.parseDouble(fichero.get("Tiempo"));
-					double x = Double.parseDouble(fichero.get("X"));
-					double modulo = Double.parseDouble(fichero.get("Modulo"));
-					unidad = fichero.get("Unidad sensor");
+				} else if (numerolineas == 3) {
+					double tiempo = Double.parseDouble(fichero.get("t (s)"));
+					double x = Double.parseDouble(fichero.get("X").replace(",", "."));
+					double modulo = Double.parseDouble(fichero.get("Modulo").replace(",", "."));
+					unidad = fichero.getHeader(3);
 					AccelData2 data = new AccelData2(tiempo, x, modulo);
 					sensor.add(data);
 				}
 			}
 			fichero.close();
-			if (numerolineas == 6) {
-				if (unidad.equalsIgnoreCase("m/sÂ²")) {
+			if (numerolineas == 5) {
+				if (unidad.equalsIgnoreCase("Unidad sensor: m/sÂ²")) {
 					tituloejey = "a ("
-							+ getString(R.string.unidad_acelerometro)+")";
+							+ getString(R.string.unidad_acelerometro) + ")";
 					titulografica = getString(R.string.acelerometro);
-				} else if (unidad.equalsIgnoreCase(getResources().getString(
-						R.string.unidad_giroscopio))) {
-					tituloejey = "ω ("
-							+ getString(R.string.unidad_giroscopio)+")";
-					titulografica = getString(R.string.giroscopio);
-				} else if (unidad.equalsIgnoreCase("ÂµT")) {
-					tituloejey = "B (" + getString(R.string.unidad_campo_magnetico)
+				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
+						+ getResources().getString(R.string.unidad_giroscopio))) {
+					tituloejey = "ω (" + getString(R.string.unidad_giroscopio)
 							+ ")";
+					titulografica = getString(R.string.giroscopio);
+				} else if (unidad.equalsIgnoreCase("Unidad sensor: ÂµT")) {
+					tituloejey = "B ("
+							+ getString(R.string.unidad_campo_magnetico) + ")";
 					titulografica = getString(R.string.magnetico);
 				}
 				mGraph = new Graph(this);
 				mGraph.iniciar(datos);
 				mGraph.ejeY(datos);
-				mGraph.setProperties(true,true,true,true, titulografica, tituloejey, calidad,
-						tamano);
+				mGraph.setProperties(true, true, true, true, titulografica,
+						tituloejey, calidad, tamano);
 				view = mGraph.getGraph();
 				layout.addView(view);
 				for (AccelData data : datos) {
 					datos.remove(data);
 				}
-			} else if (numerolineas == 4) {
-				if (unidad.equalsIgnoreCase(getResources().getString(
-						R.string.unidad_luz))) {
-					tituloejey = "E (" + getString(R.string.unidad_luz)+")";
+			} else if (numerolineas == 3) {
+				if (unidad.equalsIgnoreCase("Unidad sensor: "
+						+ getResources().getString(R.string.unidad_luz))) {
+					tituloejey = "E (" + getString(R.string.unidad_luz) + ")";
 					titulografica = getString(R.string.luminosidad);
-				} else if (unidad.equalsIgnoreCase(getResources().getString(
-						R.string.unidad_proximidad))) {
-					tituloejey = "d ("
-							+ getString(R.string.unidad_proximidad)+")";
+				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
+						+ getResources().getString(R.string.unidad_proximidad))) {
+					tituloejey = "d (" + getString(R.string.unidad_proximidad)
+							+ ")";
 					titulografica = getResources().getString(
 							R.string.proximidad);
 				}
 				mGraph = new Graph(this);
 				mGraph.iniciar2(sensor);
 				mGraph.ejeY2(sensor);
-				mGraph.setProperties2(true,true, titulografica, tituloejey,
+				mGraph.setProperties2(true, true, titulografica, tituloejey,
 						calidad, tamano);
 				view = mGraph.getGraph();
 				layout.addView(view);

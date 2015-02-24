@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -393,8 +394,8 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.initData(sensorDatas);
 					mGraph.setProperties(checkx, checky, checkz, checkmodulo,
 							getString(R.string.acelerometro), "a ("
-									+ getString(R.string.unidad_acelerometro)+")",
-							calidad, tamano);
+									+ getString(R.string.unidad_acelerometro)
+									+ ")", calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -429,8 +430,8 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.initData(sensorGiroscopio);
 					mGraph.setProperties(checkx, checky, checkz, checkmodulo,
 							getString(R.string.giroscopio), "ω ("
-									+ getString(R.string.unidad_giroscopio)+")",
-							calidad, tamano);
+									+ getString(R.string.unidad_giroscopio)
+									+ ")", calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -462,8 +463,9 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY2(sensorLuz);
 					mGraph.ejeX2(sensorLuz);
 					mGraph.initData2(sensorLuz);
-					mGraph.setProperties2(checkx, checkmodulo, getString(R.string.luminosidad),
-							"E (" + getString(R.string.unidad_luz)+")",
+					mGraph.setProperties2(checkx, checkmodulo,
+							getString(R.string.luminosidad), "E ("
+									+ getString(R.string.unidad_luz) + ")",
 							calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
@@ -535,8 +537,8 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.initData2(sensorProximidad);
 					mGraph.setProperties2(checkx, checkmodulo,
 							getString(R.string.proximidad), "d ("
-									+ getString(R.string.unidad_proximidad)+")",
-							calidad, tamano);
+									+ getString(R.string.unidad_proximidad)
+									+ ")", calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -646,7 +648,8 @@ public class Grafica extends Activity implements OnClickListener,
 
 	private class SaveThread extends Thread {
 
-	DecimalFormat formateador = new DecimalFormat("0.00##");
+		DecimalFormat formateador = new DecimalFormat("0.00##");
+
 		@Override
 		public void run() {
 			if (gpsdatos.size() > 0) {
@@ -716,7 +719,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor:;m/s²\n");
+				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: m/s²\n");
 				for (AccelData values : sensorDatas) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					csvData.append(String.valueOf(tiempo)
@@ -727,8 +730,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";"
 							+ String.valueOf(formateador.format(values.getZ()))
 							+ ";"
-							+ String.valueOf(formateador.format(values.getModulo()))
-							+ ";m/s²" + "\n");
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -785,20 +788,20 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("Tiempo;X;Y;Z;Modulo;Unidad sensor;rad/s\n");
+				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: rad/s\n");
 				for (AccelData values : sensorGiroscopio) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
 					csvData.append(String.valueOf(tiempo)
 							+ ";"
-							+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
+							+ String.valueOf(formateador.format(values.getX()))
 							+ ";"
-							+ String.valueOf(Math.round(values.getY() * 100.0) / 100.0)
+							+ String.valueOf(formateador.format(values.getY()))
 							+ ";"
-							+ String.valueOf(Math.round(values.getZ() * 100.0) / 100.0)
+							+ String.valueOf(formateador.format(values.getZ()))
 							+ ";"
-							+ String.valueOf(Math.round(values.getModulo() * 100.0) / 100.0)
-							+ ";rad/s" + "\n");
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -855,20 +858,20 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: µT\n");
 				for (AccelData values : sensorMagnetico) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
 					csvData.append(String.valueOf(tiempo)
 							+ ";"
-							+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
+							+ String.valueOf(formateador.format(values.getX()))
 							+ ";"
-							+ String.valueOf(Math.round(values.getY() * 100.0) / 100.0)
+							+ String.valueOf(formateador.format(values.getY()))
 							+ ";"
-							+ String.valueOf(Math.round(values.getZ() * 100.0) / 100.0)
+							+ String.valueOf(formateador.format(values.getZ()))
 							+ ";"
-							+ String.valueOf(Math.round(values.getModulo() * 100.0) / 100.0)
-							+ ";µT" + "\n");
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -924,19 +927,15 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("Tiempo;X;Modulo;Unidad sensor\n");
+				csvData.append("t (s);X;Modulo;Unidad sensor: Lux\n");
 				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					/*
-					 * double d = ((values.getTimestamp() - t) % 1000) * 0.001;
-					 * double fin = f + d;
-					 */
 					csvData.append(String.valueOf(tiempo)
 							+ ";"
-							+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
+							+ String.valueOf(formateador.format(values.getX()))
 							+ ";"
-							+ String.valueOf(Math.round(values.getModulo() * 100.0) / 100.0)
-							+ ";Lux" + "\n");
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -992,16 +991,16 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("Tiempo;X;Modulo;Unidad sensor\n");
+				csvData.append("t (s);X;Modulo;Unidad sensor: cm\n");
 				for (AccelData2 values : sensorProximidad) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
 					csvData.append(String.valueOf(tiempo)
 							+ ";"
-							+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
+							+ String.valueOf(formateador.format(values.getX()))
 							+ ";"
-							+ String.valueOf(Math.round(values.getModulo() * 100.0) / 100.0)
-							+ ";cm" + "\n");
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -1106,6 +1105,12 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.reiniciar):
 			iniciar.setVisibility(Button.VISIBLE);
 			continuar.setVisibility(Button.GONE);
+			ejex.setVisibility(CheckBox.GONE);
+			ejey.setVisibility(CheckBox.GONE);
+			ejez.setVisibility(CheckBox.GONE);
+			modulo.setVisibility(CheckBox.GONE);
+			graba.setVisibility(TextView.INVISIBLE);
+			graba2.setVisibility(TextView.INVISIBLE);
 			parar.setEnabled(false);
 			reiniciar.setEnabled(false);
 			layout.removeView(view);
@@ -1147,6 +1152,7 @@ public class Grafica extends Activity implements OnClickListener,
 	// vacías entonces en las opciones no aparecen esos sensores para que no
 	// aparezca un error y finalice la aplicación.
 
+	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
@@ -1185,14 +1191,24 @@ public class Grafica extends Activity implements OnClickListener,
 			MenuItem item = menu.findItem(R.id.luz);
 			item.setVisible(false);
 		}
-		if (sensorLuz.size() > 0 && sensorProximidad.size() > 0
-				&& sensorMagnetico.size() > 0 && sensorGiroscopio.size() > 0
-				&& sensorDatas.size() > 0) {
-			MenuItem item2 = menu.findItem(R.id.guardar);
-			item2.setVisible(true);
-			MenuItem item3 = menu.findItem(R.id.enviar);
-			item3.setVisible(true);
-		} 
+		if (sensorLuz.size() == 0 && sensorProximidad.size() == 0
+				&& sensorMagnetico.size() == 0 && sensorGiroscopio.size() == 0
+				&& sensorDatas.size() == 0) {
+			MenuItem item = menu.findItem(R.id.guardar);
+			item.setEnabled(false);
+		} else {
+			MenuItem item = menu.findItem(R.id.guardar);
+			item.setEnabled(true);
+		}
+		if (sensorLuz.size() == 0 && sensorProximidad.size() == 0
+				&& sensorMagnetico.size() == 0 && sensorGiroscopio.size() == 0
+				&& sensorDatas.size() == 0) {
+			MenuItem item = menu.findItem(R.id.enviar);
+			item.setEnabled(false);
+		} else {
+			MenuItem item = menu.findItem(R.id.enviar);
+			item.setEnabled(true);
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -1237,7 +1253,7 @@ public class Grafica extends Activity implements OnClickListener,
 			break;
 		case (R.id.enviar):
 			ArrayList<Uri> ficheros = new ArrayList<Uri>();
-
+			DecimalFormat formateador = new DecimalFormat("0.00##");
 			if (gpsdatos.size() > 0) {
 
 				StringBuilder csvData = new StringBuilder();
@@ -1292,21 +1308,20 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDataexportar.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDataexportar
+						.append("t (s);X;Y;Z;Modulo;Unidad sensor: m/s²\n");
 				for (AccelData values : sensorDatas) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					csvDataexportar
-							.append(String.valueOf(tiempo)
-									+ ";"
-									+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values.getY() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values.getZ() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values
-											.getModulo() * 100.0) / 100.0)
-									+ ";m/s²" + "\n");
+					csvDataexportar.append(String.valueOf(tiempo)
+							+ ";"
+							+ String.valueOf(formateador.format(values.getX()))
+							+ ";"
+							+ String.valueOf(formateador.format(values.getY()))
+							+ ";"
+							+ String.valueOf(formateador.format(values.getZ()))
+							+ ";"
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 				try {
 					String appName = getResources()
@@ -1349,22 +1364,20 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDatagiro.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDatagiro.append("t (s);X;Y;Z;Modulo;Unidad sensor: rad/s\n");
 				for (AccelData values : sensorGiroscopio) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
-					csvDatagiro
-							.append(String.valueOf(tiempo)
-									+ ";"
-									+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values.getY() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values.getZ() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values
-											.getModulo() * 100.0) / 100.0)
-									+ ";rad/s" + "\n");
+					csvDatagiro.append(String.valueOf(tiempo)
+							+ ";"
+							+ String.valueOf(formateador.format(values.getX()))
+							+ ";"
+							+ String.valueOf(formateador.format(values.getY()))
+							+ ";"
+							+ String.valueOf(formateador.format(values.getZ()))
+							+ ";"
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 				try {
 
@@ -1408,22 +1421,20 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDatamagne.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDatamagne.append("t (s);X;Y;Z;Modulo;Unidad sensor: µT\n");
 				for (AccelData values : sensorMagnetico) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
-					csvDatamagne
-							.append(String.valueOf(tiempo)
-									+ ";"
-									+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values.getY() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values.getZ() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values
-											.getModulo() * 100.0) / 100.0)
-									+ ";µT" + "\n");
+					csvDatamagne.append(String.valueOf(tiempo)
+							+ ";"
+							+ String.valueOf(formateador.format(values.getX()))
+							+ ";"
+							+ String.valueOf(formateador.format(values.getY()))
+							+ ";"
+							+ String.valueOf(formateador.format(values.getZ()))
+							+ ";"
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 
 				try {
@@ -1468,17 +1479,15 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDataluz.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDataluz.append("t (s);X;Modulo;Unidad sensor: Lux\n");
 				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					csvDataluz
-							.append(String.valueOf(tiempo)
-									+ ";"
-									+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values
-											.getModulo() * 100.0) / 100.0)
-									+ ";Lux" + "\n");
+					csvDataluz.append(String.valueOf(tiempo)
+							+ ";"
+							+ String.valueOf(formateador.format(values.getX()))
+							+ ";"
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 
 				try {
@@ -1523,18 +1532,16 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDataproxi.append("Tiempo;X;Y;Z;Modulo;Unidad sensor\n");
+				csvDataproxi.append("t (s);X;Modulo;Unidad sensor: cm\n");
 				for (AccelData2 values : sensorProximidad) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
-					csvDataproxi
-							.append(String.valueOf(tiempo)
-									+ ";"
-									+ String.valueOf(Math.round(values.getX() * 100.0) / 100.0)
-									+ ";"
-									+ String.valueOf(Math.round(values
-											.getModulo() * 100.0) / 100.0)
-									+ ";cm" + "\n");
+					csvDataproxi.append(String.valueOf(tiempo)
+							+ ";"
+							+ String.valueOf(formateador.format(values.getX()))
+							+ ";"
+							+ String.valueOf(formateador.format(values
+									.getModulo())) + "\n");
 				}
 
 				try {
@@ -1676,7 +1683,7 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.initData(sensorDatas);
 		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
 				getString(R.string.acelerometro), "a ("
-						+ getString(R.string.unidad_acelerometro)+")",
+						+ getString(R.string.unidad_acelerometro) + ")",
 				calidad, tamano);
 		if (!init) {
 			view = mGraph.getGraph();
@@ -1703,8 +1710,8 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.initData(sensorGiroscopio);
 		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
 				getString(R.string.giroscopio), "ω ("
-						+ getString(R.string.unidad_giroscopio)+")",
-				calidad, tamano);
+						+ getString(R.string.unidad_giroscopio) + ")", calidad,
+				tamano);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);
@@ -1729,9 +1736,9 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.ejeX(sensorMagnetico);
 		mGraph.initData(sensorMagnetico);
 		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
-				getString(R.string.magnetico),
-				"B (" + getString(R.string.unidad_campo_magnetico)
-						+ ")", calidad, tamano);
+				getString(R.string.magnetico), "B ("
+						+ getString(R.string.unidad_campo_magnetico) + ")",
+				calidad, tamano);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);
@@ -1757,8 +1764,8 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.initData2(sensorProximidad);
 		mGraph.setProperties2(checkx, checkmodulo,
 				getString(R.string.proximidad), "d ("
-						+ getString(R.string.unidad_proximidad)+")",
-				calidad, tamano);
+						+ getString(R.string.unidad_proximidad) + ")", calidad,
+				tamano);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);
@@ -1782,9 +1789,9 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.ejeY2(sensorLuz);
 		mGraph.ejeX2(sensorLuz);
 		mGraph.initData2(sensorLuz);
-		mGraph.setProperties2(checkx, checkmodulo, getString(R.string.luminosidad),
-				"E (" + getString(R.string.unidad_luz)+")",
-				calidad, tamano);
+		mGraph.setProperties2(checkx, checkmodulo,
+				getString(R.string.luminosidad), "E ("
+						+ getString(R.string.unidad_luz) + ")", calidad, tamano);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);

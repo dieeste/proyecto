@@ -27,8 +27,6 @@ public class Inicio extends Activity implements OnClickListener{
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		// Hide title bar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.inicio);
 		init = (RelativeLayout) findViewById(R.id.init);
 		init.setOnClickListener(this);

@@ -112,7 +112,7 @@
         <activity
             android:name="Grafica"
             android:label=" "
-            android:icon="@drawable/iconografic" >
+            android:icon="@drawable/estadistica" >
             <action android:name=".Grafica" />
 
             <category android:name="android.intent.category.DEFAULT" />
