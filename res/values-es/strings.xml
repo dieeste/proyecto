@@ -6,15 +6,12 @@
     <string name="action_settings">Settings</string>
     <string name="config">Configuración</string>
     <string name="acercaDe">Acerca de</string>
+    <string name="idiomas">Idiomas</string>
     <string name="medicion">Medición de datos</string>
-    <string name="ejemplos">Ejemplos</string>
-    <string name="teoria">Teoría</string>
     <string name="explicacion">Esto es acerda de</string>
     <string name="empezar">Empezar</string>
     <string name="continuar">Continuar</string>
     <string name="parar">Pausar/Parar</string>
-    <string name="cuenta">Tiempo en segundos: </string>
-    <string name="mostrar">&quot;&quot;</string>
     <string name="acelerometro">Acelerómetro</string>
     <string name="luminosidad">Sensor de luz</string>
     <string name="proximidad">Sensor de proximidad</string>
@@ -22,7 +19,6 @@
     <string name="magnetico">Magnetómetro</string>
     <string name="compartir">Compartir</string>
     <string name="guardar">Guardar (csv)</string>
-    <string name="cambiar">Cambiar gráfica sensor</string>
     <string name="guardado_acelerometro">Acelerómetro guardado</string>
     <string name="error_guardar">Error al guardar, no guardado</string>
     <string name="eje_x">X</string>
@@ -30,9 +26,9 @@
     <string name="eje_z">Z</string>
     <string name="eje_modulo">|V|</string>
     <string name="unidad_acelerometro">m/s²</string>
-    <string name="gpss">¿DESEA ACTIVAR EL GPS?</string>
-    <string name="tiempo">¿DESEA MARCAR UN TIEMPO DETERMINADO?</string>
-    <string name="frecuencias">SELECCIONE LA FRECUENCA</string>
+    <string name="tiempo">TIEMPO DE GRABACIÓN</string>
+    <string name="frecuencias">FRECUENCIA DE MUESTREO</string>
+    <string name="temporizador">TEMPORIZADOR</string>
     <string name="infoacelerometro">¿QUÉ ES EL ACELERÓMETRO?</string>
     <string name="infogiroscopio">¿QUÉ ES EL GIROSCOPIO?</string>
     <string name="infomagnetico">¿QUÉ ES EL MAGNETÓMETRO?</string>
@@ -106,5 +102,8 @@ Pero hay más, si tocamos la pantalla por accidente mientras estamos en una llam
 Normalmente, si el dispositivo es oscuro es casi imperceptible pero si miramos a contraluz podremos verlo, si es que tiene, claro.\n</string>
     <string name="tituloprox4">¿QUE DATOS NOS MUESTRA EL SENSOR DE PROXIMIDAD?\n</string>
     <string name="explicacionprox4">El sensor de proximidad proporciona la distancia entre el dispositivo y otro objeto. El dispositivo puede utilizarlo para detectar si el usuario sostiene el dispositivo cerca (consulte la tabla); por lo tanto, podrá determinar si el usuario se encuentra en una llamada telefónica y podrá apagar la pantalla durante la llamada telefónica.\n</string>
+    <string name="gpsoff">GPS apagado</string>
+    <string name="gpsbuscando">GPS buscando</string>
+    <string name="gpssignal">GPS señal</string>
 
 </resources>

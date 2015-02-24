@@ -13,20 +13,22 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-public class Setting extends PreferenceActivity implements OnPreferenceChangeListener{
+public class Setting extends PreferenceActivity implements
+		OnPreferenceChangeListener {
 	PreferenceManager manager;
 	ListPreference listPreference;
 	SharedPreferences sharedPreference;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.settings);
-sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-		
+		sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+
 		manager = getPreferenceManager();
 		listPreference = (ListPreference) manager.findPreference("idioma");
-		
+
 		listPreference.setOnPreferenceChangeListener(this);
 	}
 
@@ -36,26 +38,26 @@ sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
 		Configuration config = resource.getConfiguration();
 		Locale spanish = new Locale("es", "ES");
 		int pos = Integer.parseInt((String) newValue);
-    	if (pos == 1) {
-    		sharedPreference.edit().putString("language", "en").commit();
+		if (pos == 1) {
+			sharedPreference.edit().putString("language", "en").commit();
 			config.locale = Locale.ENGLISH;
 			listPreference.setValue("1");
 		} else if (pos == 2) {
 			sharedPreference.edit().putString("language", "fr").commit();
 			config.locale = Locale.FRANCE;
 			listPreference.setValue("2");
-		}else if (pos==3){
+		} else if (pos == 3) {
 			sharedPreference.edit().putString("language", "es").commit();
 			config.locale = spanish;
 			listPreference.setValue("3");
-		}else {
+		} else {
 			sharedPreference.edit().putString("language", "auto").commit();
 			config.locale = Locale.getDefault();
 			listPreference.setValue("0");
 		}
-		
+
 		getBaseContext().getResources().updateConfiguration(config, null);
-		
+
 		Intent intent = new Intent();
 		intent.setClass(this, MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

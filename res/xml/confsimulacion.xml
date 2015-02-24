@@ -7,20 +7,20 @@
         android:entryValues="@array/frecuencias"
         android:key="frecuencia"
         android:summary="Elige una frecuencia de los sensores, número de muestras por segundo."
-        android:title="FRECUENCIA DE MUESTREO" />
+        android:title="@string/frecuencias" />
     <ListPreference
         android:defaultValue="0"
         android:entries="@array/temporizador"
         android:entryValues="@array/temporizadoropciones"
         android:key="temporizador"
-        android:title="TEMPORIZADOR" />
+        android:title="@string/temporizador" />
     <ListPreference
         android:defaultValue="0"
         android:entries="@array/tiempograbacion"
         android:entryValues="@array/opcionestiempograbacion"
         android:key="tiempo"
         android:summary="Selecciona el tiempo que durará la grabación."
-        android:title="TIEMPO DE GRABACIÓN" />
+        android:title="@string/tiempo" />
     
 
 </PreferenceScreen>

@@ -200,7 +200,7 @@ public class Grafica extends Activity implements OnClickListener,
 		milocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				milocListener);
 		if (latitud == 0 && longitud == 0) {
-			gps.setText("GPS buscando");
+			gps.setText(getResources().getString(R.string.gpsbuscando));
 		}
 		// medimos la calidad de la pantalla y su tamaño para poder estableces
 		// el tamaño y los márgenes de la gráfica
@@ -270,7 +270,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	public class MiLocationListener implements LocationListener {
 		public void onLocationChanged(Location loc) {
-			gps.setText("GPS señal");
+			gps.setText(getResources().getString(R.string.gpssignal));
 
 			latitud = loc.getLatitude();
 			longitud = loc.getLongitude();
@@ -281,7 +281,7 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 
 		public void onProviderDisabled(String provider) {
-			gps.setText("GPS apagado");
+			gps.setText(getResources().getString(R.string.gpsoff));
 		}
 
 		public void onProviderEnabled(String provider) {
@@ -329,7 +329,6 @@ public class Grafica extends Activity implements OnClickListener,
 						@Override
 						public void onFinish() { // TODO Auto-generated method
 													// stub
-							Log.d("tiempo", "Paramos por tiempo");
 							onStop();
 							reiniciar.setEnabled(true);
 							iniciar.setEnabled(true);
@@ -748,7 +747,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Acelerometro "
+					String fileName = getResources().getString(
+							R.string.acelerometro)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -818,7 +819,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Giroscopio "
+					String fileName = getResources().getString(
+							R.string.giroscopio)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -888,7 +891,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Magnetometro "
+					String fileName = getResources().getString(
+							R.string.magnetico)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -952,7 +957,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Sensor luz "
+					String fileName = getResources().getString(
+							R.string.luminosidad)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -1017,7 +1024,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Sensor proximidad "
+					String fileName = getResources().getString(
+							R.string.proximidad)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -1152,7 +1161,6 @@ public class Grafica extends Activity implements OnClickListener,
 	// vacías entonces en las opciones no aparecen esos sensores para que no
 	// aparezca un error y finalice la aplicación.
 
-	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
@@ -1333,7 +1341,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Acelerometro "
+					String fileName = getResources().getString(
+							R.string.acelerometro)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -1390,7 +1400,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Giroscopio "
+					String fileName = getResources().getString(
+							R.string.giroscopio)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -1448,7 +1460,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Magnetometro "
+					String fileName = getResources().getString(
+							R.string.magnetico)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -1501,7 +1515,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Sensor luz "
+					String fileName = getResources().getString(
+							R.string.luminosidad)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
@@ -1555,7 +1571,9 @@ public class Grafica extends Activity implements OnClickListener,
 						dir.mkdirs();
 					}
 
-					String fileName = "Sensor proximidad "
+					String fileName = getResources().getString(
+							R.string.proximidad)
+							+ " "
 							+ DateFormat
 									.format("dd-MM-yyyy kk-mm-ss",
 											System.currentTimeMillis())
