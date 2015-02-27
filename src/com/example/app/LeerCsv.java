@@ -119,17 +119,23 @@ public class LeerCsv extends Activity {
 				numerolineas = fichero.getColumnCount();
 				if (numerolineas == 5) {
 					double tiempo = Double.parseDouble(fichero.get("t (s)"));
-					double x = Double.parseDouble(fichero.get("X").replace(",", "."));
-					double y = Double.parseDouble(fichero.get("Y").replace(",", "."));
-					double z = Double.parseDouble(fichero.get("Z").replace(",", "."));
-					double modulo = Double.parseDouble(fichero.get("Modulo").replace(",", "."));
+					double x = Double.parseDouble(fichero.get("X").replace(",",
+							"."));
+					double y = Double.parseDouble(fichero.get("Y").replace(",",
+							"."));
+					double z = Double.parseDouble(fichero.get("Z").replace(",",
+							"."));
+					double modulo = Double.parseDouble(fichero.get("Modulo")
+							.replace(",", "."));
 					unidad = fichero.getHeader(5);
 					AccelData data = new AccelData(tiempo, x, y, z, modulo);
 					datos.add(data);
 				} else if (numerolineas == 3) {
 					double tiempo = Double.parseDouble(fichero.get("t (s)"));
-					double x = Double.parseDouble(fichero.get("X").replace(",", "."));
-					double modulo = Double.parseDouble(fichero.get("Modulo").replace(",", "."));
+					double x = Double.parseDouble(fichero.get("X").replace(",",
+							"."));
+					double modulo = Double.parseDouble(fichero.get("Modulo")
+							.replace(",", "."));
 					unidad = fichero.getHeader(3);
 					AccelData2 data = new AccelData2(tiempo, x, modulo);
 					sensor.add(data);
@@ -137,7 +143,9 @@ public class LeerCsv extends Activity {
 			}
 			fichero.close();
 			if (numerolineas == 5) {
-				if (unidad.equalsIgnoreCase("Unidad sensor: m/sÂ²")) {
+				if (unidad.equalsIgnoreCase("Unidad sensor: "
+						+ getResources()
+								.getString(R.string.unidad_acelerometro))) {
 					tituloejey = "a ("
 							+ getString(R.string.unidad_acelerometro) + ")";
 					titulografica = getString(R.string.acelerometro);
@@ -146,7 +154,9 @@ public class LeerCsv extends Activity {
 					tituloejey = "ω (" + getString(R.string.unidad_giroscopio)
 							+ ")";
 					titulografica = getString(R.string.giroscopio);
-				} else if (unidad.equalsIgnoreCase("Unidad sensor: ÂµT")) {
+				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
+						+ getResources().getString(
+								R.string.unidad_campo_magnetico))) {
 					tituloejey = "B ("
 							+ getString(R.string.unidad_campo_magnetico) + ")";
 					titulografica = getString(R.string.magnetico);

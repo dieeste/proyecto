@@ -334,7 +334,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 				txt += "\n X: " + x;
 				txt += "\n Y: " + y;
 				txt += "\n Z: " + z;
-				txt += "\n |V|: " + modulo;
+				txt += "\n a: " + modulo;
 				acelerometro.setText(txt);
 				break;
 
@@ -351,7 +351,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 				txt += "\n X: " + x2;
 				txt += "\n Y: " + y2;
 				txt += "\n Z: " + z2;
-				txt += "\n |V|: " + modulo2;
+				txt += "\n ω: " + modulo2;
 				giroscopo.setText(txt);
 				break;
 
@@ -368,7 +368,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 				txt += "\n X: " + x3;
 				txt += "\n Y: " + y3;
 				txt += "\n Z: " + z3;
-				txt += "\n |V|: " + modulo3;
+				txt += "\n B: " + modulo3;
 				magnetico.setText(txt);
 				break;
 
@@ -378,8 +378,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double x4 = Math.round(event.values[0]*10000.0)/10000.0;
 				double modulo4 = Math.round(m4*10000.0)/10000.0;
 				txt += getString(R.string.proximidad)+ " ("+getString(R.string.unidad_proximidad)+")\n";
-				txt += "\n Distancia: " + x4;
-				txt += "\n |V|: " + modulo4;
+				txt += "\n "+getString(R.string.distancia)+": " + x4;
+				txt += "\n d: " + modulo4;
 				proximidad.setText(txt);
 				// Si detecta 0 lo represento
 				if (event.values[0] == 0) {
@@ -397,8 +397,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double x5 = Math.round(event.values[0]*10000.0)/10000.0;
 				double modulo5 = Math.round(m5*10000.0)/10000.0;
 				txt += getString(R.string.luminosidad)+ " ("+getString(R.string.unidad_luz)+")\n";
-				txt += "\n Luminosidad: " + x5;
-				txt += "\n |V|: " + modulo5;
+				txt += "\n "+getString(R.string.luminosi)+": " + x5;
+				txt += "\n E: " + modulo5;
 				luminosidad.setText(txt);
 				break;
 			}

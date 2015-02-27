@@ -24,7 +24,9 @@
     <string name="eje_x">X</string>
     <string name="eje_y">Y</string>
     <string name="eje_z">Z</string>
-    <string name="eje_modulo">|V|</string>
+    <string name="eje_modulo">Module</string>
+    <string name="distancia">Distance</string>
+    <string name="luminosi">Luminosité</string>
     <string name="unidad_acelerometro">m/s²</string>
     <string name="tiempo">TEMPS D\'ENREGISTREMENT</string>
     <string name="frecuencias">FRÉQUENCE D\'ENCHANTILLONNAGE</string>
@@ -38,11 +40,11 @@
     <string name="modulo">|V|</string>
     <string name="grafica">Graphique</string>
     <string name="cargargraficas">Charger graphiques</string>
-    <string name="checkAcelerometro">Enregistrer graphique accéléromètre</string>
-    <string name="checkGiroscopio">Enregistrer graphique gyroscope</string>
-    <string name="checkMagnetometro">Enregistrer graphique magnétomètre</string>
-    <string name="checkLuz">Enregistrer graphique capteur de lumière</string>
-    <string name="checkProximidad">Enregistrer graphique capteur de proximité</string>
+    <string name="checkAcelerometro">Enregistrer données</string>
+    <string name="checkGiroscopio">Enregistrer données</string>
+    <string name="checkMagnetometro">Enregistrer données</string>
+    <string name="checkLuz">Enregistrer données</string>
+    <string name="checkProximidad">Enregistrer données</string>
     <string name="unidad_giroscopio">rad/s</string>
     <string name="unidad_campo_magnetico">µT</string>
     <string name="unidad_luz">Lux</string>
@@ -55,10 +57,10 @@
     <string name="titulo1">\n¿QUÉ ES EL ACELERÓMETRO?\n</string>
     <string name="explicacion1">Es un dispositivo que mide la aceleración, tasa de cambio de la velocidad de un objeto, y las fuerzas inducidas por la gravedad, es decir, nos permite detectar el movimiento y el giro.\n Esto se mide en metros por segundo al cuadrado (m/s2) o en fuerzas G (g).\n</string>
     <string name="titulo2">¿CÓMO FUNCIONA EL ACELERÓMETRO?\n</string>
-    <string name="explicacion2">La base de su funcionamiento es un condensador, un dispositivo que generalmente está integrado por dos placas metálicas fijas, una enfrente de la otra, y por un material dieléctrico.\n
-Una de esas placas es móvil, de forma que cuando apliques una fuerza sobre el dispositivo, la capacidad del condensador cambiará. Se hará mayor o menor en función del movimiento.\n
-Al interior del condensador llega energía a través de esas placas procedente en última instancia de la batería del dispositivo. En función de si la capacidad del condensador es mayor o menor el material dieléctrico que existe entre esas placas será capaz de almacenar una carga u otra.\n
-Así es posible que el sensor mida qué cantidad de carga eléctrica (voltaje) se ha almacenado en el material dieléctrico y envíe esa información al microprocesador del dispositivo para que determine la fuerza y la aceleración a la que ha sido sometido. El microprocesador ha registrado el voltaje obtenido y lo ha guardado en una base de datos donde ya tenía registrado otros voltajes, que corresponde a una fuerza y a una aceleración determinadas.\n</string>
+    <string name="explicacion2">La base de son fonctionnement est un condensateur, un dispositif qui est habituellement constituée de deux plaques métalliques fixes qui se font face, et un matériau diélectrique.\n
+Un de ces plaques est mobile, quand vous appliquez une force sur le dispositif, le changement de capacité. Il sera plus ou moins en fonction du mouvement.\n
+A l\'intérieur du condensateur de l\'énergie vient à travers ces plaques venant en fin de compte à partir de la batterie de l\'appareil. Selon que le condensateur est supérieur ou inférieur, le matériau diélectrique entre les plaques sera en mesure de stocker une charge ou d\'une autre.\n
+Ainsi, il est possible que le capteur mesure la quantité de charge électrique (tension) est stockée dans le matériau diélectrique et envoient ces informations au dispositif à microprocesseur pour déterminer la force et l\'accélération qui a été soumis. Le microprocesseur enregistre la tension obtenue et enregistrée dans une base de données qui a déjà enregistré d\'autres tensions, correspondant à une force et à une certaine accélération.\n</string>
     <string name="titulo3">\n¿PARA QUÉ SIRVE EL ACELERÓMETRO?\n</string>
     <string name="explicacion3">Un acelerómetro puede cambiar automáticamente la orientación de la pantalla y detectar la posición vertical u horizontal de la pantalla.\n</string>
     <string name="titulo4">¿QUÉ DATOS NOS MUESTRA?\n</string>

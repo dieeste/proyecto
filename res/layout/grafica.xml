@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/linear"
-        android:drawableLeft="@drawable/ic_on"
+        android:drawableLeft="@drawable/ic_off"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#ADFF2F"
         android:visibility="invisible" />
@@ -135,7 +135,7 @@
          android:layout_height="wrap_content"
          android:layout_alignParentRight="true"
          android:layout_alignTop="@+id/linear"
-         android:drawableLeft="@drawable/ic_off"
+         android:drawableLeft="@drawable/ic_on"
          android:textAppearance="?android:attr/textAppearanceSmall"
          android:textColor="#ADFF2F"
          android:visibility="invisible" />

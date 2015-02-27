@@ -207,10 +207,10 @@ public class Graph extends Grafica {
 		// recogemos la calidad de pantalla para escribir el grosor de las
 		// líneas
 		if (calidad.equalsIgnoreCase("alta")) {
-			valoresX.setLineWidth(5);
-			valoresY.setLineWidth(5);
-			valoresZ.setLineWidth(5);
-			modulo.setLineWidth(5);
+			valoresX.setLineWidth(3);
+			valoresY.setLineWidth(3);
+			valoresZ.setLineWidth(3);
+			modulo.setLineWidth(3);
 			renderer.setMargins(margenesnormal);
 			renderer.setLabelsTextSize(30);
 			renderer.setLabelsTextSize(30);

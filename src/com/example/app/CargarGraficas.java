@@ -21,9 +21,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class CargarGraficas extends ListActivity{
+public class CargarGraficas extends ListActivity {
 
 	private List<String> listaNombresArchivos;
 	private List<String> listaRutasArchivos;
@@ -32,39 +31,67 @@ public class CargarGraficas extends ListActivity{
 	private TextView carpetaActual;
 	ArrayList<Uri> ficheros = new ArrayList<Uri>();
 	String root;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.carga);
 		carpetaActual = (TextView) findViewById(R.id.rutaActual);
 		root = Environment.getExternalStorageDirectory().getPath();
 		directorioRaiz = (Environment.getExternalStorageDirectory().toString()
 				+ "/" + getResources().getString(R.string.app_name)).toString();
-		
+
 		File dir = new File(directorioRaiz);
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		verArchivosDirectorio(directorioRaiz);
-		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+		this.getListView().setOnItemLongClickListener(
+				new OnItemLongClickListener() {
 
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				
-				File archivo = new File(listaRutasArchivos.get(position));
-				if (archivo.isFile()) {
-					archivo.getPath();
-					Uri path = Uri.fromFile(archivo);
-					ficheros.add(path);
-				}
-				view.setBackgroundColor(Color.GRAY);
-				return true;
-			}
-			
-		});
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View view, int position, long id) {
+						// TODO Auto-generated method stub
+						boolean borrado = false;
+						File archivo = new File(listaRutasArchivos
+								.get(position));
+						if (archivo.isFile()) {
+							archivo.getPath();
+							Uri path = Uri.fromFile(archivo);
+							if (ficheros.isEmpty()) {
+								Log.d("hola", "este es lo coge" + path);
+								ficheros.add(path);
+								view.setBackgroundColor(Color.GRAY);
+							} else {
+								for (int i = 0; i < ficheros.size(); i++) {
+									if (ficheros.get(i).equals(path)) {
+										Log.d("hola", "este lo quita" + path);
+										ficheros.remove(i);
+										view.setBackgroundColor(0);
+										Log.d("hola", "este tama iff  "
+												+ ficheros.size());
+										borrado = true;
+									}
+								}
+								if (borrado == false) {
+									for (int i = 0; i < ficheros.size(); i++) {
+										if (!ficheros.get(i).equals(path)) {
+											Log.d("hola", "este lo mete" + path);
+											ficheros.add(path);
+											view.setBackgroundColor(Color.GRAY);
+											Log.d("hola", "este tama else  "
+													+ ficheros.size());
+											break;
+										}
+									}
+								}
+							}
+						}
+						return true;
+					}
+
+				});
 	}
 
 	/**
@@ -145,11 +172,34 @@ public class CargarGraficas extends ListActivity{
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Cargamos las opciones que vamos a usar en esta pantalla
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menucargar, menu);
+		return true;
+		/** true -> el menú ya está visible */
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		if (ficheros.size() > 0) {
+			MenuItem item = menu.findItem(R.id.enviar);
+			item.setEnabled(true);
+		} else {
+			MenuItem item = menu.findItem(R.id.enviar);
+			item.setEnabled(false);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Elegimos entre las opciones disponibles en esta pantalla
 		switch (item.getItemId()) {
 		case (R.id.enviar):
-			//enviar(();
+			// enviar(();
 			enviar(ficheros);
 			ficheros.remove(true);
 			break;
@@ -167,17 +217,5 @@ public class CargarGraficas extends ListActivity{
 		sendIntent.putExtra(Intent.EXTRA_STREAM, ficheros);
 		startActivity(sendIntent);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Cargamos las opciones que vamos a usar en esta pantalla
-		super.onCreateOptionsMenu(menu);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menucargar, menu);
-		return true;
-		/** true -> el menú ya está visible */
-	}
-
-	
 
 }
