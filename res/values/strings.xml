@@ -6,8 +6,17 @@
     <string name="action_settings">Settings</string>
     <string name="config">Configuración</string>
     <string name="acercaDe">Acerca de</string>
+    <string name="explicacion">Aplicación realizada por Félix Huete García y Diego Esteban Moreno\n
+        Versión 1.0</string>
     <string name="medicion">Medición de datos</string>
-    <string name="explicacion">Esto es acerda de</string>
+    <string name="aceleracion">Aceleración</string>
+    <string name="velocidad">Velocidad angular</string>
+    <string name="magnetismo">Inducción magnética</string>
+    <string name="sensor">Sensor</string>
+    <string name="nombresensor">Nombre</string>
+    <string name="consumo">Consumo batería</string>
+    <string name="version">Versión</string>
+    <string name="distribuidor">Distribuidor</string>
     <string name="idiomas">Idiomas</string>
     <string name="empezar">Empezar</string>
     <string name="continuar">Continuar</string>
@@ -27,7 +36,7 @@
     <string name="eje_z">_Z</string>
     <string name="eje_modulo">Módulo</string>
     <string name="distancia">Distancia</string>
-    <string name="luminosi">Luminosidad</string>
+    <string name="luminosi">Iluminancia</string>
     <string name="unidad_acelerometro">m/s\u00b2</string>
     <string name="tiempo">TIEMPO DE GRABACIÓN</string>
     <string name="frecuencias">FRECUENCIA DE MUESTREO</string>

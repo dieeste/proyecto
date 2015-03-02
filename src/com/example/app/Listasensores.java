@@ -57,11 +57,14 @@ public class Listasensores extends ListActivity {
 
 			TextView text = (TextView) convertView
 					.findViewById(android.R.id.text1);
-			
 
-			text.setText("\nNombre: " + s.getName()
-					+ "\n\tConsumo bateria: " + s.getPower() + " mA"
-					+ "\n\tVersión: " + s.getVersion() + "\n\tDistribuidor: "
+			text.setText("\n" + getResources().getString(R.string.nombresensor)
+					+ ": " + s.getName() + "\n\t"
+					+ getResources().getString(R.string.consumo) + ": "
+					+ s.getPower() + " mA" + "\n\t"
+					+ getResources().getString(R.string.version) + ": "
+					+ s.getVersion() + "\n\t"
+					+ getResources().getString(R.string.distribuidor) + ": "
 					+ s.getVendor());
 			text.setTextColor(Color.WHITE);
 

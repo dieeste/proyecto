@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.ClipData.Item;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class CargarGraficas extends ListActivity {
+@SuppressLint("NewApi") public class CargarGraficas extends ListActivity {
 
 	private List<String> listaNombresArchivos;
 	private List<String> listaRutasArchivos;
@@ -46,52 +48,7 @@ public class CargarGraficas extends ListActivity {
 			dir.mkdirs();
 		}
 		verArchivosDirectorio(directorioRaiz);
-		this.getListView().setOnItemLongClickListener(
-				new OnItemLongClickListener() {
-
-					@Override
-					public boolean onItemLongClick(AdapterView<?> parent,
-							View view, int position, long id) {
-						// TODO Auto-generated method stub
-						boolean borrado = false;
-						File archivo = new File(listaRutasArchivos
-								.get(position));
-						if (archivo.isFile()) {
-							archivo.getPath();
-							Uri path = Uri.fromFile(archivo);
-							if (ficheros.isEmpty()) {
-								Log.d("hola", "este es lo coge" + path);
-								ficheros.add(path);
-								view.setBackgroundColor(Color.GRAY);
-							} else {
-								for (int i = 0; i < ficheros.size(); i++) {
-									if (ficheros.get(i).equals(path)) {
-										Log.d("hola", "este lo quita" + path);
-										ficheros.remove(i);
-										view.setBackgroundColor(0);
-										Log.d("hola", "este tama iff  "
-												+ ficheros.size());
-										borrado = true;
-									}
-								}
-								if (borrado == false) {
-									for (int i = 0; i < ficheros.size(); i++) {
-										if (!ficheros.get(i).equals(path)) {
-											Log.d("hola", "este lo mete" + path);
-											ficheros.add(path);
-											view.setBackgroundColor(Color.GRAY);
-											Log.d("hola", "este tama else  "
-													+ ficheros.size());
-											break;
-										}
-									}
-								}
-							}
-						}
-						return true;
-					}
-
-				});
+		
 	}
 
 	/**
@@ -149,6 +106,52 @@ public class CargarGraficas extends ListActivity {
 		adaptador = new ArrayAdapter<String>(this,
 				R.layout.text_view_lista_archivos, listaNombresArchivos);
 		setListAdapter(adaptador);
+		this.getListView().setOnItemLongClickListener(
+				new OnItemLongClickListener() {
+
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View view, int position, long id) {
+						// TODO Auto-generated method stub
+						boolean borrado = false;
+						File archivo = new File(listaRutasArchivos
+								.get(position));
+						if (archivo.isFile()) {
+							archivo.getPath();
+							Uri path = Uri.fromFile(archivo);
+							if (ficheros.isEmpty()) {
+								Log.d("hola", "este es lo coge" + path);
+								ficheros.add(path);
+								view.setBackgroundColor(Color.GRAY);
+							} else {
+								for (int i = 0; i < ficheros.size(); i++) {
+									if (ficheros.get(i).equals(path)) {
+										Log.d("hola", "este lo quita" + path);
+										ficheros.remove(i);
+										view.setBackgroundColor(0);
+										Log.d("hola", "este tama iff  "
+												+ ficheros.size());
+										borrado = true;
+									}
+								}
+								if (borrado == false) {
+									for (int i = 0; i < ficheros.size(); i++) {
+										if (!ficheros.get(i).equals(path)) {
+											Log.d("hola", "este lo mete" + path);
+											ficheros.add(path);
+											view.setBackgroundColor(Color.GRAY);
+											Log.d("hola", "este tama else  "
+													+ ficheros.size());
+											break;
+										}
+									}
+								}
+							}
+						}
+						return true;
+					}
+
+				});
 	}
 
 	@Override
