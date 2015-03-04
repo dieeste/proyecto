@@ -37,7 +37,7 @@
     <string name="eje_modulo">Módulo</string>
     <string name="distancia">Distancia</string>
     <string name="luminosi">Iluminancia</string>
-    <string name="unidad_acelerometro">m/s\u00b2</string>
+    <string name="unidad_acelerometro">m/s²</string>
     <string name="tiempo">TIEMPO DE GRABACIÓN</string>
     <string name="frecuencias">FRECUENCIA DE MUESTREO</string>
     <string name="temporizador">TEMPORIZADOR</string>
@@ -56,7 +56,7 @@
     <string name="checkLuz">Guardar datos</string>
     <string name="checkProximidad">Guardar datos</string>
     <string name="unidad_giroscopio">rad/s</string>
-    <string name="unidad_campo_magnetico">\u00b5T</string>
+    <string name="unidad_campo_magnetico">µT</string>
     <string name="unidad_luz">Lux</string>
     <string name="unidad_proximidad">cm</string>
     <string name="guardado_giroscopio">Giroscopio guardado</string>

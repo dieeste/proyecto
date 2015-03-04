@@ -40,11 +40,6 @@
     <string name="tiempo">TIEMPO DE GRABACIÓN</string>
     <string name="frecuencias">FRECUENCIA DE MUESTREO</string>
     <string name="temporizador">TEMPORIZADOR</string>
-    <string name="infoacelerometro">¿QUÉ ES EL ACELERÓMETRO?</string>
-    <string name="infogiroscopio">¿QUÉ ES EL GIROSCOPIO?</string>
-    <string name="infomagnetico">¿QUÉ ES EL MAGNETÓMETRO?</string>
-    <string name="infoproximidad">¿QUÉ ES EL SENSOR DE PROXIMIDAD?</string>
-    <string name="infoluz">¿QUÉ ES EL SENSOR DE LUZ?</string>
     <string name="reiniciar">Reiniciar</string>
     <string name="grafica">Gráfica</string>
     <string name="cargargraficas">Cargar gráficas</string>
