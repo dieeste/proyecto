@@ -124,6 +124,13 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
+        <activity
+            android:name="FileChooserActivity"
+            android:label="Cargar gráficas" >
+            <action android:name=".FileChooserActivity" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
         <activity android:name="LeerCsv" >
             <action android:name=".LeerCsv" />
 

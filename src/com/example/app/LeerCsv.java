@@ -128,6 +128,7 @@ public class LeerCsv extends Activity {
 					double modulo = Double.parseDouble(fichero.get("Modulo")
 							.replace(",", "."));
 					unidad = fichero.getHeader(5);
+					Log.d("err", "esto es: " + unidad);
 					AccelData data = new AccelData(tiempo, x, y, z, modulo);
 					datos.add(data);
 				} else if (numerolineas == 3) {
@@ -137,6 +138,7 @@ public class LeerCsv extends Activity {
 					double modulo = Double.parseDouble(fichero.get("Modulo")
 							.replace(",", "."));
 					unidad = fichero.getHeader(3);
+					Log.d("err", "esto es: " + unidad);
 					AccelData2 data = new AccelData2(tiempo, x, modulo);
 					sensor.add(data);
 				}
@@ -145,7 +147,8 @@ public class LeerCsv extends Activity {
 			if (numerolineas == 5) {
 				if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources()
-								.getString(R.string.unidad_acelerometro))) {
+								.getString(R.string.unidad_acelerometro))
+						|| unidad.equalsIgnoreCase("Unidad sensor: m/sÂ²")) {
 					tituloejey = "a ("
 							+ getString(R.string.unidad_acelerometro) + ")";
 					titulografica = getString(R.string.acelerometro);
@@ -156,7 +159,8 @@ public class LeerCsv extends Activity {
 					titulografica = getString(R.string.giroscopio);
 				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(
-								R.string.unidad_campo_magnetico))) {
+								R.string.unidad_campo_magnetico))
+						|| unidad.equalsIgnoreCase("Unidad sensor: ÂµT")) {
 					tituloejey = "B ("
 							+ getString(R.string.unidad_campo_magnetico) + ")";
 					titulografica = getString(R.string.magnetico);

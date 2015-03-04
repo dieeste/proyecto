@@ -7,6 +7,7 @@
 <color name="zero_line">#64FFFFFF</color>
 <color name="string">#FFFFFFFF</color>
 <color name="seleccionado">#C0C0C0</color>
+<color name="noseleccionado">#FFFFFF</color>
 <color name="background">#FF333333</color>
 <color name="filter_rate_value">#FF000000</color>
 </resources>

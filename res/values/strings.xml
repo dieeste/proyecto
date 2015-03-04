@@ -116,5 +116,6 @@ Normalmente, si el dispositivo es oscuro es casi imperceptible pero si miramos a
     <string name="gpsoff">GPS apagado</string>
     <string name="gpsbuscando">GPS buscando</string>
     <string name="gpssignal">GPS señal</string>
-
+	<string name="fileSize">File Size</string>
+    <string name="currentDir">Current Dir</string>
 </resources>

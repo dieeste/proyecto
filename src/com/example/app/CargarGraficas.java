@@ -8,7 +8,6 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.content.ClipData.Item;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
