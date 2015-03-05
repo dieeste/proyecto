@@ -1,14 +1,17 @@
  package com.example.app;
 
 import android.annotation.SuppressLint;
+import android.view.View;
 
-@SuppressLint("DefaultLocale")
+ @SuppressLint("DefaultLocale")
 public class FileInfo implements Comparable<FileInfo>{
 	private String name;
 	private String data;
 	private String path;
 	private boolean folder;
 	private boolean parent;
+    public boolean selected;
+    public View view;
 	
 	public FileInfo(String n,String d,String p, boolean folder, boolean parent)
 	{

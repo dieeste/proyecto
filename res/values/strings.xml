@@ -118,4 +118,9 @@ Normalmente, si el dispositivo es oscuro es casi imperceptible pero si miramos a
     <string name="gpssignal">GPS señal</string>
 	<string name="fileSize">File Size</string>
     <string name="currentDir">Current Dir</string>
+    <string name="gps">GPS</string>
+    <string name="checkGps">Guardar datos</string>
+    <string name="latitud">Latitud</string>
+    <string name="longitud">Longitud</string>
+    
 </resources>

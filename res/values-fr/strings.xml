@@ -108,5 +108,9 @@ Le capteur de lumière la plus commune est résistance à charge -Light ou LDR L
     <string name="gpsoff">GPS éteinte</string>
     <string name="gpsbuscando">GPS recherche</string>
     <string name="gpssignal">GPS signal</string>
+    <string name="gps">GPS</string>
+    <string name="checkGps">Enregistrer données</string>
+    <string name="latitud">Latitude</string>
+    <string name="longitud">Longitude</string>
 
 </resources>

@@ -18,9 +18,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class FileChooserActivity extends ListActivity {
 
@@ -55,13 +57,12 @@ public class FileChooserActivity extends ListActivity {
 		currentFolder = new File(Environment.getExternalStorageDirectory().toString()
 				+ "/" + getResources().getString(R.string.app_name));
 		fill(currentFolder);
-		this.getListView().setOnItemLongClickListener(
+        this.getListView().setOnItemLongClickListener(
 				new OnItemLongClickListener() {
 
 					@Override
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
-						// TODO Auto-generated method stub
 						boolean borrado = false;
 						FileInfo fileDescriptor = fileArrayListAdapter.getItem(position);
 						File archivo = new File(fileDescriptor.getPath());
@@ -71,13 +72,18 @@ public class FileChooserActivity extends ListActivity {
 							if (ficheros.isEmpty()) {
 								Log.d("hola", "este es lo coge" + path);
 								ficheros.add(path);
-								view.setSelected(true);
+                                fileDescriptor.selected = true;
+                                fileArrayListAdapter.notifyDataSetChanged();
+                                //view.setSelected(true);
 							} else {
 								for (int i = 0; i < ficheros.size(); i++) {
 									if (ficheros.get(i).equals(path)) {
 										Log.d("hola", "este lo quita" + path);
 										ficheros.remove(i);
-										view.setSelected(false);
+                                        fileDescriptor.selected = false;
+                                        fileArrayListAdapter.notifyDataSetChanged();
+
+                                        //view.setSelected(false);
 										Log.d("hola", "este tama iff  "
 												+ ficheros.size());
 										borrado = true;
@@ -88,7 +94,10 @@ public class FileChooserActivity extends ListActivity {
 										if (!ficheros.get(i).equals(path)) {
 											Log.d("hola", "este lo mete" + path);
 											ficheros.add(path);
-											view.setSelected(true);
+                                            fileDescriptor.selected = true;
+                                            fileArrayListAdapter.notifyDataSetChanged();
+
+                                            //view.setSelected(true);
 											Log.d("hola", "este tama else  "
 													+ ficheros.size());
 											break;
@@ -173,15 +182,19 @@ public class FileChooserActivity extends ListActivity {
 			currentFolder = new File(fileDescriptor.getPath());
 			fill(currentFolder);
 		} else {
-			
-			fileSelected = new File(fileDescriptor.getPath());
-			
-			Intent vamos = new Intent(this, LeerCsv.class);
-			vamos.putExtra("file", fileSelected.getPath());
-			startActivity(vamos);
+                fileSelected = new File(fileDescriptor.getPath());
+                String filenameArray[] = fileSelected.getPath().split("\\.");
+                String extension = filenameArray[filenameArray.length-1];
+                if(!extension.equalsIgnoreCase("csv")){
+                    Toast.makeText(this,"No es posible abrir este archivo",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent vamos = new Intent(this, LeerCsv.class);
+                vamos.putExtra("file", fileSelected.getPath());
+                startActivity(vamos);
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Cargamos las opciones que vamos a usar en esta pantalla

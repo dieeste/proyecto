@@ -2,14 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/acercaDe"
+        android:id="@+id/sensoresdisponibles"
         android:icon="@android:drawable/ic_menu_info_details"
-        android:title="@string/acercaDe">
+        android:title="@string/sensores">
     </item>
     <item
         android:id="@+id/menu_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/idiomas">
+    </item>
+    <item
+        android:id="@+id/acercaDe"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/acercaDe">
     </item>
 
 </menu>

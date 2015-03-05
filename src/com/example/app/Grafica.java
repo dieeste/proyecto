@@ -79,7 +79,7 @@ public class Grafica extends Activity implements OnClickListener,
 	CheckBox ejex;
 	CheckBox ejey;
 	CheckBox ejez;
-	CheckBox modulo;
+	CheckBox moduloc;
 	boolean checkx = true;
 	boolean checky = true;
 	boolean checkz = true;
@@ -99,6 +99,7 @@ public class Grafica extends Activity implements OnClickListener,
 	boolean magne;
 	boolean luz;
 	boolean proxi;
+	boolean g;
 	// vista donde colocamos la gráfica
 	GraphicalView view;
 	// clase donde representamos los datos
@@ -116,6 +117,7 @@ public class Grafica extends Activity implements OnClickListener,
 	// manejan la localización del gps
 	LocationManager milocManager;
 	LocationListener milocListener;
+	String nombresensor = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +128,6 @@ public class Grafica extends Activity implements OnClickListener,
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		requestWindowFeature(Window.FEATURE_PROGRESS);
-
 		// Elegimos el layout a mostrar en esta clase
 		setContentView(R.layout.grafica);
 
@@ -174,6 +175,7 @@ public class Grafica extends Activity implements OnClickListener,
 		magne = graficas.getBoolean("magnetometro");
 		luz = graficas.getBoolean("luz");
 		proxi = graficas.getBoolean("proximo");
+		g = graficas.getBoolean("gps");
 
 		// si el tiempo de inicio es mayor que cero vamos a contadores si no lo
 		// dejamos como está
@@ -185,12 +187,12 @@ public class Grafica extends Activity implements OnClickListener,
 		ejex = (CheckBox) findViewById(R.id.ejex);
 		ejey = (CheckBox) findViewById(R.id.ejey);
 		ejez = (CheckBox) findViewById(R.id.ejez);
-		modulo = (CheckBox) findViewById(R.id.modulo);
+		moduloc = (CheckBox) findViewById(R.id.modulo);
 
 		ejex.setOnCheckedChangeListener(this);
 		ejey.setOnCheckedChangeListener(this);
 		ejez.setOnCheckedChangeListener(this);
-		modulo.setOnCheckedChangeListener(this);
+		moduloc.setOnCheckedChangeListener(this);
 
 		// declaramos el gps y sus escuchas
 		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -283,6 +285,7 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 
 		public void onProviderEnabled(String provider) {
+			gps.setText(getResources().getString(R.string.gpsbuscando));
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -378,6 +381,12 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData data = new AccelData(timestamp, x, y, z, modulo);
 				sensorDatas.add(data);
 				if (sensor == Sensor.TYPE_ACCELEROMETER) {
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.VISIBLE);
+					ejez.setVisibility(CheckBox.VISIBLE);
+					moduloc.setVisibility(CheckBox.VISIBLE);
+					nombresensor = getString(R.string.acelerometro);
+					setTitle(nombresensor);
 					if (acce == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
@@ -390,8 +399,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorDatas);
 					mGraph.initData(sensorDatas);
 					mGraph.setProperties(checkx, checky, checkz, checkmodulo,
-							getString(R.string.acelerometro), "a ("
-									+ getString(R.string.unidad_acelerometro)
+							"", "a (" + getString(R.string.unidad_acelerometro)
 									+ ")", calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
@@ -414,6 +422,12 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData data2 = new AccelData(timestamp2, x2, y2, z2, modulo2);
 				sensorGiroscopio.add(data2);
 				if (sensor == Sensor.TYPE_GYROSCOPE) {
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.VISIBLE);
+					ejez.setVisibility(CheckBox.VISIBLE);
+					moduloc.setVisibility(CheckBox.VISIBLE);
+					nombresensor = getString(R.string.giroscopio);
+					setTitle(nombresensor);
 					if (giro == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
@@ -426,8 +440,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorGiroscopio);
 					mGraph.initData(sensorGiroscopio);
 					mGraph.setProperties(checkx, checky, checkz, checkmodulo,
-							getString(R.string.giroscopio), "ω ("
-									+ getString(R.string.unidad_giroscopio)
+							"", "ω (" + getString(R.string.unidad_giroscopio)
 									+ ")", calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
@@ -442,13 +455,17 @@ public class Grafica extends Activity implements OnClickListener,
 				break;
 			case Sensor.TYPE_LIGHT:
 				double x3 = event.values[0];
-				double modulo3 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x3,
-						2))));
 				double timestamp3 = System.currentTimeMillis();
 
-				AccelData2 data3 = new AccelData2(timestamp3, x3, modulo3);
+				AccelData2 data3 = new AccelData2(timestamp3, x3);
 				sensorLuz.add(data3);
 				if (sensor == Sensor.TYPE_LIGHT) {
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.GONE);
+					ejez.setVisibility(CheckBox.GONE);
+					moduloc.setVisibility(CheckBox.GONE);
+					nombresensor = getString(R.string.luminosidad);
+					setTitle(nombresensor);
 					if (luz == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
@@ -460,10 +477,9 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY2(sensorLuz);
 					mGraph.ejeX2(sensorLuz);
 					mGraph.initData2(sensorLuz);
-					mGraph.setProperties2(checkx, checkmodulo,
-							getString(R.string.luminosidad), "E ("
-									+ getString(R.string.unidad_luz) + ")",
-							calidad, tamano);
+					mGraph.setProperties2(checkx, "", "E ("
+							+ getString(R.string.unidad_luz) + ")", calidad,
+							tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -486,6 +502,12 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData data4 = new AccelData(timestamp4, x4, y4, z4, modulo4);
 				sensorMagnetico.add(data4);
 				if (sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.VISIBLE);
+					ejez.setVisibility(CheckBox.VISIBLE);
+					moduloc.setVisibility(CheckBox.VISIBLE);
+					nombresensor = getString(R.string.magnetico);
+					setTitle(nombresensor);
 					if (magne == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
@@ -498,7 +520,7 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeX(sensorMagnetico);
 					mGraph.initData(sensorMagnetico);
 					mGraph.setProperties(checkx, checky, checkz, checkmodulo,
-							getString(R.string.magnetico),
+							"",
 							"B (" + getString(R.string.unidad_campo_magnetico)
 									+ ")", calidad, tamano);
 					if (!init) {
@@ -514,13 +536,17 @@ public class Grafica extends Activity implements OnClickListener,
 				break;
 			case Sensor.TYPE_PROXIMITY:
 				double x5 = event.values[0];
-				double modulo5 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x5,
-						2))));
 				double timestamp5 = System.currentTimeMillis();
 
-				AccelData2 data5 = new AccelData2(timestamp5, x5, modulo5);
+				AccelData2 data5 = new AccelData2(timestamp5, x5);
 				sensorProximidad.add(data5);
 				if (sensor == Sensor.TYPE_PROXIMITY) {
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.GONE);
+					ejez.setVisibility(CheckBox.GONE);
+					moduloc.setVisibility(CheckBox.GONE);
+					nombresensor = getString(R.string.proximidad);
+					setTitle(nombresensor);
 					if (proxi == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
@@ -532,10 +558,9 @@ public class Grafica extends Activity implements OnClickListener,
 					mGraph.ejeY2(sensorProximidad);
 					mGraph.ejeX2(sensorProximidad);
 					mGraph.initData2(sensorProximidad);
-					mGraph.setProperties2(checkx, checkmodulo,
-							getString(R.string.proximidad), "d ("
-									+ getString(R.string.unidad_proximidad)
-									+ ")", calidad, tamano);
+					mGraph.setProperties2(checkx, "", "d ("
+							+ getString(R.string.unidad_proximidad) + ")",
+							calidad, tamano);
 					if (!init) {
 						view = mGraph.getGraph();
 						layout.addView(view);
@@ -649,63 +674,71 @@ public class Grafica extends Activity implements OnClickListener,
 
 		@Override
 		public void run() {
-			if (gpsdatos.size() > 0) {
+			if (g == true) {
+				if (gpsdatos.size() > 0) {
 
-				StringBuilder csvData = new StringBuilder();
-				csvData.append("Nombre del dispositivo: "
-						+ android.os.Build.MODEL
-						+ ";Fecha: "
-						+ DateFormat.format("dd/MM/yyyy",
-								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("Latitud;Longitud\n");
-				for (GpsDatos values : gpsdatos) {
-					csvData.append(String.valueOf(values.getLatitud()) + ";"
-							+ String.valueOf(values.getLongitud()) + "\n");
-				}
-
-				Bundle bundle = new Bundle();
-				Message msg = new Message();
-
-				try {
-
-					String appName = getResources()
-							.getString(R.string.app_name);
-					String dirPath = Environment.getExternalStorageDirectory()
-							.toString() + "/" + appName;
-					File dir = new File(dirPath);
-					if (!dir.exists()) {
-						dir.mkdirs();
+					StringBuilder csvData = new StringBuilder();
+					csvData.append("Nombre del dispositivo: "
+							+ android.os.Build.MODEL
+							+ ";Fecha: "
+							+ DateFormat.format("dd/MM/yyyy",
+									System.currentTimeMillis()).toString()
+							+ "\n");
+					csvData.append("Latitud;Longitud\n");
+					for (GpsDatos values : gpsdatos) {
+						csvData.append(String.valueOf(values.getLatitud())
+								+ ";" + String.valueOf(values.getLongitud())
+								+ "\n");
 					}
 
-					String fileName = "GPS "
-							+ DateFormat
-									.format("dd-MM-yyyy kk-mm-ss",
-											System.currentTimeMillis())
-									.toString().concat(".csv");
+					Bundle bundle = new Bundle();
+					Message msg = new Message();
 
-					File file = new File(dirPath, fileName);
-					if (file.createNewFile()) {
-						FileOutputStream fileOutputStream = new FileOutputStream(
-								file);
+					try {
 
-						fileOutputStream.write(csvData.toString().getBytes());
-						fileOutputStream.close();
+						String appName = getResources().getString(
+								R.string.app_name);
+						String dirPath = Environment
+								.getExternalStorageDirectory().toString()
+								+ "/"
+								+ appName;
+						File dir = new File(dirPath);
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
 
+						String fileName = "GPS "
+								+ DateFormat
+										.format("dd-MM-yyyy kk-mm-ss",
+												System.currentTimeMillis())
+										.toString().concat(".csv");
+
+						File file = new File(dirPath, fileName);
+						if (file.createNewFile()) {
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file);
+
+							fileOutputStream.write(csvData.toString()
+									.getBytes());
+							fileOutputStream.close();
+
+						}
+
+						// Si se ha guardado con éxito enviamos un mensaje al
+						// controlador de mensajes y lo muestra
+						bundle.putString("msg", Grafica.this.getResources()
+								.getString(R.string.guardado_gps));
+					} catch (Exception e) {
+						// Si no se ha podido guardar entonces nos envía un
+						// mensaje
+						// diciendo que no se ha guardado
+						bundle.putString("msg", Grafica.this.getResources()
+								.getString(R.string.error_guardar));
 					}
-
-					// Si se ha guardado con éxito enviamos un mensaje al
-					// controlador de mensajes y lo muestra
-					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.guardado_gps));
-				} catch (Exception e) {
-					// Si no se ha podido guardar entonces nos envía un mensaje
-					// diciendo que no se ha guardado
-					bundle.putString("msg", Grafica.this.getResources()
-							.getString(R.string.error_guardar));
+					msg.setData(bundle);
+					// Envía el mensaje al controlador
+					mensajeria.sendMessage(msg);
 				}
-				msg.setData(bundle);
-				// Envía el mensaje al controlador
-				mensajeria.sendMessage(msg);
 			}
 			if (acce == true) {
 				double t = sensorDatas.peek().getTimestamp();
@@ -716,8 +749,9 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_acelerometro)+"\n");
+				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+						+ getResources()
+								.getString(R.string.unidad_acelerometro) + "\n");
 				for (AccelData values : sensorDatas) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					csvData.append(String.valueOf(tiempo)
@@ -788,8 +822,9 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_giroscopio)+"\n");
+				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+						+ getResources().getString(R.string.unidad_giroscopio)
+						+ "\n");
 				for (AccelData values : sensorGiroscopio) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
@@ -861,8 +896,9 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_campo_magnetico)+"\n");
+				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+						+ getResources().getString(
+								R.string.unidad_campo_magnetico) + "\n");
 				for (AccelData values : sensorMagnetico) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
@@ -933,16 +969,13 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("t (s);X;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_luz)+"\n");
+				csvData.append("t (s);X;Unidad sensor: "
+						+ getResources().getString(R.string.unidad_luz) + "\n");
 				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					csvData.append(String.valueOf(tiempo)
-							+ ";"
+					csvData.append(String.valueOf(tiempo) + ";"
 							+ String.valueOf(formateador.format(values.getX()))
-							+ ";"
-							+ String.valueOf(formateador.format(values
-									.getModulo())) + "\n");
+							+ "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -1000,17 +1033,15 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("t (s);X;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_proximidad)+"\n");
+				csvData.append("t (s);X;Modulo;Unidad sensor: "
+						+ getResources().getString(R.string.unidad_proximidad)
+						+ "\n");
 				for (AccelData2 values : sensorProximidad) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
-					csvData.append(String.valueOf(tiempo)
-							+ ";"
+					csvData.append(String.valueOf(tiempo) + ";"
 							+ String.valueOf(formateador.format(values.getX()))
-							+ ";"
-							+ String.valueOf(formateador.format(values
-									.getModulo())) + "\n");
+							+ "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -1092,14 +1123,6 @@ public class Grafica extends Activity implements OnClickListener,
 			break;
 		case (R.id.inicio):
 			vercargar = true;
-			ejex.setVisibility(CheckBox.VISIBLE);
-			ejey.setVisibility(CheckBox.VISIBLE);
-			ejez.setVisibility(CheckBox.VISIBLE);
-			modulo.setVisibility(CheckBox.VISIBLE);
-			if (sensor == Sensor.TYPE_PROXIMITY || sensor == Sensor.TYPE_LIGHT) {
-				ejey.setVisibility(CheckBox.GONE);
-				ejez.setVisibility(CheckBox.GONE);
-			}
 			iniciar.setVisibility(Button.GONE);
 			continuar.setVisibility(Button.VISIBLE);
 			continuar.setEnabled(false);
@@ -1120,7 +1143,7 @@ public class Grafica extends Activity implements OnClickListener,
 			ejex.setVisibility(CheckBox.GONE);
 			ejey.setVisibility(CheckBox.GONE);
 			ejez.setVisibility(CheckBox.GONE);
-			modulo.setVisibility(CheckBox.GONE);
+			moduloc.setVisibility(CheckBox.GONE);
 			graba.setVisibility(TextView.INVISIBLE);
 			graba2.setVisibility(TextView.INVISIBLE);
 			parar.setEnabled(false);
@@ -1265,48 +1288,55 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.enviar):
 			ArrayList<Uri> ficheros = new ArrayList<Uri>();
 			DecimalFormat formateador = new DecimalFormat("0.00##");
-			if (gpsdatos.size() > 0) {
+			if (g == true) {
+				if (gpsdatos.size() > 0) {
 
-				StringBuilder csvData = new StringBuilder();
-				csvData.append("Nombre del dispositivo: "
-						+ android.os.Build.MODEL
-						+ ";Fecha: "
-						+ DateFormat.format("dd/MM/yyyy",
-								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("Latitud;Longitud\n");
-				for (GpsDatos values : gpsdatos) {
-					csvData.append(String.valueOf(values.getLatitud()) + ";"
-							+ String.valueOf(values.getLongitud()) + "\n");
-				}
-				try {
-
-					String appName = getResources()
-							.getString(R.string.app_name);
-					String dirPath = Environment.getExternalStorageDirectory()
-							.toString() + "/" + appName;
-					File dir = new File(dirPath);
-					if (!dir.exists()) {
-						dir.mkdirs();
+					StringBuilder csvData = new StringBuilder();
+					csvData.append("Nombre del dispositivo: "
+							+ android.os.Build.MODEL
+							+ ";Fecha: "
+							+ DateFormat.format("dd/MM/yyyy",
+									System.currentTimeMillis()).toString()
+							+ "\n");
+					csvData.append("Latitud;Longitud\n");
+					for (GpsDatos values : gpsdatos) {
+						csvData.append(String.valueOf(values.getLatitud())
+								+ ";" + String.valueOf(values.getLongitud())
+								+ "\n");
 					}
+					try {
 
-					String fileName = "GPS "
-							+ DateFormat
-									.format("dd-MM-yyyy kk-mm-ss",
-											System.currentTimeMillis())
-									.toString().concat(".csv");
+						String appName = getResources().getString(
+								R.string.app_name);
+						String dirPath = Environment
+								.getExternalStorageDirectory().toString()
+								+ "/"
+								+ appName;
+						File dir = new File(dirPath);
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
 
-					File file = new File(dirPath, fileName);
-					if (file.createNewFile()) {
-						FileOutputStream fileOutputStream = new FileOutputStream(
-								file);
+						String fileName = "GPS "
+								+ DateFormat
+										.format("dd-MM-yyyy kk-mm-ss",
+												System.currentTimeMillis())
+										.toString().concat(".csv");
 
-						fileOutputStream.write(csvData.toString().getBytes());
-						fileOutputStream.close();
-						Uri path = Uri.fromFile(file);
-						ficheros.add(path);
+						File file = new File(dirPath, fileName);
+						if (file.createNewFile()) {
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file);
+
+							fileOutputStream.write(csvData.toString()
+									.getBytes());
+							fileOutputStream.close();
+							Uri path = Uri.fromFile(file);
+							ficheros.add(path);
+						}
+
+					} catch (Exception e) {
 					}
-
-				} catch (Exception e) {
 				}
 			}
 			if (acce == true) {
@@ -1320,8 +1350,9 @@ public class Grafica extends Activity implements OnClickListener,
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
 				csvDataexportar
-						.append("t (s);X;Y;Z;Modulo;Unidad sensor: "+getResources()
-								.getString(R.string.unidad_acelerometro)+"\n");
+						.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+								+ getResources().getString(
+										R.string.unidad_acelerometro) + "\n");
 				for (AccelData values : sensorDatas) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 					csvDataexportar.append(String.valueOf(tiempo)
@@ -1378,8 +1409,9 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDatagiro.append("t (s);X;Y;Z;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_giroscopio)+"\n");
+				csvDatagiro.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+						+ getResources().getString(R.string.unidad_giroscopio)
+						+ "\n");
 				for (AccelData values : sensorGiroscopio) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
@@ -1438,8 +1470,9 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDatamagne.append("t (s);X;Y;Z;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_campo_magnetico)+"\n");
+				csvDatamagne.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+						+ getResources().getString(
+								R.string.unidad_campo_magnetico) + "\n");
 				for (AccelData values : sensorMagnetico) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
@@ -1499,16 +1532,13 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDataluz.append("t (s);X;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_luz)+"\n");
+				csvDataluz.append("t (s);X;Modulo;Unidad sensor: "
+						+ getResources().getString(R.string.unidad_luz) + "\n");
 				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					csvDataluz.append(String.valueOf(tiempo)
-							+ ";"
+					csvDataluz.append(String.valueOf(tiempo) + ";"
 							+ String.valueOf(formateador.format(values.getX()))
-							+ ";"
-							+ String.valueOf(formateador.format(values
-									.getModulo())) + "\n");
+							+ "\n");
 				}
 
 				try {
@@ -1555,17 +1585,15 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDataproxi.append("t (s);X;Modulo;Unidad sensor: "+getResources()
-						.getString(R.string.unidad_proximidad)+"\n");
+				csvDataproxi.append("t (s);X;Modulo;Unidad sensor: "
+						+ getResources().getString(R.string.unidad_proximidad)
+						+ "\n");
 				for (AccelData2 values : sensorProximidad) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
 
-					csvDataproxi.append(String.valueOf(tiempo)
-							+ ";"
+					csvDataproxi.append(String.valueOf(tiempo) + ";"
 							+ String.valueOf(formateador.format(values.getX()))
-							+ ";"
-							+ String.valueOf(formateador.format(values
-									.getModulo())) + "\n");
+							+ "\n");
 				}
 
 				try {
@@ -1696,6 +1724,12 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	public void acelerometro() {
+		ejex.setVisibility(CheckBox.VISIBLE);
+		ejey.setVisibility(CheckBox.VISIBLE);
+		ejez.setVisibility(CheckBox.VISIBLE);
+		moduloc.setVisibility(CheckBox.VISIBLE);
+		nombresensor = getString(R.string.acelerometro);
+		setTitle(nombresensor);
 		if (acce == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
@@ -1707,10 +1741,9 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.ejeY(sensorDatas);
 		mGraph.ejeX(sensorDatas);
 		mGraph.initData(sensorDatas);
-		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
-				getString(R.string.acelerometro), "a ("
-						+ getString(R.string.unidad_acelerometro) + ")",
-				calidad, tamano);
+		mGraph.setProperties(checkx, checky, checkz, checkmodulo, "", "a ("
+				+ getString(R.string.unidad_acelerometro) + ")", calidad,
+				tamano);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);
@@ -1723,6 +1756,12 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	public void giroscopio() {
+		ejex.setVisibility(CheckBox.VISIBLE);
+		ejey.setVisibility(CheckBox.VISIBLE);
+		ejez.setVisibility(CheckBox.VISIBLE);
+		moduloc.setVisibility(CheckBox.VISIBLE);
+		nombresensor = getString(R.string.giroscopio);
+		setTitle(nombresensor);
 		if (giro == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
@@ -1734,10 +1773,8 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.ejeY(sensorGiroscopio);
 		mGraph.ejeX(sensorGiroscopio);
 		mGraph.initData(sensorGiroscopio);
-		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
-				getString(R.string.giroscopio), "ω ("
-						+ getString(R.string.unidad_giroscopio) + ")", calidad,
-				tamano);
+		mGraph.setProperties(checkx, checky, checkz, checkmodulo, "", "ω ("
+				+ getString(R.string.unidad_giroscopio) + ")", calidad, tamano);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);
@@ -1750,6 +1787,12 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	public void magnetometro() {
+		ejex.setVisibility(CheckBox.VISIBLE);
+		ejey.setVisibility(CheckBox.VISIBLE);
+		ejez.setVisibility(CheckBox.VISIBLE);
+		moduloc.setVisibility(CheckBox.VISIBLE);
+		nombresensor = getString(R.string.magnetico);
+		setTitle(nombresensor);
 		if (magne == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
@@ -1761,36 +1804,8 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.ejeY(sensorMagnetico);
 		mGraph.ejeX(sensorMagnetico);
 		mGraph.initData(sensorMagnetico);
-		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
-				getString(R.string.magnetico), "B ("
-						+ getString(R.string.unidad_campo_magnetico) + ")",
-				calidad, tamano);
-		if (!init) {
-			view = mGraph.getGraph();
-			layout.addView(view);
-			init = true;
-		} else {
-			layout.removeView(view);
-			view = mGraph.getGraph();
-			layout.addView(view);
-		}
-	}
-
-	public void proximidad() {
-		if (proxi == true) {
-			graba.setText("REC");
-			graba.setVisibility(TextView.VISIBLE);
-		} else {
-			graba2.setText("REC");
-			graba2.setVisibility(TextView.VISIBLE);
-		}
-		mGraph = new Graph(this);
-		mGraph.ejeY2(sensorProximidad);
-		mGraph.ejeX2(sensorProximidad);
-		mGraph.initData2(sensorProximidad);
-		mGraph.setProperties2(checkx, checkmodulo,
-				getString(R.string.proximidad), "d ("
-						+ getString(R.string.unidad_proximidad) + ")", calidad,
+		mGraph.setProperties(checkx, checky, checkz, checkmodulo, "", "B ("
+				+ getString(R.string.unidad_campo_magnetico) + ")", calidad,
 				tamano);
 		if (!init) {
 			view = mGraph.getGraph();
@@ -1803,7 +1818,44 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 	}
 
+	public void proximidad() {
+		ejex.setVisibility(CheckBox.VISIBLE);
+		ejey.setVisibility(CheckBox.GONE);
+		ejez.setVisibility(CheckBox.GONE);
+		moduloc.setVisibility(CheckBox.GONE);
+		nombresensor = getString(R.string.proximidad);
+		setTitle(nombresensor);
+		if (proxi == true) {
+			graba.setText("REC");
+			graba.setVisibility(TextView.VISIBLE);
+		} else {
+			graba2.setText("REC");
+			graba2.setVisibility(TextView.VISIBLE);
+		}
+		mGraph = new Graph(this);
+		mGraph.ejeY2(sensorProximidad);
+		mGraph.ejeX2(sensorProximidad);
+		mGraph.initData2(sensorProximidad);
+		mGraph.setProperties2(checkx, "", "d ("
+				+ getString(R.string.unidad_proximidad) + ")", calidad, tamano);
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
+	}
+
 	public void luz() {
+		ejex.setVisibility(CheckBox.VISIBLE);
+		ejey.setVisibility(CheckBox.GONE);
+		ejez.setVisibility(CheckBox.GONE);
+		moduloc.setVisibility(CheckBox.GONE);
+		nombresensor = getString(R.string.luminosidad);
+		setTitle(nombresensor);
 		if (luz == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
@@ -1815,9 +1867,8 @@ public class Grafica extends Activity implements OnClickListener,
 		mGraph.ejeY2(sensorLuz);
 		mGraph.ejeX2(sensorLuz);
 		mGraph.initData2(sensorLuz);
-		mGraph.setProperties2(checkx, checkmodulo,
-				getString(R.string.luminosidad), "E ("
-						+ getString(R.string.unidad_luz) + ")", calidad, tamano);
+		mGraph.setProperties2(checkx, "", "E ("
+				+ getString(R.string.unidad_luz) + ")", calidad, tamano);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);

@@ -36,7 +36,7 @@
     <string name="eje_z">Z</string>
     <string name="distancia">Distancia</string>
     <string name="eje_modulo">Módulo</string>
-    <string name="unidad_acelerometro">m/s\u00b2</string>
+    <string name="unidad_acelerometro">m/s²</string>
     <string name="tiempo">TIEMPO DE GRABACIÓN</string>
     <string name="frecuencias">FRECUENCIA DE MUESTREO</string>
     <string name="temporizador">TEMPORIZADOR</string>
@@ -49,7 +49,7 @@
     <string name="checkLuz">Guardar datos</string>
     <string name="checkProximidad">Guardar datos</string>
     <string name="unidad_giroscopio">rad/s</string>
-    <string name="unidad_campo_magnetico">\u00b5T</string>
+    <string name="unidad_campo_magnetico">µT</string>
     <string name="unidad_luz">Lux</string>
     <string name="unidad_proximidad">cm</string>
     <string name="guardado_giroscopio">Giroscopio guardado</string>
@@ -110,5 +110,9 @@ Normalmente, si el dispositivo es oscuro es casi imperceptible pero si miramos a
     <string name="gpsoff">GPS apagado</string>
     <string name="gpsbuscando">GPS buscando</string>
     <string name="gpssignal">GPS señal</string>
+    <string name="gps">GPS</string>
+    <string name="checkGps">Guardar datos</string>
+    <string name="latitud">Latitud</string>
+    <string name="longitud">Longitud</string>
 
 </resources>

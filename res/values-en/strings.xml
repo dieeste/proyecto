@@ -116,5 +116,9 @@ Usually, if the device is dark it is almost imperceptible but if we look to the 
     <string name="gpsoff">GPS off</string>
 	<string name="gpsbuscando">Searching GPS</string>
 	<string name="gpssignal">GPS signal</string>
+	<string name="gps">GPS</string>
+    <string name="checkGps">Save data</string>
+    <string name="latitud">Latitude</string>
+    <string name="longitud">Longitude</string>
 
 </resources>

@@ -73,8 +73,6 @@ public class Graph extends Grafica {
 		for (AccelData2 data : sensorDatas) {
 			if (data.getX() > max)
 				max = data.getX();
-			if (data.getX() < min)
-				min = data.getModulo();
 		}
 		renderer.setYAxisMax(max + 1);
 		renderer.setYAxisMin(min - 1);
@@ -148,15 +146,12 @@ public class Graph extends Grafica {
 
 		double t = sensorDatas.peek().getTimestamp();
 		XYSeries xSeries = new XYSeries("X");
-		XYSeries modulo = new XYSeries("Modulo");
 		for (AccelData2 data : sensorDatas) {
 			double tiempo = (data.getTimestamp() - t) / 1000;
 			xSeries.add(tiempo, data.getX());
-			modulo.add(tiempo, data.getModulo());
 		}
 		dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(xSeries);
-		dataset.addSeries(modulo);
 	}
 
 	public void setProperties(boolean ex, boolean ey, boolean ez, boolean em,
@@ -292,7 +287,7 @@ public class Graph extends Grafica {
 		renderer.setLabelsColor(Color.YELLOW);
 	}
 
-	public void setProperties2(boolean ex, boolean em, String titulografica,
+	public void setProperties2(boolean ex, String titulografica,
 			String tituloejey, String calidad, String tamano) {
 		// añade las propiedades de la grafica sensor de luz y sensor proximidad
 		double[] limites = { 0, maxejex + 5, ejeymin - 20, ejeymax + 20 };
@@ -309,14 +304,6 @@ public class Graph extends Grafica {
 			valoresX.setColor(0);
 			renderer.addSeriesRenderer(valoresX);
 		}
-		XYSeriesRenderer modulo = new XYSeriesRenderer();
-		if (em == true) { // checkbox modulo
-			modulo.setColor(Color.MAGENTA);
-			renderer.addSeriesRenderer(modulo);
-		} else {
-			modulo.setColor(0);
-			renderer.addSeriesRenderer(modulo);
-		}
 		renderer.setBackgroundColor(Color.BLACK);
 		renderer.setMarginsColor(Color.BLACK);
 		renderer.setApplyBackgroundColor(true);
@@ -324,7 +311,6 @@ public class Graph extends Grafica {
 		// líneas
 		if (calidad.equalsIgnoreCase("alta")) {
 			valoresX.setLineWidth(5);
-			modulo.setLineWidth(5);
 			renderer.setMargins(margenesnormal);
 			renderer.setLabelsTextSize(30);
 			renderer.setLabelsTextSize(30);
@@ -335,7 +321,6 @@ public class Graph extends Grafica {
 			renderer.isExternalZoomEnabled();
 		} else if (calidad.equalsIgnoreCase("media")) {
 			valoresX.setLineWidth(3);
-			modulo.setLineWidth(3);
 			renderer.setMargins(margenespeque);
 			renderer.setLabelsTextSize(20);
 			renderer.setLabelsTextSize(20);
@@ -345,7 +330,6 @@ public class Graph extends Grafica {
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("baja")) {
 			valoresX.setLineWidth(3);
-			modulo.setLineWidth(3);
 			renderer.setMargins(margenespeque);
 			renderer.setLabelsTextSize(15);
 			renderer.setLabelsTextSize(15);
@@ -355,7 +339,6 @@ public class Graph extends Grafica {
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xhigh")) {
 			valoresX.setLineWidth(5);
-			modulo.setLineWidth(5);
 			renderer.setMargins(margenes);
 			renderer.setLabelsTextSize(25);
 			renderer.setLabelsTextSize(25);
@@ -365,7 +348,6 @@ public class Graph extends Grafica {
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xxhigh")) {
 			valoresX.setLineWidth(5);
-			modulo.setLineWidth(5);
 			renderer.setMargins(margenesextra);
 			renderer.setLabelsTextSize(40);
 			renderer.setLabelsTextSize(40);
@@ -375,7 +357,6 @@ public class Graph extends Grafica {
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
 			valoresX.setLineWidth(5);
-			modulo.setLineWidth(5);
 			renderer.setMargins(margenesextra);
 			renderer.setLabelsTextSize(40);
 			renderer.setLabelsTextSize(40);
@@ -428,20 +409,17 @@ public class Graph extends Grafica {
 	// sensores de proximidad y sensor de luz
 	public void iniciar2(ConcurrentLinkedQueue<AccelData2> sensorDatas) {
 		XYSeries xSeries = new XYSeries("X");
-		XYSeries modulo = new XYSeries("Modulo");
 
 		for (AccelData2 data : sensorDatas) {
 
 			double tiempo = (data.getTimestamp());
 
 			xSeries.add(tiempo, data.getX());
-			modulo.add(tiempo, data.getModulo());
 			maxejex = tiempo;
 		}
 
 		dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(xSeries);
-		dataset.addSeries(modulo);
 
 	}
 

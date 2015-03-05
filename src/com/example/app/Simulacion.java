@@ -1,6 +1,7 @@
 package com.example.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,6 +9,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -32,11 +36,13 @@ public class Simulacion extends Activity implements SensorEventListener,
 	TextView magnetico;
 	TextView proximidad;
 	TextView luminosidad;
+	TextView gpss;
 	Button acelerometer;
 	Button giroscopio;
 	Button magnetic;
 	Button proximity;
 	Button luminosity;
+	Button gpsboton;
 	Sensor giroscope;
 	Sensor aceleromete;
 	Sensor magnetometro;
@@ -52,12 +58,19 @@ public class Simulacion extends Activity implements SensorEventListener,
 	CheckBox magneto;
 	CheckBox luz;
 	CheckBox prox;
+	CheckBox gp;
 	boolean acce = false;
 	boolean gi = false;
 	boolean mag = false;
 	boolean proxi = false;
 	boolean lu = false;
-	
+	boolean g = false;
+	// latitud y longitud del gps
+	double longitud;
+	double latitud;
+	// manejan la localización del gps
+	LocationManager milocManager;
+	LocationListener milocListener;
 
 	// Recogemos las preferencias
 	int tiempoInicio, tiempoParada;
@@ -77,11 +90,13 @@ public class Simulacion extends Activity implements SensorEventListener,
 		magnetico = (TextView) findViewById(R.id.magnetico);
 		proximidad = (TextView) findViewById(R.id.proximidad);
 		luminosidad = (TextView) findViewById(R.id.luminosidad);
+		gpss = (TextView) findViewById(R.id.gps);
 		acelerometer = (Button) findViewById(R.id.acelerometer);
 		giroscopio = (Button) findViewById(R.id.giroscopio);
 		magnetic = (Button) findViewById(R.id.magnetic);
 		proximity = (Button) findViewById(R.id.proximity);
 		luminosity = (Button) findViewById(R.id.luminosity);
+		gpsboton = (Button) findViewById(R.id.gpsboton);
 		grafAcelerometro = (Button) findViewById(R.id.graficaAcelerometro);
 		grafGiroscopio = (Button) findViewById(R.id.graficaGiroscopio);
 		grafMagnetico = (Button) findViewById(R.id.graficaMagnetico);
@@ -105,6 +120,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		magnetic.setOnClickListener(this);
 		proximity.setOnClickListener(this);
 		luminosity.setOnClickListener(this);
+		gpsboton.setOnClickListener(this);
 		grafAcelerometro.setOnClickListener(this);
 		grafGiroscopio.setOnClickListener(this);
 		grafMagnetico.setOnClickListener(this);
@@ -119,15 +135,49 @@ public class Simulacion extends Activity implements SensorEventListener,
 		magneto = (CheckBox) findViewById(R.id.checkMagetico);
 		prox = (CheckBox) findViewById(R.id.checkProximidad);
 		luz = (CheckBox) findViewById(R.id.checkLuz);
-		
+		gp = (CheckBox) findViewById(R.id.checkGps);
 
 		acelero.setOnCheckedChangeListener(this);
 		giro.setOnCheckedChangeListener(this);
 		magneto.setOnCheckedChangeListener(this);
 		prox.setOnCheckedChangeListener(this);
 		luz.setOnCheckedChangeListener(this);
-		
+		gp.setOnCheckedChangeListener(this);
+		// declaramos el gps y sus escuchas
+		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		milocListener = new MiLocationListener();
+		milocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				milocListener);
+		if (latitud == 0 && longitud == 0) {
+			gpss.setText(getResources().getString(R.string.gpsbuscando));
+		}
+	}
 
+	public class MiLocationListener implements LocationListener {
+		public void onLocationChanged(Location loc) {
+			gpss.setText(getResources().getString(R.string.gpssignal));
+			String txt = "";
+			latitud = loc.getLatitude();
+			longitud = loc.getLongitude();
+
+			txt += "\n " + getResources().getString(R.string.latitud) + ": "
+					+ latitud;
+			txt += "\n " + getResources().getString(R.string.longitud) + ": "
+					+ longitud;
+			gpss.setText(txt);
+
+		}
+
+		public void onProviderDisabled(String provider) {
+			gpss.setText(getResources().getString(R.string.gpsoff));
+		}
+
+		public void onProviderEnabled(String provider) {
+			gpss.setText(getResources().getString(R.string.gpsbuscando));
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
 	}
 
 	@Override
@@ -165,6 +215,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 			startActivity(proximidad);
 
 			break;
+		case R.id.gpsboton:
+			Intent gps = new Intent(Simulacion.this, DefinicionGps.class);
+			startActivity(gps);
+			break;
+
 		case R.id.graficaAcelerometro:
 			Intent grafica = new Intent(Simulacion.this, Grafica.class);
 			grafica.putExtra("tipo", tipo);
@@ -176,6 +231,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafica.putExtra("magnetometro", mag);
 			grafica.putExtra("proximo", proxi);
 			grafica.putExtra("luz", lu);
+			grafica.putExtra("gps",g);
 			startActivity(grafica);
 			break;
 		case R.id.graficaGiroscopio:
@@ -189,6 +245,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaGir.putExtra("magnetometro", mag);
 			graficaGir.putExtra("proximo", proxi);
 			graficaGir.putExtra("luz", lu);
+			graficaGir.putExtra("gps",g);
 			startActivity(graficaGir);
 			break;
 		case R.id.graficaLuminosidad:
@@ -202,6 +259,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaLu.putExtra("magnetometro", mag);
 			graficaLu.putExtra("proximo", proxi);
 			graficaLu.putExtra("luz", lu);
+			graficaLu.putExtra("gps",g);
 			startActivity(graficaLu);
 			break;
 		case R.id.graficaMagnetico:
@@ -215,6 +273,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaMa.putExtra("magnetometro", mag);
 			graficaMa.putExtra("proximo", proxi);
 			graficaMa.putExtra("luz", lu);
+			graficaMa.putExtra("gps",g);
 			startActivity(graficaMa);
 			break;
 		case R.id.graficaProximidad:
@@ -228,6 +287,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaPr.putExtra("magnetometro", mag);
 			graficaPr.putExtra("proximo", proxi);
 			graficaPr.putExtra("luz", lu);
+			graficaPr.putExtra("gps",g);
 			startActivity(graficaPr);
 			break;
 		}
@@ -325,12 +385,13 @@ public class Simulacion extends Activity implements SensorEventListener,
 						event.values[0], 2)
 						+ Math.pow(event.values[1], 2)
 						+ Math.pow(event.values[2], 2))));
-				double x = Math.round(event.values[0]*10000.0)/10000.0;
-				double y = Math.round(event.values[1]*10000.0)/10000.0;
-				double z = Math.round(event.values[2]*10000.0)/10000.0;
-				double modulo = Math.round(m*10000.0)/10000.0;
-				
-				txt += getString(R.string.aceleracion)+ " ("+getString(R.string.unidad_acelerometro)+")\n";
+				double x = Math.round(event.values[0] * 10000.0) / 10000.0;
+				double y = Math.round(event.values[1] * 10000.0) / 10000.0;
+				double z = Math.round(event.values[2] * 10000.0) / 10000.0;
+				double modulo = Math.round(m * 10000.0) / 10000.0;
+
+				txt += getString(R.string.aceleracion) + " ("
+						+ getString(R.string.unidad_acelerometro) + ")\n";
 				txt += "\n X: " + x;
 				txt += "\n Y: " + y;
 				txt += "\n Z: " + z;
@@ -343,11 +404,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 						event.values[0], 2)
 						+ Math.pow(event.values[1], 2)
 						+ Math.pow(event.values[2], 2))));
-				double x2 = Math.round(event.values[0]*10000.0)/10000.0;
-				double y2 = Math.round(event.values[1]*10000.0)/10000.0;
-				double z2 = Math.round(event.values[2]*10000.0)/10000.0;
-				double modulo2 = Math.round(m2*10000.0)/10000.0;
-				txt += getString(R.string.velocidad)+ " ("+getString(R.string.unidad_giroscopio)+")\n";
+				double x2 = Math.round(event.values[0] * 10000.0) / 10000.0;
+				double y2 = Math.round(event.values[1] * 10000.0) / 10000.0;
+				double z2 = Math.round(event.values[2] * 10000.0) / 10000.0;
+				double modulo2 = Math.round(m2 * 10000.0) / 10000.0;
+				txt += getString(R.string.velocidad) + " ("
+						+ getString(R.string.unidad_giroscopio) + ")\n";
 				txt += "\n X: " + x2;
 				txt += "\n Y: " + y2;
 				txt += "\n Z: " + z2;
@@ -360,11 +422,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 						event.values[0], 2)
 						+ Math.pow(event.values[1], 2)
 						+ Math.pow(event.values[2], 2))));
-				double x3 = Math.round(event.values[0]*10000.0)/10000.0;
-				double y3 = Math.round(event.values[1]*10000.0)/10000.0;
-				double z3 = Math.round(event.values[2]*10000.0)/10000.0;
-				double modulo3 = Math.round(m3*10000.0)/10000.0;
-				txt += getString(R.string.magnetismo)+ " ("+getString(R.string.unidad_campo_magnetico)+")\n";
+				double x3 = Math.round(event.values[0] * 10000.0) / 10000.0;
+				double y3 = Math.round(event.values[1] * 10000.0) / 10000.0;
+				double z3 = Math.round(event.values[2] * 10000.0) / 10000.0;
+				double modulo3 = Math.round(m3 * 10000.0) / 10000.0;
+				txt += getString(R.string.magnetismo) + " ("
+						+ getString(R.string.unidad_campo_magnetico) + ")\n";
 				txt += "\n X: " + x3;
 				txt += "\n Y: " + y3;
 				txt += "\n Z: " + z3;
@@ -373,13 +436,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 				break;
 
 			case Sensor.TYPE_PROXIMITY:
-				double m4 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
-						event.values[0], 2))));
-				double x4 = Math.round(event.values[0]*10000.0)/10000.0;
-				double modulo4 = Math.round(m4*10000.0)/10000.0;
-				txt += getString(R.string.distancia)+ " ("+getString(R.string.unidad_proximidad)+")\n";
-				txt += "\n "+getString(R.string.distancia)+": " + x4;
-				txt += "\n d: " + modulo4;
+				double x4 = Math.round(event.values[0] * 10000.0) / 10000.0;
+				txt += getString(R.string.distancia) + " ("
+						+ getString(R.string.unidad_proximidad) + ")\n";
+				txt += "\n d: " + x4;
 				proximidad.setText(txt);
 				// Si detecta 0 lo represento
 				if (event.values[0] == 0) {
@@ -392,13 +452,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 				break;
 
 			case Sensor.TYPE_LIGHT:
-				double m5 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
-						event.values[0], 2))));
-				double x5 = Math.round(event.values[0]*10000.0)/10000.0;
-				double modulo5 = Math.round(m5*10000.0)/10000.0;
-				txt += getString(R.string.luminosi)+ " ("+getString(R.string.unidad_luz)+")\n";
-				txt += "\n "+getString(R.string.luminosi)+": " + x5;
-				txt += "\n E: " + modulo5;
+				double x5 = Math.round(event.values[0] * 10000.0) / 10000.0;
+				txt += getString(R.string.luminosi) + " ("
+						+ getString(R.string.unidad_luz) + ")\n";
+				txt += "\n E: " + x5;
 				luminosidad.setText(txt);
 				break;
 			}
@@ -417,6 +474,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		Parar_sensores();
+		milocManager.removeUpdates(milocListener);
 		super.onDestroy();
 	}
 
@@ -504,6 +562,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 			break;
 		case R.id.checkLuz:
 			lu = isChecked;
+			break;
+		case R.id.checkGps:
+			g = isChecked;
 			break;
 		}
 	}

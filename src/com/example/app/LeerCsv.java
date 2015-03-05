@@ -2,7 +2,6 @@ package com.example.app;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
@@ -29,6 +28,7 @@ public class LeerCsv extends Activity {
 	String titulografica;
 	String tamano;
 	String calidad;
+	String nombresensor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class LeerCsv extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		Bundle graficas = getIntent().getExtras();
 		nombre = graficas.getString("file");
+		titulografica = graficas.getString("nombrearchivo");
 		setContentView(R.layout.graficaarchivo);
 		layout = (LinearLayout) findViewById(R.id.chart);
 
@@ -108,7 +109,6 @@ public class LeerCsv extends Activity {
 			datos.remove(data);
 		}
 		try {
-
 			CsvReader fichero = new CsvReader(file);
 			fichero.setDelimiter(';');
 			fichero.getHeaders();
@@ -131,15 +131,13 @@ public class LeerCsv extends Activity {
 					Log.d("err", "esto es: " + unidad);
 					AccelData data = new AccelData(tiempo, x, y, z, modulo);
 					datos.add(data);
-				} else if (numerolineas == 3) {
+				} else if (numerolineas == 2) {
 					double tiempo = Double.parseDouble(fichero.get("t (s)"));
 					double x = Double.parseDouble(fichero.get("X").replace(",",
 							"."));
-					double modulo = Double.parseDouble(fichero.get("Modulo")
-							.replace(",", "."));
-					unidad = fichero.getHeader(3);
+					unidad = fichero.getHeader(2);
 					Log.d("err", "esto es: " + unidad);
-					AccelData2 data = new AccelData2(tiempo, x, modulo);
+					AccelData2 data = new AccelData2(tiempo, x);
 					sensor.add(data);
 				}
 			}
@@ -151,19 +149,22 @@ public class LeerCsv extends Activity {
 						|| unidad.equalsIgnoreCase("Unidad sensor: m/sÂ²")) {
 					tituloejey = "a ("
 							+ getString(R.string.unidad_acelerometro) + ")";
-					titulografica = getString(R.string.acelerometro);
+					nombresensor=getString(R.string.acelerometro);
+					setTitle(nombresensor);
 				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(R.string.unidad_giroscopio))) {
 					tituloejey = "ω (" + getString(R.string.unidad_giroscopio)
 							+ ")";
-					titulografica = getString(R.string.giroscopio);
+					nombresensor=getString(R.string.giroscopio);
+					setTitle(nombresensor);
 				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(
 								R.string.unidad_campo_magnetico))
 						|| unidad.equalsIgnoreCase("Unidad sensor: ÂµT")) {
 					tituloejey = "B ("
 							+ getString(R.string.unidad_campo_magnetico) + ")";
-					titulografica = getString(R.string.magnetico);
+					nombresensor=getString(R.string.magnetico);
+					setTitle(nombresensor);
 				}
 				mGraph = new Graph(this);
 				mGraph.iniciar(datos);
@@ -175,22 +176,23 @@ public class LeerCsv extends Activity {
 				for (AccelData data : datos) {
 					datos.remove(data);
 				}
-			} else if (numerolineas == 3) {
+			} else if (numerolineas == 2) {
 				if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(R.string.unidad_luz))) {
 					tituloejey = "E (" + getString(R.string.unidad_luz) + ")";
-					titulografica = getString(R.string.luminosidad);
+					nombresensor=getString(R.string.luminosidad);
+					setTitle(nombresensor);
 				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(R.string.unidad_proximidad))) {
 					tituloejey = "d (" + getString(R.string.unidad_proximidad)
 							+ ")";
-					titulografica = getResources().getString(
-							R.string.proximidad);
+					nombresensor=getString(R.string.proximidad);
+					setTitle(nombresensor);
 				}
 				mGraph = new Graph(this);
 				mGraph.iniciar2(sensor);
 				mGraph.ejeY2(sensor);
-				mGraph.setProperties2(true, true, titulografica, tituloejey,
+				mGraph.setProperties2(true, titulografica, tituloejey,
 						calidad, tamano);
 				view = mGraph.getGraph();
 				layout.addView(view);

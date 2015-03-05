@@ -19,9 +19,9 @@ import android.widget.Button;
 public class MainActivity extends Activity implements OnClickListener {
 	// Declaramos los botones, los hacemos globales para ser usados mas adelante
 	Button simulacion;
-	Button listasensores;
 	Button cargargraficas;
 	SharedPreferences sharedPreference;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,12 +29,10 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// Recogemos los botones
 		simulacion = (Button) findViewById(R.id.medicion);
-		listasensores = (Button) findViewById(R.id.sensoresdisponibles);
 		cargargraficas = (Button) findViewById(R.id.cargargrafica);
 
 		// Escuchamos los botones
 		simulacion.setOnClickListener(this);
-		listasensores.setOnClickListener(this);
 		cargargraficas.setOnClickListener(this);
 	}
 
@@ -60,11 +58,14 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.menu_settings:
-		    Intent i2 = new Intent(this,Setting.class);
-		    startActivity(i2);
-		break;
+			Intent i2 = new Intent(this, Setting.class);
+			startActivity(i2);
+			break;
+		case R.id.sensoresdisponibles:
+			Intent sensoresdisponibles = new Intent(this, Listasensores.class);
+			startActivity(sensoresdisponibles);
+			break;
 		}
-		
 		return true;
 		/** true -> consumimos el item, no se propaga */
 	}
@@ -79,13 +80,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			Intent simulacion = new Intent(this, Simulacion.class);
 			startActivity(simulacion);
 			break;
-		case R.id.sensoresdisponibles:
-			Intent sensoresdisponibles = new Intent(this, Listasensores.class);
-			startActivity(sensoresdisponibles);
-			break;
 		case R.id.cargargrafica:
-			/*Intent intent = new Intent(this, CargarGraficas.class);
-			this.startActivity(intent);*/
 			Intent intent = new Intent(this, FileChooserActivity.class);
 			this.startActivity(intent);
 			break;
@@ -93,24 +88,24 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 
-
-		 Resources resource = getResources();
-			Configuration config = resource.getConfiguration();
-			sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-	        if ("fr".equalsIgnoreCase(sharedPreference.getString("language", null))) {
-	        	config.locale = Locale.FRANCE;
-			} else if ("en".equalsIgnoreCase(sharedPreference.getString("language", null))) {
-				config.locale = Locale.ENGLISH;
-			} else {
-				config.locale = Locale.getDefault();
-			}
-	        getBaseContext().getResources().updateConfiguration(config, null);
+		Resources resource = getResources();
+		Configuration config = resource.getConfiguration();
+		sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+		if ("fr".equalsIgnoreCase(sharedPreference.getString("language", null))) {
+			config.locale = Locale.FRANCE;
+		} else if ("en".equalsIgnoreCase(sharedPreference.getString("language",
+				null))) {
+			config.locale = Locale.ENGLISH;
+		} else {
+			config.locale = Locale.getDefault();
+		}
+		getBaseContext().getResources().updateConfiguration(config, null);
 
 	}
 }
