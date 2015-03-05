@@ -538,6 +538,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 			tipo = SensorManager.SENSOR_DELAY_NORMAL;
 		} else if (type.equals("SensorManager.SENSOR_DELAY_UI")) {
 			tipo = SensorManager.SENSOR_DELAY_UI;
+		} else if (type.equals("SensorManager.SENSOR_DELAY_GAME")) {
+			tipo = SensorManager.SENSOR_DELAY_GAME;
+		}else if (type.equals("SensorManager.SENSOR_DELAY_FASTEST")) {
+			tipo = SensorManager.SENSOR_DELAY_FASTEST;
 		}
 		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));
 		tiempoParada = Integer.parseInt(pref.getString("tiempo", "0"));

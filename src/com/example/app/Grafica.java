@@ -293,9 +293,10 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	private void contadores() {
+		iniciar.setEnabled(false);
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
 		new CountDownTimer(tiempoInicio, 1000) {
-
+			
 			@Override
 			public void onTick(long millisUntilFinished) {
 				// TODO Auto-generated method stub
@@ -316,7 +317,7 @@ public class Grafica extends Activity implements OnClickListener,
 				} else {
 					Iniciar_sensores();
 					iniciar.setEnabled(false);
-					parar.setEnabled(true);
+					parar.setEnabled(false);
 					reiniciar.setEnabled(false);
 
 					new CountDownTimer(tiempoParada, 1000) {
@@ -332,7 +333,7 @@ public class Grafica extends Activity implements OnClickListener,
 													// stub
 							onStop();
 							reiniciar.setEnabled(true);
-							iniciar.setEnabled(true);
+							iniciar.setEnabled(false);
 							parar.setEnabled(false);
 						}
 					}.start();
@@ -1129,8 +1130,12 @@ public class Grafica extends Activity implements OnClickListener,
 			parar.setEnabled(true);
 			reiniciar.setEnabled(false);
 			Iniciar_sensores();
-			if (tiempoParada > 0)
+			if (tiempoParada > 0){
 				contadores2();
+				continuar.setEnabled(false);
+				parar.setEnabled(false);
+				reiniciar.setEnabled(false);
+			}
 			break;
 		case (R.id.continuar):
 			parar.setEnabled(true);
@@ -1139,6 +1144,7 @@ public class Grafica extends Activity implements OnClickListener,
 			break;
 		case (R.id.reiniciar):
 			iniciar.setVisibility(Button.VISIBLE);
+			iniciar.setEnabled(true);
 			continuar.setVisibility(Button.GONE);
 			ejex.setVisibility(CheckBox.GONE);
 			ejey.setVisibility(CheckBox.GONE);
@@ -1148,6 +1154,10 @@ public class Grafica extends Activity implements OnClickListener,
 			graba2.setVisibility(TextView.INVISIBLE);
 			parar.setEnabled(false);
 			reiniciar.setEnabled(false);
+			if (tiempoInicio>0){
+				contadores();
+				iniciar.setEnabled(false);
+			}
 			layout.removeView(view);
 			for (AccelData data : sensorDatas) {
 				sensorDatas.remove(data);
