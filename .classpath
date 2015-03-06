@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="libs/androidplot-core-0.6.2-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="libs/achartengine-1.1.0.jar" sourcepath="libs/achartengine-1.1.0.jar"/>
 	<classpathentry kind="lib" path="libs/javacsv-2.0.jar" sourcepath="/home/diego/Descargas/javacsv.jar"/>
+	<classpathentry kind="lib" path="/home/diego/Descargas/android-support-v7-appcompat.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

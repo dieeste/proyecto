@@ -114,5 +114,6 @@ Normalmente, si el dispositivo es oscuro es casi imperceptible pero si miramos a
     <string name="checkGps">Guardar datos</string>
     <string name="latitud">Latitud</string>
     <string name="longitud">Longitud</string>
+    <string name="ayuda">Ayuda</string>
 
 </resources>

@@ -10,4 +10,5 @@
 <color name="noseleccionado">#FFFFFF</color>
 <color name="background">#FF333333</color>
 <color name="filter_rate_value">#FF000000</color>
+<color name="psts_background_tab_pressed">#1AFFFFFF</color>
 </resources>

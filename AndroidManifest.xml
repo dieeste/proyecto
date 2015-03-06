@@ -39,6 +39,10 @@
             android:label="Acerca de" >
         </activity>
         <activity
+            android:name="Ayuda"
+            android:label="Ayuda" >
+        </activity>
+        <activity
             android:name="Setting"
             android:label="Preferencias" >
             <action android:name=".Setting" />

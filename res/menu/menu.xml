@@ -17,4 +17,10 @@
         android:title="@string/acercaDe">
     </item>
 
+    <item
+        android:id="@+id/menu_ayuda"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/ayuda">
+    </item>
+
 </menu>

@@ -120,5 +120,6 @@ Usually, if the device is dark it is almost imperceptible but if we look to the 
     <string name="checkGps">Save data</string>
     <string name="latitud">Latitude</string>
     <string name="longitud">Longitude</string>
+    <string name="ayuda">Help</string>
 
 </resources>
