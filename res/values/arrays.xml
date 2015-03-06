@@ -4,14 +4,14 @@
     <string-array name="frecuencia_recogida">
         <item>NORMAL</item>
         <item>UI</item>
-        <!-- <item>JUEGO</item> -->
-        <!-- <item>MÁS RÁPIDO</item> -->
+        <item>JUEGO</item>
+        <item>MÁS RÁPIDO</item>
     </string-array>
     <string-array name="frecuencias">
         <item>SensorManager.SENSOR_DELAY_NORMAL</item>
         <item>SensorManager.SENSOR_DELAY_UI</item>
-        <!-- <item>SensorManager.SENSOR_DELAY_GAME</item> -->
-        <!-- <SensorManager.SENSOR_DELAY_FASTEST</item> -->
+        <item>SensorManager.SENSOR_DELAY_GAME</item>
+        <item>SensorManager.SENSOR_DELAY_FASTEST</item>
     </string-array>
     <string-array name="temporizador">
         <item>DESACTIVADO</item>
