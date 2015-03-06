@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +23,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button simulacion;
 	Button cargargraficas;
 	SharedPreferences sharedPreference;
+	// Recogemos las preferencias
+		int tiempoInicio, tiempoParada;
+		int tipo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Escuchamos los botones
 		simulacion.setOnClickListener(this);
 		cargargraficas.setOnClickListener(this);
+		tipo = SensorManager.SENSOR_DELAY_NORMAL;
 	}
 
 	@Override
@@ -59,7 +65,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.menu_settings:
 			Intent i2 = new Intent(this, Setting.class);
-			startActivity(i2);
+			startActivityForResult(i2, 0);
 			break;
 		case R.id.sensoresdisponibles:
 			Intent sensoresdisponibles = new Intent(this, Listasensores.class);
@@ -78,6 +84,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			// envía lo que nosotros queremos y nos deja elegir entre las
 			// aplicaciones que tenemos para enviar el correo
 			Intent simulacion = new Intent(this, Simulacion.class);
+			simulacion.putExtra("tipo", tipo);
+			simulacion.putExtra("tiempo", tiempoParada);
+			simulacion.putExtra("temporizador", tiempoInicio);
 			startActivity(simulacion);
 			break;
 		case R.id.cargargrafica:
@@ -106,6 +115,22 @@ public class MainActivity extends Activity implements OnClickListener {
 			config.locale = Locale.getDefault();
 		}
 		getBaseContext().getResources().updateConfiguration(config, null);
+		
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
 
+		String type = pref.getString("frecuencia",
+				"SensorManager.SENSOR_DELAY_NORMAL");
+		if (type.equals("SensorManager.SENSOR_DELAY_NORMAL")) {
+			tipo = SensorManager.SENSOR_DELAY_NORMAL;
+		} else if (type.equals("SensorManager.SENSOR_DELAY_UI")) {
+			tipo = SensorManager.SENSOR_DELAY_UI;
+		} else if (type.equals("SensorManager.SENSOR_DELAY_GAME")) {
+			tipo = SensorManager.SENSOR_DELAY_GAME;
+		}else if (type.equals("SensorManager.SENSOR_DELAY_FASTEST")) {
+			tipo = SensorManager.SENSOR_DELAY_FASTEST;
+		}
+		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));
+		tiempoParada = Integer.parseInt(pref.getString("tiempo", "0"));
 	}
 }

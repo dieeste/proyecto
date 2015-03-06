@@ -127,9 +127,6 @@ public class Simulacion extends Activity implements SensorEventListener,
 		grafProximidad.setOnClickListener(this);
 		grafLuz.setOnClickListener(this);
 
-		tipo = SensorManager.SENSOR_DELAY_NORMAL;
-		Log.d("tiempo", "inicio: " + tipo);
-
 		acelero = (CheckBox) findViewById(R.id.checkAcelerometro);
 		giro = (CheckBox) findViewById(R.id.checkGiroscopio);
 		magneto = (CheckBox) findViewById(R.id.checkMagetico);
@@ -143,6 +140,20 @@ public class Simulacion extends Activity implements SensorEventListener,
 		prox.setOnCheckedChangeListener(this);
 		luz.setOnCheckedChangeListener(this);
 		gp.setOnCheckedChangeListener(this);
+		Bundle graficas = getIntent().getExtras();
+
+		// Frecuencia es los distintos tipos de frecuencia que recogemos de la
+		// actividad anteerior que a su vez es recogido de la configuración
+		tipo = graficas.getInt("tipo");
+		Log.d("tiempo", "inicio: " + tipo);
+
+		// tiempoParada y tiempoInicio es el tiempo que recogemos de la
+		// actividad anterior y que será el tiempo durante el que vamos a medir
+		// los sensores y el tiempo que pasará antes de inciar los sensores
+		tiempoInicio = graficas.getInt("temporizador");
+		Log.d("tiempo", "inicio: " + tiempoInicio);
+		tiempoParada = graficas.getInt("tiempo");
+		Log.d("tiempo", "inicio: " + tiempoParada);
 		// declaramos el gps y sus escuchas
 		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		milocListener = new MiLocationListener();
