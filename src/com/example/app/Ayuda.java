@@ -1,13 +1,11 @@
 package com.example.app;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 
 /**
@@ -34,8 +32,7 @@ public class Ayuda extends FragmentActivity {
     }
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"Categories", "Home", "Top Paid", "Top Free", "Top Grossing", "Top New Paid",
-                "Top New Free", "Trending"};
+        private final String[] TITLES = {getString(R.string.inicio), getString(R.string.medicion), getString(R.string.grafica), getString(R.string.cargargraficas), getString(R.string.teoria)};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

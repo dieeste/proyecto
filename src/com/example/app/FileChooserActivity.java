@@ -225,6 +225,10 @@ public class FileChooserActivity extends ListActivity {
 			enviar(ficheros);
 			ficheros.remove(true);
 			break;
+		case R.id.menu_ayuda:
+			Intent ayuda = new Intent(this, Ayuda.class);
+			startActivity(ayuda);
+			break;
 		}
 		return true;
 		/** true -> consumimos el item, no se propaga */

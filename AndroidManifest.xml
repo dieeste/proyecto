@@ -85,6 +85,13 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
+         <activity
+            android:name="DefinicionGps"
+            android:label="Definición del GPS" >
+            <action android:name=".DefinicionGps" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
         <activity
             android:name="DefinicionGiroscopio"
             android:label="Definición del giroscopio" >
@@ -115,8 +122,8 @@
         </activity>
         <activity
             android:name="Grafica"
-            android:label=" "
-            android:icon="@drawable/estadistica" >
+            android:icon="@drawable/estadistica"
+            android:label=" " >
             <action android:name=".Grafica" />
 
             <category android:name="android.intent.category.DEFAULT" />

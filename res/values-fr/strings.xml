@@ -4,6 +4,8 @@
     <string name="app_name">Sensor Mobile</string>
     <string name="config">Réglage</string>
     <string name="acercaDe">À propos</string>
+    <string name="inicio">Écran principal</string>
+    <string name="teoria">Théorie</string>
     <string name="explicacion">Aplication accompli par Félix Huete García y Diego Esteban Moreno\n
         Version 1.0</string>
     <string name="idiomas">Langues</string>
@@ -105,6 +107,14 @@ Le capteur de lumière la plus commune est résistance à charge -Light ou LDR L
     <string name="explicacionprox3">Lorsque l\'équipe se approcha de notre oreille pour répondre à un appel, l\'appareil se éteint le rétro-éclairage pour économiser la batterie.\n</string>
     <string name="tituloprox4">QUELLES MESURES?\n</string>
     <string name="explicacionprox4">Le capteur de proximité fournit la distance entre le dispositif et un autre objet. Le dispositif peut être utilisé pour détecter si l\'utilisateur tient l\'appareil à proximité (voir tableau); par conséquent, vous pouvez déterminer si l\'utilisateur est sur un appel et vous pouvez désactiver l\'écran pendant l\'appel téléphonique. \n</string>
+    <string name="titulogps1">\n¿QUÉ ES EL GPS?\n</string>
+    <string name="explicaciongps1">Sistema Global de Navegación por Satélite (GNSS) que nos permite fijar a escala mundial la posición de un objeto, una persona, un vehículo o una nave.\n</string>
+    <string name="titulogps2">¿CÓMO FUNCIONA EL GPS?\n</string>
+    <string name="explicaciongps2">El GPS se basa en la triangulación, un principio matemático que determina la posición exacta de un punto conociendo las distancias de éste a otros tres puntos de ubicación conocida. En teoría se usan tres satélites para determinar la posición, velocidad y altura a la que se encuentra el receptor.\n</string>
+    <string name="titulogps3">¿PARA QUÉ SIRVE EL GPS?\n</string>
+    <string name="explicaciongps3">El GPS se puede usar para indicarnos trayectorias, rutas o como localización.\n</string>
+    <string name="titulogps4">¿QUÉ DATOS NOS MUESTRA EL GPS?\n</string>
+    <string name="explicaciongps4">Latitud y longitud.\n</string>
     <string name="gpsoff">GPS éteinte</string>
     <string name="gpsbuscando">GPS recherche</string>
     <string name="gpssignal">GPS signal</string>
@@ -113,5 +123,61 @@ Le capteur de lumière la plus commune est résistance à charge -Light ou LDR L
     <string name="latitud">Latitude</string>
     <string name="longitud">Longitude</string>
     <string name="ayuda">Aide</string>
+    <string name="ayuda11">En la pantalla principal se encuentran 2 opciones diferenciadas por botones:\n</string>
+    <string name="ayuda12">Medición de Datos:\n
+\tEn este apartado se mostraran los sensores con sus medidas.\n
+Cargar Gráficas:\n
+ \tEn este apartado se mostraran todos los ficheros con las gráficas guardadas.\n
+Además de las dos opciones diferenciadas, en el botón CONFIGURACIÓN aparecen 4 opciones:\n</string>
+    <string name="ayuda13">Sensores del dispositivo: en esta opción se recogen en un listado todos los sensores del dispositivo.\n</string>
+    <string name="ayuda14">\t\tNombre del sensor\n
+\t\tConsumo de la batería\n
+\t\tVersión\n
+\t\tDistribuidor\n
+\nConfiguración: en esta opción aparecen las preferencias de la aplicación, estas preferencias son:\n</string>
+    <string name="ayuda15">\n\tIdioma: Se podrá elegir entre Auto, Español, Francés o Portugués.\n
+\tDebajo de Configuración aparecen las opciones:\n
+\t\t\tFrecuencias muestreo: se elige una frecuencia de los sensores, numero de muestras por segundo.\n
+\t\t\tTemporizador: tiempo que transcurre desde que entramos en la pantalla de la gráfica hasta que empieza a grabar.\n
+\t\t\tTiempo de grabación: se elige el tiempo que durará la grabación\n
+Acerca de: En esta opción muestra la información de los autores y privacidad de la aplicación.\n
+Ayuda: Ayuda de la aplicación.\n</string>
+    <string name="ayuda21">En esta pantalla se mostraran los sensores junto con sus mediciones. La pantalla se estructura:\n</string>
+    <string name="ayuda22">\nBotones de información de los sensores:\n
+\tAcelerómetro\n
+\tGiroscopio\n
+\tMagnetómetro\n
+\tSensor proximidad\n
+\tSensor Luz\n
+\tGps\n
+\nDebajo de cada botón de información de cada sensor hay:\n
+\tOpción de guardar los datos: se marcara si se desea que se guarden los datos del sensor en un fichero Csv.\n
+\tIcono Grafica: Este botón llevara a la representación de los sensores.\n
+\tMuestra de datos: se mostraran las medidas tomadas por los sensores en tiempo real.\n
+Además de las opciones en el botón preferencia aparecerán las opciones:\n
+\tConfiguración aparecen las opciones:
+\t\t\tFrecuencias muestreo- se elige una frecuencia de los sensores, numero de muestras por segundo.
+\t\t\tTemporizador: tiempo que transcurre desde que entramos en la pantalla de la gráfica hasta que empieza a grabar.\n
+\t\t\tTiempo de grabación- se elige el tiempo que durará la grabación\n
+Ayuda: Ayuda de la aplicación.\n</string>
+    <string name="ayuda31">En esta pantalla aparece la representación de los datos de los sensores.\n</string>
+    <string name="ayuda32">Su estructura es la siguiente:\n
+\tBotón empezar: se pulsara para iniciar la gráfica.\n
+\tBotón Pausar/Parar: Se pulsara para detener o interrumpir la representación de la gráfica.\n
+\tReiniciar: se pulsara para empezar una nueva representación de la grafica.\n
+Debajo de los botones aparece:\n
+\tMedidas: estas medidas podrán seleccionarse o no dependiendo de qué dato se desee mostrar.\n
+\tREC: se mostrara en color verde si no se ha marcado guarda datos de la pantalla Medición de Datos, en caso de que la opción Guardar datos de la pantalla Medición de datos se halla seleccionado se mostrar de color rojo.\n
+\tGPS señal: muestra el estado de la señal del Gps.\n
+\tGráfica: se representan los datos que recoge el dispositivo móvil.\n
+Además de estas opciones en la opción preferencias del sistema, una vez iniciada la representación de las mediciones, se podrán cambiar de un sensor a otro, compartirlo o guardarlo en formato CSV.\n</string>
+    <string name="ayuda41">En esta pantalla se muestran todos los ficheros guardados de las mediciones. En caso de seleccionar un fichero este mostrara la representación de las mediciones. Si se deja seleccionado durante un periodo prolongado de tiempo, el fichero podrá ser enviado mediante la opción que usted desee.\n
+Si una vez seleccionado se quiere quitar de la lista a enviar solo tiene que pulsar prolongadamente sobre ese mismo archivo y quedará sin seleccionar.\n</string>
+    <string name="ayuda42">Se podrán seleccionar varios ficheros a la vez para enviarlos.\n</string>
+    <string name="ayuda51">En las pantallas información de los sensores (giroscopio, acelerómetro, magnetómetro, sensor de luz, sensor proximidad y GPS) muestra la explicación de cada sensor. Cada pantalla está estructurada:\n
+\t¿Qué es?: explicación de que mide y que es el sensor.\n
+\t¿Cómo funciona?: explicación del funcionamiento del sensor.\n
+\t¿Para qué sirve? : ejemplo de utilidad del sensor.\n
+\t¿Datos que muestra?: medidas que toma en sensor en el dispositivo Android.\n</string>
 
 </resources>

@@ -1261,6 +1261,10 @@ public class Grafica extends Activity implements OnClickListener,
 
 		// Elegimos entre las opciones disponibles en esta pantalla
 		switch (item.getItemId()) {
+		case R.id.menu_ayuda:
+			Intent ayuda = new Intent(this, Ayuda.class);
+			startActivity(ayuda);
+			break;
 		case (R.id.acele):
 			sensor = Sensor.TYPE_ACCELEROMETER;
 			if (funciona == false) {

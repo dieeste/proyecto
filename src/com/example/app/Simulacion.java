@@ -528,6 +528,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 			// Iniciamos la actividad y esperamos respuesta con los datos
 			startActivityForResult(i, 0);
 			break;
+		case R.id.menu_ayuda:
+			Intent ayuda = new Intent(this, Ayuda.class);
+			startActivity(ayuda);
+			break;
 		}
 		return true;
 		/** true -> consumimos el item, no se propaga */

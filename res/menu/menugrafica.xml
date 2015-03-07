@@ -31,5 +31,10 @@
         android:id="@+id/luz"
         android:title="@string/luminosidad">
     </item>
+    <item
+        android:id="@+id/menu_ayuda"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/ayuda">
+    </item>
 
 </menu>
