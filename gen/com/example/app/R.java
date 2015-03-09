@@ -11,14 +11,12 @@ public final class R {
     public static final class array {
         public static final int frecuencia_recogida=0x7f050000;
         public static final int frecuencias=0x7f050001;
-        public static final int idiomas=0x7f050008;
-        public static final int idiomasValores=0x7f050009;
+        public static final int idiomas=0x7f050006;
+        public static final int idiomasValores=0x7f050007;
         public static final int opcionestiempograbacion=0x7f050005;
-        public static final int sensores=0x7f050006;
         public static final int temporizador=0x7f050002;
         public static final int temporizadoropciones=0x7f050003;
         public static final int tiempograbacion=0x7f050004;
-        public static final int valorsensores=0x7f050007;
     }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",

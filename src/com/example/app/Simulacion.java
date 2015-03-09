@@ -548,15 +548,15 @@ public class Simulacion extends Activity implements SensorEventListener,
 				.getDefaultSharedPreferences(getBaseContext());
 
 		String type = pref.getString("frecuencia",
-				"SensorManager.SENSOR_DELAY_NORMAL");
-		if (type.equals("SensorManager.SENSOR_DELAY_NORMAL")) {
-			tipo = SensorManager.SENSOR_DELAY_NORMAL;
-		} else if (type.equals("SensorManager.SENSOR_DELAY_UI")) {
-			tipo = SensorManager.SENSOR_DELAY_UI;
-		} else if (type.equals("SensorManager.SENSOR_DELAY_GAME")) {
-			tipo = SensorManager.SENSOR_DELAY_GAME;
-		}else if (type.equals("SensorManager.SENSOR_DELAY_FASTEST")) {
-			tipo = SensorManager.SENSOR_DELAY_FASTEST;
+				"lento");
+		if (type.equals("lento")) {
+			tipo = 200000;
+		} else if (type.equals("normal")) {
+			tipo = 120000;
+		} else if (type.equals("rapido")) {
+			tipo = 75000;
+		}else if (type.equals("muyrapido")) {
+			tipo = 60000;
 		}
 		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));
 		tiempoParada = Integer.parseInt(pref.getString("tiempo", "0"));
