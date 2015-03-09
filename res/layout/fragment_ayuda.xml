@@ -25,6 +25,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textColor="#ffffff"
+                android:textSize="16sp"
                 tools:text="Card" />
 
             <ImageView
@@ -42,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -57,10 +59,11 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textColor="#ffffff" />
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -75,10 +78,11 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textColor="#ffffff" />
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -93,10 +97,12 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textColor="#ffffff" />
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
         </LinearLayout>
     </ScrollView>
 
