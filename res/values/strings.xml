@@ -8,10 +8,16 @@
     <string name="acercaDe">Acerca de</string>
     <string name="inicio">Inicio</string>
     <string name="teoria">Teoría</string>
-    <string name="explicacion">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n
-Diseñada y creada por los autores: Diego Esteban Moreno y Félix Huete García, como proyecto final de carrera para la universidad de Valladolid de la titulación Ingeniería Técnica de Informática de Sistemas.\n
-Como tutores Miguel Ángel González Rebollo y Manuel Ánglel González Delgado.\n
-La aplicación muestra el uso del acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPS, además como utensilio de medida en los laboratorios de física.\n</string>
+    <string name="explicacion">\nDiseñada y creada por los autores:\n\n
+\t\tDiego Esteban Moreno\n
+\t\tFélix Huete García\n\n
+Como proyecto final de carrera para la Universidad de Valladolid de la titulación Ingeniería Técnica de Informática de Sistemas.\n\n
+
+Como tutores:\n\n
+\t\tMiguel Ángel González Rebollo\n 
+\t\tManuel Ángel González Delgado.\n</string>
+    <string name="explicacionacercade2">La aplicación muestra el uso del acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPS, además como utensilio de medida en los laboratorios de física.\n</string>
+    <string name="explicacionacercade">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n</string>
     <string name="medicion">Medición de datos</string>
     <string name="aceleracion">Aceleración</string>
     <string name="velocidad">Velocidad angular</string>

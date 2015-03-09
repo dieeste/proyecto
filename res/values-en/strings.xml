@@ -8,8 +8,16 @@
     <string name="acercaDe">About</string>
     <string name="inicio">Main screen</string>
     <string name="teoria">Theory</string>
-    <string name="explicacion">Application accomplished by Félix Huete García y Diego Esteban Moreno\n
-        Version 1.0</string>
+    <string name="explicacion">\nDiseñada y creada por los autores:\n\n
+\t\tDiego Esteban Moreno\n
+\t\tFélix Huete García\n\n
+Como proyecto final de carrera para la Universidad de Valladolid de la titulación Ingeniería Técnica de Informática de Sistemas.\n\n
+
+Como tutores:\n\n
+\t\tMiguel Ángel González Rebollo\n 
+\t\tManuel Ángel González Delgado.\n</string>
+    <string name="explicacionacercade2">La aplicación muestra el uso del acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPS, además como utensilio de medida en los laboratorios de física.\n</string>
+    <string name="explicacionacercade">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n</string>
     <string name="idiomas">Languages</string>
     <string name="medicion">Measurement data</string>
     <string name="aceleracion">Acceleration</string>
