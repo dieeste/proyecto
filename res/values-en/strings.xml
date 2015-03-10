@@ -15,10 +15,10 @@ Como proyecto final de carrera para la Universidad de Valladolid de la titulaci�
 
 Como tutores:\n\n
 \t\tMiguel Ángel González Rebollo\n 
-\t\tManuel Ángel González Delgado.\n</string>
+\t\tManuel Ángel González Delgado\n</string>
     <string name="explicacionacercade2">La aplicación muestra el uso del acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPS, además como utensilio de medida en los laboratorios de física.\n</string>
     <string name="explicacionacercade">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n</string>
-    <string name="idiomas">Languages</string>
+    <string name="idiomas">LANGUAGES</string>
     <string name="medicion">Measurement data</string>
     <string name="aceleracion">Acceleration</string>
     <string name="velocidad">Angular velocity</string>
@@ -50,6 +50,22 @@ Como tutores:\n\n
     <string name="tiempo">RECORDING TIME</string>
     <string name="frecuencias">SAMPLING FRECUENCY</string>
     <string name="temporizador">TIMER</string>
+    <string name="lento">SLOW</string>
+    <string name="normal">NORMAL</string>
+    <string name="rapido">FAST</string>
+    <string name="muyrapido">FASTEST</string>
+    <string name="apagado">OFF</string>
+    <string name="seg3">3 SECONDS</string>
+    <string name="seg5">5 SECONDS</string>
+    <string name="seg10">10 SECONDS</string>
+    <string name="seg15">15 SECONDS</string>
+    <string name="seg30">30 SECONDS</string>
+    <string name="seg60">60 SECONDS</string>
+    <string name="auto">AUTO</string>
+    <string name="espa">SPANISH</string>
+    <string name="ingles">ENGLISH</string>
+    <string name="frances">FRENCH</string>
+    <string name="portugues">PORTUGUESE</string>
     <string name="infoacelerometro">ABOUT ACCELEROMETER</string>
     <string name="infogiroscopio">ABOUT GYROSCOPE</string>
     <string name="infomagnetico">ABOUT MAGNETOMETER</string>
@@ -123,14 +139,14 @@ Besides, if we touch the screen by accident while we are on a call, nothing will
 Usually, if the device is dark it is almost imperceptible but if we look to the light we see it, if it has, of course.\n</string>
     <string name="tituloprox4">WHAT IT MEASURES\n</string>
     <string name="explicacionprox4">The proximity sensor provides the distance between the device and another object. The device can be used to detect if the user holds the device near (see table); therefore, you can determine if the user is on a call and if the screen can be turned off during the phone call\n</string>
-    <string name="titulogps1">\n¿QUÉ ES EL GPS?\n</string>
-    <string name="explicaciongps1">Sistema Global de Navegación por Satélite (GNSS) que nos permite fijar a escala mundial la posición de un objeto, una persona, un vehículo o una nave.\n</string>
-    <string name="titulogps2">¿CÓMO FUNCIONA EL GPS?\n</string>
-    <string name="explicaciongps2">El GPS se basa en la triangulación, un principio matemático que determina la posición exacta de un punto conociendo las distancias de éste a otros tres puntos de ubicación conocida. En teoría se usan tres satélites para determinar la posición, velocidad y altura a la que se encuentra el receptor.\n</string>
-    <string name="titulogps3">¿PARA QUÉ SIRVE EL GPS?\n</string>
-    <string name="explicaciongps3">El GPS se puede usar para indicarnos trayectorias, rutas o como localización.\n</string>
-    <string name="titulogps4">¿QUÉ DATOS NOS MUESTRA EL GPS?\n</string>
-    <string name="explicaciongps4">Latitud y longitud.\n</string>
+    <string name="titulogps1">\nABOUT GPS\n</string>
+    <string name="explicaciongps1">Global Navigation Satellite System (GNSS) which allows us to set global position of an object, a person, a vehicle or a ship.\n</string>
+    <string name="titulogps2">HOW IT WORKS\n</string>
+    <string name="explicaciongps2">The GPS is based on the triangulation, a mathematical principle that determines the exact position of a point knowing the distances from a known location to three points. Three satellites are used to determine the position, speed and height of receiver.\n</string>
+    <string name="titulogps3">PURPOSE IF GPS\n</string>
+    <string name="explicaciongps3">The GPS indicates paths, routes or location.\n</string>
+    <string name="titulogps4">WHAT IT MEASURES\n</string>
+    <string name="explicaciongps4">Latitude and longitude.\n</string>
     <string name="gpsoff">GPS off</string>
     <string name="gpsbuscando">Searching GPS</string>
     <string name="gpssignal">GPS signal</string>
@@ -139,50 +155,50 @@ Usually, if the device is dark it is almost imperceptible but if we look to the 
     <string name="latitud">Latitude</string>
     <string name="longitud">Longitude</string>
     <string name="ayuda">Help</string>
-    <string name="ayuda11">En la pantalla principal se encuentran 2 opciones diferenciadas por botones:\n</string>
-    <string name="ayuda12">Medición de Datos:\n
-\tEn este apartado se mostraran los sensores con sus medidas.\n
-Cargar Gráficas:\n
- \tEn este apartado se mostraran todos los ficheros con las gráficas guardadas.\n
-Además de las dos opciones diferenciadas, en el botón CONFIGURACIÓN aparecen 4 opciones:\n</string>
-    <string name="ayuda13">Sensores del dispositivo: en esta opción se recogen en un listado todos los sensores del dispositivo.\n</string>
-    <string name="ayuda14">\t\tNombre del sensor\n
-\t\tConsumo de la batería\n
-\t\tVersión\n
-\t\tDistribuidor\n
-\nConfiguración: en esta opción aparecen las preferencias de la aplicación, estas preferencias son:\n</string>
-    <string name="ayuda15">\n\tIdioma: Se podrá elegir entre Auto, Español, Francés o Portugués.\n
-\tDebajo de Configuración aparecen las opciones:\n
-\t\t\tFrecuencias muestreo: se elige una frecuencia de los sensores, numero de muestras por segundo.\n
-\t\t\tTemporizador: tiempo que transcurre desde que entramos en la pantalla de la gráfica hasta que empieza a grabar.\n
-\t\t\tTiempo de grabación: se elige el tiempo que durará la grabación\n
-Acerca de: En esta opción muestra la información de los autores y privacidad de la aplicación.\n
-Ayuda: Ayuda de la aplicación.\n</string>
-    <string name="ayuda21">En esta pantalla se mostraran los sensores junto con sus mediciones. La pantalla se estructura:\n</string>
-    <string name="ayuda22">\nBotones de información de los sensores:\n
-\tAcelerómetro\n
-\tGiroscopio\n
-\tMagnetómetro\n
-\tSensor proximidad\n
-\tSensor Luz\n
-\tGps\n
-\nDebajo de cada botón de información de cada sensor hay:\n
-\tOpción de guardar los datos: se marcara si se desea que se guarden los datos del sensor en un fichero Csv.\n
-\tIcono Grafica: Este botón llevara a la representación de los sensores.\n
-\tMuestra de datos: se mostraran las medidas tomadas por los sensores en tiempo real.\n
-Además de las opciones en el botón preferencia aparecerán las opciones:\n
-\tConfiguración aparecen las opciones:
-\t\t\tFrecuencias muestreo- se elige una frecuencia de los sensores, numero de muestras por segundo.
-\t\t\tTemporizador: tiempo que transcurre desde que entramos en la pantalla de la gráfica hasta que empieza a grabar.\n
-\t\t\tTiempo de grabación- se elige el tiempo que durará la grabación\n
-Ayuda: Ayuda de la aplicación.\n</string>
-    <string name="ayuda31">En esta pantalla aparece la representación de los datos de los sensores.\n</string>
-    <string name="ayuda32">Su estructura es la siguiente:\n
-\tBotón empezar: se pulsara para iniciar la gráfica.\n
-\tBotón Pausar/Parar: Se pulsara para detener o interrumpir la representación de la gráfica.\n
-\tReiniciar: se pulsara para empezar una nueva representación de la grafica.\n
-Debajo de los botones aparece:\n
-\tMedidas: estas medidas podrán seleccionarse o no dependiendo de qué dato se desee mostrar.\n
+    <string name="ayuda11">In the main screen you can choose between:\n</string>
+    <string name="ayuda12">Measurement data:\n
+\tsensor measures will be showing here.\n
+Load graph:\n
+ \tEvery graph you have saved will bw showing in this screen.\n
+In the menu you will find SETTINGS button with 4 options:\n</string>
+    <string name="ayuda13">Sensor device: list of sensors device.\n</string>
+    <string name="ayuda14">\t\tName\n
+\t\tPowe\n
+\t\tVersion\n
+\t\tVendor\n
+\nSettings: application preferences, which are:\n</string>
+    <string name="ayuda15">\n\tLanguage: You van choose Auto, Spanish, French or Portuguese.\n
+\tBelow settings divider you can see other three options:\n
+\t\t\tSampling frequency: number of samples per second.\n
+\t\t\tTimer: time elapsed since we enter in the graphic screen until it begins to record.\n
+\t\t\tRecording time.\n
+About: Information about the application privacy and their developers\n
+Help: Manual of the application.\n</string>
+    <string name="ayuda21">Sensor device and their measures. This screen is divided:\n</string>
+    <string name="ayuda22">\nSensor information (buttons):\n
+\tAccelerometer\n
+\tGyroscope\n
+\tMagnetometer\n
+\tProximity sensor\n
+\tLight sensor\n
+\tGPS\n
+\nBelow every button information you can see:\n
+\tCheckbox save data: if it is checked data will be saved in csv file.\n
+\tGraph icone:  Start graph screen where data will be represented.\n
+\tMuestra de datos: sensor measures in real time.\n
+There are application preferences in this menu:\n
+\t\t\tSampling frequency: number of samples per second.\n
+\t\t\tTimer: time elapsed since we enter in the graphic screen until it begins to record.\n
+\t\t\tRecording time.\n
+About: Information about the application privacy and their developers\n
+Help: Manual of the application.\n</string>
+    <string name="ayuda31">Data are represented in this screen.\n</string>
+    <string name="ayuda32">Screen schema:\n
+\tStart button: graph will start.\n
+\tBotón Pause/Stop: Stop or pause the data representation.\n
+\tReset: will be pressed to start a new representation of the graph.\n
+Below these button:\n
+\tCheckbox: may be selected depending on what data you want to display.\n
 \tREC: se mostrara en color verde si no se ha marcado guarda datos de la pantalla Medición de Datos, en caso de que la opción Guardar datos de la pantalla Medición de datos se halla seleccionado se mostrar de color rojo.\n
 \tGPS señal: muestra el estado de la señal del Gps.\n
 \tGráfica: se representan los datos que recoge el dispositivo móvil.\n

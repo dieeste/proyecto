@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AyudaFragmento extends Fragment {
 
@@ -25,11 +24,13 @@ public class AyudaFragmento extends Fragment {
 	ImageView imageView4;
 
 	private int position;
+    private String fragmento;
 
-	public static AyudaFragmento newInstance(int position) {
+	public static AyudaFragmento newInstance(int position, String fragmento) {
 		AyudaFragmento f = new AyudaFragmento();
 		Bundle b = new Bundle();
 		b.putInt(ARG_POSITION, position);
+        b.putString("fragmento",fragmento);
 		f.setArguments(b);
 		return f;
 	}
@@ -38,7 +39,8 @@ public class AyudaFragmento extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		position = getArguments().getInt(ARG_POSITION);
-	}
+        fragmento = getArguments().getString("fragmento");
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,13 +58,15 @@ public class AyudaFragmento extends Fragment {
 		imageView4 = (ImageView) rootView.findViewById(R.id.imageView4);
 
 		ViewCompat.setElevation(rootView, 50);
-		if (position == 0) {
+
+        //Como desde cada sitio se pasa el nombre del fragmento, si aqui poneis en el if otro, no tiene por qué mostrarse en todos
+        if (fragmento.equalsIgnoreCase(getString(R.string.inicio))) {
 			textView.setText(getString(R.string.ayuda11));
 			textView1.setText(getString(R.string.ayuda12));
 			textView2.setText(getString(R.string.ayuda13));
 			textView3.setText(getString(R.string.ayuda14));
 			textView4.setText(getString(R.string.ayuda15));
-		} else if (position == 1) {
+		} else if (fragmento.equalsIgnoreCase(getString(R.string.medicion))) {
 			textView.setText(getString(R.string.ayuda21));
 			textView1.setText(getString(R.string.ayuda22));
 			textView2.setVisibility(TextView.GONE);
@@ -72,7 +76,7 @@ public class AyudaFragmento extends Fragment {
 			imageView2.setVisibility(ImageView.GONE);
 			imageView3.setVisibility(ImageView.GONE);
 			imageView4.setVisibility(ImageView.GONE);
-		} else if (position == 2){
+		} else if (fragmento.equalsIgnoreCase(getString(R.string.grafica))){
 			textView.setText(getString(R.string.ayuda31));
 			textView1.setText(getString(R.string.ayuda32));
 			textView2.setVisibility(TextView.GONE);
@@ -82,7 +86,7 @@ public class AyudaFragmento extends Fragment {
 			imageView2.setImageResource(R.drawable.grafica2);
 			imageView3.setVisibility(ImageView.GONE);
 			imageView4.setVisibility(ImageView.GONE);
-		} else if(position == 3){
+		} else if(fragmento.equalsIgnoreCase(getString(R.string.cargargraficas))){
 			textView.setText(getString(R.string.ayuda41));
 			textView1.setText(getString(R.string.ayuda42));
 			textView2.setVisibility(TextView.GONE);
@@ -92,7 +96,7 @@ public class AyudaFragmento extends Fragment {
 			imageView2.setVisibility(ImageView.GONE);
 			imageView3.setVisibility(ImageView.GONE);
 			imageView4.setVisibility(ImageView.GONE);
-		}else{
+		}else if(fragmento.equalsIgnoreCase(getString(R.string.teoria))){
 			textView.setText(getString(R.string.ayuda51));
 			textView1.setVisibility(TextView.GONE);
 			textView2.setVisibility(TextView.GONE);

@@ -8,6 +8,46 @@
         android:id="@+id/chart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/leyenda"
         android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/leyenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/ejex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_x"
+            android:textColor="#ffff0000" />
+
+        <CheckBox
+            android:id="@+id/ejey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_y"
+            android:textColor="#ff00ff00" />
+
+        <CheckBox
+            android:id="@+id/ejez"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_z"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/modulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_modulo"
+            android:textColor="#ffff00ff" />
+    </LinearLayout>
 
 </RelativeLayout>

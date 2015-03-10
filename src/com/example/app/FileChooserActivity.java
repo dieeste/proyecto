@@ -53,17 +53,18 @@ public class FileChooserActivity extends ListActivity {
 				};
 			}
 		}
-		currentFolder = new File(Environment.getExternalStorageDirectory().toString()
-				+ "/" + getResources().getString(R.string.app_name));
+		currentFolder = new File(Environment.getExternalStorageDirectory()
+				.toString() + "/" + getResources().getString(R.string.app_name));
 		fill(currentFolder);
-        this.getListView().setOnItemLongClickListener(
+		this.getListView().setOnItemLongClickListener(
 				new OnItemLongClickListener() {
 
 					@Override
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
 						boolean borrado = false;
-						FileInfo fileDescriptor = fileArrayListAdapter.getItem(position);
+						FileInfo fileDescriptor = fileArrayListAdapter
+								.getItem(position);
 						File archivo = new File(fileDescriptor.getPath());
 						if (archivo.isFile()) {
 							archivo.getPath();
@@ -71,18 +72,19 @@ public class FileChooserActivity extends ListActivity {
 							if (ficheros.isEmpty()) {
 								Log.d("hola", "este es lo coge" + path);
 								ficheros.add(path);
-                                fileDescriptor.selected = true;
-                                fileArrayListAdapter.notifyDataSetChanged();
-                                //view.setSelected(true);
+								fileDescriptor.selected = true;
+								fileArrayListAdapter.notifyDataSetChanged();
+								// view.setSelected(true);
 							} else {
 								for (int i = 0; i < ficheros.size(); i++) {
 									if (ficheros.get(i).equals(path)) {
 										Log.d("hola", "este lo quita" + path);
 										ficheros.remove(i);
-                                        fileDescriptor.selected = false;
-                                        fileArrayListAdapter.notifyDataSetChanged();
+										fileDescriptor.selected = false;
+										fileArrayListAdapter
+												.notifyDataSetChanged();
 
-                                        //view.setSelected(false);
+										// view.setSelected(false);
 										Log.d("hola", "este tama iff  "
 												+ ficheros.size());
 										borrado = true;
@@ -93,10 +95,11 @@ public class FileChooserActivity extends ListActivity {
 										if (!ficheros.get(i).equals(path)) {
 											Log.d("hola", "este lo mete" + path);
 											ficheros.add(path);
-                                            fileDescriptor.selected = true;
-                                            fileArrayListAdapter.notifyDataSetChanged();
+											fileDescriptor.selected = true;
+											fileArrayListAdapter
+													.notifyDataSetChanged();
 
-                                            //view.setSelected(true);
+											// view.setSelected(true);
 											Log.d("hola", "este tama else  "
 													+ ficheros.size());
 											break;
@@ -120,7 +123,7 @@ public class FileChooserActivity extends ListActivity {
 				fill(currentFolder);
 			} else {
 				Log.i("FILE CHOOSER", "canceled");
-				setResult(Activity.RESULT_CANCELED);				
+				setResult(Activity.RESULT_CANCELED);
 				finish();
 			}
 			return false;
@@ -141,10 +144,10 @@ public class FileChooserActivity extends ListActivity {
 		try {
 			for (File file : folders) {
 				if (file.isDirectory() && !file.isHidden())
-					//si es un directorio en el data se ponemos la contante folder
-					dirs.add(new FileInfo(file.getName(),
-							Constants.FOLDER, file.getAbsolutePath(),
-							true, false));
+					// si es un directorio en el data se ponemos la contante
+					// folder
+					dirs.add(new FileInfo(file.getName(), Constants.FOLDER,
+							file.getAbsolutePath(), true, false));
 				else {
 					if (!file.isHidden())
 						files.add(new FileInfo(file.getName(),
@@ -162,10 +165,12 @@ public class FileChooserActivity extends ListActivity {
 		if (!f.getName().equalsIgnoreCase(
 				Environment.getExternalStorageDirectory().getName())) {
 			if (f.getParentFile() != null)
-			//si es un directorio padre en el data se ponemos la contante adeacuada
-				dirs.add(0, new FileInfo("..",
-						Constants.PARENT_FOLDER, f.getParent(),
-						false, true));
+				// si es un directorio padre en el data se ponemos la contante
+				// adeacuada
+				dirs.add(
+						0,
+						new FileInfo("..", Constants.PARENT_FOLDER, f
+								.getParent(), false, true));
 		}
 		fileArrayListAdapter = new FileArrayAdapter(FileChooserActivity.this,
 				R.layout.file_row, dirs);
@@ -181,16 +186,18 @@ public class FileChooserActivity extends ListActivity {
 			currentFolder = new File(fileDescriptor.getPath());
 			fill(currentFolder);
 		} else {
-                fileSelected = new File(fileDescriptor.getPath());
-                String filenameArray[] = fileSelected.getPath().split("\\.");
-                String extension = filenameArray[filenameArray.length-1];
-                if(!extension.equalsIgnoreCase("csv")){
-                    Toast.makeText(this,"No es posible abrir este archivo",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Intent vamos = new Intent(this, LeerCsv.class);
-                vamos.putExtra("file", fileSelected.getPath());
-                startActivity(vamos);
+			fileSelected = new File(fileDescriptor.getPath());
+			String filenameArray[] = fileSelected.getPath().split("\\.");
+			String extension = filenameArray[filenameArray.length - 1];
+			if (!extension.equalsIgnoreCase("csv")) {
+				Toast.makeText(this, "No es posible abrir este archivo",
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+			Intent vamos = new Intent(this, LeerCsv.class);
+			vamos.putExtra("file", fileSelected.getPath());
+			vamos.putExtra("nombrearchivo",fileSelected.getName());
+			startActivity(vamos);
 		}
 	}
 
@@ -203,6 +210,7 @@ public class FileChooserActivity extends ListActivity {
 		return true;
 		/** true -> el menú ya está visible */
 	}
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
@@ -227,6 +235,10 @@ public class FileChooserActivity extends ListActivity {
 			break;
 		case R.id.menu_ayuda:
 			Intent ayuda = new Intent(this, Ayuda.class);
+			final String[] TITLES = { getString(R.string.cargargraficas),
+					getString(R.string.inicio), getString(R.string.medicion),
+					getString(R.string.grafica), getString(R.string.teoria) };
+			ayuda.putExtra("TITLES", TITLES);
 			startActivity(ayuda);
 			break;
 		}

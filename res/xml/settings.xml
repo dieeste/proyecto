@@ -8,11 +8,11 @@
         android:entryValues="@array/idiomasValores"
         android:key="idioma"
         android:summary="Selecciona el lenguaje de la aplicación"
-        android:title="Idioma" />
+        android:title="@string/idiomas" />
 
     <PreferenceCategory android:title="@string/config" >
         <ListPreference
-            android:defaultValue="SensorManager.SENSOR_DELAY_NORMAL"
+            android:defaultValue="lento"
             android:entries="@array/frecuencia_recogida"
             android:entryValues="@array/frecuencias"
             android:key="frecuencia"

@@ -20,10 +20,13 @@ public class Ayuda extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ayuda);
+        String[] TITLES = getIntent().getStringArrayExtra("TITLES"); //Recojo el parámetro pasado
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager = (ViewPager) findViewById(R.id.pager);
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
+        adapter = new MyPagerAdapter(getSupportFragmentManager(), TITLES);
         pager.setAdapter(adapter);
+        tabs.setBackgroundResource(R.drawable.botonamarillo);//Color del fondo de las tabs
+        tabs.setTextColor(getResources().getColor(android.R.color.black)); //Color de la letra de las tabs
         tabs.setAllCaps(false);
         tabs.setViewPager(pager);
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
@@ -32,10 +35,11 @@ public class Ayuda extends FragmentActivity {
     }
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {getString(R.string.inicio), getString(R.string.medicion), getString(R.string.grafica), getString(R.string.cargargraficas), getString(R.string.teoria)};
+        String[] TITLES;
 
-        public MyPagerAdapter(FragmentManager fm) {
+        public MyPagerAdapter(FragmentManager fm, String[] titles) {
             super(fm);
+            this.TITLES = titles;
         }
 
         @Override
@@ -55,7 +59,7 @@ public class Ayuda extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return AyudaFragmento.newInstance(position);
+            return AyudaFragmento.newInstance(position,TITLES[position]);
         }
     }
 }

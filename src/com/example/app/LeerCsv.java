@@ -8,18 +8,24 @@ import org.achartengine.GraphicalView;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.csvreader.CsvReader;
 
-public class LeerCsv extends Activity {
+public class LeerCsv extends Activity implements OnCheckedChangeListener {
 	static Graph mGraph;
 	LinearLayout layout;
 	GraphicalView view;
+	public boolean init = false;
 	ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();;
 	ConcurrentLinkedQueue<AccelData2> sensor = new ConcurrentLinkedQueue<AccelData2>();
 	String nombre;
@@ -29,6 +35,15 @@ public class LeerCsv extends Activity {
 	String tamano;
 	String calidad;
 	String nombresensor;
+	CheckBox ejex;
+	CheckBox ejey;
+	CheckBox ejez;
+	CheckBox moduloc;
+	boolean checkx = true;
+	boolean checky = true;
+	boolean checkz = true;
+	boolean checkmodulo = true;
+	int tipo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +54,18 @@ public class LeerCsv extends Activity {
 		nombre = graficas.getString("file");
 		titulografica = graficas.getString("nombrearchivo");
 		setContentView(R.layout.graficaarchivo);
+
 		layout = (LinearLayout) findViewById(R.id.chart);
+		// escucha de los checkbox
+		ejex = (CheckBox) findViewById(R.id.ejex);
+		ejey = (CheckBox) findViewById(R.id.ejey);
+		ejez = (CheckBox) findViewById(R.id.ejez);
+		moduloc = (CheckBox) findViewById(R.id.modulo);
+
+		ejex.setOnCheckedChangeListener(this);
+		ejey.setOnCheckedChangeListener(this);
+		ejez.setOnCheckedChangeListener(this);
+		moduloc.setOnCheckedChangeListener(this);
 
 		float scale = getApplicationContext().getResources()
 				.getDisplayMetrics().density;
@@ -102,12 +128,6 @@ public class LeerCsv extends Activity {
 
 	public void lee(String file) {
 		int numerolineas = 0;
-		for (AccelData2 data : sensor) {
-			datos.remove(data);
-		}
-		for (AccelData data : datos) {
-			datos.remove(data);
-		}
 		try {
 			CsvReader fichero = new CsvReader(file);
 			fichero.setDelimiter(';');
@@ -128,7 +148,6 @@ public class LeerCsv extends Activity {
 					double modulo = Double.parseDouble(fichero.get("Modulo")
 							.replace(",", "."));
 					unidad = fichero.getHeader(5);
-					Log.d("err", "esto es: " + unidad);
 					AccelData data = new AccelData(tiempo, x, y, z, modulo);
 					datos.add(data);
 				} else if (numerolineas == 2) {
@@ -136,26 +155,26 @@ public class LeerCsv extends Activity {
 					double x = Double.parseDouble(fichero.get("X").replace(",",
 							"."));
 					unidad = fichero.getHeader(2);
-					Log.d("err", "esto es: " + unidad);
 					AccelData2 data = new AccelData2(tiempo, x);
 					sensor.add(data);
 				}
 			}
 			fichero.close();
 			if (numerolineas == 5) {
+				tipo = 1;
 				if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources()
 								.getString(R.string.unidad_acelerometro))
 						|| unidad.equalsIgnoreCase("Unidad sensor: m/sÂ²")) {
 					tituloejey = "a ("
 							+ getString(R.string.unidad_acelerometro) + ")";
-					nombresensor=getString(R.string.acelerometro);
+					nombresensor = getString(R.string.acelerometro);
 					setTitle(nombresensor);
 				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(R.string.unidad_giroscopio))) {
 					tituloejey = "ω (" + getString(R.string.unidad_giroscopio)
 							+ ")";
-					nombresensor=getString(R.string.giroscopio);
+					nombresensor = getString(R.string.giroscopio);
 					setTitle(nombresensor);
 				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(
@@ -163,42 +182,29 @@ public class LeerCsv extends Activity {
 						|| unidad.equalsIgnoreCase("Unidad sensor: ÂµT")) {
 					tituloejey = "B ("
 							+ getString(R.string.unidad_campo_magnetico) + ")";
-					nombresensor=getString(R.string.magnetico);
+					nombresensor = getString(R.string.magnetico);
 					setTitle(nombresensor);
 				}
-				mGraph = new Graph(this);
-				mGraph.iniciar(datos);
-				mGraph.ejeY(datos);
-				mGraph.setProperties(true, true, true, true, titulografica,
-						tituloejey, calidad, tamano);
-				view = mGraph.getGraph();
-				layout.addView(view);
-				for (AccelData data : datos) {
-					datos.remove(data);
-				}
+				iniciar();
+
 			} else if (numerolineas == 2) {
+				tipo = 2;
+				ejey.setVisibility(TextView.GONE);
+				ejez.setVisibility(TextView.GONE);
+				moduloc.setVisibility(TextView.GONE);
 				if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(R.string.unidad_luz))) {
 					tituloejey = "E (" + getString(R.string.unidad_luz) + ")";
-					nombresensor=getString(R.string.luminosidad);
+					nombresensor = getString(R.string.luminosidad);
 					setTitle(nombresensor);
 				} else if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(R.string.unidad_proximidad))) {
 					tituloejey = "d (" + getString(R.string.unidad_proximidad)
 							+ ")";
-					nombresensor=getString(R.string.proximidad);
+					nombresensor = getString(R.string.proximidad);
 					setTitle(nombresensor);
 				}
-				mGraph = new Graph(this);
-				mGraph.iniciar2(sensor);
-				mGraph.ejeY2(sensor);
-				mGraph.setProperties2(true, titulografica, tituloejey,
-						calidad, tamano);
-				view = mGraph.getGraph();
-				layout.addView(view);
-				for (AccelData2 data : sensor) {
-					datos.remove(data);
-				}
+				iniciar2();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -206,4 +212,83 @@ public class LeerCsv extends Activity {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		// TODO Auto-generated method stub
+		switch (buttonView.getId()) {
+		case R.id.ejex:
+
+			checkx = isChecked;
+			if (tipo == 1) {
+				iniciar();
+				Log.d("chec", "sest: " + checkx);
+			} else if (tipo == 2) {
+				iniciar2();
+			}
+			break;
+		case R.id.ejey:
+
+			checky = isChecked;
+			if (tipo == 1) {
+				iniciar();
+			} else if (tipo == 2) {
+				iniciar2();
+			}
+			break;
+		case R.id.ejez:
+			checkz = isChecked;
+			if (tipo == 1) {
+				iniciar();
+			} else if (tipo == 2) {
+				iniciar2();
+			}
+			break;
+		case R.id.modulo:
+			checkmodulo = isChecked;
+			if (tipo == 1) {
+				iniciar();
+			} else if (tipo == 2) {
+				iniciar2();
+			}
+			break;
+		}
+
+	}
+
+	public void iniciar() {
+		mGraph = new Graph(this);
+		Log.d("jeje", "entramos");
+		mGraph.iniciar(datos);
+		mGraph.ejeY(datos);
+		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
+				titulografica, tituloejey, calidad, tamano);
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
+	}
+
+	public void iniciar2() {
+		mGraph = new Graph(this);
+		mGraph.iniciar2(sensor);
+		mGraph.ejeY2(sensor);
+		mGraph.setProperties2(checkx, titulografica, tituloejey, calidad,
+				tamano);
+		if (!init) {
+			view = mGraph.getGraph();
+			layout.addView(view);
+			init = true;
+		} else {
+			layout.removeView(view);
+			view = mGraph.getGraph();
+			layout.addView(view);
+		}
+	}
+
 }

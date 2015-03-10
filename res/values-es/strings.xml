@@ -15,10 +15,10 @@ Como proyecto final de carrera para la Universidad de Valladolid de la titulaci�
 
 Como tutores:\n\n
 \t\tMiguel Ángel González Rebollo\n 
-\t\tManuel Ángel González Delgado.\n</string>
+\t\tManuel Ángel González Delgado\n</string>
     <string name="explicacionacercade2">La aplicación muestra el uso del acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPS, además como utensilio de medida en los laboratorios de física.\n</string>
     <string name="explicacionacercade">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n</string>
-    <string name="idiomas">Idiomas</string>
+    <string name="idiomas">IDIOMAS</string>
     <string name="medicion">Medición de datos</string>
     <string name="aceleracion">Aceleración</string>
     <string name="velocidad">Velocidad angular</string>
@@ -50,6 +50,22 @@ Como tutores:\n\n
     <string name="tiempo">TIEMPO DE GRABACIÓN</string>
     <string name="frecuencias">FRECUENCIA DE MUESTREO</string>
     <string name="temporizador">TEMPORIZADOR</string>
+    <string name="lento">LENTO</string>
+    <string name="normal">NORMAL</string>
+    <string name="rapido">RÁPIDO</string>
+    <string name="muyrapido">MUY RÁPIDO</string>
+    <string name="apagado">DESACTIVADO</string>
+    <string name="seg3">3 SEGUNDOS</string>
+    <string name="seg5">5 SEGUNDOS</string>
+    <string name="seg10">10 SEGUNDOS</string>
+    <string name="seg15">15 SEGUNDOS</string>
+    <string name="seg30">30 SEGUNDOS</string>
+    <string name="seg60">60 SEGUNDOS</string>
+    <string name="auto">AUTO</string>
+    <string name="espa">ESPAÑOL</string>
+    <string name="ingles">INGLÉS</string>
+    <string name="frances">FRANCÉS</string>
+    <string name="portugues">PORTUGUÉS</string>
     <string name="reiniciar">Reiniciar</string>
     <string name="grafica">Gráfica</string>
     <string name="cargargraficas">Cargar gráficas</string>

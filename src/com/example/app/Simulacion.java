@@ -160,7 +160,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 		milocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				milocListener);
 		if (latitud == 0 && longitud == 0) {
-			gpss.setText(getResources().getString(R.string.gpsbuscando));
+			String txt = "";
+			txt += "\n " + getResources().getString(R.string.gpsbuscando);
+			gpss.setText(txt);
 		}
 	}
 
@@ -180,11 +182,15 @@ public class Simulacion extends Activity implements SensorEventListener,
 		}
 
 		public void onProviderDisabled(String provider) {
-			gpss.setText(getResources().getString(R.string.gpsoff));
+			String txt = "";
+			txt += "\n " + getResources().getString(R.string.gpsoff);
+			gpss.setText(txt);
 		}
 
 		public void onProviderEnabled(String provider) {
-			gpss.setText(getResources().getString(R.string.gpsbuscando));
+			String txt = "";
+			txt += "\n " + getResources().getString(R.string.gpsbuscando);
+			gpss.setText(txt);
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -242,7 +248,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			grafica.putExtra("magnetometro", mag);
 			grafica.putExtra("proximo", proxi);
 			grafica.putExtra("luz", lu);
-			grafica.putExtra("gps",g);
+			grafica.putExtra("gps", g);
 			startActivity(grafica);
 			break;
 		case R.id.graficaGiroscopio:
@@ -256,7 +262,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaGir.putExtra("magnetometro", mag);
 			graficaGir.putExtra("proximo", proxi);
 			graficaGir.putExtra("luz", lu);
-			graficaGir.putExtra("gps",g);
+			graficaGir.putExtra("gps", g);
 			startActivity(graficaGir);
 			break;
 		case R.id.graficaLuminosidad:
@@ -270,7 +276,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaLu.putExtra("magnetometro", mag);
 			graficaLu.putExtra("proximo", proxi);
 			graficaLu.putExtra("luz", lu);
-			graficaLu.putExtra("gps",g);
+			graficaLu.putExtra("gps", g);
 			startActivity(graficaLu);
 			break;
 		case R.id.graficaMagnetico:
@@ -284,7 +290,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaMa.putExtra("magnetometro", mag);
 			graficaMa.putExtra("proximo", proxi);
 			graficaMa.putExtra("luz", lu);
-			graficaMa.putExtra("gps",g);
+			graficaMa.putExtra("gps", g);
 			startActivity(graficaMa);
 			break;
 		case R.id.graficaProximidad:
@@ -298,7 +304,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			graficaPr.putExtra("magnetometro", mag);
 			graficaPr.putExtra("proximo", proxi);
 			graficaPr.putExtra("luz", lu);
-			graficaPr.putExtra("gps",g);
+			graficaPr.putExtra("gps", g);
 			startActivity(graficaPr);
 			break;
 		}
@@ -530,6 +536,11 @@ public class Simulacion extends Activity implements SensorEventListener,
 			break;
 		case R.id.menu_ayuda:
 			Intent ayuda = new Intent(this, Ayuda.class);
+			final String[] TITLES = { getString(R.string.medicion),
+					getString(R.string.inicio), getString(R.string.grafica),
+					getString(R.string.cargargraficas),
+					getString(R.string.teoria) };
+			ayuda.putExtra("TITLES", TITLES);
 			startActivity(ayuda);
 			break;
 		}
@@ -547,15 +558,14 @@ public class Simulacion extends Activity implements SensorEventListener,
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 
-		String type = pref.getString("frecuencia",
-				"lento");
+		String type = pref.getString("frecuencia", "lento");
 		if (type.equals("lento")) {
 			tipo = 200000;
 		} else if (type.equals("normal")) {
 			tipo = 120000;
 		} else if (type.equals("rapido")) {
 			tipo = 75000;
-		}else if (type.equals("muyrapido")) {
+		} else if (type.equals("muyrapido")) {
 			tipo = 60000;
 		}
 		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));

@@ -2,10 +2,10 @@
 <resources>
 
     <string-array name="frecuencia_recogida">
-        <item>LENTO</item>
-        <item>NORMAL</item>
-        <item>RÁPIDO</item>
-        <item>MUY RÁPIDO</item>
+        <item>@string/lento</item>
+        <item>@string/normal</item>
+        <item>@string/rapido</item>
+        <item>@string/muyrapido</item>
     </string-array>
     <string-array name="frecuencias">
         <item>lento</item>
@@ -14,10 +14,10 @@
         <item>muyrapido</item>
     </string-array>
     <string-array name="temporizador">
-        <item>DESACTIVADO</item>
-        <item>3 SEGUNDOS</item>
-        <item>5 SEGUNDOS</item>
-        <item>10 SEGUNDOS</item>
+        <item>@string/apagado</item>
+        <item>@string/seg3</item>
+        <item>@string/seg5</item>
+        <item>@string/seg10</item>
     </string-array>
     <string-array name="temporizadoropciones">
         <item>0</item>
@@ -26,29 +26,31 @@
         <item>10000</item>
     </string-array>
     <string-array name="tiempograbacion">
-        <item>DESACTIVADO</item>
-        <item>15 SEGUNDOS</item>
-        <item>20 SEGUNDOS</item>
-        <item>30 SEGUNDOS</item>
+        <item>@string/apagado</item>
+        <item>@string/seg15</item>
+        <item>@string/seg30</item>
+        <item>@string/seg60</item>
     </string-array>
     <string-array name="opcionestiempograbacion">
         <item>0</item>
-        <item>15000</item>
-        <item>20000</item>
-        <item>30000</item>
+        <item>15400</item>
+        <item>30400</item>
+        <item>60400</item>
     </string-array>
    
     <string-array name="idiomas">
-        <item>Auto</item>
-        <item>Inglés</item>
-        <item>Francés</item>
-        <item>Español</item>
+        <item>@string/auto</item>
+        <item>@string/ingles</item>
+        <item>@string/frances</item>
+        <item>@string/espa</item>
+        <item>@string/portugues</item>
     </string-array>
     <string-array name="idiomasValores">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
     </string-array>
 
 </resources>

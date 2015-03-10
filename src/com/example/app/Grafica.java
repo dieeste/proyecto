@@ -296,7 +296,7 @@ public class Grafica extends Activity implements OnClickListener,
 		iniciar.setEnabled(false);
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
 		new CountDownTimer(tiempoInicio, 1000) {
-			
+
 			@Override
 			public void onTick(long millisUntilFinished) {
 				// TODO Auto-generated method stub
@@ -1130,7 +1130,7 @@ public class Grafica extends Activity implements OnClickListener,
 			parar.setEnabled(true);
 			reiniciar.setEnabled(false);
 			Iniciar_sensores();
-			if (tiempoParada > 0){
+			if (tiempoParada > 0) {
 				contadores2();
 				continuar.setEnabled(false);
 				parar.setEnabled(false);
@@ -1154,7 +1154,7 @@ public class Grafica extends Activity implements OnClickListener,
 			graba2.setVisibility(TextView.INVISIBLE);
 			parar.setEnabled(false);
 			reiniciar.setEnabled(false);
-			if (tiempoInicio>0){
+			if (tiempoInicio > 0) {
 				contadores();
 				iniciar.setEnabled(false);
 			}
@@ -1263,6 +1263,11 @@ public class Grafica extends Activity implements OnClickListener,
 		switch (item.getItemId()) {
 		case R.id.menu_ayuda:
 			Intent ayuda = new Intent(this, Ayuda.class);
+			final String[] TITLES = { getString(R.string.grafica),
+					getString(R.string.inicio), getString(R.string.medicion),
+					getString(R.string.cargargraficas),
+					getString(R.string.teoria) };
+			ayuda.putExtra("TITLES", TITLES);
 			startActivity(ayuda);
 			break;
 		case (R.id.acele):
