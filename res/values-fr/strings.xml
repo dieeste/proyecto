@@ -64,6 +64,10 @@ Como tutores:\n\n
     <string name="ingles">ANGLAIS</string>
     <string name="frances">FRANÇAIS</string>
     <string name="portugues">PORTUGAIS</string>
+    <string name="subidioma">Seleccione el lenguaje de la aplicación.</string>
+    <string name="subfrecuencia">Elija la frecuencia de los sensores, número de muestras por segundo.</string>
+    <string name="subtemporizador">Seleccione el tiempo desde que se inicia la pantalla de la gráfica hasta que comienza a tomar datos.</string>
+    <string name="subtiempo">Seleccione el tiempo que durará la grabación</string>
     <string name="reiniciar">Reset</string>
     <string name="modulo">|V|</string>
     <string name="grafica">Graphique</string>

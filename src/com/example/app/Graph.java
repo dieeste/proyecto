@@ -273,7 +273,7 @@ public class Graph extends Grafica {
 			renderer.setLegendTextSize(40);
 			renderer.setShowLegend(false);
 		}
-		
+		renderer.setZoomButtonsVisible(true);
 		renderer.setChartTitle(titulografica);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);
@@ -290,7 +290,7 @@ public class Graph extends Grafica {
 	public void setProperties2(boolean ex, String titulografica,
 			String tituloejey, String calidad, String tamano) {
 		// añade las propiedades de la grafica sensor de luz y sensor proximidad
-		double[] limites = { 0, maxejex + 5, ejeymin - 20, ejeymax + 20 };
+		double[] limites = { 0, maxejex + 5, ejeymin - 200, ejeymax + 200 };
 		// utilizamos diferentes márgenes para las diferentes pantallas
 		int[] margenes = { 55, 55, 55, 55 };
 		int[] margenesnormal = { 40, 55, 50, 40 };
@@ -365,6 +365,7 @@ public class Graph extends Grafica {
 			renderer.setLegendTextSize(40);
 			renderer.setShowLegend(false);
 		}
+		renderer.setZoomButtonsVisible(true);
 		renderer.setChartTitle(titulografica);
 		renderer.setGridColor(Color.DKGRAY);
 		renderer.setShowGrid(true);

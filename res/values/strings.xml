@@ -67,6 +67,10 @@ Como tutores:\n\n
     <string name="ingles">INGLÉS</string>
     <string name="frances">FRANCÉS</string>
     <string name="portugues">PORTUGUÉS</string>
+    <string name="subidioma">Seleccione el lenguaje de la aplicación.</string>
+    <string name="subfrecuencia">Elija la frecuencia de los sensores, número de muestras por segundo.</string>
+    <string name="subtemporizador">Seleccione el tiempo desde que se inicia la pantalla de la gráfica hasta que comienza a tomar datos.</string>
+    <string name="subtiempo">Seleccione el tiempo que durará la grabación</string>
     <string name="infoacelerometro">¿QUÉ ES EL ACELERÓMETRO?</string>
     <string name="infogiroscopio">¿QUÉ ES EL GIROSCOPIO?</string>
     <string name="infomagnetico">¿QUÉ ES EL MAGNETÓMETRO?</string>
@@ -208,10 +212,10 @@ Además de estas opciones en la opción preferencias del sistema, una vez inicia
     <string name="ayuda41">En esta pantalla se muestran todos los ficheros guardados de las mediciones. En caso de seleccionar un fichero este mostrara la representación de las mediciones. Si se deja seleccionado durante un periodo prolongado de tiempo, el fichero podrá ser enviado mediante la opción que usted desee.\n
 Si una vez seleccionado se quiere quitar de la lista a enviar solo tiene que pulsar prolongadamente sobre ese mismo archivo y quedará sin seleccionar.\n</string>
     <string name="ayuda42">Se podrán seleccionar varios ficheros a la vez para enviarlos.\n</string>
-    <string name="ayuda51">En las pantallas información de los sensores (giroscopio, acelerómetro, magnetómetro, sensor de luz, sensor proximidad y GPS) muestra la explicación de cada sensor. Cada pantalla está estructurada:\n
+    <string name="ayuda51">En las pantallas de información de los sensores (giroscopio, acelerómetro, magnetómetro, sensor de luz, sensor proximidad y GPS) se muestra la explicación de cada sensor. Cada pantalla está estructurada:\n
 \t¿Qué es?: explicación de que mide y que es el sensor.\n
 \t¿Cómo funciona?: explicación del funcionamiento del sensor.\n
 \t¿Para qué sirve? : ejemplo de utilidad del sensor.\n
-\t¿Datos que muestra?: medidas que toma en sensor en el dispositivo Android.\n</string>
+\t¿Datos que muestra?: medidas que toma el sensor en el dispositivo Android.\n</string>
 
 </resources>

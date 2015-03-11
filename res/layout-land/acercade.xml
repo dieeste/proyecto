@@ -12,7 +12,36 @@
         android:baselineAligned="true"
         android:orientation="vertical" >
 
-        <ImageView
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/explicacionacercade"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+  <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/spash" />
+       
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/explicacion"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+ <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,23 +50,16 @@
             android:paddingTop="20dp"
             android:src="@drawable/uvalogo" />
 
-        <TextView
-            android:id="@+id/TextView01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/explicacion"
-            android:textColor="#ffffff" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/spash" />
+ <TextView
+     android:id="@+id/textView2"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:paddingLeft="10dp"
+     android:paddingRight="10dp"
+     android:text="@string/explicacionacercade2"
+     android:textColor="#ffffff"
+     android:textSize="16sp" />
+      
     </LinearLayout>
 
 </ScrollView>

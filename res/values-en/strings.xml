@@ -8,16 +8,16 @@
     <string name="acercaDe">About</string>
     <string name="inicio">Main screen</string>
     <string name="teoria">Theory</string>
-    <string name="explicacion">\nDiseñada y creada por los autores:\n\n
+    <string name="explicacion">\nThis application has been designed and developed by:\n\n
 \t\tDiego Esteban Moreno\n
 \t\tFélix Huete García\n\n
-Como proyecto final de carrera para la Universidad de Valladolid de la titulación Ingeniería Técnica de Informática de Sistemas.\n\n
+As a final project for the University of Valladolid of Engineering degree in Computer Systems.\n\n
 
-Como tutores:\n\n
+Tutors:\n\n
 \t\tMiguel Ángel González Rebollo\n 
 \t\tManuel Ángel González Delgado\n</string>
-    <string name="explicacionacercade2">La aplicación muestra el uso del acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPS, además como utensilio de medida en los laboratorios de física.\n</string>
-    <string name="explicacionacercade">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n</string>
+    <string name="explicacionacercade2">The application shows use of the accelerometer, gyroscope, magnetometer, light sensor, proximity sensor and GPS, as well as measurement tool in physics laboratories.\n</string>
+    <string name="explicacionacercade">Sensor Mobile is an application designed as display unit of sensors on your Android device.\n</string>
     <string name="idiomas">LANGUAGES</string>
     <string name="medicion">Measurement data</string>
     <string name="aceleracion">Acceleration</string>
@@ -66,6 +66,10 @@ Como tutores:\n\n
     <string name="ingles">ENGLISH</string>
     <string name="frances">FRENCH</string>
     <string name="portugues">PORTUGUESE</string>
+    <string name="subidioma">Select the appication language.</string>
+    <string name="subfrecuencia">Select sampling frequency, number of samples per second.</string>
+    <string name="subtemporizador">Select time elapses since enter in the graphic screen until it begins to record.</string>
+    <string name="subtiempo">Select recording time.</string>
     <string name="infoacelerometro">ABOUT ACCELEROMETER</string>
     <string name="infogiroscopio">ABOUT GYROSCOPE</string>
     <string name="infomagnetico">ABOUT MAGNETOMETER</string>
@@ -159,7 +163,7 @@ Usually, if the device is dark it is almost imperceptible but if we look to the 
     <string name="ayuda12">Measurement data:\n
 \tsensor measures will be showing here.\n
 Load graph:\n
- \tEvery graph you have saved will bw showing in this screen.\n
+ \tEvery graph you have saved are listed in this screen.\n
 In the menu you will find SETTINGS button with 4 options:\n</string>
     <string name="ayuda13">Sensor device: list of sensors device.\n</string>
     <string name="ayuda14">\t\tName\n
@@ -167,7 +171,7 @@ In the menu you will find SETTINGS button with 4 options:\n</string>
 \t\tVersion\n
 \t\tVendor\n
 \nSettings: application preferences, which are:\n</string>
-    <string name="ayuda15">\n\tLanguage: You van choose Auto, Spanish, French or Portuguese.\n
+    <string name="ayuda15">\n\tLanguage: You can choose Auto, Spanish, French or Portuguese.\n
 \tBelow settings divider you can see other three options:\n
 \t\t\tSampling frequency: number of samples per second.\n
 \t\t\tTimer: time elapsed since we enter in the graphic screen until it begins to record.\n
@@ -199,17 +203,17 @@ Help: Manual of the application.\n</string>
 \tReset: will be pressed to start a new representation of the graph.\n
 Below these button:\n
 \tCheckbox: may be selected depending on what data you want to display.\n
-\tREC: se mostrara en color verde si no se ha marcado guarda datos de la pantalla Medición de Datos, en caso de que la opción Guardar datos de la pantalla Medición de datos se halla seleccionado se mostrar de color rojo.\n
-\tGPS señal: muestra el estado de la señal del Gps.\n
-\tGráfica: se representan los datos que recoge el dispositivo móvil.\n
-Además de estas opciones en la opción preferencias del sistema, una vez iniciada la representación de las mediciones, se podrán cambiar de un sensor a otro, compartirlo o guardarlo en formato CSV.\n</string>
-    <string name="ayuda41">En esta pantalla se muestran todos los ficheros guardados de las mediciones. En caso de seleccionar un fichero este mostrara la representación de las mediciones. Si se deja seleccionado durante un periodo prolongado de tiempo, el fichero podrá ser enviado mediante la opción que usted desee.\n
-Si una vez seleccionado se quiere quitar de la lista a enviar solo tiene que pulsar prolongadamente sobre ese mismo archivo y quedará sin seleccionar.\n</string>
-    <string name="ayuda42">Se podrán seleccionar varios ficheros a la vez para enviarlos.\n</string>
-    <string name="ayuda51">En las pantallas información de los sensores (giroscopio, acelerómetro, magnetómetro, sensor de luz, sensor proximidad y GPS) muestra la explicación de cada sensor. Cada pantalla está estructurada:\n
-\t¿Qué es?: explicación de que mide y que es el sensor.\n
-\t¿Cómo funciona?: explicación del funcionamiento del sensor.\n
-\t¿Para qué sirve? : ejemplo de utilidad del sensor.\n
-\t¿Datos que muestra?: medidas que toma en sensor en el dispositivo Android.\n</string>
+\tREC: green if not checked save data in Measurement Data screen, else this icone is red.\n
+\tGPS signal: state of gps (searching or off).\n
+\tGraph: the data collected by the device are represented.\n
+Once started the representation of measurements, you can switch from one sensor to another, share or save it in CSV format (menu).\n</string>
+    <string name="ayuda41">In this screen you can see all files saved. If you select a file it will show the representation of the measurements. If you push for an extended period of time, the file may be sent via the option you want.\n
+Once selected if you want to remove from the list to send, press and hold on the same file and remain unchecked.\n</string>
+    <string name="ayuda42">Multiples files may be selected to send.\n</string>
+    <string name="ayuda51">The information screens sensor (gyroscope, accelerometer, magnetometer, light sensor, proximity sensor and GPS) shows the explanation of each sensor. Each screen is structured:\n
+\tAbout: explanation about the sensor and measuring\n
+\tHow it works: explaining the operation of sensor.\n
+\tPurpose : sensor utility.\n
+\tWhat it measures: measures taken by the sensor on the Android device.\n</string>
 
 </resources>
