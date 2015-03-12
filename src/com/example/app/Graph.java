@@ -210,7 +210,7 @@ public class Graph extends Grafica {
 			renderer.setLabelsTextSize(20);
 			renderer.setLabelsTextSize(20);
 			renderer.setAxisTitleTextSize(20);
-			renderer.setChartTitleTextSize(20);
+			renderer.setChartTitleTextSize(15);
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("media")) {
 			valoresX.setLineWidth(2);
@@ -221,7 +221,7 @@ public class Graph extends Grafica {
 			renderer.setLabelsTextSize(20);
 			renderer.setLabelsTextSize(20);
 			renderer.setAxisTitleTextSize(20);
-			renderer.setChartTitleTextSize(20);
+			renderer.setChartTitleTextSize(15);
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("baja")) {
 			valoresX.setLineWidth(2);
@@ -313,9 +313,8 @@ public class Graph extends Grafica {
 			renderer.setLabelsTextSize(20);
 			renderer.setLabelsTextSize(20);
 			renderer.setAxisTitleTextSize(20);
-			renderer.setChartTitleTextSize(20);
+			renderer.setChartTitleTextSize(15);
 			renderer.setShowLegend(false);
-			renderer.isExternalZoomEnabled();
 		} else if (calidad.equalsIgnoreCase("media")) {
 			valoresX.setLineWidth(3);
 			renderer.setMargins(margenespeque);
@@ -323,7 +322,7 @@ public class Graph extends Grafica {
 			renderer.setLabelsTextSize(20);
 			renderer.setAxisTitleTextSize(20);
 			renderer.setChartTitleTextSize(20);
-			renderer.setLegendTextSize(20);
+			renderer.setLegendTextSize(15);
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("baja")) {
 			valoresX.setLineWidth(3);

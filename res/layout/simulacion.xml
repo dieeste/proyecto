@@ -17,7 +17,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
-            android:drawableRight="@drawable/inf"
+            android:drawableRight="@drawable/infor"
             android:text="@string/acelerometro"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -57,7 +57,6 @@
                 android:background="@drawable/estadistica"
                 android:minHeight="60dp"
                 android:textColor="#ffff" />
-
         </LinearLayout>
 
         <Button
@@ -65,7 +64,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
-            android:drawableRight="@drawable/inf"
+            android:drawableRight="@drawable/infor"
             android:text="@string/giroscopio"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -104,7 +103,6 @@
                 android:layout_weight="0"
                 android:background="@drawable/estadistica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
 
         <Button
@@ -112,7 +110,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
-            android:drawableRight="@drawable/inf"
+            android:drawableRight="@drawable/infor"
             android:text="@string/magnetico"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -152,7 +150,6 @@
                 android:layout_weight="0"
                 android:background="@drawable/estadistica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
 
         <Button
@@ -160,7 +157,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
-            android:drawableRight="@drawable/inf"
+            android:drawableRight="@drawable/infor"
             android:text="@string/proximidad"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -207,7 +204,6 @@
                 android:layout_weight="0"
                 android:background="@drawable/estadistica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
 
         <Button
@@ -215,7 +211,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
-            android:drawableRight="@drawable/inf"
+            android:drawableRight="@drawable/infor"
             android:text="@string/luminosidad"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -254,14 +250,14 @@
                 android:layout_weight="0"
                 android:background="@drawable/estadistica"
                 android:textColor="#ffff" />
-
         </LinearLayout>
-         <Button
+
+        <Button
             android:id="@+id/gpsboton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
-            android:drawableRight="@drawable/inf"
+            android:drawableRight="@drawable/infor"
             android:text="@string/gps"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -293,6 +289,13 @@
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/gpsss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@drawable/mapagps"
+                android:textColor="#ffff" />
         </LinearLayout>
     </LinearLayout>
 

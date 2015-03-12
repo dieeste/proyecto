@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    
     package="com.example.app"
     android:versionCode="1"
     android:versionName="1.0" >
@@ -148,5 +149,7 @@
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
     </application>
-
+<meta-data
+    android:name="com.google.android.maps.v2.API_KEY"
+    android:value="API_KEY"/>
 </manifest>

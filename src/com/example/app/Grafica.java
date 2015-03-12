@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
 
+import com.example.app.R.id;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +42,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,6 +75,8 @@ public class Grafica extends Activity implements OnClickListener,
 	Button iniciar;
 	Button reiniciar;
 	Button continuar;
+	ImageButton lupa;
+
 	// los cuatro checkbox que usamos para ver o quitar los datos de la x, y, z
 	// y módulo
 	boolean parado;
@@ -146,11 +151,14 @@ public class Grafica extends Activity implements OnClickListener,
 		iniciar = (Button) findViewById(R.id.inicio);
 		reiniciar = (Button) findViewById(R.id.reiniciar);
 		continuar = (Button) findViewById(R.id.continuar);
+		lupa = (ImageButton) findViewById(R.id.lupa);
+
 		// Escuchamos los botones
 		parar.setOnClickListener(this);
 		iniciar.setOnClickListener(this);
 		reiniciar.setOnClickListener(this);
 		continuar.setOnClickListener(this);
+		lupa.setOnClickListener(this);
 
 		graba = (TextView) findViewById(R.id.grabando);
 		graba2 = (TextView) findViewById(R.id.grabando2);
@@ -274,9 +282,11 @@ public class Grafica extends Activity implements OnClickListener,
 
 			latitud = loc.getLatitude();
 			longitud = loc.getLongitude();
-			/*double timestampgps = System.currentTimeMillis();
-			GpsDatos datos = new GpsDatos(timestampgps, latitud, longitud);
-			gpsdatos.add(datos);*/
+			/*
+			 * double timestampgps = System.currentTimeMillis(); GpsDatos datos
+			 * = new GpsDatos(timestampgps, latitud, longitud);
+			 * gpsdatos.add(datos);
+			 */
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -665,7 +675,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	protected void Iniciar_sensores() {
 		funciona = true;
-		
+
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				frecuencia);
@@ -689,69 +699,65 @@ public class Grafica extends Activity implements OnClickListener,
 		@Override
 		public void run() {
 			if (g == true) {
-					double t = gpsdatos.peek().getTimestamp();
-					StringBuilder csvData = new StringBuilder();
-					csvData.append("Nombre del dispositivo: "
-							+ android.os.Build.MODEL
-							+ ";Fecha: "
-							+ DateFormat.format("dd/MM/yyyy",
-									System.currentTimeMillis()).toString()
-							+ "\n");
-					csvData.append("t (s);Latitud;Longitud\n");
-					for (GpsDatos values : gpsdatos) {
-						double tiempo = (values.getTimestamp() - t) / 1000;
-						csvData.append(String.valueOf(tiempo) + ";"
-								+ String.valueOf(values.getLatitud()) + ";"
-								+ String.valueOf(values.getLongitud()) + "\n");
+				double t = gpsdatos.peek().getTimestamp();
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ";Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvData.append("t (s);Latitud;Longitud\n");
+				for (GpsDatos values : gpsdatos) {
+					double tiempo = (values.getTimestamp() - t) / 1000;
+					csvData.append(String.valueOf(tiempo) + ";"
+							+ String.valueOf(values.getLatitud()) + ";"
+							+ String.valueOf(values.getLongitud()) + "\n");
+				}
+
+				Bundle bundle = new Bundle();
+				Message msg = new Message();
+
+				try {
+
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
 					}
 
-					Bundle bundle = new Bundle();
-					Message msg = new Message();
+					String fileName = "GPS "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
 
-					try {
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
 
-						String appName = getResources().getString(
-								R.string.app_name);
-						String dirPath = Environment
-								.getExternalStorageDirectory().toString()
-								+ "/"
-								+ appName;
-						File dir = new File(dirPath);
-						if (!dir.exists()) {
-							dir.mkdirs();
-						}
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
 
-						String fileName = "GPS "
-								+ DateFormat
-										.format("dd-MM-yyyy kk-mm-ss",
-												System.currentTimeMillis())
-										.toString().concat(".csv");
-
-						File file = new File(dirPath, fileName);
-						if (file.createNewFile()) {
-							FileOutputStream fileOutputStream = new FileOutputStream(
-									file);
-
-							fileOutputStream.write(csvData.toString()
-									.getBytes());
-							fileOutputStream.close();
-
-						}
-
-						// Si se ha guardado con éxito enviamos un mensaje al
-						// controlador de mensajes y lo muestra
-						bundle.putString("msg", Grafica.this.getResources()
-								.getString(R.string.guardado_gps));
-					} catch (Exception e) {
-						// Si no se ha podido guardar entonces nos envía un
-						// mensaje
-						// diciendo que no se ha guardado
-						bundle.putString("msg", Grafica.this.getResources()
-								.getString(R.string.error_guardar));
 					}
-					msg.setData(bundle);
-					// Envía el mensaje al controlador
-					mensajeria.sendMessage(msg);
+
+					// Si se ha guardado con éxito enviamos un mensaje al
+					// controlador de mensajes y lo muestra
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.guardado_gps));
+				} catch (Exception e) {
+					// Si no se ha podido guardar entonces nos envía un
+					// mensaje
+					// diciendo que no se ha guardado
+					bundle.putString("msg", Grafica.this.getResources()
+							.getString(R.string.error_guardar));
+				}
+				msg.setData(bundle);
+				// Envía el mensaje al controlador
+				mensajeria.sendMessage(msg);
 			}
 			if (acce == true) {
 				double t = sensorDatas.peek().getTimestamp();
@@ -1128,10 +1134,25 @@ public class Grafica extends Activity implements OnClickListener,
 	public void onClick(View boton) {
 		// TODO Auto-generated method stub
 		switch (boton.getId()) {
+		case (R.id.lupa):
+			if (funciona == false && sensor == Sensor.TYPE_ACCELEROMETER) {
+				acelerometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_GYROSCOPE) {
+				giroscopio();
+			} else if (funciona == false
+					&& sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+				magnetometro();
+			} else if (funciona == false && sensor == Sensor.TYPE_PROXIMITY) {
+				proximidad();
+			} else if (funciona == false && sensor == Sensor.TYPE_LIGHT) {
+				luz();
+			}
+			break;
 		case (R.id.parar):
 			continuar.setEnabled(true);
 			parar.setEnabled(false);
 			reiniciar.setEnabled(true);
+			lupa.setVisibility(ImageButton.VISIBLE);
 			onStop();
 			break;
 		case (R.id.inicio):
@@ -1153,9 +1174,11 @@ public class Grafica extends Activity implements OnClickListener,
 			parar.setEnabled(true);
 			reiniciar.setEnabled(false);
 			continuar.setEnabled(false);
+			lupa.setVisibility(ImageButton.INVISIBLE);
 			Iniciar_sensores();
 			break;
 		case (R.id.reiniciar):
+			lupa.setVisibility(ImageButton.INVISIBLE);
 			iniciar.setVisibility(Button.VISIBLE);
 			iniciar.setEnabled(true);
 			continuar.setVisibility(Button.GONE);
@@ -1321,54 +1344,50 @@ public class Grafica extends Activity implements OnClickListener,
 			ArrayList<Uri> ficheros = new ArrayList<Uri>();
 			DecimalFormat formateador = new DecimalFormat("0.00##");
 			if (g == true) {
-					double t = gpsdatos.peek().getTimestamp();
-					StringBuilder csvData = new StringBuilder();
-					csvData.append("Nombre del dispositivo: "
-							+ android.os.Build.MODEL
-							+ ";Fecha: "
-							+ DateFormat.format("dd/MM/yyyy",
-									System.currentTimeMillis()).toString()
-							+ "\n");
-					csvData.append("t (s);Latitud;Longitud\n");
-					for (GpsDatos values : gpsdatos) {
-						double tiempo = (values.getTimestamp() - t) / 1000;
-						csvData.append(String.valueOf(tiempo) + ";"
-								+ String.valueOf(values.getLatitud()) + ";"
-								+ String.valueOf(values.getLongitud()) + "\n");
+				double t = gpsdatos.peek().getTimestamp();
+				StringBuilder csvData = new StringBuilder();
+				csvData.append("Nombre del dispositivo: "
+						+ android.os.Build.MODEL
+						+ ";Fecha: "
+						+ DateFormat.format("dd/MM/yyyy",
+								System.currentTimeMillis()).toString() + "\n");
+				csvData.append("t (s);Latitud;Longitud\n");
+				for (GpsDatos values : gpsdatos) {
+					double tiempo = (values.getTimestamp() - t) / 1000;
+					csvData.append(String.valueOf(tiempo) + ";"
+							+ String.valueOf(values.getLatitud()) + ";"
+							+ String.valueOf(values.getLongitud()) + "\n");
+				}
+				try {
+
+					String appName = getResources()
+							.getString(R.string.app_name);
+					String dirPath = Environment.getExternalStorageDirectory()
+							.toString() + "/" + appName;
+					File dir = new File(dirPath);
+					if (!dir.exists()) {
+						dir.mkdirs();
 					}
-					try {
 
-						String appName = getResources().getString(
-								R.string.app_name);
-						String dirPath = Environment
-								.getExternalStorageDirectory().toString()
-								+ "/"
-								+ appName;
-						File dir = new File(dirPath);
-						if (!dir.exists()) {
-							dir.mkdirs();
-						}
+					String fileName = "GPS "
+							+ DateFormat
+									.format("dd-MM-yyyy kk-mm-ss",
+											System.currentTimeMillis())
+									.toString().concat(".csv");
 
-						String fileName = "GPS "
-								+ DateFormat
-										.format("dd-MM-yyyy kk-mm-ss",
-												System.currentTimeMillis())
-										.toString().concat(".csv");
+					File file = new File(dirPath, fileName);
+					if (file.createNewFile()) {
+						FileOutputStream fileOutputStream = new FileOutputStream(
+								file);
 
-						File file = new File(dirPath, fileName);
-						if (file.createNewFile()) {
-							FileOutputStream fileOutputStream = new FileOutputStream(
-									file);
-
-							fileOutputStream.write(csvData.toString()
-									.getBytes());
-							fileOutputStream.close();
-							Uri path = Uri.fromFile(file);
-							ficheros.add(path);
-						}
-
-					} catch (Exception e) {
+						fileOutputStream.write(csvData.toString().getBytes());
+						fileOutputStream.close();
+						Uri path = Uri.fromFile(file);
+						ficheros.add(path);
 					}
+
+				} catch (Exception e) {
+				}
 			}
 			if (acce == true) {
 				// crear el fichero escribirle

@@ -12,16 +12,20 @@ import android.hardware.Sensor;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.csvreader.CsvReader;
 
-public class LeerCsv extends Activity implements OnCheckedChangeListener {
+public class LeerCsv extends Activity implements OnClickListener,
+		OnCheckedChangeListener {
 	static Graph mGraph;
 	LinearLayout layout;
 	GraphicalView view;
@@ -39,6 +43,7 @@ public class LeerCsv extends Activity implements OnCheckedChangeListener {
 	CheckBox ejey;
 	CheckBox ejez;
 	CheckBox moduloc;
+	ImageButton lupa;
 	boolean checkx = true;
 	boolean checky = true;
 	boolean checkz = true;
@@ -61,11 +66,13 @@ public class LeerCsv extends Activity implements OnCheckedChangeListener {
 		ejey = (CheckBox) findViewById(R.id.ejey);
 		ejez = (CheckBox) findViewById(R.id.ejez);
 		moduloc = (CheckBox) findViewById(R.id.modulo);
+		lupa = (ImageButton) findViewById(R.id.lupa);
 
 		ejex.setOnCheckedChangeListener(this);
 		ejey.setOnCheckedChangeListener(this);
 		ejez.setOnCheckedChangeListener(this);
 		moduloc.setOnCheckedChangeListener(this);
+		lupa.setOnClickListener(this);
 
 		float scale = getApplicationContext().getResources()
 				.getDisplayMetrics().density;
@@ -291,4 +298,18 @@ public class LeerCsv extends Activity implements OnCheckedChangeListener {
 		}
 	}
 
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case (R.id.lupa):
+			if (tipo == 1) {
+				iniciar();
+			} else if (tipo == 2) {
+				iniciar2();
+			}
+			break;
+		}
+
+	}
 }
