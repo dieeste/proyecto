@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/f" >
+
+    <LinearLayout
+        android:id="@+id/chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/leyenda"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/leyenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/ejex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_x"
+            android:textColor="#ffff0000" />
+
+        <CheckBox
+            android:id="@+id/ejey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_y"
+            android:textColor="#ff00ff00" />
+
+        <CheckBox
+            android:id="@+id/ejez"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_z"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/modulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_modulo"
+            android:textColor="#ffff00ff" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/lupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/lupas" />
+
+</RelativeLayout>

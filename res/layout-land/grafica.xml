@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/f" >
+
+    <LinearLayout
+        android:id="@+id/chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/inicio"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/botonamarillo"
+            android:enabled="true"
+            android:text="@string/empezar"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/continuar"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/botonamarillo"
+            android:minWidth="48dip"
+            android:text="@string/continuar"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/parar"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/botonamarillo"
+            android:enabled="false"
+            android:text="@string/parar"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/reiniciar"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/botonamarillo"
+            android:enabled="false"
+            android:text="@string/reiniciar"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttons"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/ejex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_x"
+            android:textColor="#ffff0000"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/ejey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_y"
+            android:textColor="#ff00ff00"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/ejez"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_z"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/modulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/eje_modulo"
+            android:textColor="#ffff00ff"
+            android:visibility="gone" />
+     
+
+    </LinearLayout>
+
+    <TextView
+         android:id="@+id/gpsestado"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_below="@+id/grabando"
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         android:textColor="#adff2f" />
+
+    <TextView
+        android:id="@+id/grabando"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/linear"
+        android:drawableLeft="@drawable/ic_off"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#ADFF2F"
+        android:visibility="invisible" />
+
+     <TextView
+         android:id="@+id/grabando2"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_alignTop="@+id/linear"
+         android:drawableLeft="@drawable/ic_on"
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         android:textColor="#ADFF2F"
+         android:visibility="invisible" />
+
+             <ImageButton
+                 android:id="@+id/lupa"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentBottom="true"
+                 android:layout_alignParentLeft="true"
+                 android:src="@drawable/lupas" />
+
+</RelativeLayout>
