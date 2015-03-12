@@ -171,7 +171,7 @@ In the menu you will find SETTINGS button with 4 options:\n</string>
 \t\tVersion\n
 \t\tVendor\n
 \nSettings: application preferences, which are:\n</string>
-    <string name="ayuda15">\n\tLanguage: You can choose Auto, Spanish, French or Portuguese.\n
+    <string name="ayuda15">\n\tLanguage: You can choose Auto, English, Spanish, French or Portuguese.\n
 \tBelow settings divider you can see other three options:\n
 \t\t\tSampling frequency: number of samples per second.\n
 \t\t\tTimer: time elapsed since we enter in the graphic screen until it begins to record.\n

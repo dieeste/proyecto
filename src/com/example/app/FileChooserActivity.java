@@ -116,17 +116,9 @@ public class FileChooserActivity extends ListActivity {
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if ((!currentFolder.getName().equals(
-					Environment.getExternalStorageDirectory().getName()))
-					&& (currentFolder.getParentFile() != null)) {
-				currentFolder = currentFolder.getParentFile();
-				fill(currentFolder);
-			} else {
-				Log.i("FILE CHOOSER", "canceled");
-				setResult(Activity.RESULT_CANCELED);
-				finish();
-			}
-			return false;
+
+			setResult(Activity.RESULT_CANCELED);
+			finish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -162,16 +154,7 @@ public class FileChooserActivity extends ListActivity {
 		Collections.sort(dirs);
 		Collections.sort(files);
 		dirs.addAll(files);
-		if (!f.getName().equalsIgnoreCase(
-				Environment.getExternalStorageDirectory().getName())) {
-			if (f.getParentFile() != null)
-				// si es un directorio padre en el data se ponemos la contante
-				// adeacuada
-				dirs.add(
-						0,
-						new FileInfo("..", Constants.PARENT_FOLDER, f
-								.getParent(), false, true));
-		}
+	
 		fileArrayListAdapter = new FileArrayAdapter(FileChooserActivity.this,
 				R.layout.file_row, dirs);
 		this.setListAdapter(fileArrayListAdapter);
@@ -196,7 +179,7 @@ public class FileChooserActivity extends ListActivity {
 			}
 			Intent vamos = new Intent(this, LeerCsv.class);
 			vamos.putExtra("file", fileSelected.getPath());
-			vamos.putExtra("nombrearchivo",fileSelected.getName());
+			vamos.putExtra("nombrearchivo", fileSelected.getName());
 			startActivity(vamos);
 		}
 	}

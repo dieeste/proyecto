@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
 	// Declaramos los botones, los hacemos globales para ser usados mas adelante
@@ -135,7 +136,24 @@ public class MainActivity extends Activity implements OnClickListener {
 		} else if (type.equals("muyrapido")) {
 			tipo = 60000;
 		}
-		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));
-		tiempoParada = Integer.parseInt(pref.getString("tiempo", "0"));
+		String ti = pref.getString("temporizador", "0");
+		if (ti == "") {
+			ti = "0";
+			int tiempoi = Integer.parseInt(ti);
+			tiempoInicio = tiempoi * 1000;
+		} else {
+			int tiempoi = Integer.parseInt(ti);
+			tiempoInicio = tiempoi * 1000;
+		}
+		String tp = pref.getString("tiempo", "0");
+		if (tp == "") {
+			tp = "0";
+			int tiempop = Integer.parseInt(tp);
+			tiempoParada = tiempop * 1000;
+		} else {
+			int tiempop = Integer.parseInt(tp);
+			tiempoParada = tiempop * 1000;
+		}
+
 	}
 }

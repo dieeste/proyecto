@@ -8,12 +8,14 @@
         android:key="frecuencia"
         android:summary="Elige una frecuencia de los sensores, número de muestras por segundo."
         android:title="@string/frecuencias" />
-    <ListPreference
-        android:defaultValue="0"
-        android:entries="@array/temporizador"
-        android:entryValues="@array/temporizadoropciones"
-        android:key="temporizador"
-        android:title="@string/temporizador" />
+    <!--
+          <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/temporizador"
+            android:entryValues="@array/temporizadoropciones"
+            android:key="temporizador"
+            android:title="@string/temporizador" android:summary="@string/subtemporizador"/>
+    
     <ListPreference
         android:defaultValue="0"
         android:entries="@array/tiempograbacion"
@@ -21,6 +23,25 @@
         android:key="tiempo"
         android:summary="Selecciona el tiempo que durará la grabación."
         android:title="@string/tiempo" />
-    
+    -->
+
+    <EditTextPreference
+        android:defaultValue="0"
+        android:dialogTitle="En segundos"
+        android:inputType="number"
+        android:key="temporizador"
+        android:negativeButtonText="Cancelar"
+        android:positiveButtonText="Ok"
+        android:summary="@string/subtemporizador"
+        android:title="@string/temporizador" />
+    <EditTextPreference
+        android:defaultValue="0"
+        android:dialogTitle="En segundos"
+        android:inputType="number"
+        android:key="tiempo"
+        android:negativeButtonText="Cancel"
+        android:positiveButtonText="Ok"
+        android:summary="@string/subtiempo"
+        android:title="@string/tiempo" />
 
 </PreferenceScreen>

@@ -274,10 +274,9 @@ public class Grafica extends Activity implements OnClickListener,
 
 			latitud = loc.getLatitude();
 			longitud = loc.getLongitude();
-
-			GpsDatos data = new GpsDatos(latitud, longitud);
-			gpsdatos.add(data);
-
+			/*double timestampgps = System.currentTimeMillis();
+			GpsDatos datos = new GpsDatos(timestampgps, latitud, longitud);
+			gpsdatos.add(datos);*/
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -371,6 +370,9 @@ public class Grafica extends Activity implements OnClickListener,
 	public void onSensorChanged(SensorEvent event) {
 		// TODO Auto-generated method stub
 		synchronized (this) {
+			double timestampgps = System.currentTimeMillis();
+			GpsDatos datos = new GpsDatos(timestampgps, latitud, longitud);
+			gpsdatos.add(datos);
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
 				double x = event.values[0];
@@ -391,9 +393,11 @@ public class Grafica extends Activity implements OnClickListener,
 					if (acce == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
 					} else {
 						graba2.setText("REC");
 						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
 					}
 					mGraph = new Graph(this);
 					mGraph.ejeY(sensorDatas);
@@ -432,9 +436,11 @@ public class Grafica extends Activity implements OnClickListener,
 					if (giro == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
 					} else {
 						graba2.setText("REC");
 						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
 					}
 					mGraph = new Graph(this);
 					mGraph.ejeY(sensorGiroscopio);
@@ -470,9 +476,11 @@ public class Grafica extends Activity implements OnClickListener,
 					if (luz == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
 					} else {
 						graba2.setText("REC");
 						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
 					}
 					mGraph = new Graph(this);
 					mGraph.ejeY2(sensorLuz);
@@ -512,9 +520,11 @@ public class Grafica extends Activity implements OnClickListener,
 					if (magne == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
 					} else {
 						graba2.setText("REC");
 						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
 					}
 					mGraph = new Graph(this);
 					mGraph.ejeY(sensorMagnetico);
@@ -551,9 +561,11 @@ public class Grafica extends Activity implements OnClickListener,
 					if (proxi == true) {
 						graba.setText("REC");
 						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
 					} else {
 						graba2.setText("REC");
 						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
 					}
 					mGraph = new Graph(this);
 					mGraph.ejeY2(sensorProximidad);
@@ -653,6 +665,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	protected void Iniciar_sensores() {
 		funciona = true;
+		
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				frecuencia);
@@ -676,8 +689,7 @@ public class Grafica extends Activity implements OnClickListener,
 		@Override
 		public void run() {
 			if (g == true) {
-				if (gpsdatos.size() > 0) {
-
+					double t = gpsdatos.peek().getTimestamp();
 					StringBuilder csvData = new StringBuilder();
 					csvData.append("Nombre del dispositivo: "
 							+ android.os.Build.MODEL
@@ -685,11 +697,12 @@ public class Grafica extends Activity implements OnClickListener,
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
 							+ "\n");
-					csvData.append("Latitud;Longitud\n");
+					csvData.append("t (s);Latitud;Longitud\n");
 					for (GpsDatos values : gpsdatos) {
-						csvData.append(String.valueOf(values.getLatitud())
-								+ ";" + String.valueOf(values.getLongitud())
-								+ "\n");
+						double tiempo = (values.getTimestamp() - t) / 1000;
+						csvData.append(String.valueOf(tiempo) + ";"
+								+ String.valueOf(values.getLatitud()) + ";"
+								+ String.valueOf(values.getLongitud()) + "\n");
 					}
 
 					Bundle bundle = new Bundle();
@@ -739,7 +752,6 @@ public class Grafica extends Activity implements OnClickListener,
 					msg.setData(bundle);
 					// Envía el mensaje al controlador
 					mensajeria.sendMessage(msg);
-				}
 			}
 			if (acce == true) {
 				double t = sensorDatas.peek().getTimestamp();
@@ -1140,6 +1152,7 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.continuar):
 			parar.setEnabled(true);
 			reiniciar.setEnabled(false);
+			continuar.setEnabled(false);
 			Iniciar_sensores();
 			break;
 		case (R.id.reiniciar):
@@ -1308,8 +1321,7 @@ public class Grafica extends Activity implements OnClickListener,
 			ArrayList<Uri> ficheros = new ArrayList<Uri>();
 			DecimalFormat formateador = new DecimalFormat("0.00##");
 			if (g == true) {
-				if (gpsdatos.size() > 0) {
-
+					double t = gpsdatos.peek().getTimestamp();
 					StringBuilder csvData = new StringBuilder();
 					csvData.append("Nombre del dispositivo: "
 							+ android.os.Build.MODEL
@@ -1317,11 +1329,12 @@ public class Grafica extends Activity implements OnClickListener,
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
 							+ "\n");
-					csvData.append("Latitud;Longitud\n");
+					csvData.append("t (s);Latitud;Longitud\n");
 					for (GpsDatos values : gpsdatos) {
-						csvData.append(String.valueOf(values.getLatitud())
-								+ ";" + String.valueOf(values.getLongitud())
-								+ "\n");
+						double tiempo = (values.getTimestamp() - t) / 1000;
+						csvData.append(String.valueOf(tiempo) + ";"
+								+ String.valueOf(values.getLatitud()) + ";"
+								+ String.valueOf(values.getLongitud()) + "\n");
 					}
 					try {
 
@@ -1356,7 +1369,6 @@ public class Grafica extends Activity implements OnClickListener,
 
 					} catch (Exception e) {
 					}
-				}
 			}
 			if (acce == true) {
 				// crear el fichero escribirle
@@ -1752,9 +1764,11 @@ public class Grafica extends Activity implements OnClickListener,
 		if (acce == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
+			graba2.setVisibility(TextView.INVISIBLE);
 		} else {
 			graba2.setText("REC");
 			graba2.setVisibility(TextView.VISIBLE);
+			graba.setVisibility(TextView.INVISIBLE);
 		}
 		mGraph = new Graph(this);
 		mGraph.ejeY(sensorDatas);
@@ -1784,9 +1798,11 @@ public class Grafica extends Activity implements OnClickListener,
 		if (giro == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
+			graba2.setVisibility(TextView.INVISIBLE);
 		} else {
 			graba2.setText("REC");
 			graba2.setVisibility(TextView.VISIBLE);
+			graba.setVisibility(TextView.INVISIBLE);
 		}
 		mGraph = new Graph(this);
 		mGraph.ejeY(sensorGiroscopio);
@@ -1815,9 +1831,11 @@ public class Grafica extends Activity implements OnClickListener,
 		if (magne == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
+			graba2.setVisibility(TextView.INVISIBLE);
 		} else {
 			graba2.setText("REC");
 			graba2.setVisibility(TextView.VISIBLE);
+			graba.setVisibility(TextView.INVISIBLE);
 		}
 		mGraph = new Graph(this);
 		mGraph.ejeY(sensorMagnetico);
@@ -1847,9 +1865,11 @@ public class Grafica extends Activity implements OnClickListener,
 		if (proxi == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
+			graba2.setVisibility(TextView.INVISIBLE);
 		} else {
 			graba2.setText("REC");
 			graba2.setVisibility(TextView.VISIBLE);
+			graba.setVisibility(TextView.INVISIBLE);
 		}
 		mGraph = new Graph(this);
 		mGraph.ejeY2(sensorProximidad);
@@ -1878,9 +1898,11 @@ public class Grafica extends Activity implements OnClickListener,
 		if (luz == true) {
 			graba.setText("REC");
 			graba.setVisibility(TextView.VISIBLE);
+			graba2.setVisibility(TextView.INVISIBLE);
 		} else {
 			graba2.setText("REC");
 			graba2.setVisibility(TextView.VISIBLE);
+			graba.setVisibility(TextView.INVISIBLE);
 		}
 		mGraph = new Graph(this);
 		mGraph.ejeY2(sensorLuz);

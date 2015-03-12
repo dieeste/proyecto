@@ -163,7 +163,7 @@ Además de las dos opciones diferenciadas, en el botón CONFIGURACIÓN aparecen 
 \t\tVersión\n
 \t\tDistribuidor\n
 \nConfiguración: en esta opción aparecen las preferencias de la aplicación, estas preferencias son:\n</string>
-    <string name="ayuda15">\n\tIdioma: Se podrá elegir entre Auto, Español, Francés o Portugués.\n
+    <string name="ayuda15">\n\tIdioma: Se podrá elegir entre Auto, Inglés, Español, Francés o Portugués.\n
 \tDebajo de Configuración aparecen las opciones:\n
 \t\t\tFrecuencias muestreo: se elige una frecuencia de los sensores, numero de muestras por segundo.\n
 \t\t\tTemporizador: tiempo que transcurre desde que entramos en la pantalla de la gráfica hasta que empieza a grabar.\n

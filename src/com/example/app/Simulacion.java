@@ -23,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
@@ -163,6 +164,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			String txt = "";
 			txt += "\n " + getResources().getString(R.string.gpsbuscando);
 			gpss.setText(txt);
+			gp.setVisibility(CheckBox.VISIBLE);
 		}
 	}
 
@@ -185,12 +187,14 @@ public class Simulacion extends Activity implements SensorEventListener,
 			String txt = "";
 			txt += "\n " + getResources().getString(R.string.gpsoff);
 			gpss.setText(txt);
+			gp.setVisibility(CheckBox.INVISIBLE);
 		}
 
 		public void onProviderEnabled(String provider) {
 			String txt = "";
 			txt += "\n " + getResources().getString(R.string.gpsbuscando);
 			gpss.setText(txt);
+			gp.setVisibility(CheckBox.VISIBLE);
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -568,8 +572,24 @@ public class Simulacion extends Activity implements SensorEventListener,
 		} else if (type.equals("muyrapido")) {
 			tipo = 60000;
 		}
-		tiempoInicio = Integer.parseInt(pref.getString("temporizador", "0"));
-		tiempoParada = Integer.parseInt(pref.getString("tiempo", "0"));
+		String ti = pref.getString("temporizador", "0");
+		if (ti == "") {
+			ti = "0";
+			int tiempoi = Integer.parseInt(ti);
+			tiempoInicio = tiempoi * 1000;
+		} else {
+			int tiempoi = Integer.parseInt(ti);
+			tiempoInicio = tiempoi * 1000;
+		}
+		String tp = pref.getString("tiempo", "0");
+		if (tp == "") {
+			tp = "0";
+			int tiempop = Integer.parseInt(tp);
+			tiempoParada = tiempop * 1000;
+		} else {
+			int tiempop = Integer.parseInt(tp);
+			tiempoParada = tiempop * 1000;
+		}
 
 	}
 
