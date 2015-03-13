@@ -23,7 +23,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
@@ -54,6 +53,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 	Button grafMagnetico;
 	Button grafProximidad;
 	Button grafLuz;
+	Button gpsmapa;
 	CheckBox acelero;
 	CheckBox giro;
 	CheckBox magneto;
@@ -103,6 +103,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		grafMagnetico = (Button) findViewById(R.id.graficaMagnetico);
 		grafProximidad = (Button) findViewById(R.id.graficaProximidad);
 		grafLuz = (Button) findViewById(R.id.graficaLuminosidad);
+		gpsmapa = (Button) findViewById(R.id.gpsss);
 
 		// declarar los sensores como variables
 
@@ -127,6 +128,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		grafMagnetico.setOnClickListener(this);
 		grafProximidad.setOnClickListener(this);
 		grafLuz.setOnClickListener(this);
+		gpsmapa.setOnClickListener(this);
 
 		acelero = (CheckBox) findViewById(R.id.checkAcelerometro);
 		giro = (CheckBox) findViewById(R.id.checkGiroscopio);
@@ -188,6 +190,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			txt += "\n " + getResources().getString(R.string.gpsoff);
 			gpss.setText(txt);
 			gp.setVisibility(CheckBox.INVISIBLE);
+			gpsmapa.setVisibility(Button.INVISIBLE);
 		}
 
 		public void onProviderEnabled(String provider) {
@@ -195,6 +198,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 			txt += "\n " + getResources().getString(R.string.gpsbuscando);
 			gpss.setText(txt);
 			gp.setVisibility(CheckBox.VISIBLE);
+			gpsmapa.setVisibility(Button.VISIBLE);
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -239,6 +243,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 		case R.id.gpsboton:
 			Intent gps = new Intent(Simulacion.this, DefinicionGps.class);
 			startActivity(gps);
+			break;
+		case R.id.gpsss:
+			Intent mapa = new Intent(Simulacion.this, com.example.app.Mapa.class);
+			startActivity(mapa);
 			break;
 
 		case R.id.graficaAcelerometro:
