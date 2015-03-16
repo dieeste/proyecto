@@ -18,22 +18,6 @@
             android:key="frecuencia"
             android:summary="@string/subfrecuencia"
             android:title="@string/frecuencias" />
-        <!--
-           <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/temporizador"
-            android:entryValues="@array/temporizadoropciones"
-            android:key="temporizador"
-            android:title="@string/temporizador" android:summary="@string/subtemporizador"/>
-        
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/tiempograbacion"
-            android:entryValues="@array/opcionestiempograbacion"
-            android:key="tiempo"
-            android:summary="@string/subtiempo"
-            android:title="@string/tiempo" />
-        -->
 
         <EditTextPreference
             android:defaultValue="0"

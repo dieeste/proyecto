@@ -55,12 +55,6 @@ Tutors:\n\n
     <string name="rapido">FAST</string>
     <string name="muyrapido">FASTEST</string>
     <string name="apagado">OFF</string>
-    <string name="seg3">3 SECONDS</string>
-    <string name="seg5">5 SECONDS</string>
-    <string name="seg10">10 SECONDS</string>
-    <string name="seg15">15 SECONDS</string>
-    <string name="seg30">30 SECONDS</string>
-    <string name="seg60">60 SECONDS</string>
     <string name="auto">AUTO</string>
     <string name="espa">SPANISH</string>
     <string name="ingles">ENGLISH</string>

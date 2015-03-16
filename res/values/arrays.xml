@@ -13,31 +13,6 @@
         <item>rapido</item>
         <item>muyrapido</item>
     </string-array>
-    <string-array name="temporizador">
-        <item>@string/apagado</item>
-        <item>@string/seg3</item>
-        <item>@string/seg5</item>
-        <item>@string/seg10</item>
-    </string-array>
-    <string-array name="temporizadoropciones">
-        <item>0</item>
-        <item>3000</item>
-        <item>5000</item>
-        <item>10000</item>
-    </string-array>
-    <string-array name="tiempograbacion">
-        <item>@string/apagado</item>
-        <item>@string/seg15</item>
-        <item>@string/seg30</item>
-        <item>@string/seg60</item>
-    </string-array>
-    <string-array name="opcionestiempograbacion">
-        <item>0</item>
-        <item>15400</item>
-        <item>30400</item>
-        <item>60400</item>
-    </string-array>
-   
     <string-array name="idiomas">
         <item>@string/auto</item>
         <item>@string/ingles</item>

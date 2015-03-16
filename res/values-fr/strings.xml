@@ -53,12 +53,6 @@ Como tutores:\n\n
     <string name="rapido">RAPIDE</string>
     <string name="muyrapido">PLUS RAPIDE</string>
     <string name="apagado">ÉTEINTE</string>
-    <string name="seg3">3 SECONDES</string>
-    <string name="seg5">5 SECONDES</string>
-    <string name="seg10">10 SECONDES</string>
-    <string name="seg15">15 SECONDES</string>
-    <string name="seg30">30 SECONDES</string>
-    <string name="seg60">60 SECONDES</string>
     <string name="auto">AUTO</string>
     <string name="espa">ESPAGNOL</string>
     <string name="ingles">ANGLAIS</string>
