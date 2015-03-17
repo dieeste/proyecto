@@ -8,7 +8,6 @@ import org.achartengine.GraphicalView;
 
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.hardware.Sensor;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -201,6 +200,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 				moduloc.setVisibility(TextView.GONE);
 				if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources().getString(R.string.unidad_luz))) {
+					ejex.setText("E");
 					tituloejey = "E (" + getString(R.string.unidad_luz) + ")";
 					nombresensor = getString(R.string.luminosidad);
 					setTitle(nombresensor);
@@ -208,6 +208,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 						+ getResources().getString(R.string.unidad_proximidad))) {
 					tituloejey = "d (" + getString(R.string.unidad_proximidad)
 							+ ")";
+					ejex.setText("d");
 					nombresensor = getString(R.string.proximidad);
 					setTitle(nombresensor);
 				}

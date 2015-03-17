@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sensor Mobile</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Opções</string>
+    <string name="config">Configurações</string>
+    <string name="acercaDe">Sobre</string>
+    <string name="inicio">Inicio</string>
+    <string name="teoria">Teoría</string>
+    <string name="explicacion">\nDiseñada y creada por los autores: Diego Esteban Moreno y Félix Huete García, como proyecto final de carrera para la universidad de Valladolid de la titulación Ingeniería Técnica de Informática de Sistemas.\n
+\nComo tutores Miguel Ángel González Rebollo (Departamento de Física de la Materia Condensada) y Manuel Ángel González Delgado (Departamento de Física Aplicada), del Grupo de Innovación Docente TIA.\n</string>
+    <string name="explicacionacercade2">La aplicación muestra el uso del acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPScomo útiles de medida en los laboratorios de física.\n</string>
+    <string name="explicacionacercade">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n</string>
+    <string name="idiomas">IDIOMAS</string>
+    <string name="medicion">Medição de dados</string>
+    <string name="aceleracion">Aceleração</string>
+    <string name="velocidad">Velocidade angular</string>
+    <string name="magnetismo">Indução magnética</string>
+    <string name="sensor">Sensor</string>
+    <string name="nombresensor">Nome</string>
+    <string name="consumo">Consumo da bateria</string>
+    <string name="version">Versão</string>
+    <string name="distribuidor">Distribuidor</string>
+    <string name="luminosi">Iluminação</string>
+    <string name="empezar">Começar</string>
+    <string name="continuar">Continuar</string>
+    <string name="parar">Pausar/Parar</string>
+    <string name="acelerometro">Acelerômetro</string>
+    <string name="luminosidad">Sensor de luz</string>
+    <string name="proximidad">Sensor de proximidade</string>
+    <string name="giroscopio">Giroscópio</string>
+    <string name="magnetico">Magnetômetro</string>
+    <string name="compartir">Compartilhar</string>
+    <string name="guardar">Salvar (csv)</string>
+    <string name="guardado_acelerometro">Acelerômetro salvo</string>
+    <string name="error_guardar">Erro ao salvar, não salvo</string>
+    <string name="eje_x">X</string>
+    <string name="eje_y">Y</string>
+    <string name="eje_z">Z</string>
+    <string name="distancia">Distância</string>
+    <string name="eje_modulo">Módulo</string>
+    <string name="unidad_acelerometro">m/s²</string>
+    <string name="tiempo">TEMPO DE GRAVAÇÃO</string>
+    <string name="frecuencias">FREQUÊNCIA DE AMOSTRAGEM</string>
+    <string name="temporizador">TEMPORIZADOR</string>
+    <string name="lento">LENTO</string>
+    <string name="normal">NORMAL</string>
+    <string name="rapido">RÁPIDO</string>
+    <string name="muyrapido">MAIS RÁPIDO</string>
+    <string name="apagado">DESLIGADO</string>
+    <string name="auto">AUTO</string>
+    <string name="espa">ESPANHOL</string>
+    <string name="ingles">INGLÊS</string>
+    <string name="frances">FRANCÊS</string>
+    <string name="portugues">PORTUGUÊS</string>
+    <string name="subidioma">Seleccione el lenguaje de la aplicación.</string>
+    <string name="subfrecuencia">Elija la frecuencia de los sensores, número de muestras por segundo.</string>
+    <string name="subtemporizador">Seleccione el tiempo desde que se inicia la pantalla de la gráfica hasta que comienza a tomar datos.</string>
+    <string name="subtiempo">Seleccione el tiempo que durará la grabación</string>
+    <string name="reiniciar">Reiniciar</string>
+    <string name="grafica">Gráfico</string>
+    <string name="cargargraficas">Carregar gráficos</string>
+    <string name="checkAcelerometro">Salvar dados</string>
+    <string name="checkGiroscopio">Salvar dados</string>
+    <string name="checkMagnetometro">Salvar dados</string>
+    <string name="checkLuz">Salvar dados</string>
+    <string name="checkProximidad">Salvar dados</string>
+    <string name="unidad_giroscopio">rad/s</string>
+    <string name="unidad_campo_magnetico">µT</string>
+    <string name="unidad_luz">Lux</string>
+    <string name="unidad_proximidad">cm</string>
+    <string name="guardado_giroscopio">Giroscópio salvo</string>
+    <string name="guardado_magnetometro">Magnetômetro salvo</string>
+    <string name="guardar_luz">Sensor de luz salvo</string>
+    <string name="guardar_proximidad">Sensor de proximidade salvo</string>
+    <string name="guardado_gps">GPS salvo</string>
+    <string name="sensores">Sensores do dispositivo</string>
+    <string name="gpsoff">GPS desligado </string>
+    <string name="gpsbuscando">GPS buscando</string>
+    <string name="gpssignal">Sinal do GPS</string>
+    <string name="titulo1">\nO QUE É O ACELERÔMETRO?\n</string>
+    <string name="explicacion1">É um dispositivo que mede a aceleração, isto é variação da velocidade de um objeto, e as forças induzidas pela gravidade, ou seja, nos permite detectar o movimento e o giro.\n 
+Isto é medido em metros por segundo ao quadrado (m/s2) ou em forças G (g =9.8 m/s2).\n</string>
+    <string name="titulo2">COMO FUNCIONA O ACELERÔMETRO?\n</string>
+    <string name="explicacion2">A base do seu funcionamento é um capacitor, um dispositivo que geralmente é composto por duas placas metálicas fixas uma na frente da outra, e um material dielétrico.\n
+Uma destas placas é móvel, de forma que quando é aplicada uma força sobre o dispositivo, a capacidade do capacitor mudará. Se tornará maior ou menor em função do movimento.\n
+Dentro do capacitor chega energia vinda dessas placas a partir da bateria do dispositivo. Dependendo do tamanho da capacidade do capacitor, o material dielétrico que existe entre essas placas será capaz de armazenar uma carga ou outra.\n
+Assim é possível que o sensor meça a quantidade de carga elétrica (tensão) armazenada no material dielétrico e envie essa informação ao microprocessador do dispositivo para que se determine a força e a aceleração pelas quais foi submetido. O microprocessador registra a tensão obtida e a salva em um banco de dados que já havia registrado outras tensões, que correspondem a uma força e uma aceleração determinadas.\n</string>
+    <string name="titulo3">\nPARA QUÊ SERVE O ACELERÔMETRO?\n</string>
+    <string name="explicacion3">Um acelerômetro pode mudar automáticamente a orientação da tela e detectar a posição vertical ou horizontal desta.\n</string>
+    <string name="titulo4">QUE DADOS NOS MOSTRA?\n</string>
+    <string name="explicacion4">O acelerômetro mede a aceleração aplicada ao dispositivo e suas propriedades se resumem à tabela.\n</string>
+    <string name="titulogiro1">\nO QUE É O GIROSCÓPIO?\n</string>
+    <string name="explicaciongiro1">Um giroscópio é um dispositivo mecânico que nos ajuda a medir, manter e mudar a orientação de algum dispositivo. Ou seja, mede a velocidade de rotação (rad/s).\n</string>
+    <string name="titulogiro2">COMO FUNCIONA O GIROSCÓPIO?\n</string>
+    <string name="explicaciongiro2">Se baseia no movimento angular. Emprega uma tecnologia microeletromecânica (MEMS) com um sensor de silício, graças às placas especiais que atuam como capacitores. As alterações de intensidade se convertem em dados digitais, os quais são lidos pelo microprocessador.\n
+O giroscópio, uma vez posto em movimento, mantém sempre a orientação e se orienta pelo norte geográfico, de maneira a nos dar uma orientação precisa. Em outras palavras, nos indica os deslocamentos de seus eixos e nos dá a posição exata a respeito do ponto de partida.\n
+MENS – Sistemas Microeletromecânicos (Microelectromechanical Systems, MEMS) se referem à tecnologia eletromecânica, micrométrica e seus produtos, e escalas relativamente menores (escala nanométrica) são mescladas em sistemas nanoeletromecânicos.\n</string>
+    <string name="titulogiro3">PARA QUE SERVE O GIROSCÓPIO?\n</string>
+    <string name="explicaciongiro3">Uma função desempenhada pelo giroscópio é, por exemplo, a possibilidade de que giremos nossa tela.\n</string>
+    <string name="titulogiro4">QUE DADOS NOS MOSTRA?\n</string>
+    <string name="explicaciongiro4">O giroscópio mede a velocidade de rotação do dispositivo em torno dos eixos x, y e z. Os valores dos dados do giroscópio podem ser positivos ou negativos. Ao observar a origem de uma posição ao longo da metade positiva do eixo, se a rotação é feita em direção anti-horária em torno do eixo, o valor é positivo; caso contrário, o valor é negativo. Também podemos determinar a direção de um valor do giroscópio.\n</string>
+    <string name="titulomagne1">\nO QUE É O MAGNETÔMETRO?\n</string>
+    <string name="explicacionmagne1">Se trata de um componente eletrônico capaz de medir e quantificar a força magnética de um objeto. Isto é, mede o campo magnético (µT).\n</string>
+    <string name="titulomagne2">COMO FUNCIONA O MAGNETÔMETRO?\n</string>
+    <string name="explicacionmagne2">Basicamente é um eletroimã típico, com um núcleo de ferro e uma bobina de arame enrolada.\n 
+O magnetismo varia de acordo com o lugar, devido às diferenças no campo magnético terreste (a magnetosfera) e pode ser causado pelas diferentes naturezas das rochas. Os magnetômetros são um frequente componente instrumental de naves espaciais que exploram planetas e para a exploração geológica, em busca de estruturas anticlinais.\n</string>
+    <string name="titulomagne3">PARA QUE SERVE O MAGNETÔMETRO?\n</string>
+    <string name="explicacionmange3">Além de bússola, pode servir como detector de metais.\n</string>
+    <string name="titulomagne4">QUE DADOS O MAGNETÔMETRO NOS MOSTRA?\n</string>
+    <string name="explicacionmange4"> O uso mais importante do magnetômetro (descrito na tabela) em sistemas para Android é implementar a bússola.\n</string>
+    <string name="tituloluz1">\nO QUE É O SENSOR DE LUZ?\n</string>
+    <string name="explicacionluz1">É um dispositivo eletrônico que responde às mudança de intensidade da luz. Estes sensores precisam de um componente emissor que gere a luz e de um componente receptor que perceba a luz gerada pelo emissor.\n</string>
+    <string name="tituloluz2">COMO FUNCIONA O SENSOR DE LUZ?\n</string>
+    <string name="explicacionluz2">Um sensor de luz inclui um transdutor fotoelétrico para converter a luz em um sinal elétrico e pode incluir eletrônica para o condicionamento do sinal, compensação, e o formato do sinal de saída.\n
+O sensor de luz mais comum é o LDR – Light Dependant Resistor, ou resistor dependente da luz. Um LDR é basicamente um resistor que muda sua resistência quando a intensidade da luz muda. Existem três tipos de sensores fotoelétricos; os sensores por barreira de luz, os de reflexão sobre espelho ou de reflexão sobre objetos.\n</string>
+    <string name="tituloluz3">PARA QUE SERVE O SENSOR DE LUZ?\n</string>
+    <string name="explicacionluz3">Sua função é detectar a intensidade da luz do ambiente para ajustar o brilho da tela.\n</string>
+    <string name="tituloluz4">QUE DADOS O SENSOR DE LUZ NOS MOSTRA?\n</string>
+    <string name="explicacionluz4">O sistema utiliza o sensor de luz ambiental, descrito na tabela, para detectar a iluminação do ambiente e ajustar automaticamente o brilho da tela ao nível adequado.\n</string>
+    <string name="tituloprox1">\nO QUE É SENSOR DE PROXIMIDADE?\n</string>
+    <string name="explicacionprox1">Se trata de um sensor capaz de medir a distancia entre o aparelho e algum outro objeto. O sensor de proximidade mede em centímetros (cm).\n</string>
+    <string name="tituloprox2">COMO FUNCIONA O SENSOR DE PROXIMIDADE?\n</string>
+    <string name="explicacionprox2">Sensores de proximidade têm como base um LED infravermelho e um receptor IR. O que isso significa?  Significa uma luz infravermelha é emitida e, se algo retornar, como seria o caso da orelha para o receptor, ele detecta que há algo muito próximo ao aparelho. No caso de uma chamada, será a orelha.\n</string>
+    <string name="tituloprox3">PARA QUÊ SERVE O SENSOR DE PROXIMIDADE?\n</string>
+    <string name="explicacionprox3">Quando o equipamento se aproxima da orelha para atender uma chamada, o aparelho desliga a luz de fundo para economizar bateria.\n
+E há mais: se tocarmos a tela por acidente enquanto estamos em uma chamada, não acontecerá nada pois o sensor de proximidade bloqueará a tela para evitar esse tipo de erro. Normalmente, se o dispositivo estiver com a tela escura é quase imperceptível, mas se olharmos contra a luz, percebemos que realmente acontece.\n</string>
+    <string name="tituloprox4">QUE DADOS O SENSOR DE PROXIMIDADE NOS MOSTRA?\n</string>
+    <string name="explicacionprox4">O sensor de proximidade proporciona a distância entre o dispositivo e o outro objeto. O dispositivo pode utilizá-lo para detectar se o usuário está por perto (consultará a tela); para tanto, poderá determinar se o usuário se encontra em uma chamada telefônica e poderá apagar a tela durante a chamada.\n</string>
+    <string name="titulogps1">\nO QUE É O GPS?\n</string>
+    <string name="explicaciongps1">Sistema Global de Navegación por Satélite (GNSS) que nos permite fijar a escala mundial la posición de un objeto, una persona, un vehículo o una nave.\n</string>
+    <string name="titulogps2">COMO FUNCIONA O GPS?\n</string>
+    <string name="explicaciongps2">El GPS se basa en la triangulación, un principio matemático que determina la posición exacta de un punto conociendo las distancias de éste a otros tres puntos de ubicación conocida. En teoría se usan tres satélites para determinar la posición, velocidad y altura a la que se encuentra el receptor.\n</string>
+    <string name="titulogps3">PARA QUÊ SERVE O GPS?\n</string>
+    <string name="explicaciongps3">El GPS se puede usar para indicarnos trayectorias, rutas o como localización.\n</string>
+    <string name="titulogps4">QUE DADOS O GPS NOS MOSTRA?\n</string>
+    <string name="explicaciongps4">Latitud y longitud.\n</string>
+    <string name="gps">GPS</string>
+    <string name="checkGps">Salvar dados</string>
+    <string name="latitud">Latitude</string>
+    <string name="longitud">Longitude</string>
+    <string name="ayuda">Ajuda</string>
+    <string name="ayuda11">En la pantalla principal se encuentran 2 opciones diferenciadas por botones:\n</string>
+    <string name="ayuda12">Medición de Datos:\n
+\tEn este apartado se mostraran los sensores con sus medidas.\n
+Cargar Gráficas:\n
+ \tEn este apartado se mostraran todos los ficheros con las gráficas guardadas.\n
+Además de las dos opciones diferenciadas, en el botón CONFIGURACIÓN aparecen 4 opciones:\n</string>
+    <string name="ayuda13">Sensores del dispositivo: en esta opción se recogen en un listado todos los sensores del dispositivo.\n</string>
+    <string name="ayuda14">\t\tNombre del sensor\n
+\t\tConsumo de la batería\n
+\t\tVersión\n
+\t\tDistribuidor\n
+\nConfiguración: en esta opción aparecen las preferencias de la aplicación, estas preferencias son:\n</string>
+    <string name="ayuda15">\n\tIdioma: Se podrá elegir entre Auto, Inglés, Español, Francés o Portugués.\n
+\tDebajo de Configuración aparecen las opciones:\n
+\t\t\tFrecuencias muestreo: se elige una frecuencia de los sensores, numero de muestras por segundo.\n
+\t\t\tTemporizador: tiempo que transcurre desde que entramos en la pantalla de la gráfica hasta que empieza a grabar.\n
+\t\t\tTiempo de grabación: se elige el tiempo que durará la grabación\n
+Acerca de: En esta opción muestra la información de los autores y privacidad de la aplicación.\n
+Ayuda: Ayuda de la aplicación.\n</string>
+    <string name="ayuda21">En esta pantalla se mostraran los sensores junto con sus mediciones. La pantalla se estructura:\n</string>
+    <string name="ayuda22">\nBotones de información de los sensores:\n
+\tAcelerómetro\n
+\tGiroscopio\n
+\tMagnetómetro\n
+\tSensor proximidad\n
+\tSensor Luz\n
+\tGps\n
+\nDebajo de cada botón de información de cada sensor hay:\n
+\tOpción de guardar los datos: se marcara si se desea que se guarden los datos del sensor en un fichero Csv.\n
+\tIcono Grafica: Este botón llevara a la representación de los sensores.\n
+\tMuestra de datos: se mostraran las medidas tomadas por los sensores en tiempo real.\n
+Además de las opciones en el botón preferencia aparecerán las opciones:\n
+\tConfiguración aparecen las opciones:
+\t\t\tFrecuencias muestreo- se elige una frecuencia de los sensores, numero de muestras por segundo.
+\t\t\tTemporizador: tiempo que transcurre desde que entramos en la pantalla de la gráfica hasta que empieza a grabar.\n
+\t\t\tTiempo de grabación- se elige el tiempo que durará la grabación\n
+Ayuda: Ayuda de la aplicación.\n</string>
+    <string name="ayuda31">En esta pantalla aparece la representación de los datos de los sensores.\n</string>
+    <string name="ayuda32">Su estructura es la siguiente:\n
+\tBotón empezar: se pulsara para iniciar la gráfica.\n
+\tBotón Pausar/Parar: Se pulsara para detener o interrumpir la representación de la gráfica.\n
+\tReiniciar: se pulsara para empezar una nueva representación de la grafica.\n
+Debajo de los botones aparece:\n
+\tMedidas: estas medidas podrán seleccionarse o no dependiendo de qué dato se desee mostrar.\n
+\tREC: se mostrara en color verde si no se ha marcado guarda datos de la pantalla Medición de Datos, en caso de que la opción Guardar datos de la pantalla Medición de datos se halla seleccionado se mostrar de color rojo.\n
+\tGPS señal: muestra el estado de la señal del Gps.\n
+\tGráfica: se representan los datos que recoge el dispositivo móvil.\n
+Además de estas opciones en la opción preferencias del sistema, una vez iniciada la representación de las mediciones, se podrán cambiar de un sensor a otro, compartirlo o guardarlo en formato CSV.\n</string>
+    <string name="ayuda41">En esta pantalla se muestran todos los ficheros guardados de las mediciones. En caso de seleccionar un fichero este mostrara la representación de las mediciones. Si se deja seleccionado durante un periodo prolongado de tiempo, el fichero podrá ser enviado mediante la opción que usted desee.\n
+Si una vez seleccionado se quiere quitar de la lista a enviar solo tiene que pulsar prolongadamente sobre ese mismo archivo y quedará sin seleccionar.\n</string>
+    <string name="ayuda42">Se podrán seleccionar varios ficheros a la vez para enviarlos.\n</string>
+    <string name="ayuda51">En las pantallas información de los sensores (giroscopio, acelerómetro, magnetómetro, sensor de luz, sensor proximidad y GPS) se muestra la explicación de cada sensor. Cada pantalla está estructurada:\n
+\t¿Qué es?: explicación de que mide y que es el sensor.\n
+\t¿Cómo funciona?: explicación del funcionamiento del sensor.\n
+\t¿Para qué sirve? : ejemplo de utilidad del sensor.\n
+\t¿Datos que muestra?: medidas que toma el sensor en el dispositivo Android.\n</string>
+
+</resources>

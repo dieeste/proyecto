@@ -8,8 +8,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
 
-import com.example.app.R.id;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -477,6 +475,7 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData2 data3 = new AccelData2(timestamp3, x3);
 				sensorLuz.add(data3);
 				if (sensor == Sensor.TYPE_LIGHT) {
+					ejex.setText("E");
 					ejex.setVisibility(CheckBox.VISIBLE);
 					ejey.setVisibility(CheckBox.GONE);
 					ejez.setVisibility(CheckBox.GONE);
@@ -562,6 +561,7 @@ public class Grafica extends Activity implements OnClickListener,
 				AccelData2 data5 = new AccelData2(timestamp5, x5);
 				sensorProximidad.add(data5);
 				if (sensor == Sensor.TYPE_PROXIMITY) {
+					ejex.setText("d");
 					ejex.setVisibility(CheckBox.VISIBLE);
 					ejey.setVisibility(CheckBox.GONE);
 					ejez.setVisibility(CheckBox.GONE);
@@ -1052,7 +1052,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvData.append("t (s);X;Modulo;Unidad sensor: "
+				csvData.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_proximidad)
 						+ "\n");
 				for (AccelData2 values : sensorProximidad) {
@@ -1582,7 +1582,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDataluz.append("t (s);X;Modulo;Unidad sensor: "
+				csvDataluz.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_luz) + "\n");
 				for (AccelData2 values : sensorLuz) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
@@ -1635,7 +1635,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString() + "\n");
-				csvDataproxi.append("t (s);X;Modulo;Unidad sensor: "
+				csvDataproxi.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_proximidad)
 						+ "\n");
 				for (AccelData2 values : sensorProximidad) {
@@ -1875,6 +1875,7 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	public void proximidad() {
+		ejex.setText("d");
 		ejex.setVisibility(CheckBox.VISIBLE);
 		ejey.setVisibility(CheckBox.GONE);
 		ejez.setVisibility(CheckBox.GONE);
@@ -1908,6 +1909,7 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	public void luz() {
+		ejex.setText("E");
 		ejex.setVisibility(CheckBox.VISIBLE);
 		ejey.setVisibility(CheckBox.GONE);
 		ejez.setVisibility(CheckBox.GONE);

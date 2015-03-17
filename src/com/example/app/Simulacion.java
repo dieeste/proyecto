@@ -468,7 +468,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double x4 = Math.round(event.values[0] * 10000.0) / 10000.0;
 				txt += getString(R.string.distancia) + " ("
 						+ getString(R.string.unidad_proximidad) + ")\n";
-				txt += "\n d: " + x4;
+				txt += "\n d <= " + x4;
 				proximidad.setText(txt);
 				// Si detecta 0 lo represento
 				if (event.values[0] == 0) {

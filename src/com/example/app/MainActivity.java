@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
 	// Declaramos los botones, los hacemos globales para ser usados mas adelante
@@ -111,7 +110,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 
-		Resources resource = getResources();
+		/*Resources resource = getResources();
 		Configuration config = resource.getConfiguration();
 		sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
 		if ("fr".equalsIgnoreCase(sharedPreference.getString("language", null))) {
@@ -122,7 +121,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		} else {
 			config.locale = Locale.getDefault();
 		}
-		getBaseContext().getResources().updateConfiguration(config, null);
+		getBaseContext().getResources().updateConfiguration(config, null);*/
 
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());

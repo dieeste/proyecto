@@ -37,6 +37,7 @@ public class Setting extends PreferenceActivity implements
 		Resources resource = getResources();
 		Configuration config = resource.getConfiguration();
 		Locale spanish = new Locale("es", "ES");
+		Locale portuguese = new Locale("pt", "PT");
 		int pos = Integer.parseInt((String) newValue);
 		if (pos == 1) {
 			sharedPreference.edit().putString("language", "en").commit();
@@ -50,6 +51,10 @@ public class Setting extends PreferenceActivity implements
 			sharedPreference.edit().putString("language", "es").commit();
 			config.locale = spanish;
 			listPreference.setValue("3");
+		} else if (pos == 4) {
+			sharedPreference.edit().putString("language", "pt").commit();
+			config.locale = portuguese;
+			listPreference.setValue("4");
 		} else {
 			sharedPreference.edit().putString("language", "auto").commit();
 			config.locale = Locale.getDefault();
