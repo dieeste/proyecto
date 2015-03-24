@@ -127,13 +127,13 @@ public class MainActivity extends Activity implements OnClickListener {
 				.getDefaultSharedPreferences(getBaseContext());
 		String type = pref.getString("frecuencia", "lento");
 		if (type.equals("lento")) {
-			tipo = 200000;
+			tipo = SensorManager.SENSOR_DELAY_NORMAL;
 		} else if (type.equals("normal")) {
-			tipo = 120000;
+			tipo = SensorManager.SENSOR_DELAY_UI;
 		} else if (type.equals("rapido")) {
-			tipo = 75000;
+			tipo = SensorManager.SENSOR_DELAY_GAME;
 		} else if (type.equals("muyrapido")) {
-			tipo = 60000;
+			tipo = SensorManager.SENSOR_DELAY_FASTEST;
 		}
 		String ti = pref.getString("temporizador", "0");
 		if (ti == "") {
