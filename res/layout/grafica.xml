@@ -48,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/botonamarillo"
-            android:enabled="false"
             android:text="@string/parar"
             android:textStyle="bold" />
 
