@@ -97,7 +97,7 @@ public class Grafica extends Activity implements OnClickListener,
 	int tiempoInicio;
 	int tiempoParada;
 	// sensor que estamos representando que nos viene de la actividad anterior
-	static int sensor;
+	int sensor;
 	// detectamos que sensores están marcados para guardas sus datos
 	boolean acce;
 	boolean giro;
@@ -125,17 +125,18 @@ public class Grafica extends Activity implements OnClickListener,
 	XYMultipleSeriesDataset sensorData;
 	XYMultipleSeriesRenderer mRenderer;
 	XYSeries series[];
-
+	XYSeriesRenderer valoresX = new XYSeriesRenderer();
+	XYSeriesRenderer valoresY = new XYSeriesRenderer();
+	XYSeriesRenderer valoresZ = new XYSeriesRenderer();
+	XYSeriesRenderer modulo = new XYSeriesRenderer();
+	
 	public static int SAMPLERATE;
 
 	private int lastMinX = 0;
 
 	int xTick = 0;
-	// Hacemos una cola FIFO con listas enlazadas
-	ConcurrentLinkedQueue<float[]> datosSensor = new ConcurrentLinkedQueue<float[]>();
 
 	// Aquí guardamos los valores de x,y,z en un array que luego irán el la cola
-	float[] xyz = new float[3];
 	double[] tie = new double[1];
 
 	private Thread ticker;
@@ -255,8 +256,7 @@ public class Grafica extends Activity implements OnClickListener,
 		mRenderer.setGridColor(Color.DKGRAY);
 		mRenderer.setShowGrid(true);
 		mRenderer.setXAxisMin(0.0);
-		// mRenderer.setXTitle(getString(R.string.samplerate, 1000 /
-		// SAMPLERATE));
+		mRenderer.setXTitle("t (s)");
 		mRenderer.setXAxisMax(5); // 10 seconds wide
 		mRenderer.setXLabels(5); // 1 second per DIV
 		mRenderer.setChartTitle(" ");
@@ -415,8 +415,10 @@ public class Grafica extends Activity implements OnClickListener,
 			double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x, 2)
 					+ Math.pow(y, 2) + Math.pow(z, 2))));
 			double timestamp = System.currentTimeMillis();
-			AccelData data = new AccelData(timestamp, x, y, z, modulo);
-			sensorDatas.add(data);
+			if (acce == true) {
+				AccelData data = new AccelData(timestamp, x, y, z, modulo);
+				sensorDatas.add(data);
+			}
 			if (sensor == Sensor.TYPE_ACCELEROMETER) {
 				ejex.setVisibility(CheckBox.VISIBLE);
 				ejey.setVisibility(CheckBox.VISIBLE);
@@ -424,6 +426,7 @@ public class Grafica extends Activity implements OnClickListener,
 				moduloc.setVisibility(CheckBox.VISIBLE);
 				nombresensor = getString(R.string.acelerometro);
 				setTitle(nombresensor);
+				mRenderer.setYTitle(getString(R.string.unidad_acelerometro));
 				if (acce == true) {
 					graba.setText("REC");
 					graba.setVisibility(TextView.VISIBLE);
@@ -441,7 +444,7 @@ public class Grafica extends Activity implements OnClickListener,
 					layout.addView(chartView);
 					double ti = System.currentTimeMillis();
 					tie[0] = ti;
-					Log.d("timemp", "incial: "+tie[0]);
+					Log.d("timemp", "incial: " + tie[0]);
 				}
 				double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
 
@@ -451,11 +454,10 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 				fitYAxis(event);
 
-				for (int i = 0; i < series.length; i++) {
-					if (series[i] != null) {
-						series[i].add(tiempo, event.values[i]);
-					}
-				}
+				series[0].add(tiempo, x);
+				series[1].add(tiempo, y);
+				series[2].add(tiempo, z);
+				series[3].add(tiempo, modulo);
 			}
 			break;
 		case Sensor.TYPE_GYROSCOPE:
@@ -474,6 +476,7 @@ public class Grafica extends Activity implements OnClickListener,
 				moduloc.setVisibility(CheckBox.VISIBLE);
 				nombresensor = getString(R.string.giroscopio);
 				setTitle(nombresensor);
+				mRenderer.setYTitle(getString(R.string.unidad_giroscopio));
 				if (giro == true) {
 					graba.setText("REC");
 					graba.setVisibility(TextView.VISIBLE);
@@ -498,61 +501,13 @@ public class Grafica extends Activity implements OnClickListener,
 					mRenderer.setXAxisMax(tiempo);
 					mRenderer.setXAxisMin(tiempo - 5);
 				}
+				
 				fitYAxis(event);
 
-				for (int i = 0; i < series.length; i++) {
-					if (series[i] != null) {
-						series[i].add(tiempo, event.values[i]);
-					}
-				}
-			}
-			break;
-		case Sensor.TYPE_LIGHT:
-			double x3 = event.values[0];
-			double timestamp3 = System.currentTimeMillis();
-
-			AccelData2 data3 = new AccelData2(timestamp3, x3);
-			sensorLuz.add(data3);
-			if (sensor == Sensor.TYPE_LIGHT) {
-				ejex.setText("E");
-				ejex.setVisibility(CheckBox.VISIBLE);
-				ejey.setVisibility(CheckBox.GONE);
-				ejez.setVisibility(CheckBox.GONE);
-				moduloc.setVisibility(CheckBox.GONE);
-				nombresensor = getString(R.string.luminosidad);
-				setTitle(nombresensor);
-				if (luz == true) {
-					graba.setText("REC");
-					graba.setVisibility(TextView.VISIBLE);
-					graba2.setVisibility(TextView.INVISIBLE);
-				} else {
-					graba2.setText("REC");
-					graba2.setVisibility(TextView.VISIBLE);
-					graba.setVisibility(TextView.INVISIBLE);
-				}
-				if (xTick == 0) {
-					// Dirty, but we only learn a few things after getting the
-					// first
-					// event.
-					configure(event);
-					layout.addView(chartView);
-					double ti = System.currentTimeMillis();
-					tie[0] = ti;
-				}
-				double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
-
-				if (tiempo > mRenderer.getXAxisMax()) {
-					mRenderer.setXAxisMax(tiempo);
-					mRenderer.setXAxisMin(tiempo - 5);
-					// Log.d("syn", "ontixk2");
-				}
-				fitYAxis(event);
-
-				for (int i = 0; i < series.length; i++) {
-					if (series[i] != null) {
-						series[i].add(tiempo, event.values[i]);
-					}
-				}
+				series[0].add(tiempo, x2);
+				series[1].add(tiempo, y2);
+				series[2].add(tiempo, z2);
+				series[3].add(tiempo, modulo2);
 			}
 			break;
 		case Sensor.TYPE_MAGNETIC_FIELD:
@@ -572,6 +527,7 @@ public class Grafica extends Activity implements OnClickListener,
 				moduloc.setVisibility(CheckBox.VISIBLE);
 				nombresensor = getString(R.string.magnetico);
 				setTitle(nombresensor);
+				mRenderer.setYTitle(getString(R.string.unidad_campo_magnetico));
 				if (magne == true) {
 					graba.setText("REC");
 					graba.setVisibility(TextView.VISIBLE);
@@ -599,11 +555,55 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 				fitYAxis(event);
 
-				for (int i = 0; i < series.length; i++) {
-					if (series[i] != null) {
-						series[i].add(tiempo, event.values[i]);
-					}
+				series[0].add(tiempo, x4);
+				series[1].add(tiempo, y4);
+				series[2].add(tiempo, z4);
+				series[3].add(tiempo, modulo4);
+			}
+			break;
+		case Sensor.TYPE_LIGHT:
+			double x3 = event.values[0];
+			double timestamp3 = System.currentTimeMillis();
+
+			AccelData2 data3 = new AccelData2(timestamp3, x3);
+			sensorLuz.add(data3);
+			if (sensor == Sensor.TYPE_LIGHT) {
+				ejex.setText("E");
+				ejex.setVisibility(CheckBox.VISIBLE);
+				ejey.setVisibility(CheckBox.GONE);
+				ejez.setVisibility(CheckBox.GONE);
+				moduloc.setVisibility(CheckBox.GONE);
+				nombresensor = getString(R.string.luminosidad);
+				setTitle(nombresensor);
+				mRenderer.setYTitle(getString(R.string.unidad_luz));
+				if (luz == true) {
+					graba.setText("REC");
+					graba.setVisibility(TextView.VISIBLE);
+					graba2.setVisibility(TextView.INVISIBLE);
+				} else {
+					graba2.setText("REC");
+					graba2.setVisibility(TextView.VISIBLE);
+					graba.setVisibility(TextView.INVISIBLE);
 				}
+				if (xTick == 0) {
+					// Dirty, but we only learn a few things after getting the
+					// first
+					// event.
+					configure2(event);
+					layout.addView(chartView);
+					double ti = System.currentTimeMillis();
+					tie[0] = ti;
+				}
+				double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+
+				if (tiempo > mRenderer.getXAxisMax()) {
+					mRenderer.setXAxisMax(tiempo);
+					mRenderer.setXAxisMin(tiempo - 5);
+					// Log.d("syn", "ontixk2");
+				}
+				fitYAxis(event);
+
+				series[0].add(tiempo, x3);
 			}
 			break;
 		case Sensor.TYPE_PROXIMITY:
@@ -620,6 +620,7 @@ public class Grafica extends Activity implements OnClickListener,
 				moduloc.setVisibility(CheckBox.GONE);
 				nombresensor = getString(R.string.proximidad);
 				setTitle(nombresensor);
+				mRenderer.setYTitle(getString(R.string.unidad_proximidad));
 				if (proxi == true) {
 					graba.setText("REC");
 					graba.setVisibility(TextView.VISIBLE);
@@ -630,10 +631,7 @@ public class Grafica extends Activity implements OnClickListener,
 					graba.setVisibility(TextView.INVISIBLE);
 				}
 				if (xTick == 0) {
-					// Dirty, but we only learn a few things after getting the
-					// first
-					// event.
-					configure(event);
+					configure2(event);
 					layout.addView(chartView);
 					double ti = System.currentTimeMillis();
 					tie[0] = ti;
@@ -643,15 +641,11 @@ public class Grafica extends Activity implements OnClickListener,
 				if (tiempo > mRenderer.getXAxisMax()) {
 					mRenderer.setXAxisMax(tiempo);
 					mRenderer.setXAxisMin(tiempo - 5);
-					// Log.d("syn", "ontixk2");
 				}
+				
 				fitYAxis(event);
 
-				for (int i = 0; i < series.length; i++) {
-					if (series[i] != null) {
-						series[i].add(tiempo, event.values[i]);
-					}
-				}
+				series[0].add(tiempo, x5);
 			}
 			break;
 		}
@@ -676,10 +670,11 @@ public class Grafica extends Activity implements OnClickListener,
 	private void fitYAxis(SensorEvent event) {
 		// Log.d("syn", "fitaxis");
 		double min = mRenderer.getYAxisMin(), max = mRenderer.getYAxisMax();
-		for (int i = 0; i < series.length; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (event.values[i] < min) {
 				min = event.values[i];
 			}
+
 			if (event.values[i] > max) {
 				max = event.values[i];
 			}
@@ -703,50 +698,66 @@ public class Grafica extends Activity implements OnClickListener,
 
 	private void configure(SensorEvent event) {
 		// Log.d("syn", "config");
-		String[] channelNames = new String[event.values.length];
-		series = new XYSeries[event.values.length];
-		for (int i = 0; i < channelNames.length; i++) {
-			channelNames[i] = "canal" + i;
-		}
+		String[] channelNames = new String[4];
+		series = new XYSeries[4];
 
 		switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
 			channelNames[0] = "X";
 			channelNames[1] = "Y";
 			channelNames[2] = "Z";
-			mRenderer.setYTitle(getString(R.string.unidad_acelerometro));
+			channelNames[3] = "Modulo";
 			break;
 		case Sensor.TYPE_GYROSCOPE:
 			channelNames[0] = "X";
 			channelNames[1] = "Y";
 			channelNames[2] = "Z";
-			mRenderer.setYTitle(getString(R.string.unidad_giroscopio));
+			channelNames[3] = "Modulo";
 			break;
 		case Sensor.TYPE_MAGNETIC_FIELD:
 			channelNames[0] = "X";
 			channelNames[1] = "Y";
 			channelNames[2] = "Z";
-			mRenderer.setYTitle(getString(R.string.unidad_campo_magnetico));
-			break;
-		case Sensor.TYPE_LIGHT:
-			channelNames[0] = "X";
-			mRenderer.setYTitle(getString(R.string.unidad_luz));
-			break;
-		case Sensor.TYPE_PROXIMITY:
-			channelNames[0] = "X";
-			mRenderer.setYTitle(getString(R.string.unidad_proximidad));
+			channelNames[3] = "Modulo";
 			break;
 		}
 
-		int[] colors = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN,
-				Color.MAGENTA, Color.CYAN };
-		for (int i = 0; i < series.length; i++) {
+		/*int[] colors = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN,
+				Color.MAGENTA, Color.CYAN };*/
+		for (int i = 0; i < 4; i++) {
 			series[i] = new XYSeries(channelNames[i]);
 			sensorData.addSeries(series[i]);
-			XYSeriesRenderer r = new XYSeriesRenderer();
-			r.setColor(colors[i % colors.length]);
-			mRenderer.addSeriesRenderer(r);
+		}
+		valoresX.setColor(Color.RED);
+		mRenderer.addSeriesRenderer(valoresX);
+		valoresY.setColor(Color.GREEN);
+		mRenderer.addSeriesRenderer(valoresY);
+		valoresZ.setColor(Color.WHITE);
+		mRenderer.addSeriesRenderer(valoresZ);
+		modulo.setColor(Color.MAGENTA);
+		mRenderer.addSeriesRenderer(modulo);
+	}
 
+	private void configure2(SensorEvent event) {
+		// Log.d("syn", "config");
+		String[] channelNames = new String[1];
+		series = new XYSeries[1];
+
+		switch (event.sensor.getType()) {
+		case Sensor.TYPE_LIGHT:
+			channelNames[0] = "X";
+			break;
+		case Sensor.TYPE_PROXIMITY:
+			channelNames[0] = "X";
+			break;
+		}
+
+		for (int i = 0; i < 1; i++) {
+			series[0] = new XYSeries(channelNames[0]);
+			sensorData.addSeries(series[0]);
+
+			valoresX.setColor(Color.RED);
+			mRenderer.addSeriesRenderer(valoresX);
 		}
 	}
 
@@ -1307,7 +1318,7 @@ public class Grafica extends Activity implements OnClickListener,
 					series[i].clear();
 				}
 			}
-			
+
 			lupa.setVisibility(ImageButton.INVISIBLE);
 			iniciar.setVisibility(Button.VISIBLE);
 			iniciar.setEnabled(true);
@@ -1364,7 +1375,7 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		if (sensorDatas.size() > 0) {
+		/*if (sensorDatas.size() > 0) {
 			MenuItem item = menu.findItem(R.id.acele);
 			item.setVisible(true);
 		} else {
@@ -1416,7 +1427,7 @@ public class Grafica extends Activity implements OnClickListener,
 		} else {
 			MenuItem item = menu.findItem(R.id.enviar);
 			item.setEnabled(true);
-		}
+		}*/
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -1463,7 +1474,47 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		// TODO Auto-generated method stub
-
+		switch (buttonView.getId()) {
+		case R.id.ejex:
+			checkx = isChecked;
+			if (checkx == true) {
+				valoresX.setColor(Color.RED);
+				mRenderer.addSeriesRenderer(valoresX);
+			} else {
+				valoresX.setColor(0);
+				mRenderer.addSeriesRenderer(valoresX);
+			}
+			break;
+		case R.id.ejey:
+			checky = isChecked;
+			if (checky == true) {
+				valoresY.setColor(Color.GREEN);
+				mRenderer.addSeriesRenderer(valoresY);
+			} else {
+				valoresY.setColor(0);
+				mRenderer.addSeriesRenderer(valoresY);
+			}
+			break;
+		case R.id.ejez:
+			checkz = isChecked;
+			if (checkz == true) {
+				valoresZ.setColor(Color.WHITE);
+				mRenderer.addSeriesRenderer(valoresZ);
+			} else {
+				valoresZ.setColor(0);
+				mRenderer.addSeriesRenderer(valoresZ);
+			}
+			break;
+		case R.id.modulo:
+			checkmodulo = isChecked;
+			if (checkmodulo == true) {
+				modulo.setColor(Color.MAGENTA);
+				mRenderer.addSeriesRenderer(modulo);
+			} else {
+				modulo.setColor(0);
+				mRenderer.addSeriesRenderer(modulo);
+			}
+			break;
+		}
 	}
-
 }

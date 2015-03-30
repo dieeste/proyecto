@@ -34,7 +34,6 @@ class Ticker extends Thread implements SensorEventListener {
 	 */
 	private int SLEEPTIME = Grafica.SAMPLERATE;
 
-	private int tipoSensor = Grafica.sensor;
 
 	/**
 	 * Create a new <code>Ticker</code> and start ticking the
@@ -64,6 +63,7 @@ class Ticker extends Thread implements SensorEventListener {
 		switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
 			worker.currentEvent = event;
+			if(activity.acce)
 			break;
 		case Sensor.TYPE_GYROSCOPE:
 			worker.giroscopioEvent = event;
@@ -98,25 +98,25 @@ class Ticker extends Thread implements SensorEventListener {
 			}
 		} else {
 			// We are the worker -> update the UI
-			if (tipoSensor == Sensor.TYPE_ACCELEROMETER) {
+			if (activity.sensor == Sensor.TYPE_ACCELEROMETER) {
 				if (currentEvent != null) {
 					// Log.d("syn", "else tocker");
 					activity.onTick(currentEvent);
 				}
-			} else if (tipoSensor == Sensor.TYPE_GYROSCOPE) {
+			} else if (activity.sensor == Sensor.TYPE_GYROSCOPE) {
 				if (giroscopioEvent != null) {
 					activity.onTick(giroscopioEvent);
 				}
-			} else if (tipoSensor == Sensor.TYPE_MAGNETIC_FIELD) {
+			} else if (activity.sensor == Sensor.TYPE_MAGNETIC_FIELD) {
 				if (magnetometroEvent != null) {
 					// Log.d("syn", "else tocker");
 					activity.onTick(magnetometroEvent);
 				}
-			} else if (tipoSensor == Sensor.TYPE_LIGHT) {
+			} else if (activity.sensor == Sensor.TYPE_LIGHT) {
 				if (luzEvent != null) {
 					activity.onTick(luzEvent);
 				}
-			} else if (tipoSensor == Sensor.TYPE_PROXIMITY) {
+			} else if (activity.sensor == Sensor.TYPE_PROXIMITY) {
 				if (proximidadEvent != null) {
 					// Log.d("syn", "else tocker");
 					activity.onTick(proximidadEvent);
