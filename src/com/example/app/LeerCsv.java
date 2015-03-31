@@ -20,6 +20,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.csvreader.CsvReader;
 
@@ -144,8 +145,8 @@ public class LeerCsv extends Activity implements OnClickListener,
 			while (fichero.readRecord()) {
 				numerolineas = fichero.getColumnCount();
 				if (numerolineas == 5) {
-					double tiempo = Double.parseDouble(fichero.get("t (s)").replace(",",
-							"."));
+					double tiempo = Double.parseDouble(fichero.get("t (s)")
+							.replace(",", "."));
 					double x = Double.parseDouble(fichero.get("X").replace(",",
 							"."));
 					double y = Double.parseDouble(fichero.get("Y").replace(",",
@@ -158,8 +159,8 @@ public class LeerCsv extends Activity implements OnClickListener,
 					AccelData data = new AccelData(tiempo, x, y, z, modulo);
 					datos.add(data);
 				} else if (numerolineas == 2) {
-					double tiempo = Double.parseDouble(fichero.get("t (s)").replace(",",
-							"."));
+					double tiempo = Double.parseDouble(fichero.get("t (s)")
+							.replace(",", "."));
 					double x = Double.parseDouble(fichero.get("X").replace(",",
 							"."));
 					unidad = fichero.getHeader(2);
@@ -215,6 +216,11 @@ public class LeerCsv extends Activity implements OnClickListener,
 					setTitle(nombresensor);
 				}
 				iniciar2();
+			} else if (numerolineas == 3) {
+				Toast.makeText(this,
+						"No se puede representar este tipo de archivos",
+						Toast.LENGTH_SHORT).show();
+				finish();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

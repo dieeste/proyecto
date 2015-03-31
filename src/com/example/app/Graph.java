@@ -283,6 +283,7 @@ public class Graph extends Grafica {
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.YELLOW);
+		renderer.setXAxisMax(10);
 	}
 
 	public void setProperties2(boolean ex, String titulografica,
@@ -372,6 +373,7 @@ public class Graph extends Grafica {
 		renderer.setYLabelsAlign(Paint.Align.RIGHT);
 		renderer.setAxesColor(Color.WHITE);
 		renderer.setLabelsColor(Color.YELLOW);
+		renderer.setXAxisMax(10);
 	}
 
 	// función donde recogemos los datos cargados de los ficheros para los

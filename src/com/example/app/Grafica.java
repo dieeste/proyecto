@@ -3,6 +3,7 @@ package com.example.app;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.ChartFactory;
@@ -23,8 +24,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -56,12 +59,18 @@ public class Grafica extends Activity implements OnClickListener,
 
 	// Declaración de las colas que usamos para recoger los datos de todos los
 	// sensores
-	private ConcurrentLinkedQueue<AccelData> sensorDatas;
-	private ConcurrentLinkedQueue<AccelData> sensorGiroscopio;
-	private ConcurrentLinkedQueue<AccelData> sensorMagnetico;
-	private ConcurrentLinkedQueue<AccelData2> sensorLuz;
-	private ConcurrentLinkedQueue<AccelData2> sensorProximidad;
+	public ConcurrentLinkedQueue<AccelData> sensorDatas;
+	public ConcurrentLinkedQueue<AccelData> sensorGiroscopio;
+	public ConcurrentLinkedQueue<AccelData> sensorMagnetico;
+	public ConcurrentLinkedQueue<AccelData2> sensorLuz;
+	public ConcurrentLinkedQueue<AccelData2> sensorProximidad;
 	private ConcurrentLinkedQueue<GpsDatos> gpsdatos;
+
+	Sensor giroscope;
+	Sensor aceleromete;
+	Sensor magnetometro;
+	Sensor luces;
+	Sensor proximo;
 
 	// Declaración del layout donde irá la gráfica
 	LinearLayout layout;
@@ -80,6 +89,7 @@ public class Grafica extends Activity implements OnClickListener,
 	// los cuatro checkbox que usamos para ver o quitar los datos de la x, y, z
 	// y módulo
 	boolean parado;
+	boolean cambio = false;
 	// Declaramos los checkbox
 	CheckBox ejex;
 	CheckBox ejey;
@@ -89,7 +99,6 @@ public class Grafica extends Activity implements OnClickListener,
 	boolean checky = true;
 	boolean checkz = true;
 	boolean checkmodulo = true;
-	public boolean vercargar = false;
 	// Declaramos los temporizadores tanto para empezar a tomar datos como para
 	// detener la toma de medidas, la frecuencia de recogida
 	CountDownTimer temporizador, tiempo;
@@ -119,6 +128,7 @@ public class Grafica extends Activity implements OnClickListener,
 	LocationManager milocManager;
 	LocationListener milocListener;
 	String nombresensor = "";
+	String hora;
 
 	// Funciones de la librería
 	private GraphicalView chartView;
@@ -129,10 +139,8 @@ public class Grafica extends Activity implements OnClickListener,
 	XYSeriesRenderer valoresY = new XYSeriesRenderer();
 	XYSeriesRenderer valoresZ = new XYSeriesRenderer();
 	XYSeriesRenderer modulo = new XYSeriesRenderer();
-	
-	public static int SAMPLERATE;
 
-	private int lastMinX = 0;
+	public static int SAMPLERATE;
 
 	int xTick = 0;
 
@@ -178,6 +186,13 @@ public class Grafica extends Activity implements OnClickListener,
 		reiniciar.setOnClickListener(this);
 		continuar.setOnClickListener(this);
 		lupa.setOnClickListener(this);
+
+		giroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+		magnetometro = sensorManager
+				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+		luces = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+		proximo = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+		aceleromete = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
 		graba = (TextView) findViewById(R.id.grabando);
 		graba2 = (TextView) findViewById(R.id.grabando2);
@@ -236,12 +251,11 @@ public class Grafica extends Activity implements OnClickListener,
 		moduloc.setOnCheckedChangeListener(this);
 
 		// declaramos el gps y sus escuchas
-		// milocManager = (LocationManager)
-		// getSystemService(Context.LOCATION_SERVICE);
-		// milocListener = new MiLocationListener();
-		// milocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-		// 0,
-		// milocListener);
+		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		milocListener = new MiLocationListener();
+		milocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				milocListener);
+
 		if (latitud == 0 && longitud == 0) {
 			gps.setText(getResources().getString(R.string.gpsbuscando));
 		}
@@ -260,21 +274,19 @@ public class Grafica extends Activity implements OnClickListener,
 		mRenderer.setXAxisMax(5); // 10 seconds wide
 		mRenderer.setXLabels(5); // 1 second per DIV
 		mRenderer.setChartTitle(" ");
+		mRenderer.setAxesColor(Color.WHITE);
+		mRenderer.setLabelsColor(Color.YELLOW);
 		mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
 		chartView = ChartFactory.getLineChartView(this, sensorData, mRenderer);
-		float textSize = new TextView(this).getTextSize();
-		float upscale = textSize / mRenderer.getLegendTextSize();
-		mRenderer.setLabelsTextSize(textSize);
-		mRenderer.setLegendTextSize(textSize);
-		mRenderer.setChartTitleTextSize(textSize);
-		mRenderer.setAxisTitleTextSize(textSize);
-		mRenderer.setFitLegend(true);
-		int[] margins = mRenderer.getMargins();
-		margins[0] *= upscale;
-		margins[1] *= upscale;
-		margins[2] = (int) (2 * mRenderer.getLegendTextSize());
-		mRenderer.setMargins(margins);
 
+		// añade las propiedades de la grafica
+		// double[] limites = { 0, maxejex + 5, ejeymin - 200, ejeymax + 200
+		// };// limites
+		// utilizamos diferentes márgenes para las diferentes pantallas
+		int[] margenes = { 70, 80, 70, 60 };
+		int[] margenesnormal = { 50, 100, 70, 40 };
+		int[] margenespeque = { 30, 40, 30, 20 };
+		int[] margenesextra = { 70, 80, 70, 60 };
 		float scale = getApplicationContext().getResources()
 				.getDisplayMetrics().density;
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -289,33 +301,123 @@ public class Grafica extends Activity implements OnClickListener,
 			scaleDensity = scale * 640;
 			pixelBoton = dips * (scaleDensity / 640);
 			calidad = "xxxhigh";
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
+			mRenderer.setMargins(margenesextra);
+			mRenderer.setLabelsTextSize(40);
+			mRenderer.setAxisTitleTextSize(40);
+			mRenderer.setChartTitleTextSize(40);
+			mRenderer.setLegendTextSize(40);
+			mRenderer.setShowLegend(false);
 			break;
 		case DisplayMetrics.DENSITY_XXHIGH:
 			scaleDensity = scale * 480;
 			pixelBoton = dips * (scaleDensity / 480);
 			calidad = "xxhigh";
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
+			mRenderer.setMargins(margenesextra);
+			mRenderer.setLabelsTextSize(40);
+			mRenderer.setAxisTitleTextSize(40);
+			mRenderer.setChartTitleTextSize(40);
+			mRenderer.setLegendTextSize(40);
+			mRenderer.setShowLegend(false);
 			break;
 		case DisplayMetrics.DENSITY_XHIGH:
 			scaleDensity = scale * 320;
 			pixelBoton = dips * (scaleDensity / 320);
 			calidad = "xhigh";
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
+			mRenderer.setMargins(margenes);
+			mRenderer.setLabelsTextSize(25);
+			mRenderer.setAxisTitleTextSize(25);
+			mRenderer.setChartTitleTextSize(25);
+			mRenderer.setLegendTextSize(25);
+			mRenderer.setShowLegend(false);
 			break;
 		case DisplayMetrics.DENSITY_HIGH: // HDPI
 			scaleDensity = scale * 240;
 			pixelBoton = dips * (scaleDensity / 240);
 			calidad = "alta";
+			valoresX.setLineWidth(3);
+			valoresY.setLineWidth(3);
+			valoresZ.setLineWidth(3);
+			modulo.setLineWidth(3);
+			mRenderer.setMargins(margenesnormal);
+			mRenderer.setLabelsTextSize(20);
+			mRenderer.setAxisTitleTextSize(20);
+			mRenderer.setChartTitleTextSize(15);
+			mRenderer.setShowLegend(false);
 			break;
 		case DisplayMetrics.DENSITY_MEDIUM: // MDPI
 			scaleDensity = scale * 160;
 			pixelBoton = dips * (scaleDensity / 160);
 			calidad = "media";
+			valoresX.setLineWidth(2);
+			valoresY.setLineWidth(2);
+			valoresZ.setLineWidth(2);
+			modulo.setLineWidth(2);
+			mRenderer.setMargins(margenespeque);
+			mRenderer.setLabelsTextSize(20);
+			mRenderer.setAxisTitleTextSize(20);
+			mRenderer.setChartTitleTextSize(15);
+			mRenderer.setShowLegend(false);
 			break;
 
 		case DisplayMetrics.DENSITY_LOW: // LDPI
 			scaleDensity = scale * 120;
 			pixelBoton = dips * (scaleDensity / 120);
 			calidad = "baja";
+			valoresX.setLineWidth(2);
+			valoresY.setLineWidth(2);
+			valoresZ.setLineWidth(2);
+			modulo.setLineWidth(2);
+			mRenderer.setMargins(margenespeque);
+			mRenderer.setLabelsTextSize(15);
+			mRenderer.setAxisTitleTextSize(15);
+			mRenderer.setChartTitleTextSize(15);
+			mRenderer.setLegendTextSize(15);
+			mRenderer.setShowLegend(false);
 			break;
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		milocManager.removeUpdates(milocListener);
+	}
+
+	public class MiLocationListener implements LocationListener {
+		public void onLocationChanged(Location loc) {
+			gps.setText(getResources().getString(R.string.gpssignal));
+
+			latitud = loc.getLatitude();
+			longitud = loc.getLongitude();
+			/*
+			 * double timestampgps = System.currentTimeMillis(); GpsDatos datos
+			 * = new GpsDatos(timestampgps, latitud, longitud);
+			 * gpsdatos.add(datos);
+			 */
+		}
+
+		public void onProviderDisabled(String provider) {
+			gps.setText(getResources().getString(R.string.gpsoff));
+		}
+
+		public void onProviderEnabled(String provider) {
+			gps.setText(getResources().getString(R.string.gpsbuscando));
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 	}
 
@@ -406,257 +508,263 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	protected void onTick(SensorEvent event) {
-
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-			double x = event.values[0];
-			double y = event.values[1];
-			double z = event.values[2];
-			double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x, 2)
-					+ Math.pow(y, 2) + Math.pow(z, 2))));
-			double timestamp = System.currentTimeMillis();
-			if (acce == true) {
-				AccelData data = new AccelData(timestamp, x, y, z, modulo);
-				sensorDatas.add(data);
-			}
-			if (sensor == Sensor.TYPE_ACCELEROMETER) {
-				ejex.setVisibility(CheckBox.VISIBLE);
-				ejey.setVisibility(CheckBox.VISIBLE);
-				ejez.setVisibility(CheckBox.VISIBLE);
-				moduloc.setVisibility(CheckBox.VISIBLE);
-				nombresensor = getString(R.string.acelerometro);
-				setTitle(nombresensor);
-				mRenderer.setYTitle(getString(R.string.unidad_acelerometro));
-				if (acce == true) {
-					graba.setText("REC");
-					graba.setVisibility(TextView.VISIBLE);
-					graba2.setVisibility(TextView.INVISIBLE);
-				} else {
-					graba2.setText("REC");
-					graba2.setVisibility(TextView.VISIBLE);
-					graba.setVisibility(TextView.INVISIBLE);
-				}
-				if (xTick == 0) {
-					// Dirty, but we only learn a few things after getting the
-					// first
-					// event.
-					configure(event);
-					layout.addView(chartView);
-					double ti = System.currentTimeMillis();
-					tie[0] = ti;
-					Log.d("timemp", "incial: " + tie[0]);
-				}
-				double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
-
-				if (tiempo > mRenderer.getXAxisMax()) {
-					mRenderer.setXAxisMax(tiempo);
-					mRenderer.setXAxisMin(tiempo - 5);
-				}
-				fitYAxis(event);
-
-				series[0].add(tiempo, x);
-				series[1].add(tiempo, y);
-				series[2].add(tiempo, z);
-				series[3].add(tiempo, modulo);
-			}
-			break;
-		case Sensor.TYPE_GYROSCOPE:
-			double x2 = event.values[0];
-			double y2 = event.values[1];
-			double z2 = event.values[2];
-			double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x2, 2)
-					+ Math.pow(y2, 2) + Math.pow(z2, 2))));
-			double timestamp2 = System.currentTimeMillis();
-			AccelData data2 = new AccelData(timestamp2, x2, y2, z2, modulo2);
-			sensorGiroscopio.add(data2);
-			if (sensor == Sensor.TYPE_GYROSCOPE) {
-				ejex.setVisibility(CheckBox.VISIBLE);
-				ejey.setVisibility(CheckBox.VISIBLE);
-				ejez.setVisibility(CheckBox.VISIBLE);
-				moduloc.setVisibility(CheckBox.VISIBLE);
-				nombresensor = getString(R.string.giroscopio);
-				setTitle(nombresensor);
-				mRenderer.setYTitle(getString(R.string.unidad_giroscopio));
-				if (giro == true) {
-					graba.setText("REC");
-					graba.setVisibility(TextView.VISIBLE);
-					graba2.setVisibility(TextView.INVISIBLE);
-				} else {
-					graba2.setText("REC");
-					graba2.setVisibility(TextView.VISIBLE);
-					graba.setVisibility(TextView.INVISIBLE);
-				}
-				if (xTick == 0) {
-					// Dirty, but we only learn a few things after getting the
-					// first
-					// event.
-					configure(event);
-					layout.addView(chartView);
-					double ti = System.currentTimeMillis();
-					tie[0] = ti;
-				}
-				double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
-
-				if (tiempo > mRenderer.getXAxisMax()) {
-					mRenderer.setXAxisMax(tiempo);
-					mRenderer.setXAxisMin(tiempo - 5);
-				}
-				
-				fitYAxis(event);
-
-				series[0].add(tiempo, x2);
-				series[1].add(tiempo, y2);
-				series[2].add(tiempo, z2);
-				series[3].add(tiempo, modulo2);
-			}
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			double x4 = event.values[0];
-			double y4 = event.values[1];
-			double z4 = event.values[2];
-			double modulo4 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x4, 2)
-					+ Math.pow(y4, 2) + Math.pow(z4, 2))));
-			double timestamp4 = System.currentTimeMillis();
-
-			AccelData data4 = new AccelData(timestamp4, x4, y4, z4, modulo4);
-			sensorMagnetico.add(data4);
-			if (sensor == Sensor.TYPE_MAGNETIC_FIELD) {
-				ejex.setVisibility(CheckBox.VISIBLE);
-				ejey.setVisibility(CheckBox.VISIBLE);
-				ejez.setVisibility(CheckBox.VISIBLE);
-				moduloc.setVisibility(CheckBox.VISIBLE);
-				nombresensor = getString(R.string.magnetico);
-				setTitle(nombresensor);
-				mRenderer.setYTitle(getString(R.string.unidad_campo_magnetico));
-				if (magne == true) {
-					graba.setText("REC");
-					graba.setVisibility(TextView.VISIBLE);
-					graba2.setVisibility(TextView.INVISIBLE);
-				} else {
-					graba2.setText("REC");
-					graba2.setVisibility(TextView.VISIBLE);
-					graba.setVisibility(TextView.INVISIBLE);
-				}
-				if (xTick == 0) {
-					// Dirty, but we only learn a few things after getting the
-					// first
-					// event.
-					configure(event);
-					layout.addView(chartView);
-					double ti = System.currentTimeMillis();
-					tie[0] = ti;
-				}
-				double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
-
-				if (tiempo > mRenderer.getXAxisMax()) {
-					mRenderer.setXAxisMax(tiempo);
-					mRenderer.setXAxisMin(tiempo - 5);
-					// Log.d("syn", "ontixk2");
-				}
-				fitYAxis(event);
-
-				series[0].add(tiempo, x4);
-				series[1].add(tiempo, y4);
-				series[2].add(tiempo, z4);
-				series[3].add(tiempo, modulo4);
-			}
-			break;
-		case Sensor.TYPE_LIGHT:
-			double x3 = event.values[0];
-			double timestamp3 = System.currentTimeMillis();
-
-			AccelData2 data3 = new AccelData2(timestamp3, x3);
-			sensorLuz.add(data3);
-			if (sensor == Sensor.TYPE_LIGHT) {
-				ejex.setText("E");
-				ejex.setVisibility(CheckBox.VISIBLE);
-				ejey.setVisibility(CheckBox.GONE);
-				ejez.setVisibility(CheckBox.GONE);
-				moduloc.setVisibility(CheckBox.GONE);
-				nombresensor = getString(R.string.luminosidad);
-				setTitle(nombresensor);
-				mRenderer.setYTitle(getString(R.string.unidad_luz));
-				if (luz == true) {
-					graba.setText("REC");
-					graba.setVisibility(TextView.VISIBLE);
-					graba2.setVisibility(TextView.INVISIBLE);
-				} else {
-					graba2.setText("REC");
-					graba2.setVisibility(TextView.VISIBLE);
-					graba.setVisibility(TextView.INVISIBLE);
-				}
-				if (xTick == 0) {
-					// Dirty, but we only learn a few things after getting the
-					// first
-					// event.
-					configure2(event);
-					layout.addView(chartView);
-					double ti = System.currentTimeMillis();
-					tie[0] = ti;
-				}
-				double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
-
-				if (tiempo > mRenderer.getXAxisMax()) {
-					mRenderer.setXAxisMax(tiempo);
-					mRenderer.setXAxisMin(tiempo - 5);
-					// Log.d("syn", "ontixk2");
-				}
-				fitYAxis(event);
-
-				series[0].add(tiempo, x3);
-			}
-			break;
-		case Sensor.TYPE_PROXIMITY:
-			double x5 = event.values[0];
-			double timestamp5 = System.currentTimeMillis();
-
-			AccelData2 data5 = new AccelData2(timestamp5, x5);
-			sensorProximidad.add(data5);
-			if (sensor == Sensor.TYPE_PROXIMITY) {
-				ejex.setText("d");
-				ejex.setVisibility(CheckBox.VISIBLE);
-				ejey.setVisibility(CheckBox.GONE);
-				ejez.setVisibility(CheckBox.GONE);
-				moduloc.setVisibility(CheckBox.GONE);
-				nombresensor = getString(R.string.proximidad);
-				setTitle(nombresensor);
-				mRenderer.setYTitle(getString(R.string.unidad_proximidad));
-				if (proxi == true) {
-					graba.setText("REC");
-					graba.setVisibility(TextView.VISIBLE);
-					graba2.setVisibility(TextView.INVISIBLE);
-				} else {
-					graba2.setText("REC");
-					graba2.setVisibility(TextView.VISIBLE);
-					graba.setVisibility(TextView.INVISIBLE);
-				}
-				if (xTick == 0) {
-					configure2(event);
-					layout.addView(chartView);
-					double ti = System.currentTimeMillis();
-					tie[0] = ti;
-				}
-				double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
-
-				if (tiempo > mRenderer.getXAxisMax()) {
-					mRenderer.setXAxisMax(tiempo);
-					mRenderer.setXAxisMin(tiempo - 5);
-				}
-				
-				fitYAxis(event);
-
-				series[0].add(tiempo, x5);
-			}
-			break;
-		}
-		xTick++;
-
-		// for (int i = 0; i < 3; i++) {
-		// float valor = event.values[i];
-		// xyz[i] = valor;
-		// Log.d("hola", "xxx " + i + " " + xyz[i] + "");
-		// }
 		synchronized (this) {
+			double timestampgps = System.currentTimeMillis();
+			if (g == true) {
+				GpsDatos datos = new GpsDatos(timestampgps, latitud, longitud);
+				gpsdatos.add(datos);
+			}
+			switch (event.sensor.getType()) {
+			case Sensor.TYPE_ACCELEROMETER:
+				double x = event.values[0];
+				double y = event.values[1];
+				double z = event.values[2];
+				double modulo = Double.valueOf(Math.abs(Math.sqrt(Math
+						.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
+				if (sensor == Sensor.TYPE_ACCELEROMETER) {
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.VISIBLE);
+					ejez.setVisibility(CheckBox.VISIBLE);
+					moduloc.setVisibility(CheckBox.VISIBLE);
+					nombresensor = getString(R.string.acelerometro);
+					setTitle(nombresensor);
+					mRenderer
+							.setYTitle(getString(R.string.unidad_acelerometro));
+					if (acce == true) {
+						graba.setText("REC");
+						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
+					} else {
+						graba2.setText("REC");
+						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
+					}
+					if (cambio == true) {
+						layout.removeView(chartView);
+						configure(event);
+						layout.addView(chartView);
+						cambio = false;
+					}
+					if (xTick == 0) {
+						configure(event);
+						layout.addView(chartView);
+						double ti = System.currentTimeMillis();
+						tie[0] = ti;
+						hora = DateFormat.format("kk:mm:ss",
+								System.currentTimeMillis()).toString();
+					}
+					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+
+					if (tiempo > mRenderer.getXAxisMax()) {
+						mRenderer.setXAxisMax(tiempo);
+						mRenderer.setXAxisMin(tiempo - 5);
+					}
+					fitYAxis(event);
+
+					series[0].add(tiempo, x);
+					series[1].add(tiempo, y);
+					series[2].add(tiempo, z);
+					series[3].add(tiempo, modulo);
+				}
+				break;
+			case Sensor.TYPE_GYROSCOPE:
+				double x2 = event.values[0];
+				double y2 = event.values[1];
+				double z2 = event.values[2];
+				double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x2,
+						2) + Math.pow(y2, 2) + Math.pow(z2, 2))));
+				if (sensor == Sensor.TYPE_GYROSCOPE) {
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.VISIBLE);
+					ejez.setVisibility(CheckBox.VISIBLE);
+					moduloc.setVisibility(CheckBox.VISIBLE);
+					nombresensor = getString(R.string.giroscopio);
+					setTitle(nombresensor);
+					mRenderer.setYTitle(getString(R.string.unidad_giroscopio));
+					if (giro == true) {
+						graba.setText("REC");
+						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
+					} else {
+						graba2.setText("REC");
+						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
+					}
+					if (cambio == true) {
+						layout.removeView(chartView);
+						configure(event);
+						layout.addView(chartView);
+						cambio = false;
+					}
+					if (xTick == 0) {
+						configure(event);
+						layout.addView(chartView);
+						double ti = System.currentTimeMillis();
+						tie[0] = ti;
+						hora = DateFormat.format("kk:mm:ss",
+								System.currentTimeMillis()).toString();
+					}
+					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+
+					if (tiempo > mRenderer.getXAxisMax()) {
+						mRenderer.setXAxisMax(tiempo);
+						mRenderer.setXAxisMin(tiempo - 5);
+					}
+
+					fitYAxis(event);
+
+					series[0].add(tiempo, x2);
+					series[1].add(tiempo, y2);
+					series[2].add(tiempo, z2);
+					series[3].add(tiempo, modulo2);
+				}
+				break;
+			case Sensor.TYPE_MAGNETIC_FIELD:
+				double x4 = event.values[0];
+				double y4 = event.values[1];
+				double z4 = event.values[2];
+				double modulo4 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x4,
+						2) + Math.pow(y4, 2) + Math.pow(z4, 2))));
+				if (sensor == Sensor.TYPE_MAGNETIC_FIELD) {
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.VISIBLE);
+					ejez.setVisibility(CheckBox.VISIBLE);
+					moduloc.setVisibility(CheckBox.VISIBLE);
+					nombresensor = getString(R.string.magnetico);
+					setTitle(nombresensor);
+					mRenderer
+							.setYTitle(getString(R.string.unidad_campo_magnetico));
+					if (magne == true) {
+						graba.setText("REC");
+						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
+					} else {
+						graba2.setText("REC");
+						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
+					}
+					if (cambio == true) {
+						layout.removeView(chartView);
+						configure(event);
+						layout.addView(chartView);
+						cambio = false;
+					}
+					if (xTick == 0) {
+						configure(event);
+						layout.addView(chartView);
+						double ti = System.currentTimeMillis();
+						tie[0] = ti;
+						hora = DateFormat.format("kk:mm:ss",
+								System.currentTimeMillis()).toString();
+					}
+					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+
+					if (tiempo > mRenderer.getXAxisMax()) {
+						mRenderer.setXAxisMax(tiempo);
+						mRenderer.setXAxisMin(tiempo - 5);
+					}
+					fitYAxis(event);
+
+					series[0].add(tiempo, x4);
+					series[1].add(tiempo, y4);
+					series[2].add(tiempo, z4);
+					series[3].add(tiempo, modulo4);
+				}
+				break;
+			case Sensor.TYPE_LIGHT:
+				double x3 = event.values[0];
+				if (sensor == Sensor.TYPE_LIGHT) {
+					ejex.setText("E");
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.GONE);
+					ejez.setVisibility(CheckBox.GONE);
+					moduloc.setVisibility(CheckBox.GONE);
+					nombresensor = getString(R.string.luminosidad);
+					setTitle(nombresensor);
+					mRenderer.setYTitle(getString(R.string.unidad_luz));
+					if (luz == true) {
+						graba.setText("REC");
+						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
+					} else {
+						graba2.setText("REC");
+						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
+					}
+					if (cambio == true) {
+						layout.removeView(chartView);
+						configure2(event);
+						layout.addView(chartView);
+						cambio = false;
+					}
+					if (xTick == 0) {
+						configure2(event);
+						layout.addView(chartView);
+						double ti = System.currentTimeMillis();
+						tie[0] = ti;
+						hora = DateFormat.format("kk:mm:ss",
+								System.currentTimeMillis()).toString();
+					}
+					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+
+					if (tiempo > mRenderer.getXAxisMax()) {
+						mRenderer.setXAxisMax(tiempo);
+						mRenderer.setXAxisMin(tiempo - 5);
+					}
+					fitYAxis(event);
+
+					series[0].add(tiempo, x3);
+				}
+				break;
+			case Sensor.TYPE_PROXIMITY:
+				double x5 = event.values[0];
+				if (sensor == Sensor.TYPE_PROXIMITY) {
+					ejex.setText("d");
+					ejex.setVisibility(CheckBox.VISIBLE);
+					ejey.setVisibility(CheckBox.GONE);
+					ejez.setVisibility(CheckBox.GONE);
+					moduloc.setVisibility(CheckBox.GONE);
+					nombresensor = getString(R.string.proximidad);
+					setTitle(nombresensor);
+					mRenderer.setYTitle(getString(R.string.unidad_proximidad));
+					if (proxi == true) {
+						graba.setText("REC");
+						graba.setVisibility(TextView.VISIBLE);
+						graba2.setVisibility(TextView.INVISIBLE);
+					} else {
+						graba2.setText("REC");
+						graba2.setVisibility(TextView.VISIBLE);
+						graba.setVisibility(TextView.INVISIBLE);
+					}
+					if (cambio == true) {
+						layout.removeView(chartView);
+						configure2(event);
+						layout.addView(chartView);
+						cambio = false;
+					}
+					if (xTick == 0) {
+						configure2(event);
+						layout.addView(chartView);
+						double ti = System.currentTimeMillis();
+						tie[0] = ti;
+						hora = DateFormat.format("kk:mm:ss",
+								System.currentTimeMillis()).toString();
+					}
+					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+
+					if (tiempo > mRenderer.getXAxisMax()) {
+						mRenderer.setXAxisMax(tiempo);
+						mRenderer.setXAxisMin(tiempo - 5);
+					}
+
+					fitYAxis(event);
+
+					series[0].add(tiempo, x5);
+				}
+				break;
+			}
+			xTick++;
+
 			// datosSensor.add(xyz.clone());
 			// Log.d("tamano", "tamano datossensor " + datosSensor.size());
 			// Log.d("syn", "syn");
@@ -722,8 +830,10 @@ public class Grafica extends Activity implements OnClickListener,
 			break;
 		}
 
-		/*int[] colors = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN,
-				Color.MAGENTA, Color.CYAN };*/
+		/*
+		 * int[] colors = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN,
+		 * Color.MAGENTA, Color.CYAN };
+		 */
 		for (int i = 0; i < 4; i++) {
 			series[i] = new XYSeries(channelNames[i]);
 			sensorData.addSeries(series[i]);
@@ -838,11 +948,12 @@ public class Grafica extends Activity implements OnClickListener,
 						+ android.os.Build.MODEL
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
-								System.currentTimeMillis()).toString() + "\n");
+								System.currentTimeMillis()).toString()
+						+ ";Hora: " + hora + "\n");
 				csvData.append("t (s);Latitud;Longitud\n");
 				for (GpsDatos values : gpsdatos) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					csvData.append(formateador2.format(String.valueOf(tiempo))
+					csvData.append(String.valueOf(formateador2.format(tiempo))
 							+ ";" + String.valueOf(values.getLatitud()) + ";"
 							+ String.valueOf(values.getLongitud()) + "\n");
 				}
@@ -900,7 +1011,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ android.os.Build.MODEL
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
-								System.currentTimeMillis()).toString() + "\n");
+								System.currentTimeMillis()).toString()
+						+ ";Hora: " + hora + "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources()
 								.getString(R.string.unidad_acelerometro) + "\n");
@@ -973,7 +1085,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ android.os.Build.MODEL
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
-								System.currentTimeMillis()).toString() + "\n");
+								System.currentTimeMillis()).toString()
+						+ ";Hora: " + hora + "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_giroscopio)
 						+ "\n");
@@ -1047,7 +1160,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ android.os.Build.MODEL
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
-								System.currentTimeMillis()).toString() + "\n");
+								System.currentTimeMillis()).toString()
+						+ ";Hora: " + hora + "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources().getString(
 								R.string.unidad_campo_magnetico) + "\n");
@@ -1120,7 +1234,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ android.os.Build.MODEL
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
-								System.currentTimeMillis()).toString() + "\n");
+								System.currentTimeMillis()).toString()
+						+ ";Hora: " + hora + "\n");
 				csvData.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_luz) + "\n");
 				for (AccelData2 values : sensorLuz) {
@@ -1185,7 +1300,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ android.os.Build.MODEL
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
-								System.currentTimeMillis()).toString() + "\n");
+								System.currentTimeMillis()).toString()
+						+ ";Hora: " + hora + "\n");
 				csvData.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_proximidad)
 						+ "\n");
@@ -1286,7 +1402,7 @@ public class Grafica extends Activity implements OnClickListener,
 			continuar.setEnabled(true);
 			parar.setEnabled(false);
 			reiniciar.setEnabled(true);
-			lupa.setVisibility(ImageButton.VISIBLE);
+			// lupa.setVisibility(ImageButton.VISIBLE);
 			onStop();
 			break;
 		case (R.id.inicio):
@@ -1318,7 +1434,7 @@ public class Grafica extends Activity implements OnClickListener,
 					series[i].clear();
 				}
 			}
-
+			mRenderer.setXAxisMin(0.0);
 			lupa.setVisibility(ImageButton.INVISIBLE);
 			iniciar.setVisibility(Button.VISIBLE);
 			iniciar.setEnabled(true);
@@ -1375,59 +1491,26 @@ public class Grafica extends Activity implements OnClickListener,
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		/*if (sensorDatas.size() > 0) {
-			MenuItem item = menu.findItem(R.id.acele);
-			item.setVisible(true);
-		} else {
+		if (aceleromete == null) {
 			MenuItem item = menu.findItem(R.id.acele);
 			item.setVisible(false);
 		}
-		if (sensorGiroscopio.size() > 0) {
-			MenuItem item = menu.findItem(R.id.giro);
-			item.setVisible(true);
-		} else {
+		if (giroscope == null) {
 			MenuItem item = menu.findItem(R.id.giro);
 			item.setVisible(false);
 		}
-		if (sensorMagnetico.size() > 0) {
-			MenuItem item = menu.findItem(R.id.mag);
-			item.setVisible(true);
-		} else {
+		if (magnetometro == null) {
 			MenuItem item = menu.findItem(R.id.mag);
 			item.setVisible(false);
 		}
-		if (sensorProximidad.size() > 0) {
-			MenuItem item = menu.findItem(R.id.proxi);
-			item.setVisible(true);
-		} else {
-			MenuItem item = menu.findItem(R.id.proxi);
-			item.setVisible(false);
-		}
-		if (sensorLuz.size() > 0) {
-			MenuItem item = menu.findItem(R.id.luz);
-			item.setVisible(true);
-		} else {
+		if (luces == null) {
 			MenuItem item = menu.findItem(R.id.luz);
 			item.setVisible(false);
 		}
-		if (sensorLuz.size() == 0 && sensorProximidad.size() == 0
-				&& sensorMagnetico.size() == 0 && sensorGiroscopio.size() == 0
-				&& sensorDatas.size() == 0) {
-			MenuItem item = menu.findItem(R.id.guardar);
-			item.setEnabled(false);
-		} else {
-			MenuItem item = menu.findItem(R.id.guardar);
-			item.setEnabled(true);
+		if (proximo == null) {
+			MenuItem item = menu.findItem(R.id.proxi);
+			item.setVisible(false);
 		}
-		if (sensorLuz.size() == 0 && sensorProximidad.size() == 0
-				&& sensorMagnetico.size() == 0 && sensorGiroscopio.size() == 0
-				&& sensorDatas.size() == 0) {
-			MenuItem item = menu.findItem(R.id.enviar);
-			item.setEnabled(false);
-		} else {
-			MenuItem item = menu.findItem(R.id.enviar);
-			item.setEnabled(true);
-		}*/
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -1446,29 +1529,431 @@ public class Grafica extends Activity implements OnClickListener,
 			startActivity(ayuda);
 			break;
 		case (R.id.guardar):
-			Log.d("algo", "boton guardar");
-			saveHistory();
+			if (sensorDatas.size() == 0 && sensorGiroscopio.size() == 0
+					&& sensorMagnetico.size() == 0 && sensorLuz.size() == 0
+					&& sensorProximidad.size() == 0 && gpsdatos.size() == 0) {
+				Toast.makeText(this, "No hay nada que guardar",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				saveHistory();
+			}
 			break;
 		case (R.id.acele):
 			sensor = Sensor.TYPE_ACCELEROMETER;
-			Log.d("el", "sensro men: " + sensor);
+			cambio = true;
 			break;
 		case (R.id.giro):
 			sensor = Sensor.TYPE_GYROSCOPE;
-			Log.d("el", "sensro giroma: " + sensor);
+			cambio = true;
 			break;
 		case (R.id.mag):
 			sensor = Sensor.TYPE_MAGNETIC_FIELD;
-			Log.d("el", "sensro menmag: " + sensor);
+			cambio = true;
 			break;
 		case (R.id.proxi):
 			sensor = Sensor.TYPE_PROXIMITY;
+			cambio = true;
 			break;
 		case (R.id.luz):
 			sensor = Sensor.TYPE_LIGHT;
+			cambio = true;
 			break;
+		case (R.id.enviar):
+			if (sensorDatas.size() == 0 && sensorGiroscopio.size() == 0
+					&& sensorMagnetico.size() == 0 && sensorLuz.size() == 0
+					&& sensorProximidad.size() == 0) {
+				Toast.makeText(this, "No hay nada que enviar",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				ArrayList<Uri> ficheros = new ArrayList<Uri>();
+				DecimalFormat formateador = new DecimalFormat("0.00##");
+				if (g == true) {
+					double t = gpsdatos.peek().getTimestamp();
+					StringBuilder csvData = new StringBuilder();
+					csvData.append("Nombre del dispositivo: "
+							+ android.os.Build.MODEL
+							+ ";Fecha: "
+							+ DateFormat.format("dd/MM/yyyy",
+									System.currentTimeMillis()).toString()
+							+ ";Hora: " + hora + "\n");
+					csvData.append("t (s);Latitud;Longitud\n");
+					for (GpsDatos values : gpsdatos) {
+						double tiempo = (values.getTimestamp() - t) / 1000;
+						csvData.append(String.valueOf(tiempo) + ";"
+								+ String.valueOf(values.getLatitud()) + ";"
+								+ String.valueOf(values.getLongitud()) + "\n");
+					}
+					try {
+
+						String appName = getResources().getString(
+								R.string.app_name);
+						String dirPath = Environment
+								.getExternalStorageDirectory().toString()
+								+ "/"
+								+ appName;
+						File dir = new File(dirPath);
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
+
+						String fileName = "GPS "
+								+ DateFormat
+										.format("dd-MM-yyyy kk-mm-ss",
+												System.currentTimeMillis())
+										.toString().concat(".csv");
+
+						File file = new File(dirPath, fileName);
+						if (file.createNewFile()) {
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file);
+
+							fileOutputStream.write(csvData.toString()
+									.getBytes());
+							fileOutputStream.close();
+							Uri path = Uri.fromFile(file);
+							ficheros.add(path);
+						}
+
+					} catch (Exception e) {
+					}
+				}
+				if (acce == true) {
+					// crear el fichero escribirle
+					double t = sensorDatas.peek().getTimestamp();
+
+					StringBuilder csvDataexportar = new StringBuilder();
+					csvDataexportar.append("Nombre del dispositivo: "
+							+ android.os.Build.MODEL
+							+ ";Fecha: "
+							+ DateFormat.format("dd/MM/yyyy",
+									System.currentTimeMillis()).toString()
+							+ ";Hora: " + hora + "\n");
+					csvDataexportar.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+							+ getResources().getString(
+									R.string.unidad_acelerometro) + "\n");
+					for (AccelData values : sensorDatas) {
+						double tiempo = (values.getTimestamp() - t) / 1000;
+						csvDataexportar.append(String.valueOf(tiempo)
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getX()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getY()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getZ()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getModulo())) + "\n");
+					}
+					try {
+						String appName = getResources().getString(
+								R.string.app_name);
+						String dirPath = Environment
+								.getExternalStorageDirectory().toString()
+								+ "/"
+								+ appName;
+						File dir = new File(dirPath);
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
+
+						String fileName = getResources().getString(
+								R.string.acelerometro)
+								+ " "
+								+ DateFormat
+										.format("dd-MM-yyyy kk-mm-ss",
+												System.currentTimeMillis())
+										.toString().concat(".csv");
+
+						File file = new File(dir, fileName);
+						if (file.createNewFile()) {
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file);
+
+							fileOutputStream.write(csvDataexportar.toString()
+									.getBytes());
+							fileOutputStream.close();
+							Uri path = Uri.fromFile(file);
+							ficheros.add(path);
+
+						}
+					} catch (Exception e) {
+
+					}
+				}
+				if (giro == true) {
+					double t = sensorGiroscopio.peek().getTimestamp();
+
+					StringBuilder csvDatagiro = new StringBuilder();
+					csvDatagiro.append("Nombre del dispositivo: "
+							+ android.os.Build.MODEL
+							+ ";Fecha: "
+							+ DateFormat.format("dd/MM/yyyy",
+									System.currentTimeMillis()).toString()
+							+ ";Hora: " + hora + "\n");
+					csvDatagiro.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+							+ getResources().getString(
+									R.string.unidad_giroscopio) + "\n");
+					for (AccelData values : sensorGiroscopio) {
+						double tiempo = (values.getTimestamp() - t) / 1000;
+
+						csvDatagiro.append(String.valueOf(tiempo)
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getX()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getY()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getZ()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getModulo())) + "\n");
+					}
+					try {
+
+						String appName = getResources().getString(
+								R.string.app_name);
+						String dirPath = Environment
+								.getExternalStorageDirectory().toString()
+								+ "/"
+								+ appName;
+						File dir = new File(dirPath);
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
+
+						String fileName = getResources().getString(
+								R.string.giroscopio)
+								+ " "
+								+ DateFormat
+										.format("dd-MM-yyyy kk-mm-ss",
+												System.currentTimeMillis())
+										.toString().concat(".csv");
+
+						File file = new File(dirPath, fileName);
+						if (file.createNewFile()) {
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file);
+
+							fileOutputStream.write(csvDatagiro.toString()
+									.getBytes());
+							fileOutputStream.close();
+							Uri path = Uri.fromFile(file);
+							ficheros.add(path);
+
+						}
+
+					} catch (Exception e) {
+					}
+				}
+				if (magne == true) {
+					double t = sensorMagnetico.peek().getTimestamp();
+
+					StringBuilder csvDatamagne = new StringBuilder();
+					csvDatamagne.append("Nombre del dispositivo: "
+							+ android.os.Build.MODEL
+							+ ";Fecha: "
+							+ DateFormat.format("dd/MM/yyyy",
+									System.currentTimeMillis()).toString()
+							+ ";Hora: " + hora + "\n");
+					csvDatamagne.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
+							+ getResources().getString(
+									R.string.unidad_campo_magnetico) + "\n");
+					for (AccelData values : sensorMagnetico) {
+						double tiempo = (values.getTimestamp() - t) / 1000;
+
+						csvDatamagne.append(String.valueOf(tiempo)
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getX()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getY()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getZ()))
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getModulo())) + "\n");
+					}
+
+					try {
+
+						String appName = getResources().getString(
+								R.string.app_name);
+						String dirPath = Environment
+								.getExternalStorageDirectory().toString()
+								+ "/"
+								+ appName;
+						File dir = new File(dirPath);
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
+
+						String fileName = getResources().getString(
+								R.string.magnetico)
+								+ " "
+								+ DateFormat
+										.format("dd-MM-yyyy kk-mm-ss",
+												System.currentTimeMillis())
+										.toString().concat(".csv");
+
+						File file = new File(dirPath, fileName);
+						if (file.createNewFile()) {
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file);
+
+							fileOutputStream.write(csvDatamagne.toString()
+									.getBytes());
+							fileOutputStream.close();
+							Uri path = Uri.fromFile(file);
+							ficheros.add(path);
+
+						}
+
+					} catch (Exception e) {
+					}
+				}
+				if (luz == true) {
+					double t = sensorLuz.peek().getTimestamp();
+
+					StringBuilder csvDataluz = new StringBuilder();
+					csvDataluz.append("Nombre del dispositivo: "
+							+ android.os.Build.MODEL
+							+ ";Fecha: "
+							+ DateFormat.format("dd/MM/yyyy",
+									System.currentTimeMillis()).toString()
+							+ ";Hora: " + hora + "\n");
+					csvDataluz.append("t (s);X;Unidad sensor: "
+							+ getResources().getString(R.string.unidad_luz)
+							+ "\n");
+					for (AccelData2 values : sensorLuz) {
+						double tiempo = (values.getTimestamp() - t) / 1000;
+						csvDataluz.append(String.valueOf(tiempo)
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getX())) + "\n");
+					}
+
+					try {
+
+						String appName = getResources().getString(
+								R.string.app_name);
+						String dirPath = Environment
+								.getExternalStorageDirectory().toString()
+								+ "/"
+								+ appName;
+						File dir = new File(dirPath);
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
+
+						String fileName = getResources().getString(
+								R.string.luminosidad)
+								+ " "
+								+ DateFormat
+										.format("dd-MM-yyyy kk-mm-ss",
+												System.currentTimeMillis())
+										.toString().concat(".csv");
+
+						File file = new File(dirPath, fileName);
+						if (file.createNewFile()) {
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file);
+
+							fileOutputStream.write(csvDataluz.toString()
+									.getBytes());
+							fileOutputStream.close();
+							Uri path = Uri.fromFile(file);
+							ficheros.add(path);
+
+						}
+
+					} catch (Exception e) {
+					}
+				}
+				if (proxi == true) {
+					double t = sensorProximidad.peek().getTimestamp();
+
+					StringBuilder csvDataproxi = new StringBuilder();
+					csvDataproxi.append("Nombre del dispositivo: "
+							+ android.os.Build.MODEL
+							+ ";Fecha: "
+							+ DateFormat.format("dd/MM/yyyy",
+									System.currentTimeMillis()).toString()
+							+ ";Hora: " + hora + "\n");
+					csvDataproxi.append("t (s);X;Unidad sensor: "
+							+ getResources().getString(
+									R.string.unidad_proximidad) + "\n");
+					for (AccelData2 values : sensorProximidad) {
+						double tiempo = (values.getTimestamp() - t) / 1000;
+
+						csvDataproxi.append(String.valueOf(tiempo)
+								+ ";"
+								+ String.valueOf(formateador.format(values
+										.getX())) + "\n");
+					}
+
+					try {
+
+						String appName = getResources().getString(
+								R.string.app_name);
+						String dirPath = Environment
+								.getExternalStorageDirectory().toString()
+								+ "/"
+								+ appName;
+						File dir = new File(dirPath);
+						if (!dir.exists()) {
+							dir.mkdirs();
+						}
+
+						String fileName = getResources().getString(
+								R.string.proximidad)
+								+ " "
+								+ DateFormat
+										.format("dd-MM-yyyy kk-mm-ss",
+												System.currentTimeMillis())
+										.toString().concat(".csv");
+
+						File file = new File(dirPath, fileName);
+						if (file.createNewFile()) {
+							FileOutputStream fileOutputStream = new FileOutputStream(
+									file);
+
+							fileOutputStream.write(csvDataproxi.toString()
+									.getBytes());
+							fileOutputStream.close();
+							Uri path = Uri.fromFile(file);
+							ficheros.add(path);
+
+						}
+					} catch (Exception e) {
+					}
+				}
+				enviar(ficheros);
+			}
+			break;
+
 		}
+
 		return true;
+
+		/** true -> consumimos el item, no se propaga */
+	}
+
+	protected void enviar(ArrayList<Uri> csvexportar) {
+		// TODO Auto-generated method stub
+		this.setProgressBarVisibility(false);
+		Intent sendIntent = new Intent();
+		sendIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+
+		sendIntent.setType("file/*");
+		sendIntent.putExtra(Intent.EXTRA_STREAM, csvexportar);
+		startActivity(sendIntent);
 	}
 
 	@Override
