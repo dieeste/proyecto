@@ -2,11 +2,13 @@ package com.example.app;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.GraphicalView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csvreader.CsvReader;
+import com.google.android.gms.maps.model.LatLng;
 
 public class LeerCsv extends Activity implements OnClickListener,
 		OnCheckedChangeListener {
@@ -49,6 +52,8 @@ public class LeerCsv extends Activity implements OnClickListener,
 	boolean checkz = true;
 	boolean checkmodulo = true;
 	int tipo;
+	ArrayList<LatLng> puntos = new ArrayList<>();
+	LatLng ubicacion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +171,11 @@ public class LeerCsv extends Activity implements OnClickListener,
 					unidad = fichero.getHeader(2);
 					AccelData2 data = new AccelData2(tiempo, x);
 					sensor.add(data);
+				} else if (numerolineas==3){
+					double latitud = Double.parseDouble(fichero.get("Latitud"));
+					double longitud = Double.parseDouble(fichero.get("Longitud"));
+					ubicacion = new LatLng(latitud, longitud);
+					puntos.add(ubicacion);
 				}
 			}
 			fichero.close();
@@ -217,10 +227,13 @@ public class LeerCsv extends Activity implements OnClickListener,
 				}
 				iniciar2();
 			} else if (numerolineas == 3) {
+				finish();
+				Intent mapa = new Intent(this, RepresentarGps.class);
+				mapa.putExtra("puntos", puntos);
+				startActivity(mapa);
 				Toast.makeText(this,
 						"No se puede representar este tipo de archivos",
 						Toast.LENGTH_SHORT).show();
-				finish();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

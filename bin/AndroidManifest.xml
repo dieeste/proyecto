@@ -48,6 +48,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="RepresentarGps" >
+            <intent-filter>
+                <action android:name=".RepresentarGps" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="AcercaDe"
             android:label="Acerca de" >
