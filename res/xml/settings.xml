@@ -21,7 +21,7 @@
 
         <EditTextPreference
             android:defaultValue="0"
-            android:dialogTitle="En segundos"
+            android:dialogTitle="@string/tiempoSeg"
             android:inputType="number"
             android:key="temporizador"
             android:negativeButtonText="Cancelar"
@@ -30,7 +30,7 @@
             android:title="@string/temporizador" />
         <EditTextPreference
             android:defaultValue="0"
-            android:dialogTitle="En segundos"
+            android:dialogTitle="@string/tiempoSeg"
             android:inputType="number"
             android:key="tiempo"
             android:negativeButtonText="Cancel"

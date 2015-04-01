@@ -1,5 +1,11 @@
 package com.example.app;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -16,12 +22,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class FileChooserActivity extends ListActivity {
 
@@ -154,7 +154,7 @@ public class FileChooserActivity extends ListActivity {
 		Collections.sort(dirs);
 		Collections.sort(files);
 		dirs.addAll(files);
-	
+
 		fileArrayListAdapter = new FileArrayAdapter(FileChooserActivity.this,
 				R.layout.file_row, dirs);
 		this.setListAdapter(fileArrayListAdapter);
@@ -194,18 +194,6 @@ public class FileChooserActivity extends ListActivity {
 		/** true -> el menú ya está visible */
 	}
 
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		if (ficheros.size() > 0) {
-			MenuItem item = menu.findItem(R.id.enviar);
-			item.setEnabled(true);
-		} else {
-			MenuItem item = menu.findItem(R.id.enviar);
-			item.setEnabled(false);
-		}
-		return super.onPrepareOptionsMenu(menu);
-	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -213,8 +201,14 @@ public class FileChooserActivity extends ListActivity {
 		switch (item.getItemId()) {
 		case (R.id.enviar):
 			// enviar(();
+			if (ficheros.size() == 0) {
+				Toast.makeText(this,
+						getResources().getString(R.string.datosCompartir),
+						Toast.LENGTH_SHORT).show();
+			}else {
 			enviar(ficheros);
 			ficheros.remove(true);
+			}
 			break;
 		case R.id.menu_ayuda:
 			Intent ayuda = new Intent(this, Ayuda.class);

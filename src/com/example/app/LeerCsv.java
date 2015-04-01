@@ -236,7 +236,6 @@ public class LeerCsv extends Activity implements OnClickListener,
 						}
 					}
 				}
-				Log.d("tamano2", "locaclizad "+localizacion.size());
 				finish();
 				Intent mapa = new Intent(this, RepresentarGps.class);
 				mapa.putExtra("puntos", localizacion);

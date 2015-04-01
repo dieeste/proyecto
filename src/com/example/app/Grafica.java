@@ -148,8 +148,8 @@ public class Grafica extends Activity implements OnClickListener,
 	double[] tie = new double[1];
 
 	private Thread ticker;
-
-	// private Sensor sensor;
+	double min;
+	double max;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -261,6 +261,7 @@ public class Grafica extends Activity implements OnClickListener,
 		}
 		sensorData = new XYMultipleSeriesDataset();
 		mRenderer = new XYMultipleSeriesRenderer();
+
 		// grafica
 		// chartView = ChartFactory.getLineChartView(this, sensorData,
 		// mRenderer);
@@ -280,8 +281,8 @@ public class Grafica extends Activity implements OnClickListener,
 		chartView = ChartFactory.getLineChartView(this, sensorData, mRenderer);
 
 		// añade las propiedades de la grafica
-		// double[] limites = { 0, maxejex + 5, ejeymin - 200, ejeymax + 200
-		// };// limites
+		
+		// limites
 		// utilizamos diferentes márgenes para las diferentes pantallas
 		int[] margenes = { 70, 80, 70, 60 };
 		int[] margenesnormal = { 50, 100, 70, 40 };
@@ -402,11 +403,6 @@ public class Grafica extends Activity implements OnClickListener,
 
 			latitud = loc.getLatitude();
 			longitud = loc.getLongitude();
-			/*
-			 * double timestampgps = System.currentTimeMillis(); GpsDatos datos
-			 * = new GpsDatos(timestampgps, latitud, longitud);
-			 * gpsdatos.add(datos);
-			 */
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -540,6 +536,8 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
+						mRenderer.setYAxisMax(-1);
+						mRenderer.setYAxisMin(1);
 						layout.removeView(chartView);
 						configure(event);
 						layout.addView(chartView);
@@ -559,7 +557,7 @@ public class Grafica extends Activity implements OnClickListener,
 						mRenderer.setXAxisMax(tiempo);
 						mRenderer.setXAxisMin(tiempo - 5);
 					}
-					fitYAxis(event);
+					fitYAxis(event, modulo);
 
 					series[0].add(tiempo, x);
 					series[1].add(tiempo, y);
@@ -591,6 +589,8 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
+						mRenderer.setYAxisMax(-1);
+						mRenderer.setYAxisMin(1);
 						layout.removeView(chartView);
 						configure(event);
 						layout.addView(chartView);
@@ -611,7 +611,7 @@ public class Grafica extends Activity implements OnClickListener,
 						mRenderer.setXAxisMin(tiempo - 5);
 					}
 
-					fitYAxis(event);
+					fitYAxis(event, modulo2);
 
 					series[0].add(tiempo, x2);
 					series[1].add(tiempo, y2);
@@ -644,6 +644,8 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
+						mRenderer.setYAxisMax(-1);
+						mRenderer.setYAxisMin(1);
 						layout.removeView(chartView);
 						configure(event);
 						layout.addView(chartView);
@@ -663,7 +665,7 @@ public class Grafica extends Activity implements OnClickListener,
 						mRenderer.setXAxisMax(tiempo);
 						mRenderer.setXAxisMin(tiempo - 5);
 					}
-					fitYAxis(event);
+					fitYAxis(event, modulo4);
 
 					series[0].add(tiempo, x4);
 					series[1].add(tiempo, y4);
@@ -692,6 +694,8 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
+						mRenderer.setYAxisMax(-1);
+						mRenderer.setYAxisMin(1);
 						layout.removeView(chartView);
 						configure2(event);
 						layout.addView(chartView);
@@ -711,7 +715,7 @@ public class Grafica extends Activity implements OnClickListener,
 						mRenderer.setXAxisMax(tiempo);
 						mRenderer.setXAxisMin(tiempo - 5);
 					}
-					fitYAxis(event);
+					fitYAxis2(event);
 
 					series[0].add(tiempo, x3);
 				}
@@ -737,6 +741,8 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
+						mRenderer.setYAxisMax(-1);
+						mRenderer.setYAxisMin(1);
 						layout.removeView(chartView);
 						configure2(event);
 						layout.addView(chartView);
@@ -757,7 +763,7 @@ public class Grafica extends Activity implements OnClickListener,
 						mRenderer.setXAxisMin(tiempo - 5);
 					}
 
-					fitYAxis(event);
+					fitYAxis2(event);
 
 					series[0].add(tiempo, x5);
 				}
@@ -765,19 +771,17 @@ public class Grafica extends Activity implements OnClickListener,
 			}
 			xTick++;
 
-			// datosSensor.add(xyz.clone());
-			// Log.d("tamano", "tamano datossensor " + datosSensor.size());
-			// Log.d("syn", "syn");
-			// configure(datosSensor);
-
 		}
 
 		chartView.repaint();
 	}
 
-	private void fitYAxis(SensorEvent event) {
-		// Log.d("syn", "fitaxis");
-		double min = mRenderer.getYAxisMin(), max = mRenderer.getYAxisMax();
+	private void fitYAxis(SensorEvent event, double modulo) {
+		double[] limites = { 0, mRenderer.getXAxisMax() + 5, min - 200, max + 200 };
+		mRenderer.setPanLimits(limites);
+		max = mRenderer.getYAxisMax() - 1;
+		min = mRenderer.getYAxisMin() + 1;
+
 		for (int i = 0; i < 3; i++) {
 			if (event.values[i] < min) {
 				min = event.values[i];
@@ -787,25 +791,39 @@ public class Grafica extends Activity implements OnClickListener,
 				max = event.values[i];
 			}
 		}
-		float sum = 0;
-		for (int i = 0; i < event.values.length; i++) {
-			sum += event.values[i];
+		if (modulo > max) {
+			max = modulo;
 		}
-		double half = 0;
-		if (xTick == 0 && sum == event.values[0] * event.values.length) {
-			// If the plot flatlines on the first event, we can't grade the Y
-			// axis.
-			// This is especially bad if the sensor does not change without a
-			// stimulus. the graph will then flatline on the x-axis where it is
-			// impossible to be seen.
-			half = event.values[0] * 0.5 + 1;
+
+		mRenderer.setYAxisMax(max + 1);
+		mRenderer.setYAxisMin(min - 1);
+
+	}
+
+	private void fitYAxis2(SensorEvent event) {
+		double[] limites = { 0, mRenderer.getXAxisMax() + 5, min - 200, max + 200 };
+		mRenderer.setPanLimits(limites);
+		max = mRenderer.getYAxisMax();
+		min = mRenderer.getYAxisMin();
+
+		if (event.values[0] > max) {
+			max = event.values[0];
+			Log.d("hola que", "este es el max22 " + max);
+		} else {
+			max = max - 1;
 		}
-		mRenderer.setYAxisMax(max + half);
-		mRenderer.setYAxisMin(min - half);
+
+		if (event.values[0] < min) {
+			min = event.values[0];
+		} else {
+			min = min + 1;
+		}
+
+		mRenderer.setYAxisMax(max + 1);
+		mRenderer.setYAxisMin(min - 1);
 	}
 
 	private void configure(SensorEvent event) {
-		// Log.d("syn", "config");
 		String[] channelNames = new String[4];
 		series = new XYSeries[4];
 
@@ -830,10 +848,6 @@ public class Grafica extends Activity implements OnClickListener,
 			break;
 		}
 
-		/*
-		 * int[] colors = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN,
-		 * Color.MAGENTA, Color.CYAN };
-		 */
 		for (int i = 0; i < 4; i++) {
 			series[i] = new XYSeries(channelNames[i]);
 			sensorData.addSeries(series[i]);
@@ -849,7 +863,6 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	private void configure2(SensorEvent event) {
-		// Log.d("syn", "config");
 		String[] channelNames = new String[1];
 		series = new XYSeries[1];
 
@@ -1428,13 +1441,17 @@ public class Grafica extends Activity implements OnClickListener,
 			break;
 		case (R.id.reiniciar):
 			xTick = 0;
-			layout.removeView(chartView);
 			for (int i = 0; i < series.length; i++) {
 				if (series[i] != null) {
 					series[i].clear();
 				}
+				sensorData.clear();
 			}
+			
+			layout.removeView(chartView);
+			layout.removeAllViews();
 			mRenderer.setXAxisMin(0.0);
+			mRenderer.setXAxisMax(5);
 			lupa.setVisibility(ImageButton.INVISIBLE);
 			iniciar.setVisibility(Button.VISIBLE);
 			iniciar.setEnabled(true);
@@ -1532,7 +1549,8 @@ public class Grafica extends Activity implements OnClickListener,
 			if (sensorDatas.size() == 0 && sensorGiroscopio.size() == 0
 					&& sensorMagnetico.size() == 0 && sensorLuz.size() == 0
 					&& sensorProximidad.size() == 0 && gpsdatos.size() == 0) {
-				Toast.makeText(this, "No hay nada que guardar",
+				Toast.makeText(this,
+						getResources().getString(R.string.datosGuardar),
 						Toast.LENGTH_SHORT).show();
 			} else {
 				saveHistory();
@@ -1562,7 +1580,8 @@ public class Grafica extends Activity implements OnClickListener,
 			if (sensorDatas.size() == 0 && sensorGiroscopio.size() == 0
 					&& sensorMagnetico.size() == 0 && sensorLuz.size() == 0
 					&& sensorProximidad.size() == 0) {
-				Toast.makeText(this, "No hay nada que enviar",
+				Toast.makeText(this,
+						getResources().getString(R.string.datosCompartir),
 						Toast.LENGTH_SHORT).show();
 			} else {
 				ArrayList<Uri> ficheros = new ArrayList<Uri>();

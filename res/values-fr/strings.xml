@@ -80,6 +80,9 @@ Como tutores:\n\n
     <string name="guardar_luz">Capteur de lumière enregistré</string>
     <string name="guardar_proximidad">Capteur de proximité enregistré</string>
     <string name="guardado_gps">GPS enregistré</string>
+    <string name="datosCompartir">Il n\'y a pas data pour partager</string>
+    <string name="datosGuardar">Il n\'y a pas data pour enregistrer</string>
+    <string name="tiempoSeg">Temps en seconds</string>
     <string name="titulo1">\nQU\'EST-CE QUE L\'ACCÉLÉROMÈTRE?\n</string>
     <string name="explicacion1">Est un appareil qui mesure l\'accélération, la vitesse de changement de vitesse d\'un objet, et les forces induites par la gravité, nous permet de détecter le mouvement et la rotation.\n
  mesurée en mètres par seconde au carré (m/s2) ou G-forces (g).\n</string>

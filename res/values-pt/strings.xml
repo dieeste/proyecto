@@ -79,6 +79,9 @@
     <string name="gpsoff">GPS desligado </string>
     <string name="gpsbuscando">GPS buscando</string>
     <string name="gpssignal">Sinal do GPS</string>
+    <string name="datosCompartir">No hay datos para compartir</string>
+    <string name="datosGuardar">No hay datos para guardar</string>
+    <string name="tiempoSeg">Tempo em segundos</string>
     <string name="titulo1">\nO QUE É O ACELERÔMETRO?\n</string>
     <string name="explicacion1">É um dispositivo que mede a aceleração, isto é variação da velocidade de um objeto, e as forças induzidas pela gravidade, ou seja, nos permite detectar o movimento e o giro.\n 
 Isto é medido em metros por segundo ao quadrado (m/s2) ou em forças G (g =9.8 m/s2).\n</string>
