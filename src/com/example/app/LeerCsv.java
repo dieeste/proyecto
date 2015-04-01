@@ -22,7 +22,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.csvreader.CsvReader;
 import com.google.android.gms.maps.model.LatLng;
@@ -53,6 +52,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 	boolean checkmodulo = true;
 	int tipo;
 	ArrayList<LatLng> puntos = new ArrayList<>();
+	ArrayList<LatLng> localizacion = new ArrayList<>();
 	LatLng ubicacion;
 
 	@Override
@@ -227,13 +227,20 @@ public class LeerCsv extends Activity implements OnClickListener,
 				}
 				iniciar2();
 			} else if (numerolineas == 3) {
+				for(int i=0;i<puntos.size();i++){
+					if (i>0){
+						if (puntos.get(i).equals(puntos.get(i-1))){
+						}
+						else{
+						localizacion.add(puntos.get(i));
+						}
+					}
+				}
+				Log.d("tamano2", "locaclizad "+localizacion.size());
 				finish();
 				Intent mapa = new Intent(this, RepresentarGps.class);
-				mapa.putExtra("puntos", puntos);
+				mapa.putExtra("puntos", localizacion);
 				startActivity(mapa);
-				Toast.makeText(this,
-						"No se puede representar este tipo de archivos",
-						Toast.LENGTH_SHORT).show();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
