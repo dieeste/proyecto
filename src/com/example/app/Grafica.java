@@ -281,7 +281,7 @@ public class Grafica extends Activity implements OnClickListener,
 		chartView = ChartFactory.getLineChartView(this, sensorData, mRenderer);
 
 		// añade las propiedades de la grafica
-		
+
 		// limites
 		// utilizamos diferentes márgenes para las diferentes pantallas
 		int[] margenes = { 70, 80, 70, 60 };
@@ -536,20 +536,30 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
-						mRenderer.setYAxisMax(-1);
-						mRenderer.setYAxisMin(1);
-						layout.removeView(chartView);
-						configure(event);
-						layout.addView(chartView);
-						cambio = false;
-					}
-					if (xTick == 0) {
-						configure(event);
-						layout.addView(chartView);
-						double ti = System.currentTimeMillis();
-						tie[0] = ti;
-						hora = DateFormat.format("kk:mm:ss",
-								System.currentTimeMillis()).toString();
+						if (xTick == 0) {
+							configure(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						} else {
+							mRenderer.setYAxisMax(-1);
+							mRenderer.setYAxisMin(1);
+							layout.removeView(chartView);
+							configure(event);
+							layout.addView(chartView);
+							cambio = false;
+						}
+					} else {
+						if (xTick == 0) {
+							configure(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
 
@@ -589,20 +599,31 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
-						mRenderer.setYAxisMax(-1);
-						mRenderer.setYAxisMin(1);
-						layout.removeView(chartView);
-						configure(event);
-						layout.addView(chartView);
-						cambio = false;
-					}
-					if (xTick == 0) {
-						configure(event);
-						layout.addView(chartView);
-						double ti = System.currentTimeMillis();
-						tie[0] = ti;
-						hora = DateFormat.format("kk:mm:ss",
-								System.currentTimeMillis()).toString();
+						if (xTick == 0) {
+							Log.d("hola", "entramos xtick0 ");
+							configure(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						} else {
+							mRenderer.setYAxisMax(-1);
+							mRenderer.setYAxisMin(1);
+							layout.removeView(chartView);
+							configure(event);
+							layout.addView(chartView);
+							cambio = false;
+						}
+					} else {
+						if (xTick == 0) {
+							configure(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
 
@@ -644,20 +665,30 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
-						mRenderer.setYAxisMax(-1);
-						mRenderer.setYAxisMin(1);
-						layout.removeView(chartView);
-						configure(event);
-						layout.addView(chartView);
-						cambio = false;
-					}
-					if (xTick == 0) {
-						configure(event);
-						layout.addView(chartView);
-						double ti = System.currentTimeMillis();
-						tie[0] = ti;
-						hora = DateFormat.format("kk:mm:ss",
-								System.currentTimeMillis()).toString();
+						if (xTick == 0) {
+							configure(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						} else {
+							mRenderer.setYAxisMax(-1);
+							mRenderer.setYAxisMin(1);
+							layout.removeView(chartView);
+							configure(event);
+							layout.addView(chartView);
+							cambio = false;
+						}
+					} else {
+						if (xTick == 0) {
+							configure(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
 
@@ -694,20 +725,30 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
-						mRenderer.setYAxisMax(-1);
-						mRenderer.setYAxisMin(1);
-						layout.removeView(chartView);
-						configure2(event);
-						layout.addView(chartView);
-						cambio = false;
-					}
-					if (xTick == 0) {
-						configure2(event);
-						layout.addView(chartView);
-						double ti = System.currentTimeMillis();
-						tie[0] = ti;
-						hora = DateFormat.format("kk:mm:ss",
-								System.currentTimeMillis()).toString();
+						if (xTick == 0) {
+							configure2(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						} else {
+							mRenderer.setYAxisMax(-1);
+							mRenderer.setYAxisMin(1);
+							layout.removeView(chartView);
+							configure2(event);
+							layout.addView(chartView);
+							cambio = false;
+						}
+					} else {
+						if (xTick == 0) {
+							configure2(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
 
@@ -741,20 +782,30 @@ public class Grafica extends Activity implements OnClickListener,
 						graba.setVisibility(TextView.INVISIBLE);
 					}
 					if (cambio == true) {
-						mRenderer.setYAxisMax(-1);
-						mRenderer.setYAxisMin(1);
-						layout.removeView(chartView);
-						configure2(event);
-						layout.addView(chartView);
-						cambio = false;
-					}
-					if (xTick == 0) {
-						configure2(event);
-						layout.addView(chartView);
-						double ti = System.currentTimeMillis();
-						tie[0] = ti;
-						hora = DateFormat.format("kk:mm:ss",
-								System.currentTimeMillis()).toString();
+						if (xTick == 0) {
+							configure2(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						} else {
+							mRenderer.setYAxisMax(-1);
+							mRenderer.setYAxisMin(1);
+							layout.removeView(chartView);
+							configure2(event);
+							layout.addView(chartView);
+							cambio = false;
+						}
+					} else {
+						if (xTick == 0) {
+							configure2(event);
+							layout.addView(chartView);
+							double ti = System.currentTimeMillis();
+							tie[0] = ti;
+							hora = DateFormat.format("kk:mm:ss",
+									System.currentTimeMillis()).toString();
+						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
 
@@ -777,7 +828,8 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	private void fitYAxis(SensorEvent event, double modulo) {
-		double[] limites = { 0, mRenderer.getXAxisMax() + 5, min - 200, max + 200 };
+		double[] limites = { 0, mRenderer.getXAxisMax() + 5, min - 200,
+				max + 200 };
 		mRenderer.setPanLimits(limites);
 		max = mRenderer.getYAxisMax() - 1;
 		min = mRenderer.getYAxisMin() + 1;
@@ -801,7 +853,8 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	private void fitYAxis2(SensorEvent event) {
-		double[] limites = { 0, mRenderer.getXAxisMax() + 5, min - 200, max + 200 };
+		double[] limites = { 0, mRenderer.getXAxisMax() + 5, min - 200,
+				max + 200 };
 		mRenderer.setPanLimits(limites);
 		max = mRenderer.getYAxisMax();
 		min = mRenderer.getYAxisMin();
@@ -1447,7 +1500,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 				sensorData.clear();
 			}
-			
+
 			layout.removeView(chartView);
 			layout.removeAllViews();
 			mRenderer.setXAxisMin(0.0);
