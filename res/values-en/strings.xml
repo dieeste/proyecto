@@ -60,15 +60,10 @@ Tutors:\n\n
     <string name="ingles">ENGLISH</string>
     <string name="frances">FRENCH</string>
     <string name="portugues">PORTUGUESE</string>
-    <string name="subidioma">Select the appication language.</string>
+    <string name="subidioma">Select the application language.</string>
     <string name="subfrecuencia">Select sampling frequency, number of samples per second.</string>
     <string name="subtemporizador">Select time elapses since enter in the graphic screen until it begins to record.</string>
     <string name="subtiempo">Select recording time.</string>
-    <string name="infoacelerometro">ABOUT ACCELEROMETER</string>
-    <string name="infogiroscopio">ABOUT GYROSCOPE</string>
-    <string name="infomagnetico">ABOUT MAGNETOMETER</string>
-    <string name="infoproximidad">ABOUT PROXIMITY SENSOR</string>
-    <string name="infoluz">ABOUT LIGHT SENSOR</string>
     <string name="reiniciar">Reset</string>
     <string name="modulo">|V|</string>
     <string name="grafica">Graph</string>
@@ -151,6 +146,7 @@ Usually, if the device is dark it is almost imperceptible but if we look to the 
     <string name="gpsoff">GPS off</string>
     <string name="gpsbuscando">Searching GPS</string>
     <string name="gpssignal">GPS signal</string>
+    <string name="fileSize">File size</string>
     <string name="gps">GPS</string>
     <string name="checkGps">Save data</string>
     <string name="latitud">Latitude</string>

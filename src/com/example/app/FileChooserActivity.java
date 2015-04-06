@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,38 +69,28 @@ public class FileChooserActivity extends ListActivity {
 							archivo.getPath();
 							Uri path = Uri.fromFile(archivo);
 							if (ficheros.isEmpty()) {
-								Log.d("hola", "este es lo coge" + path);
 								ficheros.add(path);
 								fileDescriptor.selected = true;
 								fileArrayListAdapter.notifyDataSetChanged();
-								// view.setSelected(true);
 							} else {
 								for (int i = 0; i < ficheros.size(); i++) {
 									if (ficheros.get(i).equals(path)) {
-										Log.d("hola", "este lo quita" + path);
 										ficheros.remove(i);
 										fileDescriptor.selected = false;
 										fileArrayListAdapter
 												.notifyDataSetChanged();
 
-										// view.setSelected(false);
-										Log.d("hola", "este tama iff  "
-												+ ficheros.size());
 										borrado = true;
 									}
 								}
 								if (borrado == false) {
 									for (int i = 0; i < ficheros.size(); i++) {
 										if (!ficheros.get(i).equals(path)) {
-											Log.d("hola", "este lo mete" + path);
 											ficheros.add(path);
 											fileDescriptor.selected = true;
 											fileArrayListAdapter
 													.notifyDataSetChanged();
 
-											// view.setSelected(true);
-											Log.d("hola", "este tama else  "
-													+ ficheros.size());
 											break;
 										}
 									}

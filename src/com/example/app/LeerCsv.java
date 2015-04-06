@@ -239,6 +239,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 				finish();
 				Intent mapa = new Intent(this, RepresentarGps.class);
 				mapa.putExtra("puntos", localizacion);
+				mapa.putExtra("nombre", titulografica);
 				startActivity(mapa);
 			}
 		} catch (FileNotFoundException e) {
@@ -293,7 +294,6 @@ public class LeerCsv extends Activity implements OnClickListener,
 
 	public void iniciar() {
 		mGraph = new Graph(this);
-		Log.d("jeje", "entramos");
 		mGraph.iniciar(datos);
 		mGraph.ejeY(datos);
 		mGraph.setProperties(checkx, checky, checkz, checkmodulo,

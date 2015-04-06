@@ -150,6 +150,7 @@ public class Grafica extends Activity implements OnClickListener,
 	private Thread ticker;
 	double min;
 	double max;
+	double time;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -562,6 +563,7 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
 						mRenderer.setXAxisMax(tiempo);
@@ -626,6 +628,7 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
 						mRenderer.setXAxisMax(tiempo);
@@ -691,6 +694,7 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
 						mRenderer.setXAxisMax(tiempo);
@@ -751,6 +755,7 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
 						mRenderer.setXAxisMax(tiempo);
@@ -808,6 +813,7 @@ public class Grafica extends Activity implements OnClickListener,
 						}
 					}
 					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
 						mRenderer.setXAxisMax(tiempo);
@@ -1464,11 +1470,26 @@ public class Grafica extends Activity implements OnClickListener,
 	public void onClick(View boton) {
 		// TODO Auto-generated method stub
 		switch (boton.getId()) {
+		case (R.id.lupa):
+			mRenderer.setYAxisMax(max + 1);
+			mRenderer.setYAxisMin(min - 1);
+			if (time < 5) {
+				mRenderer.setXAxisMax(5);
+			} else {
+				mRenderer.setXAxisMax(time);
+			}
+			if (time < 5) {
+				mRenderer.setXAxisMin(0);
+			} else {
+				mRenderer.setXAxisMin(time - 5);
+			}
+			chartView.repaint();
+			break;
 		case (R.id.parar):
 			continuar.setEnabled(true);
 			parar.setEnabled(false);
 			reiniciar.setEnabled(true);
-			// lupa.setVisibility(ImageButton.VISIBLE);
+			lupa.setVisibility(ImageButton.VISIBLE);
 			onStop();
 			break;
 		case (R.id.inicio):
@@ -2037,9 +2058,11 @@ public class Grafica extends Activity implements OnClickListener,
 			if (checkx == true) {
 				valoresX.setColor(Color.RED);
 				mRenderer.addSeriesRenderer(valoresX);
+				chartView.repaint();
 			} else {
 				valoresX.setColor(0);
 				mRenderer.addSeriesRenderer(valoresX);
+				chartView.repaint();
 			}
 			break;
 		case R.id.ejey:
@@ -2047,9 +2070,11 @@ public class Grafica extends Activity implements OnClickListener,
 			if (checky == true) {
 				valoresY.setColor(Color.GREEN);
 				mRenderer.addSeriesRenderer(valoresY);
+				chartView.repaint();
 			} else {
 				valoresY.setColor(0);
 				mRenderer.addSeriesRenderer(valoresY);
+				chartView.repaint();
 			}
 			break;
 		case R.id.ejez:
@@ -2057,9 +2082,11 @@ public class Grafica extends Activity implements OnClickListener,
 			if (checkz == true) {
 				valoresZ.setColor(Color.WHITE);
 				mRenderer.addSeriesRenderer(valoresZ);
+				chartView.repaint();
 			} else {
 				valoresZ.setColor(0);
 				mRenderer.addSeriesRenderer(valoresZ);
+				chartView.repaint();
 			}
 			break;
 		case R.id.modulo:
@@ -2067,9 +2094,11 @@ public class Grafica extends Activity implements OnClickListener,
 			if (checkmodulo == true) {
 				modulo.setColor(Color.MAGENTA);
 				mRenderer.addSeriesRenderer(modulo);
+				chartView.repaint();
 			} else {
 				modulo.setColor(0);
 				mRenderer.addSeriesRenderer(modulo);
+				chartView.repaint();
 			}
 			break;
 		}

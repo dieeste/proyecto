@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,11 +18,13 @@ import com.google.android.gms.maps.model.PolylineOptions;
 public class RepresentarGps extends FragmentActivity {
 	private GoogleMap googleMap;
 	Polyline line;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mapa);
+		Bundle map = getIntent().getExtras();
+		String titulo = map.getString("nombre");
+		setTitle(titulo);
 		ArrayList<LatLng> puntos = (ArrayList<LatLng>) getIntent()
 				.getSerializableExtra("puntos");
 		try {
@@ -41,7 +42,6 @@ public class RepresentarGps extends FragmentActivity {
 		}
 
 		MarkerOptions marker = new MarkerOptions();
-		Log.d("tamano", "represetnar " + puntos.size());
 		PolylineOptions options = new PolylineOptions().width(5)
 				.color(Color.BLUE).geodesic(true);
 		for (LatLng datos : puntos) {
