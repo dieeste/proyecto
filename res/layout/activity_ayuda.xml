@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <com.example.app.PagerSlidingTabStrip
+    <com.sensor.mobile.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="48dip"

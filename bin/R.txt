@@ -458,7 +458,6 @@ int string luminosidad 0x7f07003c
 int string magnetico 0x7f07003f
 int string magnetismo 0x7f070030
 int string medicion 0x7f07002d
-int string modulo 0x7f0700b7
 int string muyrapido 0x7f070051
 int string nombresensor 0x7f070032
 int string normal 0x7f07004f

@@ -7,7 +7,7 @@
         android:entries="@array/idiomas"
         android:entryValues="@array/idiomasValores"
         android:key="idioma"
-        android:summary="Selecciona el lenguaje de la aplicación"
+        android:summary="@string/subidioma"
         android:title="@string/idiomas" />
 
     <PreferenceCategory android:title="@string/config" >
@@ -24,7 +24,7 @@
             android:dialogTitle="@string/tiempoSeg"
             android:inputType="number"
             android:key="temporizador"
-            android:negativeButtonText="Cancelar"
+            android:negativeButtonText="Cancel"
             android:positiveButtonText="Ok"
             android:summary="@string/subtemporizador"
             android:title="@string/temporizador" />

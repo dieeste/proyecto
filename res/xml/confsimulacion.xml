@@ -6,7 +6,7 @@
         android:entries="@array/frecuencia_recogida"
         android:entryValues="@array/frecuencias"
         android:key="frecuencia"
-        android:summary="Elige una frecuencia de los sensores, número de muestras por segundo."
+        android:summary="@string/subfrecuencia"
         android:title="@string/frecuencias" />
 
     <EditTextPreference
@@ -14,7 +14,7 @@
         android:dialogTitle="@string/tiempoSeg"
         android:inputType="number"
         android:key="temporizador"
-        android:negativeButtonText="Cancelar"
+        android:negativeButtonText="Cancel"
         android:positiveButtonText="Ok"
         android:summary="@string/subtemporizador"
         android:title="@string/temporizador" />

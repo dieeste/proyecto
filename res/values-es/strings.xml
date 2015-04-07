@@ -25,7 +25,6 @@
     <string name="empezar">Empezar</string>
     <string name="continuar">Continuar</string>
     <string name="parar">Pausar/Parar</string>
-    <string name="cuenta">Tiempo en segundos: </string>
     <string name="acelerometro">Acelerómetro</string>
     <string name="luminosidad">Sensor de luz</string>
     <string name="proximidad">Sensor proximidad</string>
@@ -60,7 +59,6 @@
     <string name="subtemporizador">Seleccione el tiempo desde que se inicia la pantalla de la gráfica hasta que comienza a tomar datos.</string>
     <string name="subtiempo">Seleccione el tiempo que durará la grabación</string>
     <string name="reiniciar">Reiniciar</string>
-    <string name="modulo">|V|</string>
     <string name="grafica">Gráfica</string>
     <string name="cargargraficas">Cargar gráficas</string>
     <string name="checkAcelerometro">Guardar datos</string>

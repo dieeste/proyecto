@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Sensor Mobile</string>
+     <string name="action_settings">Settings</string>
     <string name="config">Réglage</string>
     <string name="acercaDe">À propos</string>
     <string name="inicio">Écran principal</string>
@@ -63,7 +64,6 @@ Como tutores:\n\n
     <string name="subtemporizador">Seleccione el tiempo desde que se inicia la pantalla de la gráfica hasta que comienza a tomar datos.</string>
     <string name="subtiempo">Seleccione el tiempo que durará la grabación</string>
     <string name="reiniciar">Reset</string>
-    <string name="modulo">|V|</string>
     <string name="grafica">Graphique</string>
     <string name="cargargraficas">Charger graphiques</string>
     <string name="checkAcelerometro">Enregistrer données</string>
@@ -144,6 +144,7 @@ Le capteur de lumière la plus commune est résistance à charge -Light ou LDR L
     <string name="gpsbuscando">GPS recherche</string>
     <string name="gpssignal">GPS signal</string>
     <string name="fileSize">File size</string>
+    <string name="currentDir">Current Dir</string>
     <string name="gps">GPS</string>
     <string name="checkGps">Enregistrer données</string>
     <string name="latitud">Latitude</string>

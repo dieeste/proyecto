@@ -25,7 +25,6 @@
     <string name="empezar">Empezar</string>
     <string name="continuar">Continuar</string>
     <string name="parar">Pausar/Parar</string>
-    <string name="cuenta">Tiempo en segundos: </string>
     <string name="acelerometro">Acelerómetro</string>
     <string name="luminosidad">Sensor de luz</string>
     <string name="proximidad">Sensor proximidad</string>

@@ -79,6 +79,8 @@
     <string name="gpsoff">GPS desligado </string>
     <string name="gpsbuscando">GPS buscando</string>
     <string name="gpssignal">Sinal do GPS</string>
+     <string name="fileSize">File size</string>
+    <string name="currentDir">Current Dir</string>
     <string name="datosCompartir">No hay datos para compartir</string>
     <string name="datosGuardar">No hay datos para guardar</string>
     <string name="tiempoSeg">Tempo em segundos</string>

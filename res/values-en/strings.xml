@@ -65,7 +65,6 @@ Tutors:\n\n
     <string name="subtemporizador">Select time elapses since enter in the graphic screen until it begins to record.</string>
     <string name="subtiempo">Select recording time.</string>
     <string name="reiniciar">Reset</string>
-    <string name="modulo">|V|</string>
     <string name="grafica">Graph</string>
     <string name="cargargraficas">Load graph</string>
     <string name="checkAcelerometro">Save data</string>
@@ -146,6 +145,7 @@ Usually, if the device is dark it is almost imperceptible but if we look to the 
     <string name="gpsoff">GPS off</string>
     <string name="gpsbuscando">Searching GPS</string>
     <string name="gpssignal">GPS signal</string>
+    <string name="currentDir">Current Dir</string>
     <string name="fileSize">File size</string>
     <string name="gps">GPS</string>
     <string name="checkGps">Save data</string>
