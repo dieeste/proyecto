@@ -115,7 +115,7 @@ Al ser la aceleración una magnitud vectorial necesitaremos para determinarla lo
     <string name="explicacionluz1">Es un dispositivo electrónico que responde al cambio en la intensidad de la luz. El sensor mide el nivel de iluminación, habiualmente en lux.\n</string>
     <string name="tituloluz2">¿CÓMO FUNCIONA EL SENSOR DE LUZ?\n</string>
     <string name="explicacionluz2">Un sensor de luz incluye un transductor fotoeléctrico que convierte la luz en una señal eléctrica y puede incluir la electrónica necesaria para el tratamiento de la señal luminosa y formateo de la señal de salida.\n
-El sensor de luz más común es el LDR -Light Dependant Resistor o resistencia dependiente de la luz (fotoresistencia)-.Un LDR es básicamente una resistencia que cambia su valor cuando cambia la intensidad de la luz que incide ella.\n</string>
+El sensor de luz más común es el LDR -Light Dependent Resistor o resistencia dependiente de la luz (fotoresistencia)-.Un LDR es básicamente una resistencia que cambia su valor cuando cambia la intensidad de la luz que incide ella.\n</string>
     <string name="tituloluz3">¿PARA QUÉ SIRVE EL SENSOR DE LUZ?\n</string>
     <string name="explicacionluz3">Su función es detectar la intensidad de la luz del ambiente para ajustar el brillo de la pantalla.\n</string>
     <string name="tituloluz4">¿QUÉ DATOS NOS MUESTRA EL SENSOR DE LUZ?\n</string>

@@ -151,6 +151,7 @@ public class Grafica extends Activity implements OnClickListener,
 	double min;
 	double max;
 	double time;
+	String tipoFrecuencia;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -214,12 +215,16 @@ public class Grafica extends Activity implements OnClickListener,
 
 		if (frecuencia == 3) {
 			SAMPLERATE = 200;
+			tipoFrecuencia = getResources().getString(R.string.lento);
 		} else if (frecuencia == 2) {
 			SAMPLERATE = 66;
+			tipoFrecuencia = getResources().getString(R.string.normal);
 		} else if (frecuencia == 1) {
 			SAMPLERATE = 20;
+			tipoFrecuencia = getResources().getString(R.string.rapido);
 		} else if (frecuencia == 0) {
 			SAMPLERATE = 5;
+			tipoFrecuencia = getResources().getString(R.string.muyrapido);
 		}
 
 		// también recogemos el frecuencia de sensor y si están seleccionados
@@ -545,6 +550,8 @@ public class Grafica extends Activity implements OnClickListener,
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						} else {
+							mRenderer.setXAxisMin(time);
+							mRenderer.setXAxisMax(time + 5);
 							mRenderer.setYAxisMax(-1);
 							max = -1;
 							mRenderer.setYAxisMin(1);
@@ -612,6 +619,8 @@ public class Grafica extends Activity implements OnClickListener,
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						} else {
+							mRenderer.setXAxisMin(time);
+							mRenderer.setXAxisMax(time + 5);
 							mRenderer.setYAxisMax(-1);
 							max = -1;
 							mRenderer.setYAxisMin(1);
@@ -680,6 +689,8 @@ public class Grafica extends Activity implements OnClickListener,
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						} else {
+							mRenderer.setXAxisMin(time);
+							mRenderer.setXAxisMax(time + 5);
 							mRenderer.setYAxisMax(-1);
 							max = -1;
 							mRenderer.setYAxisMin(1);
@@ -743,6 +754,8 @@ public class Grafica extends Activity implements OnClickListener,
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						} else {
+							mRenderer.setXAxisMin(time);
+							mRenderer.setXAxisMax(time + 5);
 							mRenderer.setYAxisMax(-1);
 							max = -1;
 							mRenderer.setYAxisMin(1);
@@ -803,6 +816,8 @@ public class Grafica extends Activity implements OnClickListener,
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						} else {
+							mRenderer.setXAxisMin(time);
+							mRenderer.setXAxisMax(time + 5);
 							mRenderer.setYAxisMax(-1);
 							max = -1;
 							mRenderer.setYAxisMin(1);
@@ -1030,7 +1045,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
-						+ ";Hora: " + hora + "\n");
+						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+						+ "\n");
 				csvData.append("t (s);Latitud;Longitud\n");
 				for (GpsDatos values : gpsdatos) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
@@ -1093,7 +1109,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
-						+ ";Hora: " + hora + "\n");
+						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+						+ "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources()
 								.getString(R.string.unidad_acelerometro) + "\n");
@@ -1167,7 +1184,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
-						+ ";Hora: " + hora + "\n");
+						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+						+ "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_giroscopio)
 						+ "\n");
@@ -1242,7 +1260,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
-						+ ";Hora: " + hora + "\n");
+						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+						+ "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources().getString(
 								R.string.unidad_campo_magnetico) + "\n");
@@ -1316,7 +1335,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
-						+ ";Hora: " + hora + "\n");
+						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+						+ "\n");
 				csvData.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_luz) + "\n");
 				for (AccelData2 values : sensorLuz) {
@@ -1382,7 +1402,8 @@ public class Grafica extends Activity implements OnClickListener,
 						+ ";Fecha: "
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
-						+ ";Hora: " + hora + "\n");
+						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+						+ "\n");
 				csvData.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_proximidad)
 						+ "\n");
@@ -1677,7 +1698,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: "
+							+ tipoFrecuencia + "\n");
 					csvData.append("t (s);Latitud;Longitud\n");
 					for (GpsDatos values : gpsdatos) {
 						double tiempo = (values.getTimestamp() - t) / 1000;
@@ -1729,7 +1751,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: "
+							+ tipoFrecuencia + "\n");
 					csvDataexportar.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_acelerometro) + "\n");
@@ -1794,7 +1817,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: "
+							+ tipoFrecuencia + "\n");
 					csvDatagiro.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_giroscopio) + "\n");
@@ -1861,7 +1885,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: "
+							+ tipoFrecuencia + "\n");
 					csvDatamagne.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_campo_magnetico) + "\n");
@@ -1929,7 +1954,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: "
+							+ tipoFrecuencia + "\n");
 					csvDataluz.append("t (s);X;Unidad sensor: "
 							+ getResources().getString(R.string.unidad_luz)
 							+ "\n");
@@ -1987,7 +2013,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: "
+							+ tipoFrecuencia + "\n");
 					csvDataproxi.append("t (s);X;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_proximidad) + "\n");

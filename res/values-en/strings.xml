@@ -8,18 +8,18 @@
     <string name="acercaDe">About</string>
     <string name="inicio">Main screen</string>
     <string name="teoria">Theory</string>
-    <string name="explicacion">\nThis application has been designed and developed by:\n\n
+    <string name="explicacion">\nDesigned and created by authors:\n\n
 \t\tDiego Esteban Moreno\n
 \t\tFélix Huete García\n\n
-As a final project for the University of Valladolid of Engineering degree in Computer Systems.\n\n
+As Final Degree Project in Engineering degree in Computer Systems by University of Valladolid (Spain).\n\n
 
-Tutors:\n\n
-\t\tMiguel Ángel González Rebollo\n 
-\t\tManuel Ángel González Delgado\n</string>
-    <string name="explicacionacercade2">The application shows use of the accelerometer, gyroscope, magnetometer, light sensor, proximity sensor and GPS, as well as measurement tool in physics laboratories.\n</string>
-    <string name="explicacionacercade">Sensor Mobile is an application designed as display unit of sensors on your Android device.\n</string>
+Tutors of the project:\n\n
+\t\tMiguel Ángel González Rebollo (Departamento de Física de la Materia Condensada)\n 
+\t\tManuel Ángel González Delgado  (Departamento de Física Aplicada), from Grupo de Innovación Docente TIA.\n</string>
+    <string name="explicacionacercade2">This application shows the use of an accelerometer, a gyroscope, a magnetometer, a light sensor, a proximity sensor and a GPS as useful devices in a physics lab.\n</string>
+    <string name="explicacionacercade">Sensor Mobile is an application designed as a viewer and monitor for sensors built in your Android dispositive.\n</string>
     <string name="idiomas">LANGUAGES</string>
-    <string name="medicion">Measurement data</string>
+    <string name="medicion">Data measurement</string>
     <string name="aceleracion">Acceleration</string>
     <string name="velocidad">Angular velocity</string>
     <string name="magnetismo">Magnetic flux density</string>
@@ -85,61 +85,62 @@ Tutors:\n\n
     <string name="datosGuardar">No data to save</string>
     <string name="tiempoSeg">Time in seconds</string>
     <string name="titulo1">\nABOUT ACCELEROMETER\n</string>
-    <string name="explicacion1">It is a device that measures acceleration, rate of change of velocity of an object, and the forces induced by gravity, i.e., allows us to detect the movement and rotation.\n This is measured in meters per second squared (m / s2) or forces g (g).\n</string>
+    <string name="explicacion1">It is a device that measures acceleration, ie the variation of the speed of an object. It also allows you to measure the acceleration of gravity.\n
+        Acceleration is measured in meters per second squared (m/s²) or in G units (g =9.8 m/s2).\n </string>
     <string name="titulo2">HOW IT WORKS\n</string>
-    <string name="explicacion2">The main constituent is a capacitor, a device that is usually composed of two fixed metal plates facing each other and a dielectric material.\n
-One of these plates is mobile. When you apply a force to the device, the capacity will increase or decrease depending on the movement.\n
-The energy comes through these plates from the battery device into the capacitor. The dielectric material between these plates will be able to store a charge or another depending on whether the capacitor is higher or lower.\n
-This procedure will allow the sensor to measure how much electrical charge (voltage) is stored in the dielectric material and send that information to the microprocessor device to determine the force and acceleration that has been submitted. The microprocessor has recorded the voltage obtained and saved in a database which had already been recorded other voltages, corresponding to a force and to a certain acceleration.\n</string>
+    <string name="explicacion2">Accelerometers used in mobile phones are MEMS (Microelectromechanical Systems) devices built in a silicon chip. It works by measuring variations in capacity of a capacitor built by two confronted fixed metal plates and by a dielectric material.\n 
+One of those plates is movable so that when force is applied on the device, the capacitance changes. Capacity increases or decreases depending on the movement.\n
+A sensor measures the variations in capacity, that are proportional to the applied force, and sends this data to the microprocessor device to determine the acceleration applied. The Microprocessor saves this data in a data base and compares new data with a range of values of reference which are related to a determined force and acceleration.\n 
+Acceleration is a vector magnitude which needs values of its three components in its three directions x, y and z. That is why there are three different devices as described above to measure acceleration in x, y and z directions.\n</string>
     <string name="titulo3">\nPURPOSE OF ACCELEROMETER\n</string>
-    <string name="explicacion3">An accelerometer can automatically change the screen orientation and detect vertical or horizontal position of the screen.\n</string>
+    <string name="explicacion3">An accelerometer allows you to detect the position of the mobile phone in order to rotate the screen.\n</string>
     <string name="titulo4">WHAT IT MEASURES\n</string>
-    <string name="explicacion4">The accelerometer measures the acceleration applied to the device and its features are summarized in the table.</string>
+    <string name="explicacion4">The accelerometer measures the acceleration applied on the device and its properties are summarized in the table.\n</string>
     <string name="sensores">Sensor device</string>
     <string name="titulogiro1">\nABOUT GYROSCOPE\n</string>
-    <string name="explicaciongiro1">A gyroscope is a mechanical device that helps us to measure, maintain and change the orientation of a device. I.e., it measures the rotational speed (rad / s).\n</string>
+    <string name="explicaciongiro1">A gyroscope is a mechanical device which allows us to measure, keep and change orientation of a device by measuring rotational speed in rad/s.\n</string>
     <string name="titulogiro2">HOW IT WORKS\n</string>
-    <string name="explicaciongiro2">It is based on the angular momentum. It uses a micro electromechanical technology (MEMS) with a silicon sensor thanks to special plates that act as capacitors. Intensity changes are converted into digital data and that is what reads the microprocessor.\n
-Once the gyroscope sets in motion always maintains the orientation and it is oriented to the true north. The gyro gives us a precise orientation, it indicates the displacement on their axes and gives us the position regarding the exact starting point.\n
-MENS (Microelectromechanical Systems, MEMS) refer to the electromechanical technology, their micrometer products and smaller scales (nanometer scale) are merged into nanoelectromechanical systems.\n</string>
+    <string name="explicaciongiro2">Gyroscopes used in mobile phones are MEMS (Microelectromechanical Systems) devices built in a silicon chip. It works by measuring variations in capacity of a capacitor that occur when a small mass, which is integrated in the mechanism, moves by means of a rotation.\n
+The gyroscope, once set in motion, always maintains the orientation and gets oriented to true north. Thus, the gyroscope gives us a precise orientation, it indicates the movement that it has on its axes and gives us the exact position regarding the starting point.\n
+As angular speed is a vector magnitude, values from its three components (x, y and z) are needed to define it.\n</string>
     <string name="titulogiro3">PURPOSE OF GYROSCPE\n</string>
-    <string name="explicaciongiro3">The gyroscope give us the possibility to turn your screen.\n</string>
+    <string name="explicaciongiro3">The gyroscope allows you to rotate your device screen.\n</string>
     <string name="titulogiro4">WHAT IT MEASURES\n</string>
-    <string name="explicaciongiro4">The gyroscope measures the speed of rotation of the device around the x, y, and z axis.The values of the gyro data can be positive or negative. Looking at the origin of a position along the mid-axis positive, if the rotation occurs to the left side around the axis, the value is positive; Otherwise, the value is negative. We can also determine the direction of a gyroscope value.\n</string>
+    <string name="explicaciongiro4">The gyroscope measures the rotational speed of the device by using x, y and z axis. Values taken by gyroscope can be positive or negative. When observing the origin of a position along the positive side of an axis, if rotation is counter-clockwise around the axis, the final value is considered positive. If rotation is made on the opposite direction, value is considered negative. We can also determine the direction of a gyroscope value.\n</string>
     <string name="titulomagne1">\nABOUT MAGNETOMETER\n</string>
-    <string name="explicacionmagne1">It is an electronic component capable of measuring and quantifying the magnetic force of an object. I.e. it measures the magnetic field (µT).\n</string>
+    <string name="explicacionmagne1">It is an electronic device able to quantify the intensity of a magnetic field (µT).\n</string>
     <string name="titulomagne2">HOW IT WORKS\n</string>
-    <string name="explicacionmagne2">The main constituent is an electromagnet with an iron core with a coil of wire wrapped.\n
-The magnetism changes depending on the location due to differences in (the magnetosphere) Earth\'s magnetic field and can be caused by the different nature of the rocks. Magnetometers are a frequent instrumental component of spacecraft that explores planets and for geological exploration for anticlinal structures.\n</string>
+    <string name="explicacionmagne2">Magnetometer is a common electromagnet with an iron core and a coil of wire wound around.\n
+Magnetism varies depending on places due to differences in earth magnet field (magnetosphere) and it could be produced by differences in rocks composition. Magnetometers are frequently integrated in spacecrafts and they are also used in geological explorations to search for anticlinal structures.\n
+As acceleration is a vector magnitude, values from its three directions (x, y and z) are needed. That is why there are three different devices as described above for each direction (x, y and z).\n</string>
     <string name="titulomagne3">PURPOSE OF MAGNETOMETER\n</string>
-    <string name="explicacionmange3">As well as a compass, it can serve as a metal detector.\n</string>
+    <string name="explicacionmange3">It can be used as a compass and metal detector.\n</string>
     <string name="titulomagne4">WHAT IT MEASURES\n</string>
     <string name="explicacionmange4">The most important use of the magnetometer (described in table) in Android systems is to implement the compass.\n</string>
     <string name="tituloluz1">\nABOUT LIGHT SENSOR\n</string>
-    <string name="explicacionluz1">It is an electronic device that responds to the change in light intensity. These sensors require a transmitter that generates light and a receptor component that receives light generated by the transmitter.\n</string>
+    <string name="explicacionluz1">It is an electronic device which measures changes in light intensity. Generally, the chosen unity is lux.\n</string>
     <string name="tituloluz2">HOW IT WORKS\n</string>
-    <string name="explicacionluz2">The light sensor includes a photoelectric transducer to convert the light into an electrical signal and may include electronics for signal conditioning and formatting the compensation signal.\n
-The most common light sensor is Light Dependant Resistor. A LDR is basically a resistor that changes its resistance when light intensity changes. There are three types of photoelectric sensors, sensors for light barrier, reflection on mirror or reflection on objects.\n</string>
+    <string name="explicacionluz2">A light sensor includes a photoelectric transducer which converts light into an electric signal. It can also include necessary hardware for treating light signal and formatting the output signal.\n
+The most common light sensor is LDR -Light Dependent Resistor-. A LDR is basically a resistor that changes its resistance when light intensity changes.\n</string>
     <string name="tituloluz3">PURPOSE OF LIGHT SENSOR\n</string>
-    <string name="explicacionluz3">Its function is to detect the intensity of the ambience light to adjust the screen brightness.\n</string>
+    <string name="explicacionluz3">It is used for adjusting screen brightness in relation to the ambient light intensity.\n</string>
     <string name="tituloluz4">WHAT IT MEASURES\n</string>
-    <string name="explicacionluz4">The system uses the ambient light sensor, described in the table, to detect the ambience lighting and automatically adjust the screen brightness to the appropriate level.\n</string>
+    <string name="explicacionluz4">The system uses an ambient light sensor, described in table, to detect ambient illumination and adjust automatically screen brightness.\n</string>
     <string name="tituloprox1">\nABOUT PROXIMITY SENSOR\n</string>
-    <string name="explicacionprox1">Se trata de un sensor capaz de medir la distancia entre el móvil y algún otro objeto. El sensor de proximidad se mide en centímetros (cm).\n</string>
+    <string name="explicacionprox1">It is a sensor able to measure in centimeters (cm) the distance between the mobile phone and another object.\n</string>
     <string name="tituloprox2">HOW IT WORKS\n</string>
-    <string name="explicacionprox2">These proximity sensors are based on an infra-red LED and an IR receiver. How does it work? It emits infra-red light and it detects if there is something very close to the device. In the case of a call, would be the ear.\n</string>
+    <string name="explicacionprox2">It is built by an infrared LED and an infrared receiver. When an object is located in a minimum distance to the device, the infrared light emitted by the infrared LED is reflected and captured by the infrared receiver. By this reflection and the reception of infrared light, objects can be detected by the system.\n</string>
     <string name="tituloprox3">PURPOSE OF PROXIMITY SENSOR\n</string>
-    <string name="explicacionprox3">When the device is approached to our ear to answer a call, the device turns off the backlight to save battery.\n
-Besides, if we touch the screen by accident while we are on a call, nothing will happen because the proximity sensor locks the screen to prevent such errors.\n
-Usually, if the device is dark it is almost imperceptible but if we look to the light we see it, if it has, of course.\n</string>
+    <string name="explicacionprox3">When the device is close to our ear for answering a call, the screen of the device will shut down to save battery.\n
+And, what is more, when touching screen by accident while answering a call, nothing will occur because the proximity sensor can block the screen to avoid this trouble.\n</string>
     <string name="tituloprox4">WHAT IT MEASURES\n</string>
-    <string name="explicacionprox4">The proximity sensor provides the distance between the device and another object. The device can be used to detect if the user holds the device near (see table); therefore, you can determine if the user is on a call and if the screen can be turned off during the phone call\n</string>
+    <string name="explicacionprox4">Proximity sensor can quantify distance between the device and other object. Device can detect if the user is holding the device closely or not (see table) and determine if the user is in a call in order to shut the screen down during that call.\n</string>
     <string name="titulogps1">\nABOUT GPS\n</string>
-    <string name="explicaciongps1">Global Navigation Satellite System (GNSS) which allows us to set global position of an object, a person, a vehicle or a ship.\n</string>
+    <string name="explicaciongps1">It is the Global Navigation Satellite System (GNSS), which allows us to determine position of an object, human being or vehicle on earth.\n</string>
     <string name="titulogps2">HOW IT WORKS\n</string>
-    <string name="explicaciongps2">The GPS is based on the triangulation, a mathematical principle that determines the exact position of a point knowing the distances from a known location to three points. Three satellites are used to determine the position, speed and height of receiver.\n</string>
+    <string name="explicaciongps2">GPS works by triangulation, a mathematician principle that determines the exact position of a point by knowing distance from it to other three known location points. Theoretically, three different satellites are needed to calculate position, speed and height of the receiver.\n</string>
     <string name="titulogps3">PURPOSE IF GPS\n</string>
-    <string name="explicaciongps3">The GPS indicates paths, routes or location.\n</string>
+    <string name="explicaciongps3">The GPS can be used to show paths, routes and locations.\n</string>
     <string name="titulogps4">WHAT IT MEASURES\n</string>
     <string name="explicaciongps4">Latitude and longitude.\n</string>
     <string name="gpsoff">GPS off</string>
@@ -152,61 +153,64 @@ Usually, if the device is dark it is almost imperceptible but if we look to the 
     <string name="latitud">Latitude</string>
     <string name="longitud">Longitude</string>
     <string name="ayuda">Help</string>
-    <string name="ayuda11">In the main screen you can choose between:\n</string>
-    <string name="ayuda12">Measurement data:\n
-\tsensor measures will be showing here.\n
-Load graph:\n
- \tEvery graph you have saved are listed in this screen.\n
-In the menu you will find SETTINGS button with 4 options:\n</string>
-    <string name="ayuda13">Sensor device: list of sensors device.\n</string>
+    <string name="ayuda11">There are two buttons on the main screen:\n</string>
+    <string name="ayuda12">Data measurement:\n
+\tIn this section, the sensors will be displayed with its measurements.\n
+Loading graphics:\n 
+ \tAll files with saved graphics will be displayed.\n
+Besides these two options, there are four more sections pressing the menu button:\n</string>
+    <string name="ayuda13">Sensor device: in this option all sensors of the device are collected in a list with the following characteristics:\n</string>
     <string name="ayuda14">\t\tName\n
-\t\tPowe\n
+\t\tPower\n
 \t\tVersion\n
 \t\tVendor\n
-\nSettings: application preferences, which are:\n</string>
-    <string name="ayuda15">\n\tLanguage: You can choose Auto, English, Spanish, French or Portuguese.\n
-\tBelow settings divider you can see other three options:\n
-\t\t\tSampling frequency: number of samples per second.\n
-\t\t\tTimer: time elapsed since we enter in the graphic screen until it begins to record.\n
-\t\t\tRecording time.\n
-About: Information about the application privacy and their developers\n
-Help: Manual of the application.\n</string>
-    <string name="ayuda21">Sensor device and their measures. This screen is divided:\n</string>
-    <string name="ayuda22">\nSensor information (buttons):\n
+\nSettings: In this section the application preferences appear. These preferences are:\n</string>
+    <string name="ayuda15">\n\tLanguage: it can be chosen from Auto, English, Spanish, French or Portuguese.\n
+\t\t\tSampling frequency: it can be chosen from the four different frequencies of sensors, ie number of samples per second.\n
+\t\t\tTimer: time elapsed since we enter the graphics screen until it begins recording.\n
+\t\t\tRecording time: length of the recording is chosen.\n
+About: this option shows information about device authors and privacy settings of the application.\n
+Help: application help.\n</string>
+    <string name="ayuda21">Sensors with their measurements will be displayed on this screen. Screen structure:\n</string>
+    <string name="ayuda22">\nButtons of sensors information:\n
 \tAccelerometer\n
 \tGyroscope\n
 \tMagnetometer\n
 \tProximity sensor\n
 \tLight sensor\n
 \tGPS\n
-\nBelow every button information you can see:\n
-\tCheckbox save data: if it is checked data will be saved in csv file.\n
-\tGraph icone:  Start graph screen where data will be represented.\n
-\tMuestra de datos: sensor measures in real time.\n
-There are application preferences in this menu:\n
-\t\t\tSampling frequency: number of samples per second.\n
-\t\t\tTimer: time elapsed since we enter in the graphic screen until it begins to record.\n
-\t\t\tRecording time.\n
-About: Information about the application privacy and their developers\n
-Help: Manual of the application.\n</string>
-    <string name="ayuda31">Data are represented in this screen.\n</string>
-    <string name="ayuda32">Screen schema:\n
-\tStart button: graph will start.\n
-\tBotón Pause/Stop: Stop or pause the data representation.\n
-\tReset: will be pressed to start a new representation of the graph.\n
-Below these button:\n
-\tCheckbox: may be selected depending on what data you want to display.\n
-\tREC: green if not checked save data in Measurement Data screen, else this icone is red.\n
-\tGPS signal: state of gps (searching or off).\n
-\tGraph: the data collected by the device are represented.\n
-Once started the representation of measurements, you can switch from one sensor to another, share or save it in CSV format (menu).\n</string>
-    <string name="ayuda41">In this screen you can see all files saved. If you select a file it will show the representation of the measurements. If you push for an extended period of time, the file may be sent via the option you want.\n
-Once selected if you want to remove from the list to send, press and hold on the same file and remain unchecked.\n</string>
-    <string name="ayuda42">Multiples files may be selected to send.\n</string>
-    <string name="ayuda51">The information screens sensor (gyroscope, accelerometer, magnetometer, light sensor, proximity sensor and GPS) shows the explanation of each sensor. Each screen is structured:\n
-\tAbout: explanation about the sensor and measuring\n
-\tHow it works: explaining the operation of sensor.\n
-\tPurpose : sensor utility.\n
-\tWhat it measures: measures taken by the sensor on the Android device.\n</string>
+\nUnder each information button we can see:\n 
+\tSaving data option: press it if you want the sensor data are stored in a csv file. Several sensors can be selected for recording at a time.\n 
+\tGraphics Icon: this button will take us to the representation of the sensors.\n
+\tData show: measures taken by the sensors are shown in real time.\n
+In the section of GPS we can see a map shaped icon which replaces the icon of the graph. This icon takes us to a world map with a button on top. By pressing it, it brings us to our current location. To make the icon appear, GPS needs to be on.\n
+If you click on the menu, two buttons appear:\n
+\t\t\tSampling frequency: it can be chosen from the four different frequencies of sensors, ie number of samples per second.\n
+\t\t\tTimer: time elapsed since we enter the graphics screen until it begins recording.\n
+\t\t\tRecording time: length of the recording is chosen.\n
+About: this option shows information about device authors and privacy settings of the application.\n
+Help: application help.\n</string>
+    <string name="ayuda31">The representation of sensors data appears on this screen.\n</string>
+    <string name="ayuda32">Its structure is as follows:\n
+\tStart Button: it will be pressed to start the graphic.\n
+\tPause/Stop Button: it will be pressed to stop or interrupt the graphical representation.\n
+\t Reset Button: it will be pressed to start a new representation of the graph.\n
+Below the buttons, it appears:\n
+\tCheckbox: these measures may be selected or not depending on what data you want to display.\n
+\tREC: it will be displayed in green if we do not press the Save Data button from Data measurements screen. If Save Data button is pressed, REC button will be displayed in red.\n
+\tGPS signal: it shows GPS status. Searching, Off or Signal.\n
+\tGraph: the data collected by the mobile are represented.\n
+Once started the representation, can switch from one sensor to another, share or save it in CSV format (menu).\n</string>
+    <string name="ayuda41">On this screen all saved files obtained after the measurements are shown. We will find two different files on this screen:\n
+Sensors measurements: these are data obtained from the accelerometer, the gyroscope, the magnetometer, the light sensor and the proximity sensor.\n
+GPS: locations which are obtained while doing the recording.\n
+If a file is pressed over an extended period of time, it can be sent by the desired application.\n
+Once a file selected, if you want it to be removed from the mailing list, you only have to press over the same file until it remains unselected again.\n</string>
+    <string name="ayuda42">Several files to be sent can be selected at a time.\n</string>
+    <string name="ayuda51">In the Information Screen of sensors (gyroscope, accelerometer, magnetometer, light sensor, proximity sensor and GPS) basic information about each sensor is shown. Each screen is structured in this way:\n
+\tAbout: explanation of what does it measure and what the sensor is.\n
+\tHow it works: explanation of how the sensor works.\n
+\tPurpose : examples of use of the sensors.\n
+\tWhat it measures: sensor measures taken by the sensor on the Android device.\n</string>
 
 </resources>
