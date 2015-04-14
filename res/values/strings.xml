@@ -201,8 +201,9 @@ Además de estas opciones en la opción preferencias del sistema, una vez inicia
 \tGPS: son las localizaciones obtenidas mientras realizábamos la grabación.\n
 Si seleccionamos un fichero con las mediciones de los sensores, éste mostrará la representación de las datos sobre una gráfica. Si por el contrario seleccionamos un fichero GPS, se representará sobre un mapa el recorrido realizado durante la grabación. Aparecerán el punto inicial y el punto final, en forma de bandera a cuadros, y el camino recorrido en color azul.\n
 Si se deja pulsado durante un periodo prolongado de tiempo, el fichero podrá ser enviado mediante la opción que se desee.\n
-Si una vez seleccionado se quiere quitar de la lista a enviar solo se tiene que pulsar prolongadamente sobre ese mismo archivo y quedará sin seleccionar.\n</string> 
-<string name="ayuda42">Se podrán seleccionar varios ficheros a la vez para enviarlos.\n</string> <string name="ayuda51">En las pantallas de información de los sensores (giroscopio, acelerómetro, magnetómetro, sensor de luz, sensor proximidad y GPS) se muestra la explicación de cada sensor. Cada pantalla está estructurada:\n
+Si una vez seleccionado se quiere quitar de la lista a enviar solo se tiene que pulsar prolongadamente sobre ese mismo archivo y quedará sin seleccionar.\n</string>
+    <string name="ayuda42">Se podrán seleccionar varios ficheros a la vez para enviarlos.\n</string>
+    <string name="ayuda51">En las pantallas de información de los sensores (giroscopio, acelerómetro, magnetómetro, sensor de luz, sensor proximidad y GPS) se muestra la explicación de cada sensor. Cada pantalla está estructurada:\n
 \t¿Qué es?: explicación de qué mide y qué es el sensor.\n
 \t¿Cómo funciona?: explicación del funcionamiento del sensor.\n
 \t¿Para qué sirve? : ejemplo de utilización del sensor.\n
