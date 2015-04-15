@@ -1,5 +1,7 @@
 package com.sensor.mobile;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -76,6 +78,10 @@ public class Simulacion extends Activity implements SensorEventListener,
 	// Recogemos las preferencias
 	int tiempoInicio, tiempoParada;
 	int tipo;
+	ArrayList<Long> tiempos = new ArrayList<>();
+	double[] tie = new double[1];
+	double fre;
+	boolean lleno = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +174,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 			gpss.setText(txt);
 			gp.setVisibility(CheckBox.VISIBLE);
 		}
+
+		tie[0] = System.currentTimeMillis();
+		tiempos.clear();
 	}
 
 	public class MiLocationListener implements LocationListener {
@@ -245,12 +254,20 @@ public class Simulacion extends Activity implements SensorEventListener,
 			startActivity(gps);
 			break;
 		case R.id.gpsss:
-			Intent mapa = new Intent(Simulacion.this, com.sensor.mobile.Mapa.class);
+			Intent mapa = new Intent(Simulacion.this,
+					com.sensor.mobile.Mapa.class);
 			startActivity(mapa);
 			break;
 
 		case R.id.graficaAcelerometro:
+			if (lleno == false) {
+				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
+				fre = tiempo / tiempos.size();
+				lleno=true;
+			} else {
+			}
 			Intent grafica = new Intent(Simulacion.this, Grafica.class);
+			grafica.putExtra("frecuencia", fre);
 			grafica.putExtra("tipo", tipo);
 			grafica.putExtra("tiempo", tiempoParada);
 			grafica.putExtra("temporizador", tiempoInicio);
@@ -264,7 +281,15 @@ public class Simulacion extends Activity implements SensorEventListener,
 			startActivity(grafica);
 			break;
 		case R.id.graficaGiroscopio:
+			
+			if (lleno == false) {
+				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
+				fre = tiempo / tiempos.size();
+				lleno=true;
+			} else {
+			}
 			Intent graficaGir = new Intent(Simulacion.this, Grafica.class);
+			graficaGir.putExtra("frecuencia", fre);
 			graficaGir.putExtra("tipo", tipo);
 			graficaGir.putExtra("tiempo", tiempoParada);
 			graficaGir.putExtra("temporizador", tiempoInicio);
@@ -278,7 +303,14 @@ public class Simulacion extends Activity implements SensorEventListener,
 			startActivity(graficaGir);
 			break;
 		case R.id.graficaLuminosidad:
+			if (lleno == false) {
+				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
+				fre = tiempo / tiempos.size();
+				lleno=true;
+			} else {
+			}
 			Intent graficaLu = new Intent(Simulacion.this, Grafica.class);
+			graficaLu.putExtra("frecuencia", fre);
 			graficaLu.putExtra("tipo", tipo);
 			graficaLu.putExtra("tiempo", tiempoParada);
 			graficaLu.putExtra("temporizador", tiempoInicio);
@@ -292,7 +324,14 @@ public class Simulacion extends Activity implements SensorEventListener,
 			startActivity(graficaLu);
 			break;
 		case R.id.graficaMagnetico:
+			if (lleno == false) {
+				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
+				fre = tiempo / tiempos.size();
+				lleno=true;
+			} else {
+			}
 			Intent graficaMa = new Intent(Simulacion.this, Grafica.class);
+			graficaMa.putExtra("frecuencia", fre);
 			graficaMa.putExtra("tipo", tipo);
 			graficaMa.putExtra("tiempo", tiempoParada);
 			graficaMa.putExtra("temporizador", tiempoInicio);
@@ -306,7 +345,14 @@ public class Simulacion extends Activity implements SensorEventListener,
 			startActivity(graficaMa);
 			break;
 		case R.id.graficaProximidad:
+			if (lleno == false) {
+				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
+				fre = tiempo / tiempos.size();
+				lleno=true;
+			} else {
+			}
 			Intent graficaPr = new Intent(Simulacion.this, Grafica.class);
+			graficaPr.putExtra("frecuencia", fre);
 			graficaPr.putExtra("tipo", tipo);
 			graficaPr.putExtra("tiempo", tiempoParada);
 			graficaPr.putExtra("temporizador", tiempoInicio);
@@ -410,6 +456,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		synchronized (this) {
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
+				tiempos.add(System.currentTimeMillis());
 				double m = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
 						event.values[0], 2)
 						+ Math.pow(event.values[1], 2)
@@ -418,7 +465,6 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double y = Math.round(event.values[1] * 10000.0) / 10000.0;
 				double z = Math.round(event.values[2] * 10000.0) / 10000.0;
 				double modulo = Math.round(m * 10000.0) / 10000.0;
-
 				txt += getString(R.string.aceleracion) + " ("
 						+ getString(R.string.unidad_acelerometro) + ")\n";
 				txt += "\n X: " + x;
@@ -598,7 +644,9 @@ public class Simulacion extends Activity implements SensorEventListener,
 			int tiempop = Integer.parseInt(tp);
 			tiempoParada = tiempop * 1000;
 		}
-
+		tie[0] = System.currentTimeMillis();
+		tiempos.clear();
+		lleno = false;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.ChartFactory;
@@ -12,6 +13,8 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
 import android.content.Context;
@@ -105,6 +108,7 @@ public class Grafica extends Activity implements OnClickListener,
 	int frecuencia;
 	int tiempoInicio;
 	int tiempoParada;
+	double frec;
 	// sensor que estamos representando que nos viene de la actividad anterior
 	int sensor;
 	// detectamos que sensores están marcados para guardas sus datos
@@ -140,7 +144,7 @@ public class Grafica extends Activity implements OnClickListener,
 	XYSeriesRenderer valoresZ = new XYSeriesRenderer();
 	XYSeriesRenderer modulo = new XYSeriesRenderer();
 
-	public static int SAMPLERATE;
+	public static long SAMPLERATE;
 
 	int xTick = 0;
 
@@ -207,6 +211,10 @@ public class Grafica extends Activity implements OnClickListener,
 		// de la
 		// actividad anteerior que a su vez es recogido de la configuración
 		frecuencia = graficas.getInt("tipo");
+		frec = graficas.getDouble("frecuencia");
+		Log.d("hola", "tiempo es frecuencia graf: " + frec);
+		SAMPLERATE = Math.round(frec);
+		Log.d("hola", "tiempo es samplwera graf: " + SAMPLERATE);
 		// tiempoParada y tiempoInicio es el tiempo que recogemos de la
 		// actividad anterior y que será el tiempo durante el que vamos a medir
 		// los sensores y el tiempo que pasará antes de inciar los sensores
@@ -214,19 +222,14 @@ public class Grafica extends Activity implements OnClickListener,
 		tiempoParada = graficas.getInt("tiempo");
 
 		if (frecuencia == 3) {
-			SAMPLERATE = 200;
 			tipoFrecuencia = getResources().getString(R.string.lento);
 		} else if (frecuencia == 2) {
-			SAMPLERATE = 66;
 			tipoFrecuencia = getResources().getString(R.string.normal);
 		} else if (frecuencia == 1) {
-			SAMPLERATE = 20;
 			tipoFrecuencia = getResources().getString(R.string.rapido);
 		} else if (frecuencia == 0) {
-			SAMPLERATE = 5;
 			tipoFrecuencia = getResources().getString(R.string.muyrapido);
 		}
-
 		// también recogemos el frecuencia de sensor y si están seleccionados
 		// más de
 		// un sensor para recoger los datos
@@ -1050,7 +1053,7 @@ public class Grafica extends Activity implements OnClickListener,
 				csvData.append("t (s);Latitud;Longitud\n");
 				for (GpsDatos values : gpsdatos) {
 					double tiempo = (values.getTimestamp() - t) / 1000;
-					csvData.append(String.valueOf(formateador2.format(tiempo))
+					csvData.append(String.valueOf(tiempo)
 							+ ";" + String.valueOf(values.getLatitud()) + ";"
 							+ String.valueOf(values.getLongitud()) + "\n");
 				}
@@ -1683,13 +1686,14 @@ public class Grafica extends Activity implements OnClickListener,
 		case (R.id.enviar):
 			if (sensorDatas.size() == 0 && sensorGiroscopio.size() == 0
 					&& sensorMagnetico.size() == 0 && sensorLuz.size() == 0
-					&& sensorProximidad.size() == 0) {
+					&& sensorProximidad.size() == 0 && gpsdatos.size() == 0) {
 				Toast.makeText(this,
 						getResources().getString(R.string.datosCompartir),
 						Toast.LENGTH_SHORT).show();
 			} else {
 				ArrayList<Uri> ficheros = new ArrayList<Uri>();
 				DecimalFormat formateador = new DecimalFormat("0.00##");
+				DecimalFormat formateador2 = new DecimalFormat("0.###");
 				if (g == true) {
 					double t = gpsdatos.peek().getTimestamp();
 					StringBuilder csvData = new StringBuilder();
@@ -1698,13 +1702,13 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+							+ "\n");
 					csvData.append("t (s);Latitud;Longitud\n");
 					for (GpsDatos values : gpsdatos) {
 						double tiempo = (values.getTimestamp() - t) / 1000;
-						csvData.append(String.valueOf(tiempo) + ";"
-								+ String.valueOf(values.getLatitud()) + ";"
+						csvData.append(String.valueOf(tiempo)
+								+ ";" + String.valueOf(values.getLatitud()) + ";"
 								+ String.valueOf(values.getLongitud()) + "\n");
 					}
 					try {
@@ -1751,23 +1755,20 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+							+ "\n");
 					csvDataexportar.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
-							+ getResources().getString(
-									R.string.unidad_acelerometro) + "\n");
+							+ getResources()
+									.getString(R.string.unidad_acelerometro) + "\n");
 					for (AccelData values : sensorDatas) {
 						double tiempo = (values.getTimestamp() - t) / 1000;
-						csvDataexportar.append(String.valueOf(tiempo)
+						csvDataexportar.append(String.valueOf(formateador2.format(tiempo))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getX()))
+								+ String.valueOf(formateador.format(values.getX()))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getY()))
+								+ String.valueOf(formateador.format(values.getY()))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getZ()))
+								+ String.valueOf(formateador.format(values.getZ()))
 								+ ";"
 								+ String.valueOf(formateador.format(values
 										.getModulo())) + "\n");
@@ -1817,24 +1818,21 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+							+ "\n");
 					csvDatagiro.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
-							+ getResources().getString(
-									R.string.unidad_giroscopio) + "\n");
+							+ getResources().getString(R.string.unidad_giroscopio)
+							+ "\n");
 					for (AccelData values : sensorGiroscopio) {
 						double tiempo = (values.getTimestamp() - t) / 1000;
 
-						csvDatagiro.append(String.valueOf(tiempo)
+						csvDatagiro.append(String.valueOf(formateador2.format(tiempo))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getX()))
+								+ String.valueOf(formateador.format(values.getX()))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getY()))
+								+ String.valueOf(formateador.format(values.getY()))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getZ()))
+								+ String.valueOf(formateador.format(values.getZ()))
 								+ ";"
 								+ String.valueOf(formateador.format(values
 										.getModulo())) + "\n");
@@ -1885,24 +1883,21 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+							+ "\n");
 					csvDatamagne.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_campo_magnetico) + "\n");
 					for (AccelData values : sensorMagnetico) {
 						double tiempo = (values.getTimestamp() - t) / 1000;
 
-						csvDatamagne.append(String.valueOf(tiempo)
+						csvDatamagne.append(String.valueOf(formateador2.format(tiempo))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getX()))
+								+ String.valueOf(formateador.format(values.getX()))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getY()))
+								+ String.valueOf(formateador.format(values.getY()))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getZ()))
+								+ String.valueOf(formateador.format(values.getZ()))
 								+ ";"
 								+ String.valueOf(formateador.format(values
 										.getModulo())) + "\n");
@@ -1954,17 +1949,16 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
-					csvDataluz.append("t (s);X;Unidad sensor: "
-							+ getResources().getString(R.string.unidad_luz)
+							+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
 							+ "\n");
+					csvDataluz.append("t (s);X;Unidad sensor: "
+							+ getResources().getString(R.string.unidad_luz) + "\n");
 					for (AccelData2 values : sensorLuz) {
 						double tiempo = (values.getTimestamp() - t) / 1000;
-						csvDataluz.append(String.valueOf(tiempo)
+						csvDataluz.append(String.valueOf(formateador2.format(tiempo))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getX())) + "\n");
+								+ String.valueOf(formateador.format(values.getX()))
+								+ "\n");
 					}
 
 					try {
@@ -2013,18 +2007,18 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Fecha: "
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
-							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
+							+ "\n");
 					csvDataproxi.append("t (s);X;Unidad sensor: "
-							+ getResources().getString(
-									R.string.unidad_proximidad) + "\n");
+							+ getResources().getString(R.string.unidad_proximidad)
+							+ "\n");
 					for (AccelData2 values : sensorProximidad) {
 						double tiempo = (values.getTimestamp() - t) / 1000;
 
-						csvDataproxi.append(String.valueOf(tiempo)
+						csvDataproxi.append(String.valueOf(formateador2.format(tiempo))
 								+ ";"
-								+ String.valueOf(formateador.format(values
-										.getX())) + "\n");
+								+ String.valueOf(formateador.format(values.getX()))
+								+ "\n");
 					}
 
 					try {

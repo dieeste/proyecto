@@ -3,6 +3,7 @@ package com.sensor.mobile;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.util.Log;
 
 /**
  * Receive events from the <code>Sensor</code> and periodically update the UI
@@ -31,7 +32,7 @@ class Ticker extends Thread implements SensorEventListener {
 	/**
 	 * How long to sleep between taking a sample
 	 */
-	private int SLEEPTIME = Grafica.SAMPLERATE;
+	private long SLEEPTIME = Grafica.SAMPLERATE;
 
 
 	/**
