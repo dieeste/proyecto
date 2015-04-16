@@ -263,7 +263,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			if (lleno == false) {
 				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
 				fre = tiempo / tiempos.size();
-				lleno=true;
+				tiempos.clear();
+				lleno = true;
 			} else {
 			}
 			Intent grafica = new Intent(Simulacion.this, Grafica.class);
@@ -281,11 +282,12 @@ public class Simulacion extends Activity implements SensorEventListener,
 			startActivity(grafica);
 			break;
 		case R.id.graficaGiroscopio:
-			
+
 			if (lleno == false) {
 				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
 				fre = tiempo / tiempos.size();
-				lleno=true;
+				tiempos.clear();
+				lleno = true;
 			} else {
 			}
 			Intent graficaGir = new Intent(Simulacion.this, Grafica.class);
@@ -306,7 +308,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			if (lleno == false) {
 				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
 				fre = tiempo / tiempos.size();
-				lleno=true;
+				tiempos.clear();
+				lleno = true;
 			} else {
 			}
 			Intent graficaLu = new Intent(Simulacion.this, Grafica.class);
@@ -327,7 +330,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			if (lleno == false) {
 				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
 				fre = tiempo / tiempos.size();
-				lleno=true;
+				tiempos.clear();
+				lleno = true;
 			} else {
 			}
 			Intent graficaMa = new Intent(Simulacion.this, Grafica.class);
@@ -348,7 +352,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 			if (lleno == false) {
 				double tiempo = tiempos.get(tiempos.size() - 1) - tie[0];
 				fre = tiempo / tiempos.size();
-				lleno=true;
+				tiempos.clear();
+				lleno = true;
 			} else {
 			}
 			Intent graficaPr = new Intent(Simulacion.this, Grafica.class);
@@ -431,6 +436,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 
 	// Paramos todos los sensores
 	protected void Parar_sensores() {
+		mSensorManager.unregisterListener(this);
 		mSensorManager.unregisterListener(this,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
 
@@ -456,7 +462,6 @@ public class Simulacion extends Activity implements SensorEventListener,
 		synchronized (this) {
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
-				tiempos.add(System.currentTimeMillis());
 				double m = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
 						event.values[0], 2)
 						+ Math.pow(event.values[1], 2)
@@ -465,6 +470,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double y = Math.round(event.values[1] * 10000.0) / 10000.0;
 				double z = Math.round(event.values[2] * 10000.0) / 10000.0;
 				double modulo = Math.round(m * 10000.0) / 10000.0;
+				tiempos.add(System.currentTimeMillis());
 				txt += getString(R.string.aceleracion) + " ("
 						+ getString(R.string.unidad_acelerometro) + ")\n";
 				txt += "\n X: " + x;

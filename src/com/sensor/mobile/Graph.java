@@ -161,7 +161,7 @@ public class Graph extends Grafica {
 		double[] limites = { 0, maxejex + 5, ejeymin - 200, ejeymax + 200 };// limites
 		// utilizamos diferentes márgenes para las diferentes pantallas
 		int[] margenes = { 70, 80, 70, 60 };
-		int[] margenesnormal = { 50, 100, 70, 40 };
+		int[] margenesnormal = { 50, 60, 70, 40 };
 		int[] margenespeque = { 30, 40, 30, 20 };
 		int[] margenesextra = { 70, 80, 70, 60 };
 		XYSeriesRenderer valoresX = new XYSeriesRenderer();
@@ -207,10 +207,9 @@ public class Graph extends Grafica {
 			valoresZ.setLineWidth(3);
 			modulo.setLineWidth(3);
 			renderer.setMargins(margenesnormal);
-			renderer.setLabelsTextSize(20);
-			renderer.setLabelsTextSize(20);
-			renderer.setAxisTitleTextSize(20);
-			renderer.setChartTitleTextSize(15);
+			renderer.setLabelsTextSize(22);
+			renderer.setAxisTitleTextSize(22);
+			renderer.setChartTitleTextSize(18);
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("media")) {
 			valoresX.setLineWidth(2);
@@ -314,7 +313,7 @@ public class Graph extends Grafica {
 			renderer.setLabelsTextSize(20);
 			renderer.setLabelsTextSize(20);
 			renderer.setAxisTitleTextSize(20);
-			renderer.setChartTitleTextSize(15);
+			renderer.setChartTitleTextSize(18);
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("media")) {
 			valoresX.setLineWidth(3);

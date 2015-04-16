@@ -32,8 +32,7 @@ class Ticker extends Thread implements SensorEventListener {
 	/**
 	 * How long to sleep between taking a sample
 	 */
-	private long SLEEPTIME = Grafica.SAMPLERATE;
-
+	private static long SLEEPTIME = Grafica.SAMPLERATE;
 
 	/**
 	 * Create a new <code>Ticker</code> and start ticking the
@@ -60,68 +59,73 @@ class Ticker extends Thread implements SensorEventListener {
 
 	// Interface: SensorEventListener
 	public void onSensorChanged(SensorEvent event) {
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-			worker.currentEvent = event;
-			if(activity.acce==true){
-				double x = event.values[0];
-				double y = event.values[1];
-				double z = event.values[2];
-				double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x, 2)
-						+ Math.pow(y, 2) + Math.pow(z, 2))));
-				double timestamp = System.currentTimeMillis();
+		synchronized (this) {
+			switch (event.sensor.getType()) {
+			case Sensor.TYPE_ACCELEROMETER:
+				worker.currentEvent = event;
+				if (activity.acce == true) {
+					double x = event.values[0];
+					double y = event.values[1];
+					double z = event.values[2];
+					double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
+							x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
+					double timestamp = System.currentTimeMillis();
 					AccelData data = new AccelData(timestamp, x, y, z, modulo);
 					activity.sensorDatas.add(data);
-			}
-			break;
-		case Sensor.TYPE_GYROSCOPE:
-			worker.giroscopioEvent = event;
-			if (activity.giro==true){
-				double x2 = event.values[0];
-				double y2 = event.values[1];
-				double z2 = event.values[2];
-				double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x2, 2)
-						+ Math.pow(y2, 2) + Math.pow(z2, 2))));
-				double timestamp2 = System.currentTimeMillis();
-				AccelData data2 = new AccelData(timestamp2, x2, y2, z2, modulo2);
-				activity.sensorGiroscopio.add(data2);
-			}
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			worker.magnetometroEvent = event;
-			if (activity.magne==true){
-				double x4 = event.values[0];
-				double y4 = event.values[1];
-				double z4 = event.values[2];
-				double modulo4 = Double.valueOf(Math.abs(Math.sqrt(Math.pow(x4, 2)
-						+ Math.pow(y4, 2) + Math.pow(z4, 2))));
-				double timestamp4 = System.currentTimeMillis();
+				}
+				break;
+			case Sensor.TYPE_GYROSCOPE:
+				worker.giroscopioEvent = event;
+				if (activity.giro == true) {
+					double x2 = event.values[0];
+					double y2 = event.values[1];
+					double z2 = event.values[2];
+					double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math
+							.pow(x2, 2) + Math.pow(y2, 2) + Math.pow(z2, 2))));
+					double timestamp2 = System.currentTimeMillis();
+					AccelData data2 = new AccelData(timestamp2, x2, y2, z2,
+							modulo2);
+					activity.sensorGiroscopio.add(data2);
+				}
+				break;
+			case Sensor.TYPE_MAGNETIC_FIELD:
+				worker.magnetometroEvent = event;
+				if (activity.magne == true) {
+					double x4 = event.values[0];
+					double y4 = event.values[1];
+					double z4 = event.values[2];
+					double modulo4 = Double.valueOf(Math.abs(Math.sqrt(Math
+							.pow(x4, 2) + Math.pow(y4, 2) + Math.pow(z4, 2))));
+					double timestamp4 = System.currentTimeMillis();
 
-				AccelData data4 = new AccelData(timestamp4, x4, y4, z4, modulo4);
-				activity.sensorMagnetico.add(data4);
-			}
-			break;
-		case Sensor.TYPE_LIGHT:
-			worker.luzEvent = event;
-			if (activity.luz==true){
-				double x3 = event.values[0];
-				double timestamp3 = System.currentTimeMillis();
+					AccelData data4 = new AccelData(timestamp4, x4, y4, z4,
+							modulo4);
+					activity.sensorMagnetico.add(data4);
+				}
+				break;
+			case Sensor.TYPE_LIGHT:
+				worker.luzEvent = event;
+				if (activity.luz == true) {
+					double x3 = event.values[0];
+					double timestamp3 = System.currentTimeMillis();
 
-				AccelData2 data3 = new AccelData2(timestamp3, x3);
-				activity.sensorLuz.add(data3);
+					AccelData2 data3 = new AccelData2(timestamp3, x3);
+					activity.sensorLuz.add(data3);
+				}
+				break;
+			case Sensor.TYPE_PROXIMITY:
+				worker.proximidadEvent = event;
+				if (activity.proxi == true) {
+					double x5 = event.values[0];
+					double timestamp5 = System.currentTimeMillis();
+
+					AccelData2 data5 = new AccelData2(timestamp5, x5);
+					activity.sensorProximidad.add(data5);
+				}
+				break;
 			}
-			break;
-		case Sensor.TYPE_PROXIMITY:
-			worker.proximidadEvent = event;
-			if (activity.proxi==true){
-				double x5 = event.values[0];
-				double timestamp5 = System.currentTimeMillis();
-				
-				AccelData2 data5 = new AccelData2(timestamp5, x5);
-				activity.sensorProximidad.add(data5);
-			}
-			break;
 		}
+
 	}
 
 	@Override
