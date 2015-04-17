@@ -327,6 +327,8 @@ int menu menucargar 0x7f0c0001
 int menu menugrafica 0x7f0c0002
 int menu menusimulacion 0x7f0c0003
 int raw gtm_analytics 0x7f050000
+int raw tono1 0x7f050001
+int raw tono2 0x7f050002
 int string accept 0x7f070002
 int string aceleracion 0x7f07002e
 int string acelerometro 0x7f07003a

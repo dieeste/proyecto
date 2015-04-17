@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.ChartFactory;
@@ -13,8 +12,6 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,6 +27,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -67,7 +65,7 @@ public class Grafica extends Activity implements OnClickListener,
 	public ConcurrentLinkedQueue<AccelData> sensorMagnetico;
 	public ConcurrentLinkedQueue<AccelData2> sensorLuz;
 	public ConcurrentLinkedQueue<AccelData2> sensorProximidad;
-	private ConcurrentLinkedQueue<GpsDatos> gpsdatos;
+	public ConcurrentLinkedQueue<GpsDatos> gpsdatos;
 
 	Sensor giroscope;
 	Sensor aceleromete;
@@ -156,6 +154,7 @@ public class Grafica extends Activity implements OnClickListener,
 	double max;
 	double time;
 	String tipoFrecuencia;
+	MediaPlayer sonidoIniciar, sonidoParar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -399,6 +398,8 @@ public class Grafica extends Activity implements OnClickListener,
 			mRenderer.setShowLegend(false);
 			break;
 		}
+		sonidoIniciar = MediaPlayer.create(this, R.raw.tono1);
+	    sonidoParar = MediaPlayer.create(this, R.raw.tono2);
 	}
 
 	@Override
@@ -467,12 +468,13 @@ public class Grafica extends Activity implements OnClickListener,
 					iniciar.setEnabled(false);
 					parar.setEnabled(true);
 					reiniciar.setEnabled(false);
+					sonidoIniciar.start();
 				} else {
 					Iniciar_sensores();
 					iniciar.setEnabled(false);
 					parar.setEnabled(false);
 					reiniciar.setEnabled(false);
-
+					sonidoIniciar.start();
 					new CountDownTimer(tiempoParada, 1000) {
 						@Override
 						public void onTick(long millisUntilFinished) {
@@ -488,6 +490,7 @@ public class Grafica extends Activity implements OnClickListener,
 							reiniciar.setEnabled(true);
 							iniciar.setEnabled(false);
 							parar.setEnabled(false);
+							sonidoParar.start();
 						}
 					}.start();
 				}
@@ -510,17 +513,13 @@ public class Grafica extends Activity implements OnClickListener,
 				reiniciar.setEnabled(true);
 				iniciar.setEnabled(false);
 				parar.setEnabled(false);
+				sonidoParar.start();
 			}
 		}.start();
 	}
 
 	protected void onTick(SensorEvent event) {
 		synchronized (this) {
-			double timestampgps = System.currentTimeMillis();
-			if (g == true) {
-				GpsDatos datos = new GpsDatos(timestampgps, latitud, longitud);
-				gpsdatos.add(datos);
-			}
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
 				if (sensor == Sensor.TYPE_ACCELEROMETER) {

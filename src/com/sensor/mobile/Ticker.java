@@ -62,6 +62,11 @@ class Ticker extends Thread implements SensorEventListener {
 		synchronized (this) {
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
+				if (activity.g == true) {
+					double timestampgps = System.currentTimeMillis();
+					GpsDatos datos = new GpsDatos(timestampgps, activity.latitud, activity.longitud);
+					activity.gpsdatos.add(datos);
+				}
 				worker.currentEvent = event;
 				if (activity.acce == true) {
 					double x = event.values[0];
