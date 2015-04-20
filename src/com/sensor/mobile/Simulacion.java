@@ -79,7 +79,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 	int tiempoInicio, tiempoParada;
 	int tipo;
 	ArrayList<Long> tiempos = new ArrayList<>();
-	double[] tie = new double[1];
+	long[] tie = new long[1];
 	double fre;
 	boolean lleno = false;
 
