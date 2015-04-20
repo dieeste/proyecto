@@ -470,7 +470,8 @@ public class Simulacion extends Activity implements SensorEventListener,
 				double y = Math.round(event.values[1] * 10000.0) / 10000.0;
 				double z = Math.round(event.values[2] * 10000.0) / 10000.0;
 				double modulo = Math.round(m * 10000.0) / 10000.0;
-				tiempos.add(System.currentTimeMillis());
+				long tiem = System.currentTimeMillis();
+				tiempos.add(tiem);
 				txt += getString(R.string.aceleracion) + " ("
 						+ getString(R.string.unidad_acelerometro) + ")\n";
 				txt += "\n X: " + x;

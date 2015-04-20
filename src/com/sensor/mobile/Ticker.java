@@ -3,7 +3,6 @@ package com.sensor.mobile;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.util.Log;
 
 /**
  * Receive events from the <code>Sensor</code> and periodically update the UI
@@ -62,12 +61,12 @@ class Ticker extends Thread implements SensorEventListener {
 		synchronized (this) {
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
+				worker.currentEvent = event;
 				if (activity.g == true) {
 					double timestampgps = System.currentTimeMillis();
 					GpsDatos datos = new GpsDatos(timestampgps, activity.latitud, activity.longitud);
 					activity.gpsdatos.add(datos);
 				}
-				worker.currentEvent = event;
 				if (activity.acce == true) {
 					double x = event.values[0];
 					double y = event.values[1];

@@ -222,7 +222,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 		if (frecuencia == 3) {
 			tipoFrecuencia = getResources().getString(R.string.lento);
-			//SAMPLERATE = 180;
+			SAMPLERATE = 200;
 			Log.d("hola", "sensor es sample fijo graf: " + SAMPLERATE);
 		} else if (frecuencia == 2) {
 			tipoFrecuencia = getResources().getString(R.string.normal);
@@ -399,7 +399,7 @@ public class Grafica extends Activity implements OnClickListener,
 			break;
 		}
 		sonidoIniciar = MediaPlayer.create(this, R.raw.tono1);
-	    sonidoParar = MediaPlayer.create(this, R.raw.tono2);
+		sonidoParar = MediaPlayer.create(this, R.raw.tono2);
 	}
 
 	@Override
@@ -527,7 +527,9 @@ public class Grafica extends Activity implements OnClickListener,
 					double y = event.values[1];
 					double z = event.values[2];
 					double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
-							x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
+							event.values[0], 2)
+							+ Math.pow(event.values[1], 2)
+							+ Math.pow(event.values[2], 2))));
 					ejex.setVisibility(CheckBox.VISIBLE);
 					ejey.setVisibility(CheckBox.VISIBLE);
 					ejez.setVisibility(CheckBox.VISIBLE);
@@ -866,6 +868,7 @@ public class Grafica extends Activity implements OnClickListener,
 		double[] limites = { 0, mRenderer.getXAxisMax() + 5, min - 200,
 				max + 200 };
 		mRenderer.setPanLimits(limites);
+
 		if (xTick == 0) {
 			max = mRenderer.getYAxisMax() - 1;
 			min = mRenderer.getYAxisMin() + 1;
@@ -1527,12 +1530,18 @@ public class Grafica extends Activity implements OnClickListener,
 			onStop();
 			break;
 		case (R.id.inicio):
-			iniciar.setVisibility(Button.GONE);
-			continuar.setVisibility(Button.VISIBLE);
-			continuar.setEnabled(false);
-			parar.setEnabled(true);
-			reiniciar.setEnabled(false);
-			Iniciar_sensores();
+			if (g == true && latitud == 0 && longitud == 0) {
+				Toast.makeText(this,
+						"GPS buscando, espere a tener señal para comenzar",
+						Toast.LENGTH_LONG).show();
+			} else {
+				iniciar.setVisibility(Button.GONE);
+				continuar.setVisibility(Button.VISIBLE);
+				continuar.setEnabled(false);
+				parar.setEnabled(true);
+				reiniciar.setEnabled(false);
+				Iniciar_sensores();
+			}
 			if (tiempoParada > 0) {
 				contadores2();
 				continuar.setEnabled(false);
@@ -1555,7 +1564,8 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 				sensorData.clear();
 			}
-
+			min= 1;
+			max = -1;
 			layout.removeView(chartView);
 			layout.removeAllViews();
 			mRenderer.setXAxisMin(0.0);
