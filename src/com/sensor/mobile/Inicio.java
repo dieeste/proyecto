@@ -12,12 +12,12 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
-public class Inicio extends Activity implements OnClickListener{
-	
+public class Inicio extends Activity implements OnClickListener {
 
 	private static final long SPLASH_SCREEN_DELAY = 3000;
 	TimerTask task;
 	RelativeLayout init;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,6 +62,7 @@ public class Inicio extends Activity implements OnClickListener{
 			break;
 		}
 	}
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub

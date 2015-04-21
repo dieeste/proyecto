@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 public class RepresentarGps extends FragmentActivity {
 	private GoogleMap googleMap;
 	Polyline line;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

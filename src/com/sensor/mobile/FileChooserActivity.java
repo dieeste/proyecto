@@ -183,7 +183,6 @@ public class FileChooserActivity extends ListActivity {
 		/** true -> el menú ya está visible */
 	}
 
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Elegimos entre las opciones disponibles en esta pantalla
@@ -194,9 +193,9 @@ public class FileChooserActivity extends ListActivity {
 				Toast.makeText(this,
 						getResources().getString(R.string.datosCompartir),
 						Toast.LENGTH_SHORT).show();
-			}else {
-			enviar(ficheros);
-			ficheros.remove(true);
+			} else {
+				enviar(ficheros);
+				ficheros.remove(true);
 			}
 			break;
 		case R.id.menu_ayuda:

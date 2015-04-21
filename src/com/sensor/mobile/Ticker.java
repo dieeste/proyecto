@@ -64,7 +64,8 @@ class Ticker extends Thread implements SensorEventListener {
 				worker.currentEvent = event;
 				if (activity.g == true) {
 					double timestampgps = System.currentTimeMillis();
-					GpsDatos datos = new GpsDatos(timestampgps, activity.latitud, activity.longitud);
+					GpsDatos datos = new GpsDatos(timestampgps,
+							activity.latitud, activity.longitud);
 					activity.gpsdatos.add(datos);
 				}
 				if (activity.acce == true) {

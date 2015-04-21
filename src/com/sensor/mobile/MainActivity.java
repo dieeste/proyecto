@@ -106,18 +106,17 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 
-		/*Resources resource = getResources();
-		Configuration config = resource.getConfiguration();
-		sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-		if ("fr".equalsIgnoreCase(sharedPreference.getString("language", null))) {
-			config.locale = Locale.FRANCE;
-		} else if ("en".equalsIgnoreCase(sharedPreference.getString("language",
-				null))) {
-			config.locale = Locale.ENGLISH;
-		} else {
-			config.locale = Locale.getDefault();
-		}
-		getBaseContext().getResources().updateConfiguration(config, null);*/
+		/*
+		 * Resources resource = getResources(); Configuration config =
+		 * resource.getConfiguration(); sharedPreference =
+		 * PreferenceManager.getDefaultSharedPreferences(this); if
+		 * ("fr".equalsIgnoreCase(sharedPreference.getString("language", null)))
+		 * { config.locale = Locale.FRANCE; } else if
+		 * ("en".equalsIgnoreCase(sharedPreference.getString("language", null)))
+		 * { config.locale = Locale.ENGLISH; } else { config.locale =
+		 * Locale.getDefault(); }
+		 * getBaseContext().getResources().updateConfiguration(config, null);
+		 */
 
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());

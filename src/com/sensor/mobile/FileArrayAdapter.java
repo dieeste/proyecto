@@ -44,7 +44,8 @@ public class FileArrayAdapter extends ArrayAdapter<FileInfo> {
 			viewHolder.name = (TextView) convertView.findViewById(R.id.name);
 			viewHolder.details = (TextView) convertView
 					.findViewById(R.id.details);
-            viewHolder.mView = (LinearLayout) convertView.findViewById(R.id.itemlista);
+			viewHolder.mView = (LinearLayout) convertView
+					.findViewById(R.id.itemlista);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -55,12 +56,12 @@ public class FileArrayAdapter extends ArrayAdapter<FileInfo> {
 
 			if (option.getData().equalsIgnoreCase(Constants.FOLDER)) {
 				viewHolder.icon.setImageResource(R.drawable.folder);
-                viewHolder.mView.setBackgroundResource(R.color.noseleccionado);
-            } else if (option.getData().equalsIgnoreCase(
+				viewHolder.mView.setBackgroundResource(R.color.noseleccionado);
+			} else if (option.getData().equalsIgnoreCase(
 					Constants.PARENT_FOLDER)) {
 				viewHolder.icon.setImageResource(R.drawable.back);
-                viewHolder.mView.setBackgroundResource(R.color.noseleccionado);
-            } else {
+				viewHolder.mView.setBackgroundResource(R.color.noseleccionado);
+			} else {
 				String name = option.getName().toLowerCase();
 				if (name.endsWith(Constants.XLS)
 						|| name.endsWith(Constants.XLSX))
@@ -102,13 +103,14 @@ public class FileArrayAdapter extends ArrayAdapter<FileInfo> {
 					viewHolder.icon.setImageResource(R.drawable.csv);
 				else
 					viewHolder.icon.setImageResource(R.drawable.blank);
-                if(option.selected){
-                    viewHolder.mView.setBackgroundResource(R.color.seleccionado);
-                }
-                else{
-                    viewHolder.mView.setBackgroundResource(R.color.noseleccionado);
-                }
-            }
+				if (option.selected) {
+					viewHolder.mView
+							.setBackgroundResource(R.color.seleccionado);
+				} else {
+					viewHolder.mView
+							.setBackgroundResource(R.color.noseleccionado);
+				}
+			}
 
 			viewHolder.name.setText(option.getName());
 			viewHolder.details.setText(option.getData());
@@ -118,7 +120,7 @@ public class FileArrayAdapter extends ArrayAdapter<FileInfo> {
 	}
 
 	class ViewHolder {
-        LinearLayout mView;
+		LinearLayout mView;
 		ImageView icon;
 		TextView name;
 		TextView details;

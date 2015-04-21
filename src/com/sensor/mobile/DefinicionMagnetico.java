@@ -5,14 +5,15 @@ import android.os.Bundle;
 
 public class DefinicionMagnetico extends Activity {
 
-    /** Called when the activity is first created. */
+	/** Called when the activity is first created. */
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.defmagnetico);
+		setContentView(R.layout.defmagnetico);
 
-    }
+	}
 
 }
