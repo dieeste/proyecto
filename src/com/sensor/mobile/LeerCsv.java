@@ -146,10 +146,12 @@ public class LeerCsv extends Activity implements OnClickListener,
 			fichero.getHeaders();
 			fichero.skipLine();
 			fichero.readHeaders();
-
+			boolean columna = fichero.getHeader(5).isEmpty();
+			Log.d("entramos", "columna " + columna);
 			while (fichero.readRecord()) {
 				numerolineas = fichero.getColumnCount();
-				if (numerolineas == 5) {
+				if (numerolineas == 5 && columna == false) {
+					Log.d("entramos", "entramos sensor1");
 					double tiempo = Double.parseDouble(fichero.get("t (s)")
 							.replace(",", "."));
 					double x = Double.parseDouble(fichero.get("X").replace(",",
@@ -171,15 +173,18 @@ public class LeerCsv extends Activity implements OnClickListener,
 					unidad = fichero.getHeader(2);
 					AccelData2 data = new AccelData2(tiempo, x);
 					sensor.add(data);
-				} else if (numerolineas==3){
+				} else if (numerolineas == 5 && columna == true) {
+					Log.d("entramos", "entramos gps1");
 					double latitud = Double.parseDouble(fichero.get("Latitud"));
-					double longitud = Double.parseDouble(fichero.get("Longitud"));
+					double longitud = Double.parseDouble(fichero
+							.get("Longitud"));
 					ubicacion = new LatLng(latitud, longitud);
 					puntos.add(ubicacion);
 				}
 			}
 			fichero.close();
-			if (numerolineas == 5) {
+			if (numerolineas == 5 && columna == false) {
+				Log.d("entramos", "entramos sensor");
 				tipo = 1;
 				if (unidad.equalsIgnoreCase("Unidad sensor: "
 						+ getResources()
@@ -226,13 +231,13 @@ public class LeerCsv extends Activity implements OnClickListener,
 					setTitle(nombresensor);
 				}
 				iniciar2();
-			} else if (numerolineas == 3) {
-				for(int i=0;i<puntos.size();i++){
-					if (i>0){
-						if (puntos.get(i).equals(puntos.get(i-1))){
-						}
-						else{
-						localizacion.add(puntos.get(i));
+			} else if (numerolineas == 5 && columna == true) {
+				Log.d("entramos", "entramos gps");
+				for (int i = 0; i < puntos.size(); i++) {
+					if (i > 0) {
+						if (puntos.get(i).equals(puntos.get(i - 1))) {
+						} else {
+							localizacion.add(puntos.get(i));
 						}
 					}
 				}

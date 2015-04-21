@@ -65,7 +65,8 @@ public class Grafica extends Activity implements OnClickListener,
 	public ConcurrentLinkedQueue<AccelData> sensorMagnetico;
 	public ConcurrentLinkedQueue<AccelData2> sensorLuz;
 	public ConcurrentLinkedQueue<AccelData2> sensorProximidad;
-	public ConcurrentLinkedQueue<GpsDatos> gpsdatos;
+	// public ConcurrentLinkedQueue<GpsDatos> gpsdatos;
+	ArrayList<GpsDatos> gpsdatos = new ArrayList<>();
 
 	Sensor giroscope;
 	Sensor aceleromete;
@@ -156,6 +157,10 @@ public class Grafica extends Activity implements OnClickListener,
 	String tipoFrecuencia;
 	MediaPlayer sonidoIniciar, sonidoParar;
 
+	double distanciaCoordenadas = 0;
+	double distanciaTotal = 0;
+	double numeroMuestras;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -174,7 +179,7 @@ public class Grafica extends Activity implements OnClickListener,
 		sensorMagnetico = new ConcurrentLinkedQueue<AccelData>();
 		sensorLuz = new ConcurrentLinkedQueue<AccelData2>();
 		sensorProximidad = new ConcurrentLinkedQueue<AccelData2>();
-		gpsdatos = new ConcurrentLinkedQueue<GpsDatos>();
+		// gpsdatos = new ConcurrentLinkedQueue<GpsDatos>();
 
 		// Declaramos objetos
 		layout = (LinearLayout) findViewById(R.id.chart);
@@ -211,9 +216,8 @@ public class Grafica extends Activity implements OnClickListener,
 		// actividad anteerior que a su vez es recogido de la configuración
 		frecuencia = graficas.getInt("tipo");
 		frec = graficas.getDouble("frecuencia");
-		Log.d("hola", "tiempo es frecuencia graf: " + frec);
 		SAMPLERATE = Math.round(frec);
-		Log.d("hola", "sensor es samplwera graf: " + SAMPLERATE);
+		numeroMuestras = 1000 / SAMPLERATE;
 		// tiempoParada y tiempoInicio es el tiempo que recogemos de la
 		// actividad anterior y que será el tiempo durante el que vamos a medir
 		// los sensores y el tiempo que pasará antes de inciar los sensores
@@ -223,7 +227,7 @@ public class Grafica extends Activity implements OnClickListener,
 		if (frecuencia == 3) {
 			tipoFrecuencia = getResources().getString(R.string.lento);
 			SAMPLERATE = 200;
-			Log.d("hola", "sensor es sample fijo graf: " + SAMPLERATE);
+			numeroMuestras = 1000 / SAMPLERATE;
 		} else if (frecuencia == 2) {
 			tipoFrecuencia = getResources().getString(R.string.normal);
 		} else if (frecuencia == 1) {
@@ -1041,11 +1045,12 @@ public class Grafica extends Activity implements OnClickListener,
 
 		DecimalFormat formateador = new DecimalFormat("0.00##");
 		DecimalFormat formateador2 = new DecimalFormat("0.###");
+		DecimalFormat formateador3 = new DecimalFormat("0.00000");
 
 		@Override
 		public void run() {
 			if (g == true) {
-				double t = gpsdatos.peek().getTimestamp();
+				double t = gpsdatos.get(0).getTimestamp();
 				StringBuilder csvData = new StringBuilder();
 				csvData.append("Nombre del dispositivo: "
 						+ android.os.Build.MODEL
@@ -1053,13 +1058,46 @@ public class Grafica extends Activity implements OnClickListener,
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
 						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
-						+ "\n");
-				csvData.append("t (s);Latitud;Longitud\n");
-				for (GpsDatos values : gpsdatos) {
-					double tiempo = (values.getTimestamp() - t) / 1000;
-					csvData.append(String.valueOf(tiempo) + ";"
-							+ String.valueOf(values.getLatitud()) + ";"
-							+ String.valueOf(values.getLongitud()) + "\n");
+						+ ";Numero muestras/segundo: " + numeroMuestras + "\n");
+				csvData.append("t (s);Latitud;Longitud;Distancia entre coordenadas (km);Distancia total (km)\n");
+
+				for (int i = 0; i < gpsdatos.size(); i++) {
+
+					if (i > 0) {
+						if (gpsdatos.get(i).equals(gpsdatos.get(i - 1))) {
+						} else {
+							double deltaLat = ((Math.PI * gpsdatos.get(i)
+									.getLatitud()) / 180)
+									- ((Math.PI * gpsdatos.get(i - 1)
+											.getLatitud()) / 180);
+							double deltaLong = ((Math.PI * gpsdatos.get(i)
+									.getLongitud()) / 180)
+									- ((Math.PI * gpsdatos.get(i - 1)
+											.getLongitud()) / 180);
+							;
+							double fiM = (((Math.PI * gpsdatos.get(i)
+									.getLatitud()) / 180) + ((Math.PI * gpsdatos
+									.get(i - 1).getLatitud()) / 180)) / 2;
+							distanciaCoordenadas = 6371.009 * Math.sqrt(Math
+									.pow(deltaLat, 2)
+									+ Math.pow((Math.cos(fiM) * deltaLong), 2));
+							distanciaTotal += distanciaCoordenadas;
+						}
+
+					}
+
+					double tiempo = (gpsdatos.get(i).getTimestamp() - t) / 1000;
+					csvData.append(String.valueOf(tiempo)
+							+ ";"
+							+ String.valueOf(gpsdatos.get(i).getLatitud())
+							+ ";"
+							+ String.valueOf(gpsdatos.get(i).getLongitud())
+							+ ";"
+							+ String.valueOf(formateador3
+									.format(distanciaCoordenadas))
+							+ ";"
+							+ String.valueOf(formateador3
+									.format(distanciaTotal)) + "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -1117,7 +1155,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
 						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
-						+ "\n");
+						+ ";Numero muestras/segundo: " + numeroMuestras + "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources()
 								.getString(R.string.unidad_acelerometro) + "\n");
@@ -1192,7 +1230,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
 						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
-						+ "\n");
+						+ ";Numero muestras/segundo: " + numeroMuestras + "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_giroscopio)
 						+ "\n");
@@ -1268,7 +1306,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
 						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
-						+ "\n");
+						+ ";Numero muestras/segundo: " + numeroMuestras + "\n");
 				csvData.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 						+ getResources().getString(
 								R.string.unidad_campo_magnetico) + "\n");
@@ -1343,7 +1381,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
 						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
-						+ "\n");
+						+ ";Numero muestras/segundo: " + numeroMuestras + "\n");
 				csvData.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_luz) + "\n");
 				for (AccelData2 values : sensorLuz) {
@@ -1410,7 +1448,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ DateFormat.format("dd/MM/yyyy",
 								System.currentTimeMillis()).toString()
 						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
-						+ "\n");
+						+ ";Numero muestras/segundo: " + numeroMuestras + "\n");
 				csvData.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_proximidad)
 						+ "\n");
@@ -1564,7 +1602,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 				sensorData.clear();
 			}
-			min= 1;
+			min = 1;
 			max = -1;
 			layout.removeView(chartView);
 			layout.removeAllViews();
@@ -1705,8 +1743,10 @@ public class Grafica extends Activity implements OnClickListener,
 				ArrayList<Uri> ficheros = new ArrayList<Uri>();
 				DecimalFormat formateador = new DecimalFormat("0.00##");
 				DecimalFormat formateador2 = new DecimalFormat("0.###");
+				DecimalFormat formateador3 = new DecimalFormat("0.00000");
+
 				if (g == true) {
-					double t = gpsdatos.peek().getTimestamp();
+					double t = gpsdatos.get(0).getTimestamp();
 					StringBuilder csvData = new StringBuilder();
 					csvData.append("Nombre del dispositivo: "
 							+ android.os.Build.MODEL
@@ -1714,13 +1754,48 @@ public class Grafica extends Activity implements OnClickListener,
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
 							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
-					csvData.append("t (s);Latitud;Longitud\n");
-					for (GpsDatos values : gpsdatos) {
-						double tiempo = (values.getTimestamp() - t) / 1000;
-						csvData.append(String.valueOf(tiempo) + ";"
-								+ String.valueOf(values.getLatitud()) + ";"
-								+ String.valueOf(values.getLongitud()) + "\n");
+							+ tipoFrecuencia + ";Numero muestras/segundo: "
+							+ numeroMuestras + "\n");
+					csvData.append("t (s);Latitud;Longitud;Distancia entre coordenadas (km);Distancia total (km)\n");
+
+					for (int i = 0; i < gpsdatos.size(); i++) {
+						if (i > 0) {
+							if (gpsdatos.get(i).equals(gpsdatos.get(i - 1))) {
+							} else {
+								double deltaLat = ((Math.PI * gpsdatos.get(i)
+										.getLatitud()) / 180)
+										- ((Math.PI * gpsdatos.get(i - 1)
+												.getLatitud()) / 180);
+								double deltaLong = ((Math.PI * gpsdatos.get(i)
+										.getLongitud()) / 180)
+										- ((Math.PI * gpsdatos.get(i - 1)
+												.getLongitud()) / 180);
+								;
+								double fiM = (((Math.PI * gpsdatos.get(i)
+										.getLatitud()) / 180) + ((Math.PI * gpsdatos
+										.get(i - 1).getLatitud()) / 180)) / 2;
+								distanciaCoordenadas = 6371.009 * Math
+										.sqrt(Math.pow(deltaLat, 2)
+												+ Math.pow(
+														(Math.cos(fiM) * deltaLong),
+														2));
+								distanciaTotal += distanciaCoordenadas;
+							}
+
+						}
+
+						double tiempo = (gpsdatos.get(i).getTimestamp() - t) / 1000;
+						csvData.append(String.valueOf(tiempo)
+								+ ";"
+								+ String.valueOf(gpsdatos.get(i).getLatitud())
+								+ ";"
+								+ String.valueOf(gpsdatos.get(i).getLongitud())
+								+ ";"
+								+ String.valueOf(formateador3
+										.format(distanciaCoordenadas))
+								+ ";"
+								+ String.valueOf(formateador3
+										.format(distanciaTotal)) + "\n");
 					}
 					try {
 
@@ -1767,7 +1842,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
 							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ tipoFrecuencia + ";Numero muestras/segundo: "
+							+ numeroMuestras + "\n");
 					csvDataexportar.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_acelerometro) + "\n");
@@ -1834,7 +1910,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
 							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ tipoFrecuencia + ";Numero muestras/segundo: "
+							+ numeroMuestras + "\n");
 					csvDatagiro.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_giroscopio) + "\n");
@@ -1903,7 +1980,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
 							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ tipoFrecuencia + ";Numero muestras/segundo: "
+							+ numeroMuestras + "\n");
 					csvDatamagne.append("t (s);X;Y;Z;Modulo;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_campo_magnetico) + "\n");
@@ -1973,7 +2051,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
 							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ tipoFrecuencia + ";Numero muestras/segundo: "
+							+ numeroMuestras + "\n");
 					csvDataluz.append("t (s);X;Unidad sensor: "
 							+ getResources().getString(R.string.unidad_luz)
 							+ "\n");
@@ -2033,7 +2112,8 @@ public class Grafica extends Activity implements OnClickListener,
 							+ DateFormat.format("dd/MM/yyyy",
 									System.currentTimeMillis()).toString()
 							+ ";Hora: " + hora + ";Frecuencia: "
-							+ tipoFrecuencia + "\n");
+							+ tipoFrecuencia + ";Numero muestras/segundo: "
+							+ numeroMuestras + "\n");
 					csvDataproxi.append("t (s);X;Unidad sensor: "
 							+ getResources().getString(
 									R.string.unidad_proximidad) + "\n");
