@@ -21,7 +21,9 @@
     <string name="continuar">Continuer</string>
     <string name="parar">Pause/Arrêt</string>
     <string name="explicacion">\nSensor Mobile a été conçu et construit par les auteurs: Diego Esteban Moreno et Félix García Huete, comme Mémoire de Diplôme d\'Ingénieur en Informatique Systèmes de l\'Université de Valladolid.
-        \nEncadrés par Miguel Ángel Rebollo González (Département de Physique de la Matière Condensée) et Manuel Ángel González Delgado (Département de Physique Appliquée) du Groupe TIA d\¡Innovation en Enseignement.\n</string>
+\nEncadrés par Miguel Ángel Rebollo González (Département de Physique de la Matière Condensée) et Manuel Ángel González Delgado (Département de Physique Appliquée) du Groupe TIA d\¡Innovation en Enseignement.\n
+La traduction portugaise a été faite par W.Rochadel et JB da Silva, de l\'Université fédérale de Santa Catarina (Brésil). \ n
+La traduction française a été faite par M. et D. Skouri Goudjami, Université Cadi_Ayyad, Marrakech (Maroc).\n</string>
     <string name="explicacionacercade2">L\'application montre des utilisations de l\'accéléromètre, du gyroscope, du magnétomètre, du capteur de lumière, du capteur de proximité et du capteur GPS dans des laboratoires de physique.\n</string>
     <string name="explicacionacercade">Sensor Mobile est une application conçue comme un viseur et un moniteur des capteurs sur votre appareil Android.\n</string>
     <string name="acelerometro">Accéléromètre</string>

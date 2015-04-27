@@ -9,7 +9,9 @@
     <string name="inicio">Inicio</string>
     <string name="teoria">Teoría</string>
     <string name="explicacion">\nDiseñada y creada por los autores: Diego Esteban Moreno y Félix Huete García, como proyecto final de carrera para la universidad de Valladolid de la titulación Ingeniería Técnica de Informática de Sistemas.\n
-\nComo tutores Miguel Ángel González Rebollo (Departamento de Física de la Materia Condensada) y Manuel Ángel González Delgado (Departamento de Física Aplicada), del Grupo de Innovación Docente TIA.\n</string>
+\nComo tutores Miguel Ángel González Rebollo (Departamento de Física de la Materia Condensada) y Manuel Ángel González Delgado (Departamento de Física Aplicada), del Grupo de Innovación Docente TIA.\n
+A tradução Português foi feita por W.Rochadel e JB da Silva, da Universidade Federal de Santa Catarina (Brasil). \ n
+A tradução francesa foi feita por M. e D. Skouri Goudjami, Université Cadi_Ayyad, Marrakech (Marrocos).\n</string>
     <string name="explicacionacercade2">La aplicación muestra el uso del acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPScomo útiles de medida en los laboratorios de física.\n</string>
     <string name="explicacionacercade">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n</string>
     <string name="idiomas">IDIOMAS</string>

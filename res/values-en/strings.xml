@@ -15,7 +15,9 @@ As Final Degree Project in Engineering degree in Computer Systems by University 
 
 Tutors of the project:\n\n
 \t\tMiguel Ángel González Rebollo (Departamento de Física de la Materia Condensada)\n 
-\t\tManuel Ángel González Delgado  (Departamento de Física Aplicada), from Grupo de Innovación Docente TIA.\n</string>
+\t\tManuel Ángel González Delgado  (Departamento de Física Aplicada), from Grupo de Innovación Docente TIA.\n
+The Portuguese translation was made by W.Rochadel and JB da Silva of the Federal University of Santa Catarina (Brazil). \ n
+The French translation was made by M. and D. Skouri Goudjami, Université Cadi_Ayyad, Marrakech (Morocco).\n</string>
     <string name="explicacionacercade2">This application shows the use of an accelerometer, a gyroscope, a magnetometer, a light sensor, a proximity sensor and a GPS as useful devices in a physics lab.\n</string>
     <string name="explicacionacercade">Sensor Mobile is an application designed as a viewer and monitor for sensors built in your Android dispositive.\n</string>
     <string name="idiomas">LANGUAGES</string>

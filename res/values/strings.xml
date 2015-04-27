@@ -9,7 +9,9 @@
     <string name="inicio">Inicio</string>
     <string name="teoria">Teoría</string>
     <string name="explicacion">\nDiseñada y creada por los autores: Diego Esteban Moreno y Félix Huete García, como proyecto final de carrera para la Universidad de Valladolid de la titulación Ingeniería Técnica de Informática de Sistemas.\n
-\nComo tutores Miguel Ángel González Rebollo (Departamento de Física de la Materia Condensada) y Manuel Ángel González Delgado (Departamento de Física Aplicada), del Grupo de Innovación Docente TIA (Tecnología, Innovación y Aprendizaje).\n</string>
+\nComo tutores Miguel Ángel González Rebollo (Departamento de Física de la Materia Condensada) y Manuel Ángel González Delgado (Departamento de Física Aplicada), del Grupo de Innovación Docente TIA (Tecnología, Innovación y Aprendizaje).\n
+La  traducción al portugués ha sido realizada por  W.Rochadel y J.B. da Silva de la Universidade Federal de Santa Catarina (Brasil).\n
+La traducción al francés ha sido realizada por  M. Skouri y D. Goudjami, de la Université Cadi_Ayyad, Marrakech (Marruecos).\n</string>
     <string name="explicacionacercade2">La aplicación utiliza los sensores disponibles en los dispositivos (acelerómetro, giroscopio, magnetómetro, sensor de luz, sensor aproximación y GPS) como herramientas de medida en los laboratorios de física.\n</string>
     <string name="explicacionacercade">Sensor Mobile es una aplicación diseñada como un visor y monitor de los sensores de su dispositivo Android.\n</string>
     <string name="medicion">Medición de datos</string>
