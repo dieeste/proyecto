@@ -159,6 +159,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	double distanciaCoordenadas = 0;
 	double distanciaTotal = 0;
+	double velocidadInstantanea = 0;
 	double numeroMuestras;
 
 	@Override
@@ -216,6 +217,8 @@ public class Grafica extends Activity implements OnClickListener,
 		// actividad anteerior que a su vez es recogido de la configuración
 		frecuencia = graficas.getInt("tipo");
 		frec = graficas.getDouble("frecuencia");
+		Log.d("frecuencia", "frecuencia recibida: " + frecuencia);
+		Log.d("frecuencia", "frecuencia numero: " + frec);
 		SAMPLERATE = Math.round(frec);
 		numeroMuestras = 1000 / SAMPLERATE;
 		// tiempoParada y tiempoInicio es el tiempo que recogemos de la
@@ -1059,7 +1062,7 @@ public class Grafica extends Activity implements OnClickListener,
 								System.currentTimeMillis()).toString()
 						+ ";Hora: " + hora + ";Frecuencia: " + tipoFrecuencia
 						+ ";Numero muestras/segundo: " + numeroMuestras + "\n");
-				csvData.append("t (s);Latitud;Longitud;Distancia entre coordenadas (km);Distancia total (km)\n");
+				csvData.append("t (s);Latitud;Longitud;Distancia total (km);Velocidad instantanea (km/h)\n");
 
 				for (int i = 0; i < gpsdatos.size(); i++) {
 
@@ -1081,6 +1084,8 @@ public class Grafica extends Activity implements OnClickListener,
 							distanciaCoordenadas = 6371.009 * Math.sqrt(Math
 									.pow(deltaLat, 2)
 									+ Math.pow((Math.cos(fiM) * deltaLong), 2));
+							double velocidad = distanciaCoordenadas / (((gpsdatos.get(i-1).getTimestamp() - t) / 1000)-((gpsdatos.get(i).getTimestamp() - t) / 1000));
+							velocidadInstantanea = velocidad * 3600;
 							distanciaTotal += distanciaCoordenadas;
 						}
 
@@ -1093,11 +1098,9 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";"
 							+ String.valueOf(gpsdatos.get(i).getLongitud())
 							+ ";"
-							+ String.valueOf(formateador3
-									.format(distanciaCoordenadas))
+							+ String.valueOf(formateador3.format(distanciaTotal))
 							+ ";"
-							+ String.valueOf(formateador3
-									.format(distanciaTotal)) + "\n");
+							+ String.valueOf(formateador3.format(velocidadInstantanea)) + "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -1756,7 +1759,7 @@ public class Grafica extends Activity implements OnClickListener,
 							+ ";Hora: " + hora + ";Frecuencia: "
 							+ tipoFrecuencia + ";Numero muestras/segundo: "
 							+ numeroMuestras + "\n");
-					csvData.append("t (s);Latitud;Longitud;Distancia entre coordenadas (km);Distancia total (km)\n");
+					csvData.append("t (s);Latitud;Longitud;Distancia total (km);Velocidad instantanea (km/h)\n");
 
 					for (int i = 0; i < gpsdatos.size(); i++) {
 						if (i > 0) {
@@ -1774,11 +1777,11 @@ public class Grafica extends Activity implements OnClickListener,
 								double fiM = (((Math.PI * gpsdatos.get(i)
 										.getLatitud()) / 180) + ((Math.PI * gpsdatos
 										.get(i - 1).getLatitud()) / 180)) / 2;
-								distanciaCoordenadas = 6371.009 * Math
-										.sqrt(Math.pow(deltaLat, 2)
-												+ Math.pow(
-														(Math.cos(fiM) * deltaLong),
-														2));
+								distanciaCoordenadas = 6371.009 * Math.sqrt(Math
+										.pow(deltaLat, 2)
+										+ Math.pow((Math.cos(fiM) * deltaLong), 2));
+								double velocidad = distanciaCoordenadas / (((gpsdatos.get(i-1).getTimestamp() - t) / 1000)-((gpsdatos.get(i).getTimestamp() - t) / 1000));
+								velocidadInstantanea = velocidad * 3600;
 								distanciaTotal += distanciaCoordenadas;
 							}
 
@@ -1791,11 +1794,9 @@ public class Grafica extends Activity implements OnClickListener,
 								+ ";"
 								+ String.valueOf(gpsdatos.get(i).getLongitud())
 								+ ";"
-								+ String.valueOf(formateador3
-										.format(distanciaCoordenadas))
+								+ String.valueOf(formateador3.format(distanciaTotal))
 								+ ";"
-								+ String.valueOf(formateador3
-										.format(distanciaTotal)) + "\n");
+								+ String.valueOf(formateador3.format(velocidadInstantanea)) + "\n");
 					}
 					try {
 

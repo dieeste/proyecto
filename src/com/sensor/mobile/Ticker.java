@@ -31,7 +31,7 @@ class Ticker extends Thread implements SensorEventListener {
 	/**
 	 * How long to sleep between taking a sample
 	 */
-	private static long SLEEPTIME = Grafica.SAMPLERATE;
+	private long SLEEPTIME = Grafica.SAMPLERATE;
 
 	/**
 	 * Create a new <code>Ticker</code> and start ticking the
