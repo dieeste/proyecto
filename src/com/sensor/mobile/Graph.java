@@ -14,7 +14,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 
-public class Graph extends Grafica {
+public class Graph extends LeerCsv{
 
 	private Context context;
 	XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -155,8 +155,7 @@ public class Graph extends Grafica {
 	}
 
 	public void setProperties(boolean ex, boolean ey, boolean ez, boolean em,
-			String titulografica, String tituloejey, String calidad,
-			String tamano) {
+			String titulografica, String tituloejey, String calidad) {
 		// añade las propiedades de la grafica
 		double[] limites = { 0, maxejex + 5, ejeymin - 200, ejeymax + 200 };// limites
 		// utilizamos diferentes márgenes para las diferentes pantallas
@@ -270,6 +269,17 @@ public class Graph extends Grafica {
 			renderer.setChartTitleTextSize(40);
 			renderer.setLegendTextSize(40);
 			renderer.setShowLegend(false);
+		} else if (calidad.equalsIgnoreCase("tv")){
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
+			renderer.setMargins(margenesextra);
+			renderer.setLabelsTextSize(40);
+			renderer.setAxisTitleTextSize(40);
+			renderer.setChartTitleTextSize(40);
+			renderer.setLegendTextSize(40);
+			renderer.setShowLegend(false);
 		}
 		renderer.setChartTitle(titulografica);
 		renderer.setGridColor(Color.DKGRAY);
@@ -286,14 +296,14 @@ public class Graph extends Grafica {
 	}
 
 	public void setProperties2(boolean ex, String titulografica,
-			String tituloejey, String calidad, String tamano) {
+			String tituloejey, String calidad) {
 		// añade las propiedades de la grafica sensor de luz y sensor proximidad
 		double[] limites = { 0, maxejex + 5, ejeymin - 200, ejeymax + 200 };
 		// utilizamos diferentes márgenes para las diferentes pantallas
-		int[] margenes = { 55, 55, 55, 55 };
-		int[] margenesnormal = { 40, 55, 50, 40 };
-		int[] margenespeque = { 30, 35, 30, 25 };
-		int[] margenesextra = { 60, 60, 60, 60 };
+		int[] margenes = { 70, 80, 70, 60 };
+		int[] margenesnormal = { 50, 60, 70, 40 };
+		int[] margenespeque = { 30, 40, 30, 20 };
+		int[] margenesextra = { 70, 80, 70, 60 };
 		XYSeriesRenderer valoresX = new XYSeriesRenderer();
 		if (ex == true) { // checkbox x
 			valoresX.setColor(Color.RED);
@@ -352,6 +362,15 @@ public class Graph extends Grafica {
 			renderer.setLegendTextSize(40);
 			renderer.setShowLegend(false);
 		} else if (calidad.equalsIgnoreCase("xxxhigh")) {
+			valoresX.setLineWidth(5);
+			renderer.setMargins(margenesextra);
+			renderer.setLabelsTextSize(40);
+			renderer.setLabelsTextSize(40);
+			renderer.setAxisTitleTextSize(40);
+			renderer.setChartTitleTextSize(40);
+			renderer.setLegendTextSize(40);
+			renderer.setShowLegend(false);
+		} else if (calidad.equalsIgnoreCase("tv")) {
 			valoresX.setLineWidth(5);
 			renderer.setMargins(margenesextra);
 			renderer.setLabelsTextSize(40);

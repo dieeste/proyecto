@@ -119,7 +119,6 @@ public class Grafica extends Activity implements OnClickListener,
 	boolean g;
 	// calidad de pantalla, tamaño de pantalla
 	String calidad;
-	String tamano;
 	// nos indica si un sensor está grabando y si el gps está encendido
 	TextView graba;
 	TextView graba2;
@@ -402,6 +401,21 @@ public class Grafica extends Activity implements OnClickListener,
 			mRenderer.setAxisTitleTextSize(15);
 			mRenderer.setChartTitleTextSize(15);
 			mRenderer.setLegendTextSize(15);
+			mRenderer.setShowLegend(false);
+			break;
+		case DisplayMetrics.DENSITY_TV:
+			scaleDensity = scale * 213;
+			pixelBoton = dips * (scaleDensity /  213);
+			calidad = "tv";
+			valoresX.setLineWidth(5);
+			valoresY.setLineWidth(5);
+			valoresZ.setLineWidth(5);
+			modulo.setLineWidth(5);
+			mRenderer.setMargins(margenesextra);
+			mRenderer.setLabelsTextSize(40);
+			mRenderer.setAxisTitleTextSize(40);
+			mRenderer.setChartTitleTextSize(40);
+			mRenderer.setLegendTextSize(40);
 			mRenderer.setShowLegend(false);
 			break;
 		}

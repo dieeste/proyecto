@@ -9,7 +9,6 @@ import org.achartengine.GraphicalView;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -28,17 +27,16 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class LeerCsv extends Activity implements OnClickListener,
 		OnCheckedChangeListener {
-	static Graph mGraph;
+	Graph mGraph;
 	LinearLayout layout;
 	GraphicalView view;
 	public boolean init = false;
-	ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();;
+	ConcurrentLinkedQueue<AccelData> datos = new ConcurrentLinkedQueue<AccelData>();
 	ConcurrentLinkedQueue<AccelData2> sensor = new ConcurrentLinkedQueue<AccelData2>();
 	String nombre;
 	String unidad;
 	String tituloejey;
 	String titulografica;
-	String tamano;
 	String calidad;
 	String nombresensor;
 	CheckBox ejex;
@@ -81,18 +79,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 
 		float scale = getApplicationContext().getResources()
 				.getDisplayMetrics().density;
-		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-			tamano = "grande";
-		}
-		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-			tamano = "normal";
-		}
-		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-			tamano = "pequena";
-		}
-		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
-			tamano = "extra";
-		}
+		
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		int dips = 40;
@@ -132,6 +119,11 @@ public class LeerCsv extends Activity implements OnClickListener,
 			scaleDensity = scale * 120;
 			pixelBoton = dips * (scaleDensity / 120);
 			calidad = "baja";
+			break;
+		case DisplayMetrics.DENSITY_TV:
+			scaleDensity = scale * 213;
+			pixelBoton = dips * (scaleDensity /  213);
+			calidad = "tv";
 			break;
 		}
 		lee(nombre);
@@ -302,7 +294,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 		mGraph.iniciar(datos);
 		mGraph.ejeY(datos);
 		mGraph.setProperties(checkx, checky, checkz, checkmodulo,
-				titulografica, tituloejey, calidad, tamano);
+				titulografica, tituloejey, calidad);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);
@@ -318,8 +310,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 		mGraph = new Graph(this);
 		mGraph.iniciar2(sensor);
 		mGraph.ejeY2(sensor);
-		mGraph.setProperties2(checkx, titulografica, tituloejey, calidad,
-				tamano);
+		mGraph.setProperties2(checkx, titulografica, tituloejey, calidad);
 		if (!init) {
 			view = mGraph.getGraph();
 			layout.addView(view);
