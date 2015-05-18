@@ -14,7 +14,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 
-public class Graph extends LeerCsv{
+public class Graph extends LeerCsv {
 
 	private Context context;
 	XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -269,7 +269,7 @@ public class Graph extends LeerCsv{
 			renderer.setChartTitleTextSize(40);
 			renderer.setLegendTextSize(40);
 			renderer.setShowLegend(false);
-		} else if (calidad.equalsIgnoreCase("tv")){
+		} else if (calidad.equalsIgnoreCase("tv")) {
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
 			valoresZ.setLineWidth(5);

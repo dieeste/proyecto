@@ -21,10 +21,10 @@
     <string name="continuar">Continuer</string>
     <string name="parar">Pause/Arrêt</string>
     <string name="explicacion">\nSensor Mobile a été conçu et construit par les auteurs: Diego Esteban Moreno et Félix García Huete, comme Mémoire de Diplôme d\'Ingénieur en Informatique Systèmes de l\'Université de Valladolid.
-\nEncadrés par Miguel Ángel Rebollo González (Département de Physique de la Matière Condensée) et Manuel Ángel González Delgado (Département de Physique Appliquée) du Groupe TIA d\¡Innovation en Enseignement.\n
-La traduction portugaise a été faite par W.Rochadel et JB da Silva, de l\'Université fédérale de Santa Catarina (Brésil). \ n
+\nEncadrés par Miguel Ángel Rebollo González (Département de Physique de la Matière Condensée) et Manuel Ángel González Delgado (Département de Physique Appliquée) du Groupe d\’Innovation d\’Enseinement de l\’UVa TIA (Tecnología Innovación y Aprendizaje)\n
+La traduction portugaise a été faite par W.Rochadel et JB da Silva, de l\'Univesidade Federal de Santa Catarina (Brasil). \ n
 La traduction française a été faite par M. et D. Skouri Goudjami, Université Cadi_Ayyad, Marrakech (Maroc).\n</string>
-    <string name="explicacionacercade2">L\'application montre des utilisations de l\'accéléromètre, du gyroscope, du magnétomètre, du capteur de lumière, du capteur de proximité et du capteur GPS dans des laboratoires de physique.\n</string>
+    <string name="explicacionacercade2">L\'application utilise des capteurs disponibles sur le périphérique (accéléromètre, gyroscope, magnétomètre, capteur de lumière, capteur de proximité et GPS) comme outils de mesure dans les laboratoires d\’enseignement de Physique.\n</string>
     <string name="explicacionacercade">Sensor Mobile est une application conçue comme un viseur et un moniteur des capteurs sur votre appareil Android.\n</string>
     <string name="acelerometro">Accéléromètre</string>
 <string name="luminosidad">Capteur de lumière</string>
@@ -102,7 +102,7 @@ L\'accélération étant une grandeur vectorielle, nous aurons besoin de ses com
     <string name="titulo4">QUELLES DONNÉES NOUS MONTRE UN ACCÉLÈROMETRE?\n</string>
     <string name="explicacion4">L\'accéléromètre mesure l\'accélération appliquée au dispositif et ses propriétés. Les données mesurées sont résumées dans le tableau ci dessous.\n</string>
     <string name="titulogiro1">\nQU\'EST-CE QU\'UN GYROSCOPE?\n</string>
-    <string name="explicaciongiro1">Le gyroscope est un dispositif mécanique qui permet de mesurer, maintenir ou changer l\'orientation d\'un dispositif. Il mesure la vitesse de rotation angulaire (rad/s).\n</string>
+    <string name="explicaciongiro1">Le gyroscope est un dispositif mécanique qui permet de mesurer, maintenir ou changer l\'orientation d\'un dispositif. Il mesure la vitesse de rotation angulaire w (rad/s).\n</string>
     <string name="titulogiro2">COMMENT FONCTIONNE UN GYROSCOPE?\n</string>
     <string name="explicaciongiro2">Le gyroscope repose sur l\'observation des forces de Coriolis, effet qui se manifeste par la déviation d\'un corps en mouvement évoluant dans un milieu en rotation. Les gyroscopes utilisés dans les téléphones portables son des dispositifs du type MEMS (microsystèmes électromécaniques) intégrés sur une puce de silicium. En fait, ils mesurent la variation de la capacité d\'un condensateur sous l\'effet d\'une rotation.\n
 Une fois mis en mouvement, le gyroscope maintient toujours l\'orientation vers le Nord géographique, de sorte que le gyroscope nous donne une orientation précise, autrement dit, il indique le déplacement de ses axes et nous donne la position concernant le point de départ exact.\n
@@ -110,7 +110,7 @@ Comme la vitesse angulaire est une grandeur vectorielle, il faut déterminer les
     <string name="titulogiro3">A QUOI SERT UN GYROSCOPE?\n</string>
     <string name="explicaciongiro3">Un des rôles du gyroscope est, par exemple, la possibilité de tourner notre écran.\n</string>
     <string name="titulogiro4">QUELLES DONNÉES NOUS MONTRE LE GYROSCOPE?\n</string>
-    <string name="explicaciongiro4">Le gyroscope mesure la vitesse de rotation du dispositif autour de x, y et z. Les valeurs des données gyroscopiques peuvent être positives ou négatives. En regardant à l\'origine d\'une position le long de l\'axe médian positif, si la rotation se produit dans le sens inverse des aiguilles d\'une montre autour de l\'axe, la valeur est positive ; dans le cas contraire, la valeur est négative. On peut aussi déterminer la direction d\'une valeur de gyroscope.\n</string>
+    <string name="explicaciongiro4">Le gyroscope mesure la vitesse angulaire w (rad/s) du dispositif autour de x, y et z. Les valeurs des données gyroscopiques peuvent être positives ou négatives. Si la rotation se produit dans le sens inverse des aiguilles d\'une montre la valeur; dans le cas contraire, la valeur est négative. On peut aussi déterminer le sens de la rotation.\n</string>
     <string name="titulomagne1">\nQU\'EST-CE QU\'UN MAGNÉTOMÈTRE?\n</string>
     <string name="explicacionmagne1">Il s\'agit d\'un composant électronique capable de mesurer et de quantifier l\'intensité d\'un champ magnétique (µT).\n</string>
     <string name="titulomagne2">COMMENT FONCTIONNE UN MAGNÉTOMÈTRE\n</string>
@@ -137,7 +137,7 @@ Le capteur de lumière le plus commun est la LDR (Light Dependent Resistor), ré
     <string name="tituloprox3">A QUOI SERT LE CAPTEUR DE PROXIMITÉ?\n</string>
     <string name="explicacionprox3">Lorsque l\'appareil est approché de notre oreille pour répondre à un appel, l\'appareil éteint le rétro-éclairage pour économiser la batterie et désactive l\'écran tactile pour éviter qu\'un contact accidentel avec l\'écran ne génère une action indésirable.\n</string>
     <string name="tituloprox4">QUELLES DONNÉES NOUS MONTRE LE CAPTEUR DE PROXIMITÉ?\n</string>
-    <string name="explicacionprox4">Le capteur de proximité fournit la distance entre le dispositif et un autre objet. Le dispositif peut être utilisé pour détecter si l\'utilisateur tient l\'appareil à proximité (voir tableau); par conséquent, si l\'utilisateur est sur un appel.\n</string>
+    <string name="explicacionprox4">Le dispositif peut être utilisé pour détecter si l\'utilisateur tient l\'appareil à proximité (voir tableau); par conséquent, si l\'utilisateur est sur un appel. Le dispositif montrera tout objet placé dans une position inférieure à une certaine distance.\n</string>
     <string name="titulogps1">\nQU\'EST-CE QU\'UN GPS?\n</string>
     <string name="explicaciongps1">C\'est l\'abréviation de "Global Positioning System", un système mondial qui nous permet de positionner sur la Terre un objet, une personne ou un véhicule.\n</string>
     <string name="titulogps2">COMMENT FONCTIONNE UN GPS?\n</string>
@@ -149,7 +149,7 @@ Le capteur de lumière le plus commun est la LDR (Light Dependent Resistor), ré
     <string name="currentDir">Current Dir</string>
     <string name="ayuda11">Sur l\'écran principal, il y a deux options différentes pour les boutons:\n</string>
     <string name="ayuda12">Données mesurées:\n
-\tDans cette section, on verra les capteurs avec leurs mesures.\n
+\tDans cette section, on verra les capteurs avec leurs mesures en temps réel, et permet l’accès à leur représentation graphique.\n
 Chargement des graphiques:\n
  \tDans cette section, on affichera les fichiers graphiques enregistrés.\n
 En plus des deux options différentes le bouton CONFIGURATION montre 4 options qui sont:\n</string>
@@ -161,9 +161,9 @@ En plus des deux options différentes le bouton CONFIGURATION montre 4 options q
 \nConfiguration : Dans cette option apparaissent les préférences de l\'application qui sont:\n</string>
     <string name="ayuda15">\n\tLangue : Vous pouvez choisir parmi Auto, anglais, espagnol, français ou portugais.\n
 \tOptions de configuration: Sous les options de configuration apparaissent:\n
-\t\t\tFréquences d\'échantillonnage des capteurs de fréquence, le nombre par seconde est choisi.\n
-\t\t\tMinuteur: durée entre l\'entrée dans les graphiques et le début d\'enregistrement.\n
-\t\t\tDurée d\'enregistrement : choisir une durée appropriée.\n
+\t\t\tFréquences d\'échantillonnage (4 différentes) des capteurs de fréquence, le nombre par seconde est choisi. Par défaut "lent".\n
+\t\t\tMinuteur: durée entre l\'entrée dans les graphiques et le début d\'enregistrement. Par défaut 0 secondes\n
+\t\t\tDurée d\'enregistrement : Permet la sélection d\’un intervalle d\’enregistrement. Lorsqu\'un temps est choisi dans le temporisateur, un signal sonore indique le debut et la fin de l\'enregistrement. Par défaut 0 secondes.\n
 À propos : Cette option affiche les informations des auteurs et des paramètres de confidentialité pour l\'application.\n
 Aide : Application.\n</string>
     <string name="ayuda21">Dans cet écran on verra les capteurs avec leurs mesures. La structure de l\'écran est:\n</string>
@@ -180,9 +180,9 @@ Aide : Application.\n</string>
 \tMontrer données : mesures prises par les capteurs affichées en temps réel.\n
 En plus des options, le bouton préférences donnera les options:\n
 \tOptions de configuration apparaissent:
-\t\t\tFréquences d\'échantillonnage des capteurs de fréquence, le nombre par seconde est choisi.\n
-\t\t\tMinuteur: durée entre l\'entrée dans les graphiques et le début d\'enregistrement.\n
-\t\t\tDurée d\'enregistrement : choisir une durée appropriée.\n
+\t\t\tFréquences d\'échantillonnage (4 différentes) des capteurs de fréquence, le nombre par seconde est choisi. Par défaut "lent".\n
+\t\t\tMinuteur: durée entre l\'entrée dans les graphiques et le début d\'enregistrement. Par défaut 0 secondes\n
+\t\t\tDurée d\'enregistrement : Permet la sélection d\’un intervalle d\’enregistrement. Lorsqu\'un temps est choisi dans le temporisateur, un signal sonore indique le debut et la fin de l\'enregistrement. Par défaut 0 secondes.\n
 À propos : Cette option affiche les informations des auteurs et des paramètres de confidentialité pour l\'application.\n
 Aide : Application.\n</string>
     <string name="ayuda31">Représentation des données de capteurs affichés sur cet écran.\n</string>

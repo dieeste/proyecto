@@ -63,7 +63,7 @@ class Ticker extends Thread implements SensorEventListener {
 			case Sensor.TYPE_ACCELEROMETER:
 				worker.currentEvent = event;
 				if (activity.g == true) {
-					double timestampgps = System.currentTimeMillis();
+					double timestampgps = System.nanoTime();
 					GpsDatos datos = new GpsDatos(timestampgps,
 							activity.latitud, activity.longitud);
 					activity.gpsdatos.add(datos);
@@ -74,7 +74,7 @@ class Ticker extends Thread implements SensorEventListener {
 					double z = event.values[2];
 					double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
 							x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
-					double timestamp = System.currentTimeMillis();
+					double timestamp = System.nanoTime();
 					AccelData data = new AccelData(timestamp, x, y, z, modulo);
 					activity.sensorDatas.add(data);
 				}
@@ -87,7 +87,7 @@ class Ticker extends Thread implements SensorEventListener {
 					double z2 = event.values[2];
 					double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math
 							.pow(x2, 2) + Math.pow(y2, 2) + Math.pow(z2, 2))));
-					double timestamp2 = System.currentTimeMillis();
+					double timestamp2 = System.nanoTime();
 					AccelData data2 = new AccelData(timestamp2, x2, y2, z2,
 							modulo2);
 					activity.sensorGiroscopio.add(data2);
@@ -101,7 +101,7 @@ class Ticker extends Thread implements SensorEventListener {
 					double z4 = event.values[2];
 					double modulo4 = Double.valueOf(Math.abs(Math.sqrt(Math
 							.pow(x4, 2) + Math.pow(y4, 2) + Math.pow(z4, 2))));
-					double timestamp4 = System.currentTimeMillis();
+					double timestamp4 = System.nanoTime();
 
 					AccelData data4 = new AccelData(timestamp4, x4, y4, z4,
 							modulo4);
@@ -112,7 +112,7 @@ class Ticker extends Thread implements SensorEventListener {
 				worker.luzEvent = event;
 				if (activity.luz == true) {
 					double x3 = event.values[0];
-					double timestamp3 = System.currentTimeMillis();
+					double timestamp3 = System.nanoTime();
 
 					AccelData2 data3 = new AccelData2(timestamp3, x3);
 					activity.sensorLuz.add(data3);
@@ -122,7 +122,7 @@ class Ticker extends Thread implements SensorEventListener {
 				worker.proximidadEvent = event;
 				if (activity.proxi == true) {
 					double x5 = event.values[0];
-					double timestamp5 = System.currentTimeMillis();
+					double timestamp5 = System.nanoTime();
 
 					AccelData2 data5 = new AccelData2(timestamp5, x5);
 					activity.sensorProximidad.add(data5);

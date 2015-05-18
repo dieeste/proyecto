@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.achartengine.ChartFactory;
@@ -126,6 +127,7 @@ public class Grafica extends Activity implements OnClickListener,
 	// latitud y longitud del gps
 	double longitud;
 	double latitud;
+	double precision;
 	// manejan la localización del gps
 	LocationManager milocManager;
 	LocationListener milocListener;
@@ -160,6 +162,10 @@ public class Grafica extends Activity implements OnClickListener,
 	double distanciaTotal = 0;
 	double velocidadInstantanea = 0;
 	double numeroMuestras;
+
+	boolean grabado = false;
+	double t0 = 0;
+	double velocidad = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -405,7 +411,7 @@ public class Grafica extends Activity implements OnClickListener,
 			break;
 		case DisplayMetrics.DENSITY_TV:
 			scaleDensity = scale * 213;
-			pixelBoton = dips * (scaleDensity /  213);
+			pixelBoton = dips * (scaleDensity / 213);
 			calidad = "tv";
 			valoresX.setLineWidth(5);
 			valoresY.setLineWidth(5);
@@ -436,6 +442,9 @@ public class Grafica extends Activity implements OnClickListener,
 
 			latitud = loc.getLatitude();
 			longitud = loc.getLongitude();
+			precision = loc.getAccuracy();
+			Log.d("preciosn", "preciosn : " + precision);
+
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -470,7 +479,7 @@ public class Grafica extends Activity implements OnClickListener,
 	private void contadores() {
 		iniciar.setEnabled(false);
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
-		new CountDownTimer(tiempoInicio, 1000) {
+		temporizador = new CountDownTimer(tiempoInicio, 1000) {
 
 			@Override
 			public void onTick(long millisUntilFinished) {
@@ -496,7 +505,7 @@ public class Grafica extends Activity implements OnClickListener,
 					parar.setEnabled(false);
 					reiniciar.setEnabled(false);
 					sonidoIniciar.start();
-					new CountDownTimer(tiempoParada, 1000) {
+					tiempo = new CountDownTimer(tiempoParada, 1000) {
 						@Override
 						public void onTick(long millisUntilFinished) {
 							// TODO Auto-generated method stub
@@ -521,7 +530,7 @@ public class Grafica extends Activity implements OnClickListener,
 
 	private void contadores2() {
 		// Con este temporizador medimos el tiempo antes de iniciar los sensores
-		new CountDownTimer(tiempoParada, 1000) {
+		tiempo = new CountDownTimer(tiempoParada, 1000) {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				// TODO Auto-generated method stub
@@ -572,7 +581,7 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
@@ -592,13 +601,13 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						}
 					}
-					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					double tiempo = (System.nanoTime() - tie[0]) / 1000000000;
 					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
@@ -641,7 +650,7 @@ public class Grafica extends Activity implements OnClickListener,
 							Log.d("hola", "entramos xtick0 ");
 							configure(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
@@ -661,13 +670,13 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						}
 					}
-					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					double tiempo = (System.nanoTime() - tie[0]) / 1000000000;
 					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
@@ -711,7 +720,7 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
@@ -731,13 +740,13 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						}
 					}
-					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					double tiempo = (System.nanoTime() - tie[0]) / 1000000000;
 					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
@@ -776,7 +785,7 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure2(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
@@ -796,13 +805,13 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure2(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						}
 					}
-					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					double tiempo = (System.nanoTime() - tie[0]) / 1000000000;
 					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
@@ -838,7 +847,7 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure2(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
@@ -858,13 +867,13 @@ public class Grafica extends Activity implements OnClickListener,
 						if (xTick == 0) {
 							configure2(event);
 							layout.addView(chartView);
-							double ti = System.currentTimeMillis();
+							double ti = System.nanoTime();
 							tie[0] = ti;
 							hora = DateFormat.format("kk:mm:ss",
 									System.currentTimeMillis()).toString();
 						}
 					}
-					double tiempo = (System.currentTimeMillis() - tie[0]) / 1000;
+					double tiempo = (System.nanoTime() - tie[0]) / 1000000000;
 					time = tiempo;
 
 					if (tiempo > mRenderer.getXAxisMax()) {
@@ -996,6 +1005,30 @@ public class Grafica extends Activity implements OnClickListener,
 	}
 
 	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		// if (grabado == false) {
+		// Toast.makeText(this, "No se ha guardado antes de salir",
+		// Toast.LENGTH_SHORT).show();
+		// grabado = true;
+		// } else {
+		if (tiempo != null) {
+			tiempo.cancel();
+			tiempo = null;
+			sonidoParar.release();
+			Log.d("oulsa", "parar tiempo");
+		}
+		if (temporizador != null) {
+			temporizador.cancel();
+			temporizador = null;
+			sonidoIniciar.release();
+			Log.d("oulsa", "parar temporri");
+		}
+		super.onBackPressed();
+		// }
+	}
+
+	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
@@ -1061,7 +1094,7 @@ public class Grafica extends Activity implements OnClickListener,
 	private class SaveThread extends Thread {
 
 		DecimalFormat formateador = new DecimalFormat("0.00##");
-		DecimalFormat formateador2 = new DecimalFormat("0.###");
+		DecimalFormat formateador2 = new DecimalFormat("0.000000");
 		DecimalFormat formateador3 = new DecimalFormat("0.00000");
 
 		@Override
@@ -1079,10 +1112,17 @@ public class Grafica extends Activity implements OnClickListener,
 				csvData.append("t (s);Latitud;Longitud;Distancia total (km);Velocidad instantanea (km/h)\n");
 
 				for (int i = 0; i < gpsdatos.size(); i++) {
-
+					if (i == 0) {
+						t0 = 0;
+					}
 					if (i > 0) {
-						if (gpsdatos.get(i).equals(gpsdatos.get(i - 1))) {
+						if (gpsdatos.get(i).getLatitud() == gpsdatos.get(i - 1)
+								.getLatitud()
+								&& gpsdatos.get(i).getLongitud() == gpsdatos
+										.get(i - 1).getLongitud()) {
+							velocidad = 1111111111;
 						} else {
+							double t1 = (gpsdatos.get(i).getTimestamp() - t) / 1000000000;
 							double deltaLat = ((Math.PI * gpsdatos.get(i)
 									.getLatitud()) / 180)
 									- ((Math.PI * gpsdatos.get(i - 1)
@@ -1098,23 +1138,28 @@ public class Grafica extends Activity implements OnClickListener,
 							distanciaCoordenadas = 6371.009 * Math.sqrt(Math
 									.pow(deltaLat, 2)
 									+ Math.pow((Math.cos(fiM) * deltaLong), 2));
-							double velocidad = distanciaCoordenadas / (((gpsdatos.get(i-1).getTimestamp() - t) / 1000)-((gpsdatos.get(i).getTimestamp() - t) / 1000));
+							double velocidad = distanciaCoordenadas / (t1 - t0);
 							velocidadInstantanea = velocidad * 3600;
 							distanciaTotal += distanciaCoordenadas;
+							Log.d("variable antes", "antes cambio: " + t0);
+							t0 = t1;
+							Log.d("variable antes", "antes desopues cambio: "
+									+ t0);
 						}
-
 					}
 
-					double tiempo = (gpsdatos.get(i).getTimestamp() - t) / 1000;
-					csvData.append(String.valueOf(tiempo)
+					double tiempo = (gpsdatos.get(i).getTimestamp() - t) / 1000000000;
+					csvData.append(String.valueOf(formateador2.format(tiempo))
 							+ ";"
 							+ String.valueOf(gpsdatos.get(i).getLatitud())
 							+ ";"
 							+ String.valueOf(gpsdatos.get(i).getLongitud())
 							+ ";"
-							+ String.valueOf(formateador3.format(distanciaTotal))
+							+ String.valueOf(formateador3
+									.format(distanciaTotal))
 							+ ";"
-							+ String.valueOf(formateador3.format(velocidadInstantanea)) + "\n");
+							+ String.valueOf(formateador3
+									.format(velocidadInstantanea)) + "\n");
 				}
 
 				Bundle bundle = new Bundle();
@@ -1177,7 +1222,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ getResources()
 								.getString(R.string.unidad_acelerometro) + "\n");
 				for (AccelData values : sensorDatas) {
-					double tiempo = (values.getTimestamp() - t) / 1000;
+					double tiempo = (values.getTimestamp() - t) / 1000000000;
 					csvData.append(String.valueOf(formateador2.format(tiempo))
 							+ ";"
 							+ String.valueOf(formateador.format(values.getX()))
@@ -1252,7 +1297,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ getResources().getString(R.string.unidad_giroscopio)
 						+ "\n");
 				for (AccelData values : sensorGiroscopio) {
-					double tiempo = (values.getTimestamp() - t) / 1000;
+					double tiempo = (values.getTimestamp() - t) / 1000000000;
 
 					csvData.append(String.valueOf(formateador2.format(tiempo))
 							+ ";"
@@ -1328,7 +1373,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ getResources().getString(
 								R.string.unidad_campo_magnetico) + "\n");
 				for (AccelData values : sensorMagnetico) {
-					double tiempo = (values.getTimestamp() - t) / 1000;
+					double tiempo = (values.getTimestamp() - t) / 1000000000;
 
 					csvData.append(String.valueOf(formateador2.format(tiempo))
 							+ ";"
@@ -1402,7 +1447,7 @@ public class Grafica extends Activity implements OnClickListener,
 				csvData.append("t (s);X;Unidad sensor: "
 						+ getResources().getString(R.string.unidad_luz) + "\n");
 				for (AccelData2 values : sensorLuz) {
-					double tiempo = (values.getTimestamp() - t) / 1000;
+					double tiempo = (values.getTimestamp() - t) / 1000000000;
 					csvData.append(String.valueOf(formateador2.format(tiempo))
 							+ ";"
 							+ String.valueOf(formateador.format(values.getX()))
@@ -1470,7 +1515,7 @@ public class Grafica extends Activity implements OnClickListener,
 						+ getResources().getString(R.string.unidad_proximidad)
 						+ "\n");
 				for (AccelData2 values : sensorProximidad) {
-					double tiempo = (values.getTimestamp() - t) / 1000;
+					double tiempo = (values.getTimestamp() - t) / 1000000000;
 
 					csvData.append(String.valueOf(formateador2.format(tiempo))
 							+ ";"
@@ -1657,8 +1702,12 @@ public class Grafica extends Activity implements OnClickListener,
 				sensorProximidad.remove(data);
 			}
 			if (gpsdatos.size() > 0) {
-				for (GpsDatos data : gpsdatos) {
-					gpsdatos.remove(data);
+				Iterator<GpsDatos> nombreIterator = gpsdatos.iterator();
+				nombreIterator = gpsdatos.iterator();
+				while (nombreIterator.hasNext()) {
+					GpsDatos elemento = nombreIterator.next();
+					nombreIterator.remove(); // Eliminamos el Elemento que hemos
+												// obtenido del Iterator
 				}
 			}
 		}
@@ -1759,7 +1808,7 @@ public class Grafica extends Activity implements OnClickListener,
 			} else {
 				ArrayList<Uri> ficheros = new ArrayList<Uri>();
 				DecimalFormat formateador = new DecimalFormat("0.00##");
-				DecimalFormat formateador2 = new DecimalFormat("0.###");
+				DecimalFormat formateador2 = new DecimalFormat("0.000000");
 				DecimalFormat formateador3 = new DecimalFormat("0.00000");
 
 				if (g == true) {
@@ -1776,9 +1825,17 @@ public class Grafica extends Activity implements OnClickListener,
 					csvData.append("t (s);Latitud;Longitud;Distancia total (km);Velocidad instantanea (km/h)\n");
 
 					for (int i = 0; i < gpsdatos.size(); i++) {
+						if (i == 0) {
+							t0 = 0;
+						}
 						if (i > 0) {
-							if (gpsdatos.get(i).equals(gpsdatos.get(i - 1))) {
+							if (gpsdatos.get(i).getLatitud() == gpsdatos.get(
+									i - 1).getLatitud()
+									&& gpsdatos.get(i).getLongitud() == gpsdatos
+											.get(i - 1).getLongitud()) {
+								velocidad = 1111111111;
 							} else {
+								double t1 = (gpsdatos.get(i).getTimestamp() - t) / 1000000000;
 								double deltaLat = ((Math.PI * gpsdatos.get(i)
 										.getLatitud()) / 180)
 										- ((Math.PI * gpsdatos.get(i - 1)
@@ -1791,26 +1848,33 @@ public class Grafica extends Activity implements OnClickListener,
 								double fiM = (((Math.PI * gpsdatos.get(i)
 										.getLatitud()) / 180) + ((Math.PI * gpsdatos
 										.get(i - 1).getLatitud()) / 180)) / 2;
-								distanciaCoordenadas = 6371.009 * Math.sqrt(Math
-										.pow(deltaLat, 2)
-										+ Math.pow((Math.cos(fiM) * deltaLong), 2));
-								double velocidad = distanciaCoordenadas / (((gpsdatos.get(i-1).getTimestamp() - t) / 1000)-((gpsdatos.get(i).getTimestamp() - t) / 1000));
+								distanciaCoordenadas = 6371.009 * Math
+										.sqrt(Math.pow(deltaLat, 2)
+												+ Math.pow(
+														(Math.cos(fiM) * deltaLong),
+														2));
+								double velocidad = distanciaCoordenadas
+										/ (t1 - t0);
 								velocidadInstantanea = velocidad * 3600;
 								distanciaTotal += distanciaCoordenadas;
+								t0 = t1;
 							}
 
 						}
 
-						double tiempo = (gpsdatos.get(i).getTimestamp() - t) / 1000;
-						csvData.append(String.valueOf(tiempo)
+						double tiempo = (gpsdatos.get(i).getTimestamp() - t) / 1000000000;
+						csvData.append(String.valueOf(formateador2
+								.format(tiempo))
 								+ ";"
 								+ String.valueOf(gpsdatos.get(i).getLatitud())
 								+ ";"
 								+ String.valueOf(gpsdatos.get(i).getLongitud())
 								+ ";"
-								+ String.valueOf(formateador3.format(distanciaTotal))
+								+ String.valueOf(formateador3
+										.format(distanciaTotal))
 								+ ";"
-								+ String.valueOf(formateador3.format(velocidadInstantanea)) + "\n");
+								+ String.valueOf(formateador3
+										.format(velocidadInstantanea)) + "\n");
 					}
 					try {
 
@@ -1863,7 +1927,7 @@ public class Grafica extends Activity implements OnClickListener,
 							+ getResources().getString(
 									R.string.unidad_acelerometro) + "\n");
 					for (AccelData values : sensorDatas) {
-						double tiempo = (values.getTimestamp() - t) / 1000;
+						double tiempo = (values.getTimestamp() - t) / 1000000000;
 						csvDataexportar.append(String.valueOf(formateador2
 								.format(tiempo))
 								+ ";"
@@ -1931,7 +1995,7 @@ public class Grafica extends Activity implements OnClickListener,
 							+ getResources().getString(
 									R.string.unidad_giroscopio) + "\n");
 					for (AccelData values : sensorGiroscopio) {
-						double tiempo = (values.getTimestamp() - t) / 1000;
+						double tiempo = (values.getTimestamp() - t) / 1000000000;
 
 						csvDatagiro.append(String.valueOf(formateador2
 								.format(tiempo))
@@ -2001,7 +2065,7 @@ public class Grafica extends Activity implements OnClickListener,
 							+ getResources().getString(
 									R.string.unidad_campo_magnetico) + "\n");
 					for (AccelData values : sensorMagnetico) {
-						double tiempo = (values.getTimestamp() - t) / 1000;
+						double tiempo = (values.getTimestamp() - t) / 1000000000;
 
 						csvDatamagne.append(String.valueOf(formateador2
 								.format(tiempo))
@@ -2072,7 +2136,7 @@ public class Grafica extends Activity implements OnClickListener,
 							+ getResources().getString(R.string.unidad_luz)
 							+ "\n");
 					for (AccelData2 values : sensorLuz) {
-						double tiempo = (values.getTimestamp() - t) / 1000;
+						double tiempo = (values.getTimestamp() - t) / 1000000000;
 						csvDataluz.append(String.valueOf(formateador2
 								.format(tiempo))
 								+ ";"
@@ -2133,7 +2197,7 @@ public class Grafica extends Activity implements OnClickListener,
 							+ getResources().getString(
 									R.string.unidad_proximidad) + "\n");
 					for (AccelData2 values : sensorProximidad) {
-						double tiempo = (values.getTimestamp() - t) / 1000;
+						double tiempo = (values.getTimestamp() - t) / 1000000000;
 
 						csvDataproxi.append(String.valueOf(formateador2
 								.format(tiempo))

@@ -102,7 +102,7 @@ Al ser la velocidad angular una magnitud vectorial para determinarla necesitarem
     <string name="titulogiro3">¿PARA QUÉ SIRVE EL GIROSCOPIO?\n</string>
     <string name="explicaciongiro3">Una de las funciones que desempeña el giroscopio es monitorizar el posible giro de nuestra pantalla.\n</string>
     <string name="titulogiro4">¿QUE DATOS NOS MUESTRA?\n</string>
-    <string name="explicaciongiro4">El giroscopio mide la velocidad de rotación del dispositivo alrededor de los ejes x, y, z. Los valores de los datos del giroscopio pueden ser positivos o negativos. Si la rotación se produce en dirección contraria a las manecillas de un reloj alrededor del eje, el valor es positivo; caso contrario, el valor es negativo.\n</string>
+    <string name="explicaciongiro4">El giroscopio mide la velocidad de rotación (w) del dispositivo alrededor de los ejes x, y, z (rad/s). Los valores de los datos del giroscopio pueden ser positivos o negativos. Si la rotación se produce en dirección contraria a las manecillas de un reloj alrededor del eje, el valor es positivo; en caso contrario, el valor es negativo.\n</string>
     <string name="titulomagne1">\n¿QUE ES EL MAGNETÓMETRO?\n</string>
     <string name="explicacionmagne1">Se trata de un componente electrónico capaz de medir y cuantificar la intensidad de campo magnético (µT).\n</string>
     <string name="titulomagne2">¿CÓMO FUNCIONA EL MAGNETÓMETRO?\n</string>

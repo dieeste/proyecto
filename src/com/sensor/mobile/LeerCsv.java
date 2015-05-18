@@ -114,7 +114,6 @@ public class LeerCsv extends Activity implements OnClickListener,
 			pixelBoton = dips * (scaleDensity / 160);
 			calidad = "media";
 			break;
-
 		case DisplayMetrics.DENSITY_LOW: // LDPI
 			scaleDensity = scale * 120;
 			pixelBoton = dips * (scaleDensity / 120);
@@ -122,7 +121,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 			break;
 		case DisplayMetrics.DENSITY_TV:
 			scaleDensity = scale * 213;
-			pixelBoton = dips * (scaleDensity /  213);
+			pixelBoton = dips * (scaleDensity / 213);
 			calidad = "tv";
 			break;
 		}
@@ -255,7 +254,6 @@ public class LeerCsv extends Activity implements OnClickListener,
 			checkx = isChecked;
 			if (tipo == 1) {
 				iniciar();
-				Log.d("chec", "sest: " + checkx);
 			} else if (tipo == 2) {
 				iniciar2();
 			}
