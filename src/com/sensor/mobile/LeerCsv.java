@@ -9,7 +9,10 @@ import org.achartengine.GraphicalView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -51,7 +54,10 @@ public class LeerCsv extends Activity implements OnClickListener,
 	int tipo;
 	ArrayList<LatLng> puntos = new ArrayList<>();
 	ArrayList<LatLng> localizacion = new ArrayList<>();
+	
 	LatLng ubicacion;
+	int numerolineas = 0;
+	boolean columna;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +85,7 @@ public class LeerCsv extends Activity implements OnClickListener,
 
 		float scale = getApplicationContext().getResources()
 				.getDisplayMetrics().density;
-		
+
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		int dips = 40;
@@ -126,9 +132,11 @@ public class LeerCsv extends Activity implements OnClickListener,
 			break;
 		}
 		lee(nombre);
+		
 
 	}
 
+	
 	public void lee(String file) {
 		int numerolineas = 0;
 		try {
@@ -335,3 +343,4 @@ public class LeerCsv extends Activity implements OnClickListener,
 
 	}
 }
+	

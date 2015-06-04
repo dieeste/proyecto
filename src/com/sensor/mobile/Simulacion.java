@@ -626,6 +626,7 @@ public class Simulacion extends Activity implements SensorEventListener,
 		String type = pref.getString("frecuencia", "lento");
 		if (type.equals("lento")) {
 			tipo = SensorManager.SENSOR_DELAY_NORMAL;
+			Log.d("i","inicio:    "+tipo);
 		} else if (type.equals("normal")) {
 			tipo = SensorManager.SENSOR_DELAY_UI;
 		} else if (type.equals("rapido")) {

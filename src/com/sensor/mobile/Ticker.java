@@ -3,6 +3,7 @@ package com.sensor.mobile;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.util.Log;
 
 /**
  * Receive events from the <code>Sensor</code> and periodically update the UI
@@ -17,7 +18,8 @@ class Ticker extends Thread implements SensorEventListener {
 	private SensorEvent magnetometroEvent;
 	private SensorEvent luzEvent;
 	private SensorEvent proximidadEvent;
-
+	int valores;
+	int valoresac;
 	/**
 	 * The activity, we are ticking for
 	 */
@@ -62,21 +64,38 @@ class Ticker extends Thread implements SensorEventListener {
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
 				worker.currentEvent = event;
-				if (activity.g == true) {
+				if (activity.g == true && activity.acce == false) {
 					double timestampgps = System.nanoTime();
 					GpsDatos datos = new GpsDatos(timestampgps,
 							activity.latitud, activity.longitud);
 					activity.gpsdatos.add(datos);
 				}
-				if (activity.acce == true) {
+				if (activity.acce == true && activity.g == false) {
 					double x = event.values[0];
 					double y = event.values[1];
 					double z = event.values[2];
 					double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
 							x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
 					double timestamp = System.nanoTime();
+					valoresac++;
+					Log.d("tiempo", "tiempo accelero valores " + valoresac);
 					AccelData data = new AccelData(timestamp, x, y, z, modulo);
 					activity.sensorDatas.add(data);
+				}
+				if (activity.acce == true && activity.g == true) {
+					double x = event.values[0];
+					double y = event.values[1];
+					double z = event.values[2];
+					double modulo = Double.valueOf(Math.abs(Math.sqrt(Math.pow(
+							x, 2) + Math.pow(y, 2) + Math.pow(z, 2))));
+					double timestamp = System.nanoTime();
+					valoresac++;
+					Log.d("tiempo", "tiempo accelero valores " + valoresac);
+					AccelData data = new AccelData(timestamp, x, y, z, modulo);
+					activity.sensorDatas.add(data);
+					GpsDatos datos = new GpsDatos(timestamp,
+							activity.latitud, activity.longitud);
+					activity.gpsdatos.add(datos);
 				}
 				break;
 			case Sensor.TYPE_GYROSCOPE:
@@ -88,6 +107,8 @@ class Ticker extends Thread implements SensorEventListener {
 					double modulo2 = Double.valueOf(Math.abs(Math.sqrt(Math
 							.pow(x2, 2) + Math.pow(y2, 2) + Math.pow(z2, 2))));
 					double timestamp2 = System.nanoTime();
+					valores++;
+					Log.d("tiempo", "tiempo giroscopo valores " + valores);
 					AccelData data2 = new AccelData(timestamp2, x2, y2, z2,
 							modulo2);
 					activity.sensorGiroscopio.add(data2);

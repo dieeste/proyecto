@@ -173,10 +173,10 @@
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
 
-         <meta-data
+       <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCIxHQerKjOfbbBEThbU6kRXyJqRqDKdC0" /> 
-          <!--   <meta-data
+         <!--      <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAbeu0IA-EV-4umDVTHKkUMeXSH3GfUcGQ" />-->
             
