@@ -1120,7 +1120,6 @@ public class Grafica extends Activity implements OnClickListener,
 								.getLatitud()
 								&& gpsdatos.get(i).getLongitud() == gpsdatos
 										.get(i - 1).getLongitud()) {
-							velocidad = 1111111111;
 						} else {
 							double t1 = (gpsdatos.get(i).getTimestamp() - t) / 1000000000;
 							double deltaLat = ((Math.PI * gpsdatos.get(i)
@@ -1139,12 +1138,9 @@ public class Grafica extends Activity implements OnClickListener,
 									.pow(deltaLat, 2)
 									+ Math.pow((Math.cos(fiM) * deltaLong), 2));
 							double velocidad = distanciaCoordenadas / (t1 - t0);
-							velocidadInstantanea = velocidad * 3600;
+							velocidadInstantanea = Math.abs(velocidad * 3600);
 							distanciaTotal += distanciaCoordenadas;
-							Log.d("variable antes", "antes cambio: " + t0);
 							t0 = t1;
-							Log.d("variable antes", "antes desopues cambio: "
-									+ t0);
 						}
 					}
 
@@ -1664,6 +1660,7 @@ public class Grafica extends Activity implements OnClickListener,
 				}
 				sensorData.clear();
 			}
+			distanciaTotal =0;
 			min = 1;
 			max = -1;
 			layout.removeView(chartView);
@@ -1833,7 +1830,6 @@ public class Grafica extends Activity implements OnClickListener,
 									i - 1).getLatitud()
 									&& gpsdatos.get(i).getLongitud() == gpsdatos
 											.get(i - 1).getLongitud()) {
-								velocidad = 1111111111;
 							} else {
 								double t1 = (gpsdatos.get(i).getTimestamp() - t) / 1000000000;
 								double deltaLat = ((Math.PI * gpsdatos.get(i)
@@ -1855,7 +1851,7 @@ public class Grafica extends Activity implements OnClickListener,
 														2));
 								double velocidad = distanciaCoordenadas
 										/ (t1 - t0);
-								velocidadInstantanea = velocidad * 3600;
+								velocidadInstantanea = Math.abs(velocidad * 3600);
 								distanciaTotal += distanciaCoordenadas;
 								t0 = t1;
 							}

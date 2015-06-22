@@ -53,11 +53,12 @@ public class LeerCsv extends Activity implements OnClickListener,
 	boolean checkmodulo = true;
 	int tipo;
 	ArrayList<LatLng> puntos = new ArrayList<>();
-	ArrayList<LatLng> localizacion = new ArrayList<>();
-	
+	static ArrayList<LatLng> localizacion = new ArrayList<>();
+
 	LatLng ubicacion;
 	int numerolineas = 0;
 	boolean columna;
+	double distancia;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,11 +133,9 @@ public class LeerCsv extends Activity implements OnClickListener,
 			break;
 		}
 		lee(nombre);
-		
 
 	}
 
-	
 	public void lee(String file) {
 		int numerolineas = 0;
 		try {
@@ -173,10 +172,11 @@ public class LeerCsv extends Activity implements OnClickListener,
 					AccelData2 data = new AccelData2(tiempo, x);
 					sensor.add(data);
 				} else if (numerolineas == 5 && columna == true) {
-					Log.d("entramos", "entramos gps1");
 					double latitud = Double.parseDouble(fichero.get("Latitud"));
 					double longitud = Double.parseDouble(fichero
 							.get("Longitud"));
+					distancia = Double.parseDouble(fichero.get("Distancia total (km)").replace(",",
+							"."));
 					ubicacion = new LatLng(latitud, longitud);
 					puntos.add(ubicacion);
 				}
@@ -232,19 +232,22 @@ public class LeerCsv extends Activity implements OnClickListener,
 				iniciar2();
 			} else if (numerolineas == 5 && columna == true) {
 				Log.d("entramos", "entramos gps");
+				localizacion.clear();
 				for (int i = 0; i < puntos.size(); i++) {
 					if (i > 0) {
-						if (puntos.get(i).equals(puntos.get(i - 1))) {
-						} else {
+						if (!puntos.get(i).equals(puntos.get(i - 1))) {
 							localizacion.add(puntos.get(i));
 						}
 					}
 				}
-				finish();
 				Intent mapa = new Intent(this, RepresentarGps.class);
-				mapa.putExtra("puntos", localizacion);
+				
+				//mapa.putExtra("puntos", localizacion);
 				mapa.putExtra("nombre", titulografica);
+				mapa.putExtra("distancia",distancia);
+				
 				startActivity(mapa);
+				finish();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -343,4 +346,3 @@ public class LeerCsv extends Activity implements OnClickListener,
 
 	}
 }
-	

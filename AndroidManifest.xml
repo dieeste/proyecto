@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sensor.mobile"
-    android:versionCode="5"
-    android:versionName="1.4" >
+    android:versionCode="7"
+    android:versionName="1.6" >
 
     <permission
         android:name="com.example.googlemaps.permission.MAPS_RECEIVE"
@@ -173,14 +173,16 @@
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
 
-       <meta-data
+        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCIxHQerKjOfbbBEThbU6kRXyJqRqDKdC0" /> 
-         <!--      <meta-data
+            android:value="AIzaSyCIxHQerKjOfbbBEThbU6kRXyJqRqDKdC0" />
+        <!--
+            <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAbeu0IA-EV-4umDVTHKkUMeXSH3GfUcGQ" />-->
-            
-        <meta-data 
+            android:value="AIzaSyB4Xu-M1TGfWwuR3ugNQum7gj33lfM8Uvk" />
+        -->
+
+        <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
     </application>
